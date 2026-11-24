@@ -241,6 +241,40 @@ library/
   <paper>/deployed.json                              (engine hash, content hash, source commit)
 ```
 
+### Passage annotations
+
+Author notes in `instances/<paper>/annotations/<slot>.json`. Each file maps a
+`tie.phrase` in that document to an object whose keys are exact Lean declaration
+names from `tie.rows` and whose values are nonempty note strings. A declaration
+can have a different note in each passage. Use the document slot from
+`instance.json` for companions. Euler and Navier–Stokes use `adapted.json` for
+their adapted documents. The standalone RH build uses `short.json` and the
+phrase IDs from its PDF marks, including IDs such as `st:rh`.
+
+Both build routes use [apply_passage_annotations.py](../scripts/apply_passage_annotations.py)
+to add `annotation` to the matching Lean row in the static tie response. For a
+companion or an adapted document the response is under
+`edition/docs/<slot>/ties/short.json`. The build applies the notes after copying
+the companion export, so its cache stays reusable. When an instance has an
+`annotations/` directory, the build requires notes for all its active passage
+and Lean pairs. Wrap Lean code in backticks and mathematical notation in
+`$...$` so the reader can render each correctly.
+
+To validate or update a local copy of a built reader, pass its `edition`
+directory to the same script.
+
+```sh
+python scripts/apply_passage_annotations.py instances/euler /path/to/staged/euler/edition --complete
+python scripts/apply_passage_annotations.py instances/euler /path/to/staged/euler/edition --complete --write
+```
+
+The first command checks that every exported phrase and Lean declaration pair
+has an authored note. The second applies those notes after validation. The
+script updates only the fixed-path tie JSONs named in the edition indexes and
+preserves the snapshot hashes. Omit `--complete` to check only authored pairs.
+An unpublished adapted draft participates when its preview is present in the
+export.
+
 **Workflow `library.yml` in lean-exposition.** It runs on push to main, on PRs (build and test only) and on dispatch.
 
 1. **`plan`.**

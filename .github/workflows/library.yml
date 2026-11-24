@@ -31,13 +31,18 @@ jobs:
           BEFORE: ${{ github.event.pull_request.base.sha || github.event.before }}
           ASKED: ${{ github.event.inputs.papers }}
         run: |
-          all=$(ls instances | tr '\n' ' ')
+          # The standalone RH reader uses build_rh_library.py and its own inputs.
+          all=$(for f in instances/*/instance.json; do dirname "$f"; done | sed 's#^instances/##' | tr '\n' ' ')
           if [ -n "${ASKED:-}" ]; then papers="$ASKED"
           elif [ -z "${BEFORE:-}" ] || ! git cat-file -e "$BEFORE" 2>/dev/null || [ "${{ github.event_name }}" = workflow_dispatch ]; then papers="$all"
           else
             changed=$(git diff --name-only "$BEFORE" HEAD)
-            if echo "$changed" | grep -qE '^(site/|src/|scripts/(build_library|from_proof_reader|private_|check_library|serve_library|publish_library)|pyproject.toml)'; then papers="$all"
-            else papers=$(echo "$changed" | sed -n 's#^instances/\([^/]*\)/.*#\1#p' | sort -u | tr '\n' ' '); fi
+            if echo "$changed" | grep -qE '^(site/|src/|scripts/(apply_passage_annotations|build_library|from_proof_reader|private_|check_library|serve_library|publish_library)|pyproject.toml)'; then papers="$all"
+            else
+              papers=$(echo "$changed" | sed -n 's#^instances/\([^/]*\)/.*#\1#p' | sort -u | while read -r paper; do
+                if [ -f "instances/$paper/instance.json" ]; then echo "$paper"; fi
+              done | tr '\n' ' ')
+            fi
           fi
           json=$(printf '%s\n' $papers | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
           echo "papers=$json" >> "$GITHUB_OUTPUT"

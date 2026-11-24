@@ -15,6 +15,7 @@ import subprocess
 from tempfile import TemporaryDirectory
 from urllib.parse import urlencode
 
+from apply_passage_annotations import apply_annotations
 from lean_exposition.alignment import FIDELITY, FIDELITY_KEYS
 from lean_exposition.bundle import scaffold
 from lean_exposition.contracts import encoded
@@ -418,6 +419,8 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
                 write(edition / file, descriptor)
                 index["responses"]["/lean/module?" + urlencode({"name": name})] = file
         write(edition / "index.json", index)
+        if (INSTANCE / "annotations").is_dir():
+            apply_annotations(INSTANCE, edition, write=True, complete=True)
         write(work / "pdf-marks/short.json", marks)
         write(work / "lean-line-annotations.json", line_annotations)
         write(work / "instance.json", config)

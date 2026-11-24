@@ -4,12 +4,14 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { noteHtml } from "../src/reader/math.ts";
+import { unformattedAnnotationTokens } from "./annotation-notation.ts";
 
 const paper = process.argv[2];
 const root = resolve(import.meta.dirname, "../../instances", paper ?? "");
 if (!paper || !existsSync(root)) throw new Error("Name an existing reader instance");
 const read = (rel) => (existsSync(resolve(root, rel)) ? JSON.parse(readFileSync(resolve(root, rel), "utf8")) : null);
 const fields = [];
+const notationProblems = [];
 
 function explanation(where, note) {
   if (!note) return;
@@ -60,6 +62,25 @@ if (existsSync(alignment)) {
 const adapted = read("adapted/edition.json")?.document?.slot;
 if (adapted && !existsSync(resolve(alignment, `phrases-${adapted}.json`))) phrases("adapted/phrases.json");
 
+const annotations = resolve(root, "annotations");
+if (existsSync(annotations)) {
+  for (const name of readdirSync(annotations).sort()) {
+    if (!name.endsWith(".json")) continue;
+    const data = Object.entries(read(`annotations/${name}`));
+    const declarations = new Set(data.flatMap(([, notes]) => Object.keys(notes).map((declaration) => declaration.split(".").at(-1))));
+    for (const [phrase, notes] of data) {
+      for (const [declaration, text] of Object.entries(notes)) {
+        const where = `annotations/${name}: ${phrase} ${declaration}`;
+        fields.push([where, text]);
+        const unformatted = unformattedAnnotationTokens(text, declarations);
+        if (unformatted.length) {
+          notationProblems.push(`${where}: mark code with backticks and math with $…$: ${unformatted.join(", ")}`);
+        }
+      }
+    }
+  }
+}
+
 for (const [name, note] of Object.entries(read("generated/lean-notes.json")?.notes ?? {})) {
   fields.push([`Lean note ${name}`, note.text], [`Lean summary ${name}`, note.summary]);
 }
@@ -78,7 +99,7 @@ for (const [id, passage] of Object.entries(localTies?.passages ?? {})) {
 }
 
 const prose = fields.filter(([, text]) => typeof text === "string" && text.length > 0);
-const problems = prose.flatMap(([where, text]) => noteHtml(text).errors.map((error) => `${where}: ${error}`));
+const problems = [...notationProblems, ...prose.flatMap(([where, text]) => noteHtml(text).errors.map((error) => `${where}: ${error}`))];
 if (problems.length) {
   console.error(`${paper}: ${problems.length} annotation error(s):\n${problems.slice(0, 30).map((p) => `  - ${p}`).join("\n")}`);
   process.exit(1);

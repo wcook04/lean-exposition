@@ -1,0 +1,446 @@
+{
+  "st:rh": {
+    "riemannHypothesis": "`RiemannHypothesis` is Mathlib’s name for the statement written out here. If $\\zeta(s)=0$ and $s$ is neither a negative even integer nor $1$, then $\\operatorname{Re}(s)=\\tfrac12$. The final term, `rhOfAll`, names the earlier result that supplies the proof."
+  },
+  "st:grh": {
+    "LFunction_ne_zero_of_half_lt_re": "In `DirichletLNonvanishingRightOfHalf`, `NeZero N` says that the natural-number modulus is positive. The disjunction $\\chi\\ne 1$ or $s\\ne 1$ removes exactly the principal character at its pole. The proof term `allChi` includes characters induced from smaller moduli."
+  },
+  "st:strip": {
+    "LFunction_eq_zero_re": "The two inequalities in `DirichletLZerosOnLine` put $s$ in the open strip before the zero hypothesis is used. The left boundary matters for imprimitive characters: the extra Euler factors introduced at a larger modulus can vanish at real part zero."
+  },
+  "verification:63:1": {
+    "riemannZeta_eq_zero_re": "The same term `rhOfAll` proves the two statements on lines 4 and 6 because unfolding `RiemannZetaZerosOnLine` gives exactly Mathlib’s `RiemannHypothesis`. The two names give entry points to a single proof."
+  },
+  "verification:64:1": {
+    "LFunction_eq_zero_re_of_isPrimitive": "In `PrimitiveDirichletLZerosOnLine` the extra premise `χ.IsPrimitive` means the character is already at its conductor. The reflection argument for this theorem therefore applies the functional equation directly, without removing Euler factors at primes of a larger modulus."
+  },
+  "verification:145:1": {
+    "riemannHypothesis": "The dependency count begins at the declaration on line 4. Its type refers to `RiemannHypothesis` and its value to `rhOfAll`. The account’s count follows both references recursively in the compiled environment, along with the constructor and projection links described here."
+  },
+  "verification:204:1": {
+    "riemannHypothesis": "Line 4 identifies which theorem was replayed. Qui Vincit and Fable report 1,478,222 names for their traversal, which also follows recursor rules and expansions of numerals and strings. They collected `Classical.choice`, `Quot.sound` and `propext` from terms checked in the rebuilt environment."
+  },
+  "overview:6:1": {
+    "Formalism.HC.ZeroFreeAll": "`ZeroFreeOn` takes a predicate on primitive characters. Setting the predicate to `True` in `ZeroFreeAll` removes the restriction to a particular set of primitives. The passage to characters at arbitrary moduli comes in the next theorem."
+  },
+  "three-inputs": {
+    "UpperTheory.Top.every_character_of_green_v_win": "The whole proof term for the displayed implication applies `UpperTheory.Top.imprimitive` to the primitive result with the same three inputs. The extension works because the Euler factors added at a larger modulus are nonzero to the right of $1/2$.",
+    "UpperTheory.Top.zero_free_all_of_green_v_win": "The preceding primitive theorem is where the three hypotheses first meet. Its call to `UpperTheory.Top.zeroFreeAll_of_topG` sets the window exponent to $3/2$. The argument using Green’s formulas and the lattice conditions supplies the count bounds, while `UpperTheory.Top.supplyChi` uses the cohomological bound to supply the hosts."
+  },
+  "overview:27:1": {
+    "Formalism.MainNotions.ChainTied": "The witnesses in `Formalism.MainNotions.ChainTied` include a base index at the scale $x$ and a map `pt` assigning an index to each translate. Thus the lattices used for the separate translates can vary, while the proposition keeps them at the same scale."
+  },
+  "overview:27:2": {
+    "Formalism.MainNotions.ChainTied": "In the conjunction defining `Formalism.MainNotions.ChainTied`, `SizeData₂` groups the eleven numerical conditions. The surrounding clauses specify the lattice and count data to which those conditions apply, and require the additional bounds that link the lattice estimates to the analytic sum."
+  },
+  "st:landau": {
+    "Deduction.zeroFree_of_rpow_window": "The quantifier order in `Deduction.zeroFree_of_rpow_window` is the point of Statement 4.1. For each cutoff $Y_0$ there is a later $Y$ on whose entire closed interval the inequality must hold. The positive weights in `CharFamily` concern the mixture of characters, while the prime-power coefficients themselves can have either sign."
+  },
+  "level-character-weights": {
+    "Formalism.HC.Level.wt": "The test in `Formalism.HC.Level.wt` is equality with the level’s optional distinguished character. If the option is empty then every character that enters the nontrivial sum has coefficient $(3o+1)^{-1}$. For example, $o=2$ gives $1/7$.",
+    "Formalism.HC.Level.Gm": "In `Formalism.HC.Level.Gm`, the set `Nt` leaves the trivial character out of the weighted sum. Its contribution comes in separately as `Formalism.Gz y`, with coefficient one, so it never goes through the conditional weight in `wt`.",
+    "Formalism.HC.zeroFreeOn_of_levels": "The premise of `Formalism.HC.zeroFreeOn_of_levels` pairs each requested primitive character with a level that contains it and has already been proved zero-free. The last line specializes that level’s conclusion to the chosen member. Different characters may be covered by different levels."
+  },
+  "landau-proof-idea": {
+    "Deduction.landau_window": "The first case of `Deduction.landau_window` shifts the center vertically so a unique pole lies closer than the radius of the pole-free disk at the real center. The second case stays at the real center and uses the sign of the isolated real pole’s residue. One coefficient estimate holds at every shift, so the proof can choose the shift after locating the poles.",
+    "Deduction.lemmaL": "`Deduction.lemmaL` constructs the pole data from the family’s $L$-functions. A zero in the strip would give one of those poles, so the abstract pole bound applies there. The branch for $1\\le\\operatorname{Re}s$ uses known nonvanishing."
+  },
+  "analytic:56:1": {
+    "Deduction.CH.HostFactsS": "In `Deduction.CH.HostFactsS`, `split_inertia` and `split_frob` put the inertia elements and the chosen Frobenius at primes of $S$ inside $\\Phi$. Those Frobenius powers stay inside the subgroup. The separate conditions on $d$ are needed for the exceptional ramified contribution to the count."
+  },
+  "st:balance": {
+    "Deduction.ch_balance": "The right side of `Deduction.ch_balance` is named `De`. Its expansion gives the double sum with the cutoff $a/w(\\rho_g)$ for the class $g$. Lean takes an explicit integer cutoff $N$ above all these ratios, and allows the same arbitrary correction `ell` on both sides. The paper specializes it to logarithmic derivatives at one."
+  },
+  "character-orthogonality": {
+    "Deduction.ch_balance": "In the proof of `Deduction.ch_balance`, `CharacterBalance.askExp` expands the count by summing over the full character group. For an unramified prime power, averaging $\\overline{\\psi(g)}\\psi(\\operatorname{Frob}_p^i)$ selects exactly the terms in class $g$. The computation at the exceptional ramified prime uses the inertia average."
+  },
+  "analytic:91:1": {
+    "Deduction.CH.SizesA": "`Deduction.CH.SizesA` gives a weight interval for each translate and lift. At thick places the weights are close to $b$, so the ratio $a_t/w$ can be moved to the common scale $x$. At thin places the small weights send that ratio up to the scales controlled by the zero-free-region estimate."
+  },
+  "analytic:98:1": {
+    "Formalism.LFunctionChainParameters.ThickSetMeanBounds.ThinScales": "In `Formalism.LFunctionChainParameters.ThickSetMeanBounds.ThinScales` the same estimate holds for every host character. Substituting $y=a_t/w$ and multiplying by $w$ gives an error at most $\\vartheta a_t$ at each thin place, independent of its weight."
+  },
+  "analytic:98:2": {
+    "Formalism.LFunctionChainParameters.LChain.CostWindows": "The first conjunct of `Formalism.LFunctionChainParameters.LChain.CostWindows` is the stated bound on $\\vartheta$ after rearrangement. The second bounds $\\eta+1$, the spread of the thick weights, so the error of moving the thick terms to $x$ also fits inside the count estimate."
+  },
+  "analytic:99:1": {
+    "Formalism.MainNotions.Lnk.Char_at": "The thin-scale implication in `Formalism.MainNotions.Lnk.Char_at` uses the paper’s exponential $X'$ and $\\vartheta$ once the host satisfies `ChThin_at`. The preceding clauses identify the correction $\\ell$ with the logarithmic derivative at one for each matching primitive character."
+  },
+  "st:core": {
+    "Deduction.ch_core": "`Deduction.ch_core` concludes a bound on `GmA` with the omitted-character norm sum `SigA` still on the right. Lean makes the two bounds $x^{1/2-\\varepsilon}\\le m\\le x^{1/2+\\varepsilon/2}$ explicit. They keep the costs proportional to $x/m$ and $m$ at the square-root scale up to the allowed powers of $x$."
+  },
+  "apply-count-balance": {
+    "Deduction.ch_core": "In `Deduction.ch_core`, the hypothesis bounding the sum of the count gaps is passed to `Deduction.CharacterBalanceMoves.core` with a lower bound for the character average. The resulting inequality still carries the size of the average, which the final estimate divides out.",
+    "Deduction.CharacterBalanceMoves.core": "`Deduction.CharacterBalanceMoves.core` applies the real part of the balance identity separately for each size and lift at a fixed translate. The estimates for moving the arguments and bounding the thin places cost at most $2b/x$ per pair, giving the term $2|TT|mb/x$ on the right of its conclusion."
+  },
+  "average-kept-characters": {
+    "Deduction.ch_core": "In `Deduction.ch_core` the character estimate moves $G_\\psi(a_t/b)$ to $G_\\psi(x)$ before averaging the character values. That leaves a coefficient close to $\\beta|TT|$ for a kept character nontrivial on $H$, and exactly $|TT|$ for one trivial on $H$. The omitted terms enter through their norms."
+  },
+  "analytic:141:1": {
+    "Formalism.HC.HostRaw.ExceptionalCharacterKept": "The two clauses of `Formalism.HC.HostRaw.ExceptionalCharacterKept` distinguish whether the level has a distinguished character. When it does, that primitive character induces the exceptional quadratic host character. Otherwise the exceptional host character is excluded from the kept set, so there is no extra weight-one contribution."
+  },
+  "analytic:145:1": {
+    "UpperTheory.Comparison₂.gmA_eq": "The equation in `UpperTheory.Comparison₂.gmA_eq` holds at every $y$ once the host satisfies the compatibility premises. A kept host character and its primitive character give the same smoothed term. The restriction to $H$ then gives the same coefficient as the level’s distinction between ordinary and designated characters."
+  },
+  "analytic:146:1": {
+    "UpperTheory.Comparison₂.sigA_le": "`UpperTheory.Comparison₂.sigA_le` sums norms over the host characters omitted from the level. The factor $4o$ comes from how many terms there can be, and the host hypothesis supplies the bound $x^{1/2+\\varepsilon}$ for each one at $x$. A bound at this single point suffices for the omitted sum."
+  },
+  "analytic:148:1": {
+    "UpperTheory.Comparison₂.core_gm": "The two inputs `EAtH` and `CoreAtH` in `UpperTheory.Comparison₂.core_gm` supply character estimates and the count bound respectively. Once the kept sum is replaced by $G_L$, the additional $x^\\varepsilon$ in the exponent allows the fixed factor $4o$ in the omitted sum to be absorbed for sufficiently large $x$."
+  },
+  "analytic:155:1": {
+    "Deduction.ch_top": "The input `IdentU` in `Deduction.ch_top` identifies the lattice indices, weights and count terms. It lets the proof replace the excess in the count by a difference of lattice quantities before applying the inequalities. The variable `u` picks one translate, as required by condition (3)."
+  },
+  "analytic:158:1": {
+    "Formalism.LFunctionChainParameters.ThickSetMeanBounds.SizeWindows": "The lower bounds on `nT` and `nT2` in `SizeWindows` prevent the loss from normalization by the size set and thick-set density from being too large. The lower bound $xm\\le k$ also turns $m^2/k$ in the bracket into at most $m/x$."
+  },
+  "analytic:177:1": {
+    "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthSizeBound": "The real input `Gx` of `GrowthSizeBound` stands here for the kept sum minus the omitted-character error. Its premise is the inequality before division by $|TT|mb\\delta_T/2$. With the bounds in `SizeWindows`, the costs $x/m$ and $m$ are both of square-root size up to small powers of $x$."
+  },
+  "lattices:30:1": {
+    "GlobalTheory.Mem.Col2.GStep.Fi": "The `carrier` of `GlobalTheory.Mem.Col2.GStep.Fi` tests a function separately at every genus class. Its value must lie in the weight space and be fixed by every element of that class’s stabilizer. These are the conditions for the full space used to define the lattice $M_u$."
+  },
+  "lattices:42:1": {
+    "Formalism.BasicNotions.DV.Iu": "In `Formalism.BasicNotions.DV.Iu`, the exponents of the prime ideals are integers with a minus sign outside the floor. A positive threshold $\\lfloor e_\\lambda g(u,\\lambda)\\rfloor$ therefore permits a denominator of precisely the order that period divisibility can absorb at $\\lambda$."
+  },
+  "lattices:42:2": {
+    "Formalism.BasicNotions.DV.NprimeDef": "`Formalism.BasicNotions.DV.NprimeDef` identifies $N_u$ with the integral span of all products of a scalar in `Iu` and a form in `NuLat`. Taking the span makes it enough to check integrality of the period map on those products."
+  },
+  "lattices:42:3": {
+    "Formalism.BasicNotions.SizeData₂.sg": "The summand in `Formalism.BasicNotions.SizeData₂.sg` adds the gain and the correction independent of $u$, then subtracts the correction indexed by $u$. The result is a real number. The ramification factor and floor are applied after the contributions of all lifts are added."
+  },
+  "eleven-size-clauses": {
+    "Formalism.LFunctionChainParameters.LChain.SizeData₂": "`Formalism.LFunctionChainParameters.LChain.SizeData₂` is a conjunction on the same collection of lattice data. Four entries give the displayed comparisons, while entries such as `Slopes`, `Count5` and `EComp5` bound the intermediate quantities that must be eliminated to obtain the count estimate."
+  },
+  "lattices:65:1": {
+    "Formalism.BasicNotions.SizeData₂.Ga": "In `Formalism.BasicNotions.SizeData₂.Ga`, the cost $\\tau_\\lambda$ is subtracted once at each place, after adding its gains over the lifts. The factor in `sz` converts the local quantity to slope units. The same total then appears in both the count inequality and the lower bound for the rescaled slope."
+  },
+  "lattices:65:2": {
+    "Formalism.BasicNotions.SizeData₂.Fo": "`Formalism.BasicNotions.SizeData₂.Fo` uses `F` with a lift index and a place index only. That is why the same total works for every word and can cancel against the matching term in the bound from the period lattice."
+  },
+  "lattices:65:3": {
+    "Formalism.BasicNotions.SizeData₂.Ee": "The index $u$ in `Formalism.BasicNotions.SizeData₂.Ee` stays inside the sum over lifts and places. To eliminate this term from the slope estimate, the proof compares it word by word with the leading term forced by the dimension count."
+  },
+  "lattices:77:1": {
+    "Formalism.RankGapBounds.WeightedMeanData.Data.Slopes": "`Formalism.RankGapBounds.WeightedMeanData.Data.Slopes` bounds two different quantities. The lower bound for the mean slope controls the starting point of the gain calculation. The upper bound for the maximal slope controls the top of the filtration used in the subsequent frame estimate."
+  },
+  "lattices:78:1": {
+    "Formalism.RankGapBounds.WeightedMeanData.Data.HComp": "The absolute value in `Formalism.RankGapBounds.WeightedMeanData.Data.HComp` compares two words in a single translate. It encloses both height and level contributions. This permits the combined quantity $h(u)+\\sum_t a_t\\log T(u)$ to be moved between words even if its two parts vary separately."
+  },
+  "lattices:79:1": {
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.Count5": "The lower bound in `Formalism.LFunctionChainParameters.WeightedSlopeBounds.Count5` contains $m\\ell_g$ along with the weighted logarithms of the place sizes. Its sign matters: $\\log T(u)$ occurs with a minus sign in the upper bound for the period slope."
+  },
+  "lattices:79:2": {
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.EComp5": "In `Formalism.LFunctionChainParameters.WeightedSlopeBounds.EComp5`, the error bounds the difference between $\\mathrm{Ee}(u)$ and $m\\ell_g\\sum_t a_t$. The lower bound for $\\log T(u)$ yields the same leading quantity when multiplied by the sum of the sizes, which is what allows cancellation in the slope comparison."
+  },
+  "lattices:93:1": {
+    "Formalism.MainNotions.LocalQuadraticParts.adm2": "The equality inside `Formalism.MainNotions.LocalQuadraticParts.adm2` first identifies the complex period with an element of the coefficient field. The valuation condition then applies to that element when it is nonzero. Its floor is the same as the one in the exponent of the rescaling ideal."
+  },
+  "lattices:99:1": {
+    "Formalism.L2.G.Adm2InU.admissible_level_two": "The conclusion of `Formalism.L2.G.Adm2InU.admissible_level_two` gives the condition needed before multiplying by the fractional ideal. The proof treats the auxiliary level prime, the two host primes and the other places separately, so the period remains integral at every place after rescaling."
+  },
+  "lattices:102:1": {
+    "Formalism.MainNotions.G.gainP": "The outer conditional in `Formalism.MainNotions.G.gainP` excludes primes past the cutoff and the inert case with $h_p=0$. Among the remaining orbits, belonging to `VV` is what makes the candidate $g_U-\\mathrm{Pr}$ available alongside $g_0$ and zero in the maximum."
+  },
+  "lattices:111:1": {
+    "Formalism.MainNotions.G.IsV": "In `Formalism.MainNotions.G.IsV`, the bound `i < nP D p` puts the step number in one orbit period. The condition `Even i` then measures parity from the chosen base point. The odd-position filter in $g_U$ uses its complement."
+  },
+  "lattices:116:1": {
+    "Formalism.MainNotions.G.capU": "The partner is computed before the adjusted weight in `Formalism.MainNotions.G.capU`. For an odd step the code uses the second copy when the prime belongs to `PrimeClass.signal`. The resulting capacity bounds the deduction in $g_U$ and is the threshold for a positive contribution in $g_0$."
+  },
+  "lattices:123:1": {
+    "Formalism.MainNotions.G.gU": "The subtraction in `Formalism.MainNotions.G.gU` is over top places failing `IsV`. An even-position top place therefore keeps its full geometric-series contribution before the common orbit correction. At an odd position each subtraction is capped by the smaller of the step contribution and its partner capacity."
+  },
+  "lattices:123:2": {
+    "Formalism.MainNotions.G.g0": "For an odd step that survives `Excl`, `Formalism.MainNotions.G.g0` contributes the positive part of $\\alpha_t/p^e-c_t(e)$. If the partner capacity covers that step entirely, its term is zero before the orbit correction is taken."
+  },
+  "lattices:126:1": {
+    "Formalism.MainNotions.G.Excl": "In `Formalism.MainNotions.G.Excl`, `IsDist` expresses the first positive step to the destination on the original copy of the places. The destination must be a different top place. The exclusion picks out this first arrival when computing the odd terms of $g_0$."
+  },
+  "lattices:132:1": {
+    "Formalism.MainNotions.G.VV": "The test on `Sig` in `Formalism.MainNotions.G.VV` is at the prime level, in addition to the candidate-prime test. If either test fails the eligible set is empty. Only when both pass do the individually regular orbits enter the sum with the $g_U$ option."
+  },
+  "lattices:137:1": {
+    "Formalism.MainNotions.G.Good": "`Formalism.MainNotions.G.Good` feeds the top places’ positions within an orbit to `IsGoodOrbit`. The test checks their distribution in short windows, including blocks with even cells occupied and odd cells empty. The position test is how regular orbits supply the even-position contribution in $g_U$."
+  },
+  "st:F": {
+    "Formalism.HN.TheoremF": "In `Formalism.HN.TheoremF`, the rows indexed by `Sum.inl` are the original maps in the enlarged target. The other rows belong to the added directions, whose rank share is bounded. The frame measurements are made in the enlarged space, while the lower bound at the end concerns the mean slope of the original lattice $P$."
+  },
+  "rank-lost-at-a-filtration-cut": {
+    "Formalism.HN.frameB_share": "In `Formalism.HN.frameB_share`, repeat each height-adjusted slope according to its rank. The upper bound $\\bar\\mu+u_F$ and the mean bound allow total shortfall at most $u_F$ times the total rank. Each slope strictly below the cut spends at least $u_F+\\tau$ of shortfall, giving the displayed fraction for $u_F>0$."
+  },
+  "lattices:204:1": {
+    "Formalism.DivisorInequality.BoundsMu": "`Formalism.DivisorInequality.BoundsMu` requires invertible matrices at the infinite places and only finitely many changes from the default finite-place data. The determinant factorization in its premises lets the proof turn the composite determinant into a sum of logarithms for the individual lifts and the scalar."
+  },
+  "lattices:208:1": {
+    "GlobalTheory.BigTop.lamLow_of_hypotheses_alt_alt": "`GlobalTheory.BigTop.lamLow_of_hypotheses_alt_alt` takes the seven named results as hypotheses. Its conclusion is the eventual lower bound for the scalar in the determinant comparison. The doubling identities enter at this point because the scalar comes from comparing theta-lift inner products."
+  },
+  "lattices:220:1": {
+    "Formalism.DivisionValues.divisor_inequality_assembly": "The proof of `Formalism.DivisionValues.divisor_inequality_assembly` first establishes the displayed inequality separately for each pair $(j,\\rho)$. The conditional on membership in `TT` puts the factorial expression on the right only at a top place. Summing those inequalities prepares the upper bound for the common period slope."
+  },
+  "lattices:232:1": {
+    "Formalism.L2.Pj.Core.cuspA": "`Formalism.L2.Pj.Core.cuspA` specifies the cusp-form subspace for a particular lift, weight and level. The auxiliary lattice in the passage consists of forms in that space satisfying the separate finite-place integrality conditions."
+  },
+  "lattices:233:1": {
+    "GlobalTheory.CovTop.Assembly.lcv_le": "The left side of `GlobalTheory.CovTop.Assembly.lcv_le` divides the log covolume by the rank. In comparing with the slope of the sublattice selected by the idempotent, the exponentially small rank share of the other summand controls how much its slope can affect that normalized quantity."
+  },
+  "lattices:240:1": {
+    "SelfIntersectionVolumeEstimates.topCovolSlim2_use_alt_alt": "The arrows in `SelfIntersectionVolumeEstimates.topCovolSlim2_use_alt_alt` list the fifteen hypotheses from which the covolume bound follows. The proof assembles the toroidal and height data before applying the intersection estimate to the lattices of forms on the indefinite moduli space."
+  },
+  "lattices:254:1": {
+    "GlobalTheory.chowla_selberg_eta": "The hypothesis of `GlobalTheory.chowla_selberg_eta` identifies each $\\tau_c$ as the point for an ideal class. On the right of the identity the quotient $-L'(1,\\chi_d)/L(1,\\chi_d)$ explains why the quadratic logarithmic derivative reappears in the main term of the count."
+  },
+  "lattices:265:1": {
+    "Formalism.MainNotions.StandardLattice.ClassNumberFormula₂": "In `Formalism.MainNotions.StandardLattice.ClassNumberFormula₂`, the class count is evaluated at a word $u$ for which the auxiliary prime $T(u)$ splits. The factor $(T(u)^k-1)^f$ is the dependence on this prime. A lower bound on the required dimension can therefore force a lower bound on $T(u)$."
+  },
+  "lattices:267:1": {
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.Count5": "The first conjunct of `Formalism.LFunctionChainParameters.WeightedSlopeBounds.Count5` is the displayed lower bound. The average over places is taken separately for each lift and then summed over the lifts. This particular weighting makes the logarithms of their local weights reappear in the analytic main term."
+  },
+  "st:key": {
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5": "In `Formalism.LFunctionChainParameters.WeightedSlopeBounds.key_identity5`, `Lam5` is the numerical lower-bound expression, with its counting error already subtracted. Subtracting $\\sum_t a_t$ times that expression brings the error in with a plus sign. The remaining logarithms of $v/\\pi$ cancel the matching period terms."
+  },
+  "lattices:284:1": {
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.EComp5": "The term with $m\\ell_g\\sum_t a_t$ left over in the identity occurs with the opposite sign in the period bound. The absolute difference in `EComp5` measures what remains when it is paired with $\\mathrm{Ee}(u)$, so only the stated error has to be carried into the next inequality."
+  },
+  "lattices:298:1": {
+    "Formalism.LFunctionChainParameters.WeightedSlopeBounds.each_unit_bound_statement": "In the proof of `Formalism.LFunctionChainParameters.WeightedSlopeBounds.each_unit_bound_statement`, the eleven conditions are introduced before `u0`. For each choice of that translate, the lower and upper bounds on the same period slope eliminate it and give the count bound for that translate."
+  },
+  "divisibility:13:1": {
+    "Formalism.L2.Th1.CM.ltLog": "The index test in `Formalism.L2.Th1.CM.ltLog` gives a nonzero coefficient only at $n=(\\ell^2)^j$, with value $\\ell^{-j}$. The powers of $\\ell^2$ are the height-two feature of the coordinate change that enters the derivative estimates."
+  },
+  "divisibility:18:1": {
+    "Formalism.DworkPowerSeriesWeights.LemmaSt": "The substitution condition in `Formalism.DworkPowerSeriesWeights.LemmaSt` says the series $g$ inverts the logarithm. The coefficient bound allows a valuation loss of $(r-1)/(\\ell^2-1)$ at order $r$. When the coefficient is used for a derivative it is multiplied by $r!$, which more than compensates for this loss at leading order."
+  },
+  "divisibility:28:1": {
+    "Formalism.DworkPowerSeriesWeights.LemmaRA": "In `Formalism.DworkPowerSeriesWeights.LemmaRA`, the signed exponential can reduce the valuation gained from differentiating. Lean takes nonnegative allowances $\\varsigma_i$ subject to the stated test on its coefficients. The rate for each derivative in variable $i$ is then $\\gamma_\\ell-\\varsigma_i$."
+  },
+  "st:cm2": {
+    "Formalism.L2.Th1.CM.CM2": "The witness in `Formalism.L2.Th1.CM.CM2` is a pair of invariants satisfying `IsGoodModel`. The two invariants are rescaled by powers of one scalar and the unit discriminant ensures smooth reduction. Lean takes the invariants in the completed unramified field in $\\mathbb C_\\ell$, where the account specifies the algebraic maximal unramified extension."
+  },
+  "st:cm3": {
+    "Formalism.L2.Th1.CM.CM3": "In `Formalism.L2.Th1.CM.CM3`, the absence of a square root of $-d$ in the residue field is the inertness premise. For each good model, the substitution of a norm-one multiple of `ltLog` into `uSer` gives coefficients of norm at most one. Lean places the unit and coefficients in the completed maximal unramified extension."
+  },
+  "divisibility:54:1": {
+    "GlobalTheory.Corev.CmTwoClosing.cmGoodModel_of_globalArtinReciprocity": "In `GlobalTheory.Corev.CmTwoClosing.cmGoodModel_of_globalArtinReciprocity`, the Artin reciprocity premise is used to find an ideal class with the prescribed Artin symbol. That choice and the separate degree-one valuation result are inputs to the construction of the unramified good model."
+  },
+  "divisibility:63:1": {
+    "Formalism.L2.KerInert.IntInert": "The conclusion of `Formalism.L2.KerInert.IntInert` is integrality of the normalized kernel in the local formal parameter. Its premises select an admitted pair of lattices and an inert prime $p\\ge5$, and quantify over the embedding into $\\mathbb C_p$. This is the kernel input to the next jet calculation."
+  },
+  "divisibility:68:1": {
+    "PI.OrbBoundFW.prvF_of_orbitLetterBounds": "`PI.OrbBoundFW.prvF_of_orbitLetterBounds` takes a bound for series indexed by letters and a hypothesis matching those letters to the arithmetic data. The proof supplies the jet admissibility conditions for each orbit and obtains a valuation estimate in the orbit’s own weights and correction terms."
+  },
+  "divisibility:75:1": {
+    "GlobalTheory.T.standard_weyl_lattices_fock_dual": "The two equivalences in `GlobalTheory.T.standard_weyl_lattices_fock_dual` interchange the standard Weyl lattices. In each direction the test for membership is that every polynomial-model pairing against the other lattice lands in the image of $\\mathcal O_K$. This is the integrality test used for the summands of a period."
+  },
+  "divisibility:79:1": {
+    "minkowski_bound_rat": "The type `PI.MinkowskiBoundQ` behind `minkowski_bound_rat` gives a common integer multiple for the orders of the finite rational matrix groups in a fixed dimension. This bounds the denominators from stabilizer orders in the finite class sum for a period."
+  },
+  "frame:4:1": {
+    "Formalism.LFunctionChainParameters.MatrixLatticeEstimates.InputSG": "`InputSG` tests the normalized Gram matrix one block at a time. The diagonal test subtracts the identity to measure the failure of an individual map to be isometric after weighting. The off-diagonal test and target dimension bound together control how much the different images can overlap."
+  },
+  "frame:32:1": {
+    "Formalism.L2.SG.TermOp.KExpansion": "`Formalism.L2.SG.TermOp.KExpansion` asks for an operator $K$ that is the sum of the orbital operators and represents the original pairing by an inner product. The `HasSum` condition is what justifies collecting contributions to a Gram block from the double-coset expansion."
+  },
+  "frame:36:1": {
+    "Formalism.L2.SG.TermOp.IdBlocks.oot_eq": "In `Formalism.L2.SG.TermOp.IdBlocks.oot_eq`, both indices of the orbital term are the same. Its scalar includes the conjugate of the unipotent character value, the two volumes and the reciprocal of the representation dimension. The normalization in the frame calculation turns the identity contribution into the identity block."
+  },
+  "frame:41:1": {
+    "Formalism.L2.SG.KappaOffDiagonal.SchurNFC": "`Formalism.L2.SG.KappaOffDiagonal.SchurNFC` asks whether an operator intertwines the two actions on the pointwise stabilizer of a relevant degenerate coset. With different archimedean parameters at every place, that condition forces the operator to vanish. The argument removes these terms before the remaining off-diagonal estimates."
+  },
+  "frame:46:1": {
+    "CompanionTheory.Lime.BM.UniqGap": "`CompanionTheory.Lime.BM.UniqGap` includes the explicit inequality $120(2r+k+1)^3\\le h$ on the parameter gap, along with the discrete-series conditions. In that range the proportionality is on smooth vectors, which is the domain on which the Bessel maps are compared."
+  },
+  "frame:49:1": {
+    "HeckeCharacterZeroLocus.SiegelWeilU.SiegelDensities": "The inequalities `2 * n < M` and `T.det ≠ 0` in `HeckeCharacterZeroLocus.SiegelWeilU.SiegelDensities` put the frame average in the convergent range and fix a nondegenerate Gram matrix. For the product test function in the premises, the average then factors into densities at the places."
+  },
+  "frame:52:1": {
+    "GlobalTheory.rowMainEqP_of_siegelWeil": "The conclusion `RowMainEqP` of `GlobalTheory.rowMainEqP_of_siegelWeil` uses a single index $u$ and the pairing with $u$ repeated. The prose here concerns off-diagonal blocks. For the bound with two distinct indices, the account’s next declaration is `Formalism.L2.SG.TheoremS.pbApplied`."
+  },
+  "frame:54:1": {
+    "Formalism.L2.SG.TheoremS.pbApplied": "`Formalism.L2.SG.TheoremS.pbApplied` requires separate controls on large, nonscalar and nongeneric rows. The first two decay with $kf\\log k$ and the third has its own power of two. Together these estimates allow the squared off-diagonal norm to be bounded by the dimension expression times $1+b^{-6}$."
+  },
+  "frame:70:1": {
+    "Formalism.MainNotions.BesselId": "The target isometry in `Formalism.MainNotions.BesselId` is chosen once, outside the quantifier over words. Each word can have its own source isometry and scalar. The common target change of coordinates is needed when comparing images of the different period maps in one Gram matrix."
+  },
+  "st:vwin": {
+    "UpperTheory.Top.VVle": "In `UpperTheory.Top.VVle`, finiteness is asserted separately for each prime and each twist in range. The numerical bound is then required for every finite set of primes. Since the log-weighted lengths are nonnegative, taking the supremum of these finite sums gives the aggregate bound in the passage.",
+    "UpperTheory.Top.VWin": "`UpperTheory.Top.VWin` fixes the twist exponent $401$ and ranges over all primitive characters. The nested choices in `VWinAt` use one eligible auxiliary prime pair throughout $[Y,Y^2]$ and impose the bound on every matching host there. The printed statement abbreviates those uniformity conditions."
+  },
+  "cohomology:40:1": {
+    "Formalism.MainNotions.LinkN_at": "The Sha term in `Formalism.MainNotions.LinkN_at` is a series, so summability is an explicit premise. After factoring out the rank `dZ0`, the series is added to the size terms that already appear in the error bracket. This is where the cohomology contributes to the bound on the local index."
+  },
+  "cohomology:46:1": {
+    "Formalism.LFunctionChainParameters.LChain.BNBounds": "In `Formalism.LFunctionChainParameters.LChain.BNBounds`, the bound for $B_0$ depends on the number of levels and the size of $H$. The bound for $N_c$ also uses the rank $k$ and thick-set size. These are the two separate estimates needed to fit the congruence term into the analytic error bracket."
+  },
+  "cohomology-square-root-slack": {
+    "UpperTheory.Top.divinN_of_hypV": "`UpperTheory.Top.divinN_of_hypV` gets summability and the bound from `vvRecord`, then enlarges $\\sqrt b$ to $b$ before applying the local index estimate. Once the rank is factored out, the cohomological sum can be absorbed into $B_0$, which is already at least $b$."
+  },
+  "cohomology:52:1": {
+    "UpperTheory.Top.vvRecord": "The proof of `UpperTheory.Top.vvRecord` identifies the recorded `shaLen` with the actual cohomology length at each prime and twist. It can then transfer the host bound to the infinite series of terms `vvTerm` that the lattice argument uses."
+  },
+  "cohomology:53:1": {
+    "Formalism.L2.DIV.inEta_num": "In `Formalism.L2.DIV.inEta_num`, the twisted places used at one lift level contribute at most the full sum of local lengths at that level. The numerical bound for the full sum therefore supplies an estimate uniform in the level for precisely the terms used by the slope argument."
+  },
+  "hecke-lift-subset": {
+    "Formalism.MainNotions.N.ZN": "The condition in `Formalism.MainNotions.N.ZN` asks for an automorphic point realizing the eigensystem and a particular block in its base-change parameter. The block has width `R.t` and includes a prescribed twisted character. The prose specifies the width, and the Lean predicate also fixes the character used to select the lift eigenspaces."
+  },
+  "congruence-ideal-and-length": {
+    "Formalism.BasicNotions.ccIdeal": "In `Formalism.BasicNotions.ccIdeal`, each factor of the product map evaluates a Hecke operator at an eigensystem outside $Z$. A kernel element vanishes on all of those eigensystems. This gives the ideal of integral operators supported on the specified lift subset.",
+    "Formalism.BasicNotions.NData.etaLoc": "`Formalism.BasicNotions.NData.etaLoc` takes the length of the quotient of the projected lattice by its integral intersection and normalizes it by the length of $\\mathcal O/\\ell\\mathcal O$. The formal lattices use the subset of good lift eigensystems, where the displayed quotient is written using $Z$."
+  },
+  "st:cong": {
+    "GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at": "In `GlobalTheory.IndefiniteRowSideFullHecke.BaseSizes.CongBound_at`, `IsRankRPart` specifies the fraction-field decomposition and requires the rank-$r$ part over the coefficient ring. Differences between exponents in the prescribed character block explain why the Sha term sums over positive twists below the block width `R.t`."
+  },
+  "assemble-cohomology-counts": {
+    "UpperTheory.V.HV.Core.of_four_alt": "The four count hypotheses of `UpperTheory.V.HV.Core.of_four_alt` enter the last call to `vwin_of_counts`. The proof obtains the cyclotomic-tower input using Ferrero–Washington and the crude bound, converts the separate odd estimate, and supplies the additional `CountZ`. The conclusion is the single window assertion `VWin`."
+  },
+  "cohomology:99:1": {
+    "UpperTheory.V.Odd.PsiBound": "The sign test in `UpperTheory.V.Odd.PsiBound` is $(-1)^{e+1}$ at complex conjugation, so the eigenspaces selected by the estimate alternate with the twist. For odd $\\ell$ prime to the field degree, the bound compares the selected length with the valuation of the scaled Bernoulli value."
+  },
+  "cohomology:100:1": {
+    "UpperTheory.V.ML.iv": "The inputs to `UpperTheory.V.ML.iv` are Poitou–Tate duality and unramified orthogonality. The proof first uses them to obtain the reciprocity input `recip`, then applies `psiOf` to turn that input into the bound on the eigenspace of the stated parity."
+  },
+  "cohomology:102:1": {
+    "UpperTheory.V.ML.kolStep": "In `UpperTheory.V.ML.kolStep`, `q :: L` is the former list $L$ with an admissible auxiliary prime $q$ added. The conclusion equates the new class evaluated on the specified inertia element at $q$ to a signed multiple of the old class evaluated at Frobenius. This is the local relation used in the derivative argument."
+  },
+  "cohomology:108:1": {
+    "UpperTheory.V.FW.sinnott": "In `UpperTheory.V.FW.sinnott`, a function modulo $\\ell^n$ has a translate difference supported on a fixed interval. The assumed vanishing of its rescalings by the chosen units forces each coefficient on that interval to be zero for large $n$. The independence condition on the units is used to separate those rescalings."
+  },
+  "cohomology:109:1": {
+    "UpperTheory.V.LemmaK": "`UpperTheory.V.LemmaK` puts the field degree, absolute discriminant and twist into the explicit function `kBound`. The result includes finiteness of the degree-two group as a separate condition so that its log order can be used for the twists outside the tower estimate."
+  },
+  "cohomology:116:1": {
+    "UpperTheory.V.Z.J.NumberU3U_s": "In `UpperTheory.V.Z.J.NumberU3U_s`, the integer `NN` is chosen before the coefficient prime $\\ell$. The local trace-difference valuations can therefore be summed over $\\ell$ using the prime factorization of one integer. This is why its log size bounds the aggregate contribution."
+  },
+  "cohomology:133:1": {
+    "UpperTheory.V.Z.J.OneCharU_s": "The inequality of traces in `UpperTheory.V.Z.J.OneCharU_s` is a premise on every admissible representation. It keeps each difference from the specified Eisenstein trace nonzero. The finite family in the conclusion then gives a bound for the cohomology length by twice the sum of the resulting valuations."
+  },
+  "cohomology:137:1": {
+    "UpperTheory.V.Alg.LemmaM": "The five predicates in `UpperTheory.V.Alg.LemmaM` govern the graded algebra, the chosen ideal and the element $a$. The conclusion uses only the weight $-1$ part of the cotangent space at the augmentation. Evaluating $a$ at the finite covering family is the algebraic counterpart of taking the trace differences in the preceding paragraph."
+  },
+  "cohomology:144:1": {
+    "UpperTheory.V.Hi.hida_unitary_of_printed_hida": "The premise of `UpperTheory.V.Hi.hida_unitary_of_printed_hida` is the record of cited Hida results. The proof constructs an ideal in the ordinary determinant ring and applies the automorphy result for that ideal. The resulting arithmetic points supply the unitary-group family used in the congruence argument."
+  },
+  "cohomology:145:1": {
+    "UpperTheory.V.Z.Kato.Final.zetaUr": "The proof term of `UpperTheory.V.Z.Kato.Final.zetaUr` combines the global law for smoothed classes with the local statement at $\\ell$. The resulting cocycle is integral and unramified away from $\\ell$, and its projection to the ordinary quotient is nontrivial in local cohomology. That local condition is part of the Euler-system input used here."
+  },
+  "cohomology:152:1": {
+    "UpperTheory.Gal.Int.galoisRepresentations_of_thetaLift": "`UpperTheory.Gal.Int.galoisRepresentations_of_thetaLift` takes `UpperTheory.TP.TLiftK` as its hypothesis. It passes the definite theta-lift existence theorem and the geometric construction to the local–global result. Its output `Row0b` contains the Hodge–Tate weights and the particular compatibility conditions stated next."
+  },
+  "cohomology:160:1": {
+    "UpperTheory.GalStar.AwayB": "`UpperTheory.GalStar.AwayB` gives dimension equality unconditionally for the two parameters. Its split character clause gives equality of the parameters when monodromy is zero. The tame square-free clause over the specified $\\mathbb Q_p$ gives agreement of characteristic polynomials only on elements of degree zero, that is, on inertia."
+  },
+  "cohomology:168:1": {
+    "UpperTheory.TP.TLiftK": "The order of the quantifiers in `UpperTheory.TP.TLiftK` is that a definite Hermitian source admits a threshold for the rank of the definite skew-Hermitian target. The lift above that threshold still requires the inequalities on the source weights at the infinite places, as well as the conditions on the twisting characters."
+  },
+  "cohomology:168:2": {
+    "UpperTheory.TP.K.tLiftK": "The proof term for `UpperTheory.TP.K.tLiftK` is `UpperTheory.TP.tLift_holds_k`. This is where the abstract lift assumption of the Galois-representation theorem is supplied by the definite theta-kernel construction."
+  },
+  "hosts:5:1": {
+    "UpperTheory.Top.IsChiField": "The equivalence in `UpperTheory.Top.IsChiField` characterizes the automorphisms fixing the embedded host. Each sends a chosen primitive root to its $a$th power. The two Jacobi-symbol tests are the conditions on $a$ coming from the quadratic fields associated with $q$ and $d$."
+  },
+  "quadratic-subfield-of-host": {
+    "Formalism.HC.HostRaw": "In `Formalism.HC.HostRaw`, the element squaring to $-d$ comes with its Galois sign. An automorphism fixes the quadratic subfield exactly when it preserves that element, so the subgroup called $\\Phi$ in the account is the kernel of this sign character."
+  },
+  "hosts:18:1": {
+    "UpperTheory.Top.WinPair": "`UpperTheory.Top.WinPair` uses the parameter $Y$ in the size restrictions for the primes. In particular it requires $Y^{\\varepsilon/5}/2<\\log q\\le Y^{\\varepsilon/5}$. Once chosen, the same two primes can be used throughout the window while the cyclotomic layer changes."
+  },
+  "hosts:18:2": {
+    "UpperTheory.Top.PageN": "`UpperTheory.Top.PageN` uses the individual scale $x$ to constrain the power of two. The interval from $x^{2+8\\varepsilon}$ to twice that value leaves a choice of $2^{e_2}$ even as the scale varies and the two auxiliary primes stay fixed."
+  },
+  "st:supply": {
+    "UpperTheory.Top.supplyChi": "The type of `UpperTheory.Top.supplyChi` uses the cohomology premise at exponent $401$ and outputs `HostExW (3 / 2)`. In its proof `supplyOfAdm` reduces host supply to choosing admissible ranks. The chosen block width fits inside the twist range on which the cohomology bound was obtained."
+  },
+  "why-counts-windowed": {
+    "UpperTheory.Top.supplyChi": "The $3/2$ in the result of `UpperTheory.Top.supplyChi` is the exponent of a whole interval with hosts available at every scale. After a fixed rescaling of a sufficiently late window start, such an interval fits inside the cohomological square window. A whole interval is needed for the integral estimate in Landau’s argument.",
+    "UpperTheory.Top.VWin": "`UpperTheory.Top.VWin` delegates the window quantifiers to `VWinAt`. For large $X$ the latter supplies a square window inside $[X^{1/J},X]$ while keeping the prime pair fixed. This is the source of arbitrarily late intervals in which the host proof can fit its $3/2$-power windows."
+  },
+  "st:pairs": {
+    "UpperTheory.Top.PairEx": "In `UpperTheory.Top.PairEx`, a single pair $q,d$ is chosen after the base modulus and the window exponent, and `PairGood` demands the estimates throughout $[Y,Y^A]$. The smoothed bounds in Lean apply to the primitive characters agreeing with the twists away from $2M_0qd$. The conductors contain one of the large new primes, making these short sums."
+  },
+  "estimates-for-auxiliary-twists": {
+    "QH.meanSqK": "The `MeanSq` conclusion of `QH.meanSqK` sums squares over the candidate primes in the progression at each $y$ in the window. The subsequent maximum estimate uses these mean squares to count primes that fail the short-sum bound somewhere in the window.",
+    "Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box": "`Formalism.HermitianLattices.Ext.PrimitiveCharacterCasts.ZD.zero_density_box` bounds the number of primitive characters with a zero in the box near real part one by $CQ^{1/4}$ for moduli up to $Q$. In the application the modulus of an offending twist records the candidate prime, so this bound controls the separate zero-related exclusions."
+  },
+  "hosts:63:1": {
+    "Formalism.FrobeniusOrbits.ThickExists.noRel_image": "The map in `Formalism.FrobeniusOrbits.ThickExists.noRel_image` encodes the sphere points in base $4Ld$. That base is large enough to read a forbidden relation with coefficients bounded by $L$ coordinate by coordinate. Such a relation would put three distinct points of a sphere on one line."
+  },
+  "hosts:64:1": {
+    "Formalism.FrobeniusOrbits.hostThickExists": "`Formalism.FrobeniusOrbits.hostThickExists` adds a size estimate to the absence of bounded three-point relations. The condition $4Ls<n$ for every selected integer $s$ keeps the set inside the required range, while the lower bound on its cardinality supplies the density needed after averaging."
+  },
+  "offpath:5:1": {
+    "riemannHypothesis": "The declaration `riemannHypothesis` specifies the starting point of the compiled traversal used in this section. Constants are reached through theorem types and proof terms, with the stated constructor and projection links. Two declarations in the same imported file can therefore fall on opposite sides of the dependency count."
+  },
+  "offpath:60:1": {
+    "Formalism.RiemannHypothesisOfLowerBounds": "The premises of `Formalism.RiemannHypothesisOfLowerBounds` ask for both a square-root-scale lower bound on each difference `Gz - Gchi` and a nonvanishing witness at each point to the right of $1/2$. That second premise excludes common zeros of the chosen character family. This conditional route sits outside the final dependency cone."
+  },
+  "offpath:60:2": {
+    "Formalism.CMTypeGaloisData.RiemannHypothesisOfHalfLinks": "`Formalism.CMTypeGaloisData.RiemannHypothesisOfHalfLinks` asks for `HalfLinks` at every sufficiently large scale and separately controls the weighted bad-prime sum. The bad-prime term must fit the same $x^{1/2+\\varepsilon}$ allowance. The account lists this as a conditional route outside the final dependency cone."
+  },
+  "offpath:61:1": {
+    "Formalism.WT.WeightedSieveImpliesRH": "In `Formalism.WT.WeightedSieveImpliesRH`, the existence premise combines Jacobi characters with host comparisons at the eligible discriminants. The comparisons and bad-prime bounds are required at every sufficiently large scale. The implication is one of the alternatives outside the final dependency cone."
+  },
+  "offpath:61:2": {
+    "Formalism.WeightedSieveThreeParameter.WeightedSieveImpliesRHThreeParameter": "`Formalism.WeightedSieveThreeParameter.WeightedSieveImpliesRHThreeParameter` has explicit parameters for an exceptional set and a slack allowance in the Jacobi comparison. Its quantitative premises keep the cost of both allowances at square-root scale up to $x^\\varepsilon$. The implication is outside the final dependency cone."
+  },
+  "offpath:62:1": {
+    "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthBoundGivesRiemannHypothesis": "The premise of `GrowthBoundGivesRiemannHypothesis` asks for the older growth-inequality data at every sufficiently large $x$, for every small positive $\\varepsilon$. The corresponding proof supplies the balance identity through `colour_balance`. This is an alternative reduction outside the final dependency cone."
+  },
+  "offpath:62:2": {
+    "Formalism.LFunctionChainParameters.ThickSetMeanBounds.RiemannHypothesisOfBalanceAndGrowthData": "`RiemannHypothesisOfBalanceAndGrowthData` takes the count identity as a separate universal premise over finite abelian groups. The second premise is the existence of data at every sufficiently large scale. This conditional reduction, also outside the final dependency cone, exposes the extra balance input that the preceding version supplies internally."
+  },
+  "offpath:65:1": {
+    "Formalism.B.ZetaQuarterPowerCorollary": "The existence premise of `Formalism.B.ZetaQuarterPowerCorollary` couples data for a CM type and its dual, with about $x^{1/4}$ lifts. Its conclusion is nonvanishing of $\\zeta$ for $\\operatorname{Re}s>3/4$. This conditional implication is outside the final dependency cone."
+  },
+  "offpath:68:1": {
+    "Formalism.LFunctionChainParameters.characterSumData.AskMainBalance": "The premise `HostFacts` of `AskMainBalance` limits ramification to $2$ and two specified odd primes. The equality encoding the count has the same shape as Statement 4.2. This older host-specific statement is outside the cone traced from the final theorem."
+  },
+  "offpath:69:1": {
+    "Formalism.LFunctionChainParameters.characterSumData.colour_balance": "The proof of `colour_balance` rewrites the count as a character expansion before matching each weighted term to `GPsi`. It proves `AskMainBalance` under the older ramification premise and is outside the final dependency cone."
+  },
+  "offpath:69:2": {
+    "Formalism.LFunctionChainParameters.ThickSetMeanBounds.GrowthInequalityForm": "`GrowthInequalityForm` takes the older balance proposition as an input. In its conclusion the sum before normalization is scaled by $|TT|mb\\delta_T/2$ and contains the smoothed zeta sum `Gz`. The final dependency path uses the estimate for a kept family of characters."
+  },
+  "offpath:71:1": {
+    "Deduction.ch_balance": "The extra argument `S` of `Deduction.ch_balance` is the difference relevant to this comparison. Its host premise allows the special Frobenius conditions at every prime in $S$. This is the exact count identity used in the final dependency cone."
+  },
+  "offpath:71:2": {
+    "Deduction.ch_core": "`Deduction.ch_core` uses the host record with $S$ and gives an estimate for `GmA`, the weighted sum of the kept characters. That is the form the final proof can apply to one level, with the omitted-character norm sum still present as an error."
+  },
+  "offpath:72:1": {
+    "Deduction.CH.HostFactsS": "`Deduction.CH.HostFactsS` allows a finite set containing $2$ and the first odd prime, with the exceptional prime $d$ outside it. For every prime in that set the same conditions put inertia and Frobenius in $\\Phi$. That uniform condition is what the on-path character calculation uses."
+  },
+  "offpath:73:1": {
+    "Formalism.MainNotions.G.gainP": "The reference opens `Formalism.MainNotions.G.gainP`, the definition in §5.3 that sums over Frobenius orbits for each prime and lift. The three other declarations named `gainP` mentioned in this sentence have different full names and are outside the dependency cone."
+  },
+  "offpath:75:1": {
+    "Formalism.DworkPowerSeriesWeights.thmBGauss": "The type `ThmBGauss` of `thmBGauss` bounds coefficients of a polynomial obtained from minors and an integral-jet series multiplied by a quadratic exponential. The stated bound records the positions and sizes of the minors. This is an alternative jet result outside the final dependency cone."
+  },
+  "offpath:76:1": {
+    "Formalism.L2.KerInert.JetsInert": "`Formalism.L2.KerInert.JetsInert` concerns jet values at inert primes for the admitted pair of lattices. It is the separate jet-integrality formulation listed outside the final dependency cone. The path described in §6 uses kernel integrality in the formal parameter and an orbit estimate for the derivatives."
+  },
+  "offpath:77:1": {
+    "Formalism.RankGapBounds.WeightedMeanData.Data.MeanBoundSecondForm": "The two occurrences of `umean` in `MeanBoundSecondForm` take the mean over translates before comparing the count and the main term. This alternative is outside the final dependency cone. The estimate used by the analytic reduction in §4.3 is required at each translate."
+  },
+  "offpath:77:2": {
+    "Formalism.B.DetGain": "In `Formalism.B.DetGain`, `Δ.natAbs.factorization p` is the exponent of $p$ in the nonzero integer’s absolute value. Each gain times $\\log p$ is bounded by that prime’s contribution to $\\log|\\Delta|$. The finite sum selects only the stated primes. This calculation is outside the final dependency cone."
+  },
+  "offpath:79:1": {
+    "Formalism.ThetaLiftIndependence.DetChain": "`Formalism.ThetaLiftIndependence.DetChain` matches the blocks of the operators by index and dimension. Thus multiplying the scalar identities on each block yields the product of the individual determinants times the common scalar to the total dimension. The account lists this form outside the final dependency cone."
+  },
+  "offpath:79:2": {
+    "Formalism.ThetaLiftIndependence.DetBlocks": "`Formalism.ThetaLiftIndependence.DetBlocks` uses an internal direct sum. The determinant of the action on a single block is its scalar to the rank of that block, and the conclusion multiplies these factors. This declaration is outside the final dependency cone."
+  },
+  "offpath:80:1": {
+    "PI.BesselPeriodGGP.BesselPeriodGGP": "`PI.BesselPeriodGGP.BesselPeriodGGP` imposes interlacing and half-integrality conditions on the parameters and asks for translates of the lowest vector with a nonzero Bessel-period integral. This is the nonvanishing statement catalogued outside the final dependency cone."
+  },
+  "offpath:81:1": {
+    "UpperTheory.V.Af.NumberSp4": "In `UpperTheory.V.Af.NumberSp4`, the integer is quantified before the coefficient prime $\\ell$ and is required to control products of Frobenius trace differences in rank four. The account lists this $\\mathrm{GSp}_4$ formulation outside the final dependency cone."
+  },
+  "offpath:81:2": {
+    "UpperTheory.V.Af.CongruenceNumberRankThree": "In `UpperTheory.V.Af.CongruenceNumberRankThree`, the field has degree two and one integer works across the coefficient primes. This first $\\mathrm{U}(3)$ formulation is outside the cone. The bound in §8.3 uses `UpperTheory.V.Z.J.NumberU3U_s`, whose representation admissibility conditions are different."
+  },
+  "offpath:83:1": {
+    "GlobalTheory.BigTop.lamLow_of_classicalTheorems": "`GlobalTheory.BigTop.lamLow_of_classicalTheorems` takes the doubling-method statement as one of seven hypotheses for a scalar lower bound. This declaration is outside the final dependency cone. The derivation in §5.5 uses the formulation in terms of local doubling zeta integrals."
+  }
+}

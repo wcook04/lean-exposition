@@ -1,0 +1,740 @@
+{
+  "short.front.main-result": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.arbitraryWeightMixedSupport_allBase_hereditary": "`hE` applies the weighted condition to $E$ at base two. The cover input `D : LogBudgetCover V` has positive weights and finite total cost and includes the dyadic cover after conversion. Irrationality then holds for every infinite $A\\subseteq E\\cup V$ at each integer base $b\\ge2$."
+  },
+  "short.front.incomparability": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_weighted_not_strengthened_host": "The witness has `FinitePrimeWeighted 2 A` but fails `HasStrengthenedPositiveCover A`. These two conjuncts place it in the weighted class and outside the stated divisor-cover class.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_strengthened_not_old_or_weighted_host": "The witness has `HasStrengthenedPositiveCover A` and fails `FinitePrimeWeighted b A` for every integer base $b\\ge2$. This is the separating support in the divisor-cover class."
+  },
+  "short.front.divergent-reciprocals": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_weighted_not_strengthened_host": "In the weighted witness, `¬ Summable` applies to the selected reciprocals $1/a$. Thus the weighted condition holds even though the unweighted reciprocal-exponent sum diverges.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_strengthened_not_old_or_weighted_host": "The divisor-cover witness is squarefree, and the statement includes both `HasStrengthenedPositiveCover A` and failure of summability for the selected reciprocal terms $1/a$."
+  },
+  "short.w.series": {
+    "Erdos249257.erdosSupportSeries": "`erdosSupportSeries` uses `Set.indicator A` so only selected exponents contribute. Its base is a natural number. For integer $b\\ge2$ the summands agree with the display, whose definition also allows real $b>1$."
+  },
+  "short.w.convergence": {
+    "Erdos249257.summable_erdosSupport_indicator": "`summable_erdosSupport_indicator` uses the geometric majorant $2b^{-a}$ under `hb : 2 ≤ b`. The paper uses $b^{1-a}/(b-1)$ to allow every real $b>1$."
+  },
+  "short.w.prime-part": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.primeSetPart": "In `primeSetPart P a`, the exponent on each $p$ is `a.factorization p`, the valuation $v_p(a)$ for positive $a$ and prime $p$. The product runs over the finite set `P`."
+  },
+  "short.w.integer-base-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.DivisibilityWeightedClaim": "The highlighted `b : ℕ` and `2 ≤ b` specify the base of the first conjunct of `DivisibilityWeightedClaim`. This conjunct uses the same base in the weighted hypothesis and the irrationality conclusion."
+  },
+  "short.w.infinite-support-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.DivisibilityWeightedClaim": "The binders `0 ∉ A` and `A.Infinite` require the support to be positive and infinite. Both occur in the first conjunct of `DivisibilityWeightedClaim` before the weighted-summability premise."
+  },
+  "short.w.finite-prime-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.FinitePrimeWeighted": "The proposition quantifies over `P : Finset ℕ` existentially and requires `P.Nonempty` and `Nat.Prime p` for every member. The fixed prime set chosen in the paper is a candidate witness to that existential condition."
+  },
+  "short.w.theorem-prime-part": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.primeSetPart": "`primeSetPart P a` multiplies $p^{v_p(a)}$ for the primes in `P`. For the later witness with $P=\\{2\\}$, its value on $a=2^k m$ with odd $m$ is $2^k$."
+  },
+  "short.w.weighted-formula": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.primeWeightedTerm": "`primeWeightedTerm` uses `primeSetPart P a` for $h(a)$ in both numerator and denominator. The display's finiteness is the separate `Summable` hypothesis on these terms restricted to $A$."
+  },
+  "short.res-weighted-support#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "The first conjunct proved by `divisibilityWeightedClaim` concludes `Irrational (erdosSupportSeries b A)` for an infinite positive support when `FinitePrimeWeighted b A` holds at that same $b\\ge2$."
+  },
+  "short.w.binary-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.primeWeightedTerm": "Set `b` to $2$ in `primeWeightedTerm` to obtain the summand in (W). Its sum over $A$ is finite under the separate weighted hypothesis."
+  },
+  "short.w.all-base": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "The second conjunct proved by `divisibilityWeightedClaim` assumes `FinitePrimeWeighted 2 A` and then quantifies the irrationality conclusion over all integer bases $b\\ge2$ and over infinite subsets of $A$."
+  },
+  "short.w.hereditary": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.finitePrimeWeighted_fixedBase_hereditary": "At a fixed base $b$, `hH` is the weighted condition on the positive host `H`. The conclusion quantifies over its infinite subsets `A`. Restricting the support keeps a subseries of the same nonnegative weighted terms.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "The second conjunct of `DivisibilityWeightedClaim` takes the weighted hypothesis on a host at base two. It gives the result for every infinite subset of that host and every integer base $b\\ge2$."
+  },
+  "short.w.astar-definition": {
+    "ErdosProblems.Erdos257.witnessClauseSupport": "In `witnessClauseSupport`, take `C` to be $\\{2\\}$. Then `C.prod id` is $2$, so `Nat.Coprime m (C.prod id)` means $m$ is odd and the bound on $m$ becomes $2^{2^k}$."
+  },
+  "short.w.astar-irrational": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "The second conjunct applies to every positive weighted support. The preceding summability calculation instantiates it at $A_\\star$."
+  },
+  "short.w.astar-divergence": {
+    "ErdosProblems.Erdos257.not_summable_reciprocal_witnessClauseSupport": "For every nonempty finite set `C` of primes, the reciprocals of the exponents in `witnessClauseSupport C` are not summable. The theorem treats every nonempty finite prime set $C$, and specialise $C=\\{2\\}$ to obtain this support."
+  },
+  "short.w.reciprocal-comparison": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.geom_ratio_antitone": "Specialise $B=2, u=1, v=h$ in the positive-integer ratio inequality. The theorem permits all real $B>1$ and $1\\le u\\le v$."
+  },
+  "short.front.divisor-majorants": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "This is a field required of the cover data, not a theorem asserting every cover has it. This structure does not assert irrationality or summability of the total cover cost."
+  },
+  "short.front.incomparable-criteria": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_weighted_not_strengthened_host": "There exists an infinite positive support satisfying the binary finite-prime weighted condition but admitting no cover satisfying (V). This declaration gives the $E$ witness for one direction of class incomparability. The other existential declaration gives the reverse direction.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_strengthened_not_old_or_weighted_host": "There exists an infinite positive squarefree support with a cover satisfying (V), divergent reciprocal mass, and no finite-prime weighted condition at any integer base $b\\ge2$. This declaration gives the $V$ witness for one direction of class incomparability. The other existential declaration gives the reverse direction."
+  },
+  "short.front.mixed-preview": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.arbitraryWeightMixedSupport_allBase_hereditary": "`FinitePrimeWeighted 2 E` applies only to the weighted host, while `LogBudgetCover V` supplies the positive divisor cover on the other host. The infinite subset in the conclusion can draw exponents from their union."
+  },
+  "step.displacement_identity#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "This theorem gives the first atom-sum equality for integer $b\\ge2$. It does not state the explicit $J$ double sum or the second equality in (D)."
+  },
+  "step.positive_displacement#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos": "For every infinite support and every positive index $N$, the displacement is strictly positive at an integer base $b\\ge2$. The three hypotheses are `hb : 2 ≤ b`, `hA : A.Infinite`, and `hN : 0 < N`. An infinite subset of the natural numbers contains an exponent larger than $N$, whose contribution is strictly positive. The remaining contributions are nonnegative. No weighted or reciprocal summability condition is required."
+  },
+  "step.rational_gap#1": {
+    "ErdosProblems.Erdos257.irrational_erdosSupportSeries_of_radix_closeReturn": "The proof identifies $q\\Delta$ with a positive difference of integers under assumed rationality. Under an assumed rational value $p/v$, the proof constructs integers $u_N$ with $u_N=vT_N$, where $T_N$ is the shifted sum."
+  },
+  "short.w.irrationality-device": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.irrational_of_displacement_returns": "An infinite support has irrational $X_A(b)$ if its displacement becomes arbitrarily small at positive indices. Lean only requires arbitrarily small displacements at positive indices, without a specified sequence or rate."
+  },
+  "short.w.prefix-cancellation": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "A finite support $F$ contributes zero displacement whenever every exponent in it divides the observation index $N$. Lean assumes `hb : 2 ≤ b` and `hdiv : ∀ d ∈ F, d ∣ N`. Then every remainder $N\\bmod d$ is zero, so each numerator $b^{N\\bmod d}-1$ vanishes. Choosing a modulus divisible by the exponents in $F$ makes this cancellation hold at every sampled multiple of that modulus."
+  },
+  "short.w.atom": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "At $N=m$ and $d=a$, `displacementAtom` subtracts the baseline `shiftedRadixAtom b 0 d` from the shifted value. For positive $a$ this subtracts $1$ from the shifted numerator and gives exactly $d_a(m)$."
+  },
+  "step.orbit_bound#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_gcdMean_add_error": "Set `L = Q`, `d = a` and `B = b`. The proof bounds each complete cycle by its geometric sum and allows one incomplete cycle. Its numerator is $b^{tQ\\bmod a}$, so the same upper bound applies after subtracting the baseline term to obtain $d_a(tQ)$."
+  },
+  "short.w.orbit-mass": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.sum_kernelWeight_gcdOrbit": "Over one complete orbit of length $d/(L,d)$, the shifted summand $B^{tL\\bmod d}/(B^d-1)$ sums to $1/(B^{(L,d)}-1)$. Lean assumes `hB : 1 < B`, `hL : 0 < L`, and `hd : 0 < d`. Multiplication by $L/(L,d)$ permutes the residues modulo $d/(L,d)$, leaving a geometric sum. The numerator here has no minus one. The displacement contribution is bounded by this sum. The same equality is proved for all real $B>1$, beyond integer bases $b\\ge2$."
+  },
+  "step.outer_bound#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_far_conductors_le": "Lean bounds a finite set $F$ of far exponents and the larger kernel $\\frac{B^{N\\bmod a}}{B^a-1}$. The display sums displacement atoms over the possibly infinite tail of $A$."
+  },
+  "short.w.outer-envelope": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight_nowrap_binary_envelope": "If the observation index $N$ is below the exponent $d$, then $w_{B,d}(N)\\le2\\,2^N(1/2)^d$ for every real $B\\ge2$. Lean bounds the larger shifted kernel for every real $B\\ge2$ whenever $N<d$, and set $N=tQ, d=a$."
+  },
+  "short.w.outer-geometric": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.positive_geometric_sum_le_twice_last": "For every real $C\\ge2$ and natural length $T$, the sum $C+C^2+\\cdots+C^T$ is at most $2C^T$. Take $C=2^Q$ in the general bound $\\sum_{t=1}^T C^t\\le2C^T$ and divide by $2^{QT}$."
+  },
+  "short.w.dyadic-geometric": {
+    "ErdosProblems.Erdos257.sum_dyadic_observation_weights_le": "For any finite set of scales $J$, the sum of $2^{-j}$ over those scales with $a\\le Q2^j$ is at most $2Q/a$. The theorem allows any finite set of scales $J$, not just the consecutive dyadic window used here."
+  },
+  "step.dyadic_estimate#1": {
+    "ErdosProblems.Erdos257.dyadic_observation_sum_le": "The theorem has finite sets $J$ and $F$ and a finite right-hand sum. The display has an infinite right-hand sum. Restrict $F$ to the largest sampled range, then use nonnegativity."
+  },
+  "short.w.finite-tail": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_finite_weighted_tail": "Lean supplies a finite $F\\subseteq A$ with small weighted tail but does not require `F.Nonempty`. For infinite $A$ one may add an element, using nonnegativity."
+  },
+  "short.w.modulus": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.primeSamplingModulus": "The modulus used in the Lean proof is $Q=L(\\prod_{p\\in P}p)^H$. The paper uses $Q=L\\prod_{p\\in P}p^{\\lfloor\\log_p H\\rfloor}$ and $G=\\lfloor H/\\max P\\rfloor$. Lean defines $Q=L(\\prod_{p\\in P}p)^H$ and uses $G=2^H$."
+  },
+  "short.w.cancel-chosen-prefix": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "A finite support $F$ contributes zero displacement whenever every exponent in it divides the observation index $N$. Lean assumes `hb : 2 ≤ b` and `hdiv : ∀ d ∈ F, d ∣ N`. Then every remainder $N\\bmod d$ is zero, so each numerator $b^{N\\bmod d}-1$ vanishes. Choosing a modulus divisible by the exponents in $F$ makes this cancellation hold at every sampled multiple of that modulus."
+  },
+  "short.w.decreasing-ratio": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.geom_ratio_antitone": "The function $n\\mapsto n/(B^n-1)$ decreases on the positive integers for every real base $B>1$. Lean assumes `hB : 1 < B`, `hu : 0 < u`, and `huv : u ≤ v`, and concludes $v/(B^v-1)\\le u/(B^u-1)$. This lets a lower bound on $(Q,a)$ turn into an upper bound on the complete-period contribution. It is a statement about the exponent, not monotonicity in the base. The theorem holds for all real $B>1$, not only integer $b\\ge2$."
+  },
+  "short.w.large-gcd": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.primeSamplingModulus_gcd_dichotomy": "Lean proves $h(a)\\mid\\gcd(Q,a)$ or $2^H\\le\\gcd(Q,a)$ for $Q=L(\\prod_{p\\in P}p)^H$. It does not use this paragraph’s size-truncated modulus or $G=\\lfloor H/\\max P\\rfloor$."
+  },
+  "step.combined_bound#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_support_le_profile": "Lean bounds the mean by $(1+2Q/M)$ times the residual weighted mass plus $\\frac{G(Q+2M)+Q+1}{b^G-1}+4\\cdot 2^{-M}$. The displayed logarithmic error and modulus schedule differ."
+  },
+  "short.w.scales-mean": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean": "The mean $\\mathscr D_{L;R,M}f$ first averages $f$ over the first $2^k$ positive multiples of $L$, then averages those means over $R\\le k<R+M$. Lean writes `dyadicMean L R M f`, and its inner samples are $(m+1)L$, excluding zero. The modulus $L$ stays fixed, and $M$ counts scales, not sampled integers. Each scale has equal outer weight. The weighted proof takes $R=M$ and calls the modulus $Q$. A probability interpretation requires $M>0$, although the definition is total at zero.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "The finite average $T^{-1}\\sum_{t=1}^T f(tL)$ over the first $T$ positive multiples of $L$. Lean writes the index as `m ∈ Finset.range T` and samples at `(m + 1) * L`, so zero is excluded. The definition permits $T=0$ using total division, and bounds and sample-extraction lemmas require a positive length. In the weighted proof the paper's modulus $Q$ occupies Lean's argument `L`."
+  },
+  "short.w.small-sample": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "Use `f N = displacement b A N` and threshold $2\\varepsilon$. The extraction lemma gives a dyadic scale $j$ and an index $m<2^j$ with $f((m+1)Q)<2\\varepsilon$. Its offset makes the selected $N$ a positive multiple of $Q$."
+  },
+  "step.weighted_base_monotone#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.finitePrimeWeighted_subset": "The source theorem states preservation of weighted summability under $A\\subseteq H$. Its proof compares summands, but its statement does not assert a numerical inequality between total sums."
+  },
+  "short.w.astar-recall": {
+    "ErdosProblems.Erdos257.witnessClauseSupport": "The existential parameters in `witnessClauseSupport` are the layer $k\\ge1$ and the cofactor $m\\ge1$. With `C = {2}`, the coprimality test keeps the odd cofactors and the equation is $a=2^k m$."
+  },
+  "short.w.layers-disjoint": {
+    "ErdosProblems.Erdos257.clause_layer_index_unique": "Equal numbers $D^km=D^\\ell n$ in the coprime-layer construction have $k=\\ell$, provided $m,n$ are nonzero and coprime to $D$. Here $D$ is the product of a nonempty finite prime set `C`. The assumptions `hmc` and `hnc` express the coprimality, and `heq` is the displayed equality. Reading the valuation at any prime in $C$ recovers the layer index. For $C=\\{2\\}$ this is uniqueness of the two-adic valuation."
+  },
+  "short.w.layer-lower": {
+    "ErdosProblems.Erdos257.clauseProgression_row_reciprocal_lower": "Each layer $D^{k+1}(1+jQ)$, with its cofactors truncated at $2^{D^{k+1}}$, contributes at least $1/(2Q)$ to the reciprocal sum. Specialise $D=Q=2$ and replace Lean’s $k+1$ by the paper’s $k\\ge1$. The theorem gives $\\frac{1}{2Q}$ for general $D,Q>0$."
+  },
+  "short.w.example-divergence": {
+    "ErdosProblems.Erdos257.not_summable_reciprocal_witnessClauseSupport": "For every nonempty finite set `C` of primes, the reciprocals of the exponents in `witnessClauseSupport C` are not summable. Taking $C=\\{2\\}$ gives the divergence claimed for $A_\\star$. Lean assumes `hCn : C.Nonempty` and `hC : ∀ p ∈ C, Nat.Prime p`. The proof finds disjoint layers with a positive reciprocal contribution bounded away from zero. It proves divergence without requiring the paper's particular notation $S_r$."
+  },
+  "short.w.example-weighted": {
+    "ErdosProblems.Erdos257.summable_primeWeightedTerm_witnessClauseSupport_of_inter_nonempty": "The weighted-summability theorem applies at every integer base and to every pair of prime sets $C,P$ with nonempty intersection, and use $C=P=\\{2\\}$.",
+    "ErdosProblems.Erdos257.not_summable_reciprocal_witnessClauseSupport": "For every nonempty finite set `C` of primes, the reciprocals of the exponents in `witnessClauseSupport C` are not summable. Taking $C=\\{2\\}$ gives the divergence claimed for $A_\\star$. Lean assumes `hCn : C.Nonempty` and `hC : ∀ p ∈ C, Nat.Prime p`. The proof finds disjoint layers with a positive reciprocal contribution bounded away from zero. It proves divergence without requiring the paper's particular notation $S_r$."
+  },
+  "short.w.witness-rule": {
+    "ErdosProblems.Erdos257.finite_monotone_witness_rule_realised": "The theorem gives one support with exactly this prime-set convergence rule and divergent reciprocal sum. Given a finite prime set $E$ and an upward-closed rule $\\mathcal U$ containing $E$ but not the empty set, there is a positive support whose weighted series converges exactly for prime sets $P$ with $P\\cap E\\in\\mathcal U$."
+  },
+  "short.w.rule-irrational": {
+    "ErdosProblems.Erdos257.finite_monotone_witness_rule_realised": "The final conjunct explicitly gives the all-base hereditary irrationality conclusion. The same support has divergent reciprocal sum and irrational sums on every infinite subset at every integer base."
+  },
+  "short.c.divisor-counts": {
+    "Erdos249257.supportCoeff": "The number $c_A(n)$ of positive divisors of $n$ belonging to the selected exponents $A$. Lean filters `n.divisors` by membership in `A` and takes its cardinality. This is finite even when $A$ is infinite. At zero the divisor set is empty. These are power-series coefficients before carrying, not membership indicators or base-two digits, and they may exceed one. For a greedy target, substitute the same support $A_x$ at every index, and unrelated coefficient choices need not come from a support."
+  },
+  "step.incidence#1": {
+    "Erdos249257.supportCoeff": "`supportCoeff` filters `n.divisors` by membership in $A$ and takes the cardinality. These counts are finite even for infinite $A$. The second equality in (6) uses a separate Lambert series identity.",
+    "Erdos249257.erdosSupportSeries_eq_tsum_supportCoeff": "This states the Lambert expansion using `supportCoeff` for natural bases $b\\ge2$. It does not define the count in this declaration or cover every real base $b>1$ allowed by the opening notation."
+  },
+  "short.c.coefficient-bound": {
+    "Erdos249257.supportCoeff_le_card_divisors": "`supportCoeff` counts a filtered subset of the finite set of divisors of $n$. Filtering gives the upper bound by $\\tau(n)$, and the natural-number codomain gives the lower bound $0$."
+  },
+  "short.c.positive-multiples": {
+    "Erdos249257.supportCoeff_pos_of_mem_dvd": "`supportCoeff_pos_of_mem_dvd` uses the selected divisor `ha` and its divisibility proof `hdvd` to show that the filtered set is nonempty. Choosing $a=\\min A$ gives the claim for every positive multiple of that exponent."
+  },
+  "short.c.finite-incidence": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.incidenceCount": "The count $f_F(n)$ of elements of a finite set $F$ that divide $n$. Lean filters `F` by the relation `a ∣ n` and takes the cardinality. For positive $F$ and positive $n$, this is the finite-support instance of $c_A(n)$. $F$ is already a `Finset`, so finiteness is part of its type rather than a separate hypothesis. This count may exceed one when several selected exponents divide the same integer."
+  },
+  "short.c.four-exponent-count": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.cube_incidence_exact": "Put $q=2$ and $P=\\{3,5\\}$. For even $n>0$, `cubePrimeRank` counts the eligible primes among $3$ and $5$, with each contributing a factor of two to the incidence. For odd $n$ the zero count follows separately because every cube exponent is even.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.cube_incidence_zero": "If $q$ does not divide $n$, none of the numbers $qd$ in the finite block divides $n$, so its divisor count is zero. For $q=2$ this gives the odd-$n$ zero case. It does not give the product formula when $n$ is even."
+  },
+  "short.c.fractional-expansion": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.cube_fractional_expansion": "`cube_fractional_expansion` gives the divisor sum under $\\alpha>0$. The subset products for $q=2$ and $P=\\{3,5\\}$ are $2,6,10,30$, with coefficients $1,z,z,z^2$. The cost also printed in the display is a separate calculation.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.cubeCoefficient_cost": "The cost sums `cubeCoefficient q P z d` divided by each index $d$. With $q=2$ and $P=\\{3,5\\}$, the product expression is $(1+z/3)(1+z/5)/2$. This gives the cost in the display."
+  },
+  "short.c.divisor-indicator-mean": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.mean_divisibility_atom": "The theorem gives the exact finite mean over every positive period divisible by $d$, with any real weight $w$. The paper uses $w=1$."
+  },
+  "short.c.divisor-block": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisorCube": "The finite set $\\{qd:d\\mid\\prod_{p\\in P}p\\}$. The definition forms the divisors of the product and multiplies each by $q$. No primality or positivity hypotheses are needed merely to define this `Finset`. The subsequent expansion theorems assume $q>0$ and prime elements of $P$. For $q=2$ and $P=\\{3,5\\}$ it gives $\\{2,6,10,30\\}$. Its divisor count records which of these selected exponents divide the observation index."
+  },
+  "short.c.cover-data": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "A sequence of finite sets $F_j$, exponents $0<\\alpha_j\\le1$ and nonnegative coefficients $c_{j,d}$ that majorise $f_{F_j}(n)^{\\alpha_j}$. The fields `frame_positive`, `exponent_bounds`, `coefficient_nonneg` and `majorises` are assumptions on this data. The field `column_summable` requires each $C_j=\\sum_d c_{j,d}/d$ to be finite. This structure does not assert irrationality or summability of the total cover cost. Its natural index $j$ corresponds to the paper's $j+1$."
+  },
+  "short.c.majorant-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "This is a field required of the cover data, not a theorem asserting every cover has it. A sequence of finite sets $F_j$, exponents $0<\\alpha_j\\le1$ and nonnegative coefficients $c_{j,d}$ that majorise $f_{F_j}(n)^{\\alpha_j}$."
+  },
+  "short.c.column-cost": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.cost": "The number $C_j=\\sum_{d\\ge1}c_{j,d}/d$ attached to one finite set in the cover. The field `column_summable` of the data ensures this series converges. The factor $1/d$ is the mean of the divisibility indicator for $d$. Lean includes a zero index, whose contribution vanishes by total division. This is the cost before applying the exponent-dependent factor in condition (V)."
+  },
+  "step.cover_condition#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData.StrengthenedCostSummable": "The source uses `j + 1` in the exponent because its cover sequence starts at $0$ and the paper starts at $1$. The corresponding `Summable` condition is exactly (V)."
+  },
+  "short.thm-variable-fractional-cover#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.strengthenedPositiveCoverClaim": "`strengthenedPositiveCoverClaim` first derives binary returns from the summability of the cover cost. `all_base_hereditary_of_binary_returns` then gives irrationality for each infinite subset of the covered host at every integer base $b\\ge2$."
+  },
+  "short.c.kernel-and-mean": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight": "The function $w_{B,d}(N)=B^{N\\bmod d}/(B^d-1)$. This definition gives $w_{B,d}$. It does not define the dyadic mean in the second part of the display.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean": "The mean $\\mathscr D_{L;R,M}f$ first averages $f$ over the first $2^k$ positive multiples of $L$, then averages those means over $R\\le k<R+M$. This definition gives the dyadic mean. The separate `kernelWeight` definition gives $w_{B,d}$."
+  },
+  "step.kernel_estimate#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_kernelWeight_le": "The mean of $w_{B,d}$ over the dyadic sampling scheme is at most $(1+4L/M)/(d(B-1))$. The binders `hB` and `hB2` require $1<B\\le2$. `hL`, `hd` and `hM` require positive $L,d,M$. The starting scale $R$ is arbitrary. Multiplying by $B-1$ removes the singular factor as $B$ approaches one. The proof treats completed cycles, a possible transition scale and samples before the first modular wrap."
+  },
+  "short.c.complete-cycle": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.sum_kernelWeight_gcdOrbit": "The sum runs over `Finset.range (d / Nat.gcd L d)`, one full cycle. Dividing residue indices by $g$ turns multiplication by $L/g$ into a permutation modulo $d/g$, leaving a geometric sum with ratio $B^g$."
+  },
+  "short.c.incomplete-cycle": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_gcdMean_add_error": "For real $B>1$ and positive modulus $L$, exponent $d$, and length $T$, the average of $w_{B,d}(tL)$ is at most $g/[d(B^g-1)]+1/[T(B^g-1)]$, where $g=(L,d)$. This states the first inequality, with its gcd-dependent expression. The next simplification to $B-1$ is a separate theorem.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_mean_add_error": "The same progression mean is bounded by $1/[d(B-1)]+1/[T(B-1)]$. This states the final upper bound, and its statement omits the intermediate gcd-dependent expression in the displayed chain."
+  },
+  "short.c.far-tail": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight_le_of_twice_lt": "The theorem assumes only $B>1$ and $2N<d$ at the sampled point $N$. It does not require $B\\le2$ or a prescribed progression."
+  },
+  "short.c.unique-transition": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadic_transition_unique": "For fixed $L$ and $d$, at most one dyadic exponent satisfies $L2^k<d\\le2L2^k$. The hypotheses `hi` and `hj` say that two indices satisfy these inequalities, and the conclusion is `i = j`. The half-open transition intervals for consecutive scales touch only at an endpoint assigned to one side. This ensures the transition contribution is paid at most once in the outer mean."
+  },
+  "short.c.transition-sum": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_no_wrap_eq": "If $LT<d$, the first $T$ positive multiples of $L$ are all below $d$. This gives the displayed equality under $LT<d$, but none of the following upper bounds.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_transition": "Under $1<B\\le2$, positive $L,T$, and $LT<d$, the progression mean is at most $2L/[d(B-1)]$. This gives the final bound $\\frac{2L}{d(B-1)}$, not the equality and intermediate bound in the same display."
+  },
+  "short.c.geometric-prefix-ratio": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.pow_sub_one_ratio_le": "For $B>1$ and natural integers $0\\le n\\le d$ with $d>0$, the ratio $(B^n-1)/(B^d-1)$ is at most $n/d$. The theorem bounds $\\frac{B^n-1}{B^d-1}$ for every $B>1$ and $0\\le n\\le d$, so $n=LT$ is one instance."
+  },
+  "short.c.sum-kernel-estimates": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_tsum_kernel_le": "The theorem also allows the bases $B_i$ and divisors $d_i$ to vary with the index, provided the corresponding nonnegative total cost is summable."
+  },
+  "short.c.fractional-base": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverBase": "The base $B_j=2^{\\alpha_j}$ associated with the exponent of the $j$th finite set. `PositiveCoverData` stores $0<\\alpha_j\\le1$, so this base lies in $(1,2]$, as the adjacent lemmas show. This is why the uniform kernel estimate covers arbitrarily small positive exponents. The base belongs to an auxiliary tail estimate. The original Lambert subseries is still evaluated at base two during this part of the proof."
+  },
+  "short.c.two-tail-definitions": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.framePotential_eq_tsum": "For a finite set $F$ of positive exponents, the finite sum of geometric tails equals $U_F(N)=\\sum_{r\\ge1}2^{-r}f_F(N+r)$. This identifies $U_j$ with the finite modular-tail sum, but does not define $V_j$.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverPotential": "The quantity $V_j(N)=\\sum_d c_{j,d}w_{2^{\\alpha_j},d}(N)$ obtained from the positive divisor majorant for $F_j$. This defines $V_j$, but does not define the divisor-count tail $U_j$."
+  },
+  "short.c.fractional-tail-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.framePotential_rpow_le_divisorPotential": "The theorem states only the endpoint $U_j(N)^{\\alpha_j}\\le V_j(N)$. It proves it by recurrence comparison and does not state the two intermediate infinite sums."
+  },
+  "step.tail_displacement#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.displacement_finset_le_framePotential": "`displacement_finset_le_framePotential` gives the inequality in the display. The proof drops the nonnegative baseline from the shifted term, leaving `framePotential F N` as an upper bound."
+  },
+  "short.c.initial-cancellation": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "The theorem cancels any finite support at any integer base $b\\ge2$ when all its exponents divide $N$. It is not restricted to the binary cover prefix."
+  },
+  "short.c.allowances": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.tsum_coverThreshold": "`coverThreshold ε j` has factor $2^{-(j+1)}$ because the Lean index starts at zero. Its exact sum is $\\varepsilon$, and the application takes $\\varepsilon>0$ to give positive allowances."
+  },
+  "short.c.small-cost-tail": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_coverScaledCost_tail_lt": "With the cover summability input `hC`, the lemma bounds the scaled cost after some finite cutoff by any prescribed $\\delta>0$. Here $\\delta=1/4$, and Lean's index `k + J` corresponds to the paper's tail starting after $J$."
+  },
+  "short.c.uniform-epsilon-factor": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.rpow_neg_le_max_one_inv": "For $t>0$ and $0<\\alpha\\le1$, one has $t^{-\\alpha}\\le\\max(1,t^{-1})$. The binders `ht`, `hα` and `hα1` give exactly these assumptions. If $t\\ge1$, the left side is at most one, and if $t<1$, increasing the positive exponent toward one can only enlarge the reciprocal power. This controls the factor introduced by a fixed error allowance uniformly across all cover exponents."
+  },
+  "short.c.initial-modulus": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverPrefix_common_multiple": "The exponents in the first finitely many cover sets have a common positive multiple $L$. The finite set `coverPrefix C J` is the union of the frames with natural index below $J$. Positivity of their exponents comes from the cover data. The conclusion supplies both `0 < L` and a proof that each member divides $L$. Sampling positive multiples of this $L$ cancels those initial displacement terms."
+  },
+  "short.c.one-cover-sample": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "The lemma applies to any function and real threshold on a nonempty dyadic sample. The paper uses its particular tail test and threshold one."
+  },
+  "short.c.cover-displacement-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.displacement_host_le_of_coverTailTest": "The theorem gives the final upper bound $\\Delta_{2,C.\\mathrm{host}}(N)\\le\\varepsilon$. It does not state the intermediate sum of $U_j$ or strict positivity for infinite $A$."
+  },
+  "step.base_comparison#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_le_two_mul_binary": "The pinned theorem gives $\\Delta_{b,A}(N)\\le2\\Delta_{2,A}(N)$ only for natural $b\\ge2$. It neither removes the factor 2 nor quantifies over all real bases."
+  },
+  "short.c.arbitrary-weights": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.arbitraryWeightPositiveCover_allBase_hereditary": "A support with a positive divisor cover using any positive weights of total mass one has irrational Lambert subseries on every infinite subset, at every integer base $b\\ge2$. The argument `D : LogBudgetCover V` includes the weights, their sum, the majorants and summability of $C_j\\eta_j^{-\\alpha_j}/(2^{\\alpha_j}-1)$. The weights allocate error allowances across finite sets, and they are not coefficients multiplying terms of $X_A(b)$."
+  },
+  "short.c.strict-old-cover": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_strengthened_not_old_or_weighted_host": "The theorem supplies such a separating squarefree support and additionally excludes every finite-prime weighted condition and proves hereditary irrationality."
+  },
+  "short.res-mixed-supports#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.mixedSupportClaim": "This theorem covers only a positive divisor cover satisfying the fixed dyadic condition (V). The sentence also allows arbitrary positive weights.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.arbitraryWeightMixedSupport_allBase_hereditary": "The two premises are `hE : FinitePrimeWeighted 2 E` and `D : LogBudgetCover V`, with `hE0` excluding zero from $E$. The quantified output applies to every infinite $A\\subseteq E\\cup V$ and all $b\\ge2$."
+  },
+  "short.c.add-errors": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_add": "The dyadic mean of $f+g$ is the sum of the dyadic means of $f$ and $g$, with the same $L,R,M$ in both terms. This is finite-sum linearity. It assumes neither independence nor positivity. In the mixed argument the two functions are the scaled weighted displacement and the combined cover-tail test. Keeping their sampling parameters identical is what allows one later sample to control both errors."
+  },
+  "short.c.choose-common-sample": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "Apply the finite-mean lemma to the sum of the two error functions and set its threshold to $1$. Its witness is one sampled argument `((m + 1) * L)`, so both estimates hold at the same positive multiple of the shared modulus."
+  },
+  "short.c.overlapping-supports": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_union_le": "The union displacement inequality holds for any two supports at every integer base $b\\ge2$, not only for the binary mixed construction."
+  },
+  "short.c.weighted-class": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.FinitePrimeWeighted": "The condition that a support has finite weighted sum for some finite nonempty set of primes. Lean chooses `P : Finset ℕ`, requires `P.Nonempty` and `∀ p ∈ P, Nat.Prime p`, then requires `Summable (Set.indicator A (primeWeightedTerm b P))`. One prime set serves the entire support, and its prime powers may grow with the exponent. Choosing a different prime set for each exponent would change the condition. This declaration defines a summability hypothesis, not its irrationality consequence."
+  },
+  "short.c.cover-class": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.HasStrengthenedPositiveCover": "The property that a support $A$ lies inside the union of some `PositiveCoverData` whose total cost satisfies (V). It quantifies over one complete sequence of finite sets, exponents and majorants. The finite sets may overlap, and their union may contain exponents outside $A$. This is the paper's class $\\mathcal C$, and failure of one proposed cover does not establish that $A$ is outside this class."
+  },
+  "short.res-weighted-cover-incomparability#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_weighted_not_strengthened_host": "This gives the $E$ witness only, with extra reciprocal-divergence and hereditary-irrationality conclusions. It does not also give the $V$ witness.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_strengthened_not_old_or_weighted_host": "The existential witness supplies the two properties of $V$ in the display. It has a strengthened positive cover, and `FinitePrimeWeighted b A` fails for every integer $b\\ge2$. The two properties of $E$ come from the other witness theorem."
+  },
+  "short.c.total-cost-and-scalar-infimum": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.LogBudgetCover.cost": "The total cover cost $K=\\sum_j C_j\\eta_j^{-\\alpha_j}/(2^{\\alpha_j}-1)$ for specified cover data and positive weights. This defines $K$ for the chosen weighted cover. It does not define the separate scalar function $\\Psi$.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverGauge": "The function $\\Psi$ with $\\Psi(0)=0$ and $\\Psi(t)=\\inf_{0<\\alpha\\le1}t^\\alpha/(2^\\alpha-1)$ for positive $t$. This defines $\\Psi$ through `scalarCoverCosts`. It does not define $K$ or optimise over whole covers."
+  },
+  "step.log_obstruction#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.finiteGaugeMean_le_cost": "This gives that $K$ bounds the mean of $\\Psi(f_F)$ from above, in fact on every positive initial interval. It does not also state the logarithmic lower bound.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.exp_one_mul_log_le_coverGauge": "This gives $e\\log t\\le\\Psi(t)$ pointwise for $t\\ge1$. It does not state its averaged version, the $t=0$ case, or the separate cover-cost inequality."
+  },
+  "short.c.count-multiples": {
+    "ErdosProblems.Erdos257.card_Icc_one_filter_dvd": "Among $1,\\ldots,X$, exactly $\\lfloor X/d\\rfloor$ integers are divisible by $d>0$. This declaration gives the exact count $\\lfloor X/d\\rfloor$. Division by $X>0$ and the upper bound $1/d$ are not in its statement."
+  },
+  "short.c.fractional-denominator-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.two_rpow_sub_one_le_self": "For $0\\le\\alpha\\le1$, one has $2^\\alpha-1\\le\\alpha$. The binders `hα0` and `hα1` give the closed interval, including zero. Convexity places $2^\\alpha$ below the chord joining its values at zero and one. In the cover lower bound this replaces the denominator by $\\alpha$, after which an elementary exponential inequality produces the factor $e\\log t$."
+  },
+  "short.c.exponential-minimum": {
+    "ErdosProblems.Erdos257.PaperCompleteR7.exp_one_mul_le_exp": "For $u>0$, the inequality $eu\\le e^u$ holds. The binder `_hu` states positivity. Dividing by $u$ gives $e^u/u\\ge e$, the form printed in the proof of (7). Substituting $u=\\alpha\\log t$ is valid when $t>1$ and $\\alpha>0$. This is a scalar inequality, and averaging divisor counts requires the separate cover-majorant argument."
+  },
+  "short.c.primes-after-exclusions": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_prime_mass_outside": "After excluding any finite set of primes, a finite set of remaining primes has reciprocal sum larger than any prescribed real number $R$. The input `E` is a `Finset` of the type `Nat.Primes`, so primality is built in. The conclusion supplies `Disjoint S E` and the strict mass bound. Excluding the prime two as well gives the odd-prime supply used in the separating constructions."
+  },
+  "short.c.weighted-prime-blocks": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.disjointPrimeHarmonicBlocks_spec": "Taking $R_k=2^k/4$ gives disjoint odd-prime blocks with $R_k\\le S_k\\le R_k+1$. The printed upper inequality is strict."
+  },
+  "short.c.no-cover-from-growth": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.no_logBudgetCover_of_unbounded_finite_means": "The result excludes all arbitrary-positive-weight covers whenever finite logarithmic means are unbounded, and dyadic covers satisfying (V) are a special case."
+  },
+  "short.c.block-reciprocal-sum": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.cube_reciprocal_sum": "The theorem gives the equality $R_j/q_j$ for a divisor block, but not membership in $[1,4/3)$, which depends on the printed choice of $P_j$."
+  },
+  "short.c.restrict-cover": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.LogBudgetCover.restrict": "A cover of $A$ is also a cover of every subset $B\\subseteq A$. Restriction works for any subset and any positive-weight cover. The paper uses $E\\subseteq U$ and fixed dyadic weights."
+  },
+  "short.c.restrict-weighted": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.finitePrimeWeighted_subset": "The proof retains the same prime set $P$ while restricting the nonnegative summable function. The statement preserves the existential condition, and its proof retains the original prime set $P$ and compares nonnegative indicator terms."
+  },
+  "short.c.weighted-factor-decreases": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.geom_ratio_antitone": "For positive integer $h$ the theorem works at every real base $B>1$, whereas the surrounding paper argument fixes an integer $b\\ge2$."
+  },
+  "short.c.full-support-irrational": {
+    "Erdos249257.irrational_erdosSum_full_support": "The full series $\\sum_{n\\ge1}1/(b^n-1)$ is irrational for every integer base $b\\ge2$. The theorem proves full-support irrationality at every integer base $b\\ge2$. The surrounding paragraph considers base two."
+  },
+  "short.c.squarefree-count": {
+    "ErdosProblems.Erdos257.squarefreeIncidence_eq": "For a positive integer $n$, the number of its squarefree divisors other than one is $2^{\\omega(n)}-1$, where $\\omega(n)$ counts distinct prime factors. The hypothesis `hn : n ≠ 0` ensures the divisor set has its usual meaning. Every subset of the distinct prime factors determines one squarefree divisor. The empty subset contributes one, which is then removed. Lean writes `n.primeFactors.card` for $\\omega(n)$."
+  },
+  "short.c.squarefree-parity": {
+    "ErdosProblems.Erdos257.odd_squarefreeIncidence": "For $n\\ge2$, the squarefree-divisor count with one removed is odd. The binder `hn : 2 ≤ n` ensures at least one prime factor, so $2^{\\omega(n)}$ is even and $2^{\\omega(n)}-1$ is odd. This is a parity fact about the coefficient sequence. It limits certificates that require even divisibility of those coefficients. It does not imply rationality or prevent other irrationality arguments."
+  },
+  "short.c.adjoin-one": {
+    "ErdosProblems.Erdos257.irrational_erdosSupportSeries_squarefreeSupport_iff_shifted": "The theorem states equivalence of irrationality before and after adjoining 1. Its statement does not assert the change in parity or the exact rational difference."
+  },
+  "short.a.support-hypothesis": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Every infinite support $A$ with $\\sum_{a\\in A}1/a<\\infty$ gives an irrational value $X_A(b)$ at each integer base $b\\ge2$. The hypotheses are `hb : 2 ≤ b`, `hA : A.Infinite`, and `hsum : Summable (reciprocalSupportTerm A)`. No coprimality assumption is present. The source obtains small binary displacements and transfers them to base $b$, then contradicts the positive integer gap forced by a rational value. Its all-base conclusion agrees with Theorem A.1, and its proof is not the printed all-base averaging calculation."
+  },
+  "short.a.reciprocal-condition": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Every infinite support $A$ with $\\sum_{a\\in A}1/a<\\infty$ gives an irrational value $X_A(b)$ at each integer base $b\\ge2$. The hypotheses are `hb : 2 ≤ b`, `hA : A.Infinite`, and `hsum : Summable (reciprocalSupportTerm A)`. No coprimality assumption is present. The source obtains small binary displacements and transfers them to base $b$, then contradicts the positive integer gap forced by a rational value. Its all-base conclusion agrees with Theorem A.1, and its proof is not the printed all-base averaging calculation."
+  },
+  "short.res-reciprocal-support#1": {
+    "Erdos249257.irrational_erdosSupportSeries_of_summable_reciprocal": "Every infinite support $A$ with $\\sum_{a\\in A}1/a<\\infty$ gives an irrational value $X_A(b)$ at each integer base $b\\ge2$. The hypotheses are `hb : 2 ≤ b`, `hA : A.Infinite`, and `hsum : Summable (reciprocalSupportTerm A)`. No coprimality assumption is present. The source obtains small binary displacements and transfers them to base $b$, then contradicts the positive integer gap forced by a rational value. Its all-base conclusion agrees with Theorem A.1, and its proof is not the printed all-base averaging calculation."
+  },
+  "short.a.shifted-tail-definition": {
+    "Erdos249257.shiftedRadixAtom": "Defines the individual shifted term, and subtract its value at zero to obtain displacement. This declaration defines $w_{b,d}(N)$, the first component of the display. It does not define the support sum $T_N$.",
+    "Erdos249257.shiftedRadixSupportAtom": "Restricts the term to the selected exponents. The displayed tail sums these terms. This declaration is the summand restricted to $A$. The displayed $T_N$ is its infinite sum, not this individual term."
+  },
+  "step.gcd_orbit_mean#1": {
+    "Erdos249257.tendsto_cesaroMean_shiftedMersenneAtom_mul": "`cesaroMean` averages the first $K$ samples at positive multiples of $Q$. At fixed positive $Q,d$ its limit is the binary orbit mean $g/[d(2^g-1)]$. The display uses the analogous limit at every integer base.",
+    "Erdos249257.shiftedMersenneOrbitMean_le_reciprocal": "In base two the bound uses $g\\le2^g-1$ in the expression for `shiftedMersenneOrbitMean Q d`. It gives the last inequality uniformly in $Q$. The convergence statement itself is a separate theorem."
+  },
+  "short.a.finite-mean-majorant": {
+    "Erdos249257.cesaroMean_shiftedMersenneAtom_mul_le": "The paper proves the whole counting identity and the upper bound $\\frac{Q+2}{d}$ for any integer $b\\ge2$. Lean states only a binary upper bound $\\frac{2(Q+1)}{d}$. It supplies neither the counting identity nor the sharper constant."
+  },
+  "short.a.first-dominated-limit": {
+    "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul": "This target proves the convergence statement only at $b=2$ and uses $\\frac{2(Q+1)}d$. The sentence specifies $\\frac{Q+2}d$ and the previously fixed arbitrary base $b$."
+  },
+  "short.a.lcm-modulus": {
+    "Erdos249257.TotientTailPeriodKiller.periodLcm": "`periodLcm` starts at $1$ and adjoins $t+1$ by taking a least common multiple. Each fixed positive exponent divides $Q_t$ eventually, which makes its shifted term equal its baseline at that sampling step."
+  },
+  "step.lcm_limit#1": {
+    "Erdos249257.tendsto_tsum_shiftedSupportOrbitMean_periodLcm": "The paper states convergence to $X_A(b)$ for the fixed arbitrary integer base $b\\ge2$. Both `shiftedSupportOrbitMean` and `shiftedSupportAtom` in the source are binary, so this target proves only $b=2$."
+  },
+  "short.a.choose-an-index": {
+    "Erdos249257.exists_shiftedSupportAtom_closeReturn_of_summable_reciprocal": "The proof fixes the modulus with `houter`, increases the averaging length at that fixed modulus, then extracts one sampled shift. These choices control the binary shifted sum. Infinitude gives strict positivity separately."
+  },
+  "short.b.finite-positive-hypothesis": {
+    "Erdos249257.finite_period_noncollapse_rat_den": "The multiplicative order of $b$ modulo the reduced denominator of $X_F(b)$ equals $\\operatorname{lcm}(F)$. The hypotheses are `hF : F.Nonempty`, `h0 : 0 ∉ F`, and `hb : 2 ≤ b`. In Lean, `ZMod.unitOfCoprime` regards the base as an invertible residue modulo that denominator, and `orderOf` is its multiplicative order. The source constructs its required prime-power witnesses internally. There is no remaining witness-supply assumption. This is the exact period assertion in Theorem B.1."
+  },
+  "short.b.integer-base-hypothesis": {
+    "Erdos249257.finite_period_noncollapse_rat_den": "The multiplicative order of $b$ modulo the reduced denominator of $X_F(b)$ equals $\\operatorname{lcm}(F)$. The hypotheses are `hF : F.Nonempty`, `h0 : 0 ∉ F`, and `hb : 2 ≤ b`. In Lean, `ZMod.unitOfCoprime` regards the base as an invertible residue modulo that denominator, and `orderOf` is its multiplicative order. The source constructs its required prime-power witnesses internally. There is no remaining witness-supply assumption. This is the exact period assertion in Theorem B.1."
+  },
+  "short.b.finite-sum-definition": {
+    "Erdos249257.finiteErdosSum": "The rational number $X_F(b)=\\sum_{n\\in F}1/(b^n-1)$ for a finite set $F$. Lean defines the subtraction and division in `Rat`, so the displayed expression is a rational sum before conversion to a real number. The definition alone has no assumptions. The denominator theorems add `h0 : 0 ∉ F` and `hb : 2 ≤ b` to ensure that the summands are the positive reciprocal-power terms used in the paper."
+  },
+  "short.b.base-coprime": {
+    "Erdos249257.coprime_base_den_finiteErdosSum": "The base $b$ and the reduced denominator of the finite rational sum $X_F(b)$ are coprime. The Lean coprimality theorem also permits $F=\\varnothing$, and Theorem B.1 assumes $F$ is nonempty."
+  },
+  "short.res-period#1": {
+    "Erdos249257.finite_period_noncollapse_rat_den": "The multiplicative order of $b$ modulo the reduced denominator of $X_F(b)$ equals $\\operatorname{lcm}(F)$. The hypotheses are `hF : F.Nonempty`, `h0 : 0 ∉ F`, and `hb : 2 ≤ b`. In Lean, `ZMod.unitOfCoprime` regards the base as an invertible residue modulo that denominator, and `orderOf` is its multiplicative order. The source constructs its required prime-power witnesses internally. There is no remaining witness-supply assumption. This is the exact period assertion in Theorem B.1."
+  },
+  "short.b.denominator-growth": {
+    "Erdos249257.lcm_lt_den_finiteErdosSum": "Under `h2 : 2 ≤ F.lcm id`, the exact order of the base modulo $D_F$ is strictly less than $D_F$. The lower bound on the least common multiple excludes $F=\\{1\\}$ at $b=2$, where both quantities equal one."
+  },
+  "short.b.clear-denominators": {
+    "Erdos249257.den_finiteErdosSum_dvd": "The reduced denominator of $X_F(b)$ divides $b^{\\operatorname{lcm}(F)}-1$. This divisibility theorem permits the empty finite set, whereas the paragraph retains Theorem B.1’s nonempty hypothesis."
+  },
+  "short.b.choose-cyclotomic-prime": {
+    "Erdos249257.exists_prime_dvd_cyclotomic_eval": "For integer $b\\ge2$ and $n\\ge2$, some prime divides the integer value $\\Phi_n(b)$. These are the hypotheses `hb : 2 ≤ b` and `hn : 2 ≤ n`. The proof first shows that the absolute value of the cyclotomic value exceeds one, then takes a prime divisor. This provides a prime for the finite-denominator proof. It does not assert that the prime itself has order $n$, and a suitable prime power is needed in the later step."
+  },
+  "short.b.exact-order-witness": {
+    "Erdos249257.exists_exactOrderPrimePowerWitness": "The prose fixes any chosen cyclotomic prime $\\ell$ and the full $e=v_\\ell(b^n-1)$. This source supplies some prime $q$ and some $s$ with exact order $n$, without that identification."
+  },
+  "short.b.nine-example": {
+    "Erdos249257.orderOf_two_unit_mod_nine_eq_six": "The unit defined by $2$ modulo $9$ has order $6$ by `orderOf_two_unit_mod_nine_eq_six`. The hypothesis `h9` makes $2$ a unit there. The order $6$ is already visible at this prime power of the modulus $63$."
+  },
+  "short.b.no-finite-twenty-one": {
+    "ErdosProblems.Erdos257.finiteErdosSum_ne_one_div_twenty_one": "The sentence excludes every finite positive support. This declaration assumes all exponents are at least 2. The paper’s following sentence separately rules out exponent 1 by positivity."
+  },
+  "short.r.integer-tail": {
+    "Erdos249257.exists_temperedBinaryOrbit_of_rational": "The proof constructs an integer scaled tail for a general coefficient sequence with $c(n)\\le n$, and its local $z$ is a prefix and its $u$ is the paper’s $z$. The displayed finite-prefix sum is not written in this local proof."
+  },
+  "short.r.tail-recurrence": {
+    "Erdos249257.binaryCoeffTail_succ": "The scaled coefficient tail satisfies $T(N+1)=2T(N)-c(N+1)$. The unscaled identity holds for every natural coefficient sequence with $c(n)\\le n$, and multiplying by $v$ gives the paper’s specialization."
+  },
+  "short.r.zero-run-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.paper_zero_run_le_of_mem": "A run of consecutive zero divisor counts has length at most $a-1$ whenever $a>0$ belongs to the support. The source permits any positive $a\\in A$, not just the least selected exponent, and needs no rationality hypothesis."
+  },
+  "short.r.common-multiple-coefficient": {
+    "Erdos249257.card_le_supportCoeff_of_forced_divisors": "The two hypotheses `hFA` and `hFdvd` insert the chosen finite set `F` into the selected divisors of the nonzero index `n`. Taking $|F|=k$ and $n=L$ gives $c_A(L)\\ge k$."
+  },
+  "short.r.large-scaled-tail": {
+    "Erdos249257.binaryCoeffTail_ge_head": "The source proves $T(L-1)\\ge c(L)/2$ for coefficient sequences with $c(n)\\le n$. The paper additionally substitutes $c_A(L)\\ge k$ from its preceding common-multiple step."
+  },
+  "short.r.mobius-compatibility": {
+    "Erdos249257.moebius_mul_supportCoeffAF": "Multiplication in `ArithmeticFunction ℤ` is Dirichlet convolution. `moebius_mul_supportCoeffAF` gives the support indicator at each positive index by convolving the divisor count with the Möbius function. Both arithmetic functions are zero at index $0$."
+  },
+  "short.r.boolean-compatibility": {
+    "Erdos249257.mobius_supportCoeff_boolean": "For every index, the Möbius transform of a support divisor-count sequence is either $0$ or $1$. In Lean the alternatives are the two sides of `∨`. The result applies to any set `A`, with the value at zero normalized to zero. It is a necessary condition on coefficients claimed to come from a single support, and integrality of an unrelated forcing sequence alone does not establish it."
+  },
+  "short.r.mersenne-weight": {
+    "Erdos249257.mersenneWeight": "The real weight $w_n=1/(2^n-1)$ assigned to exponent $n$. The paper uses positive exponents. The Lean function is defined on all natural numbers and has value zero at $n=0$ under Lean’s division convention. That extra value contributes nothing to the support series. It must not be interpreted as the real fraction $1/0$, or as an additional selectable positive weight."
+  },
+  "short.r.achievement-and-tail": {
+    "Erdos249257.mersenneAchievementSet": "The selector set, and zero is excluded from supports. This definition supplies only the achievement set in the two-object display. The full tail is a separate definition.",
+    "Erdos249257.mersenneTail": "The full weight tail $R_N$, independent of any target. This definition supplies only $R_N$ in the two-object display. The achievement set is a separate definition."
+  },
+  "short.r.strict-tail-bound": {
+    "Erdos249257.mersenneTail_lt_weight": "`mersenneTail_lt_weight` supplies the strict comparison $R_N<w_N$ for positive $N$. It obtains it by bounding the tail by twice the next weight. The intermediate quantitative estimate in the display is separate."
+  },
+  "short.r.selector-uniqueness": {
+    "Erdos249257.positiveMersenneDigitValue_injective": "The source asserts injectivity via greedy support recovery. The paper gives a first-difference lower-bound argument, which is not the statement of this declaration."
+  },
+  "short.r.cantor-geometry": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_achievement_geometry": "The conjunction establishes compactness, perfectness, total disconnectedness, empty interior, unique coding and measure one. It does not depend on the cited external theorem."
+  },
+  "short.r.scaled-tail-limit": {
+    "Erdos249257.tendsto_two_pow_mul_mersenneTail_one": "The total mass after exponent $N$, multiplied by $2^N$, tends to $1$. The notation `Tendsto ... atTop (nhds 1)` expresses this limit as $N\\to\\infty$. In the interval construction there are $2^N$ possible prefixes, each with a remaining interval of length $R_N$, so this is the limit of their total lengths. It is used to compute the achievement set’s Lebesgue measure."
+  },
+  "short.r.achievement-measure": {
+    "Erdos249257.volume_mersenneAchievementSet": "The Lebesgue measure of the complete achievement set is exactly $1$. The word `volume` is Lean’s standard Lebesgue measure on the real line. The proof uses decreasing finite unions of intervals, whose lengths total $2^NR_N\\to1$. This is an absolute measure, not a statement that the achievement set fills its ambient interval. It therefore does not settle membership of a chosen rational number."
+  },
+  "short.r.nested-prefix-enclosures": {
+    "Erdos249257.mersenneAchievementSet_eq_iInter_cylinderStage": "The source identifies the intersection of all enclosures with the achievement set. It does not itself assert that the sequence of enclosures is decreasing.",
+    "Erdos249257.antitone_mersenneCylinderStage": "Increasing the number of decided digits can only shrink the finite union of remaining intervals. The source asserts decreasing enclosures. It does not itself identify their intersection with the achievement set."
+  },
+  "short.r.restricted-tail": {
+    "ErdosProblems.Erdos257.selectedMersenneTail_lt_weight": "The source states the selected future tail is below the current weight, and its `J` indexes future offsets, rather than the paper’s global allowed exponents."
+  },
+  "short.r.restricted-injectivity": {
+    "ErdosProblems.Erdos257.supportedMersenneDigitValue_injective": "Binary selectors restricted to an arbitrary allowed coordinate set `J` still give distinct sums. The theorem follows by restricting the injective full selector map. It needs no finiteness or density assumption on `J`. Lean uses zero-based coordinates, so coordinate $k$ corresponds to positive exponent $k+1$. A paper support of allowed exponents must be shifted accordingly when comparing it with this declaration."
+  },
+  "short.r.finite-omissions": {
+    "ErdosProblems.Erdos257.volume_supportedMersenneAchievementSet_finset_compl": "Forbidding exactly the finitely many coordinates in `F` leaves an achievement set of Lebesgue measure $2^{-|F|}$. Lean writes this as the inverse of `2 ^ F.card` in the extended nonnegative reals. Its coordinates start at zero, with coordinate $k$ selecting exponent $k+1$, and shifting a finite set of positive omitted exponents preserves its cardinality. The theorem imposes no condition on where those omissions occur."
+  },
+  "short.r.infinite-omissions": {
+    "ErdosProblems.Erdos257.volume_supportedMersenneAchievementSet_eq_zero_of_compl_infinite": "If infinitely many selector coordinates are forbidden, the restricted achievement set has Lebesgue measure zero. The exact hypothesis is `hJ : Jᶜ.Infinite`, referring to the complement of the allowed set. For every $m$, one can retain only $m$ of these prohibitions and obtain an enclosing set of measure $2^{-m}$. Letting $m$ grow forces zero measure. No assertion about a particular rational target follows from this measure statement."
+  },
+  "short.r.real-greedy-rule": {
+    "Erdos249257.greedyMersenneRemainder": "The real remainder after processing the first $N$ exponents. It starts at `x`. At step $N+1$, the rule subtracts $w_{N+1}$ exactly when the current remainder is at least that weight. Otherwise the remainder is unchanged. The definition makes sense for every real `x`, although the paper works with $x\\ge0$. A nonnegative remainder is not by itself evidence that its limit is zero or that the target is represented."
+  },
+  "short.r.greedy-support": {
+    "Erdos249257.greedyMersenneSupport": "The set $A_x$ of positive exponents chosen by the greedy rule for target $x$. An exponent $n$ belongs when $w_n\\le r_{n-1}(x)$. The condition `0 < n` removes the artificial zero index. This support is fixed by the target and the rule. The later divisor counts must all be computed from this same set. The definition does not assert that its sum equals the target."
+  },
+  "short.r.greedy-divisor-count": {
+    "Erdos249257.supportCoeff": "The number $c_A(n)$ of positive divisors of $n$ belonging to the selected exponents $A$. Lean filters `n.divisors` by membership in `A` and takes its cardinality. This is finite even when $A$ is infinite. At zero the divisor set is empty. These are power-series coefficients before carrying, not membership indicators or base-two digits, and they may exceed one. For a greedy target, substitute the same support $A_x$ at every index, and unrelated coefficient choices need not come from a support."
+  },
+  "short.r.coefficient-prefix-and-defect": {
+    "Erdos249257.binaryCoeffPrefixNumerator": "The integer $P_N$ representing the first $N$ terms of the coefficient series at denominator $2^N$. This definition supplies $P_0$ and the recurrence for $P_N$. It does not define the displayed $Q_N$.",
+    "ErdosProblems.Erdos257.PaperCompleteR20.paperIntegerDefect": "The paper’s integer remainder $Q_N=\\lfloor2^Nx\\rfloor-P_N$, with $P_N$ built from the actual greedy support of $x$. This definition supplies $Q_N$ using the already defined coefficient prefix. The recurrence for $P_N$ is a separate definition."
+  },
+  "short.r.nonnegative-defect": {
+    "ErdosProblems.Erdos257.greedyBinaryPrefix_le_floor": "The source directly states $P_N\\le \\lfloor 2^N x\\rfloor$, which ensures $Q_N\\ge0$. It does not state the intermediate inequality involving $X_{A_x}(2)$."
+  },
+  "short.r.greedy-recurrence": {
+    "ErdosProblems.Erdos257.greedyBinaryDefect_succ_lower": "The source states only $Q_{N+1}\\ge2Q_N-c_x(N+1)$ for $x\\ge0$. Equation (10) additionally specifies the floor digit and its value in $\\{0,1\\}$."
+  },
+  "short.r.defect-tail-identity": {
+    "Erdos249257.binaryCoeffSeries_eq_prefix_add_tail": "The source splits a general coefficient series into its real prefix and scaled tail. The displayed floor identity additionally substitutes the greedy value, defines $\\delta$ and takes the floor."
+  },
+  "short.r.general-repair-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_general_repair_criteria": "The theorem applies to each nonnegative real target. The three conditions follow below. For every $x\\ge0$, membership in $\\mathcal A$ is equivalent both to arbitrarily late nonincreases of $Q_N$ and to a nonincrease in every window $[K,K+2\\lfloor\\sqrt K\\rfloor+12)$."
+  },
+  "short.res-general-repair#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_general_repair_criteria": "For every $x\\ge0$, membership in $\\mathcal A$ is equivalent both to arbitrarily late nonincreases of $Q_N$ and to a nonincrease in every window $[K,K+2\\lfloor\\sqrt K\\rfloor+12)$. The exact hypothesis is `hx : 0 ≤ x`. Lean states two equivalences joined by `∧`, and together they are the paper’s three-way equivalence. `Nat.sqrt K` is the integer square root. Neither equivalence supplies the required nonincreases for a particular target."
+  },
+  "short.r.greedy-recovers-support": {
+    "Erdos249257.greedySupport_supportValue_eq": "Applying the greedy rule to a represented sum recovers the entire positive support that produced it. The hypothesis `hA0 : 0 ∉ A` removes the zero index, which carries no weight. At each exponent the strict inequality $R_n<w_n$ forces the correct choice, since later terms cannot replace a missed weight. Finite and infinite supports are treated alike. No assumption about the target’s rationality is used."
+  },
+  "short.r.represented-defect-bounds": {
+    "ErdosProblems.Erdos257.greedyBinaryDefect_le_sqrt_of_mem": "The source bounds $Q_N$ by $2\\sqrt N+4$ under $x\\ge0$ and membership, but does not include the intermediate coefficient-tail inequality in this display.",
+    "Erdos249257.binaryCoeffTail_supportCoeff_le_two_sqrt_add_four": "This source proves the final coefficient-tail bound for any support. It does not assert the preceding inequalities relating that tail to $Q_N$."
+  },
+  "short.r.coefficient-square-root-bound": {
+    "Erdos249257.supportCoeff_le_two_mul_sqrt": "The source directly proves $c_A(n)\\le 2\\lfloor\\sqrt n\\rfloor$ and does not state the displayed intermediate $\\tau(n)$ inequality. Its integer bound implies the real square-root bound."
+  },
+  "short.r.integer-window-argument": {
+    "ErdosProblems.Erdos257.exists_repair_in_sqrt_window": "Any natural-valued sequence bounded by $2\\sqrt N+4$ has a nonincrease in every window $[K,K+2\\lfloor\\sqrt K\\rfloor+12)$. The hypothesis `hQ` gives the bound at every rank. No recurrence is assumed. If the sequence increased strictly at each step, integer-valuedness would force growth of at least one per step, exceeding the square-root bound by the end of the window. This is the combinatorial step behind Theorem C.1."
+  },
+  "short.r.three-quarters-example": {
+    "Erdos249257.three_fourths_not_mem_mersenneAchievementSet": "The source concludes $3/4\\notin\\mathcal A$. The selected prose also records the explicit interval $R_1<2/3<3/4<1$ used to explain this example."
+  },
+  "short.r.quotient-and-target": {
+    "Erdos249257.localMersenneQuotient": "The quotient $q_M(d)=\\lfloor2^M/(2^d-1)\\rfloor$, computed by natural-number division. This definition supplies $q_M(d)$ only. $T_M$ in the same display has a separate definition.",
+    "Erdos249257.twentyOneQuotientTarget": "The scaled integer target $T_M=\\lfloor2^M/21\\rfloor$. This definition supplies $T_M$ only. $q_M(d)$ in the same display has a separate definition."
+  },
+  "short.r.quotient-geometric-sum": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.paper_floor_quotient_geometric_sum": "Lean assumes `hd : 2 ≤ d` so the truncated geometric expansion leaves a fraction strictly below one. Taking the integer quotient then leaves exactly the terms indexed by $1\\le j\\le\\lfloor M/d\\rfloor$."
+  },
+  "short.r.integer-greedy-rule": {
+    "Erdos249257.twentyOneEvenQuotientGreedyRemainder": "`twentyOneEvenQuotientGreedyRemainder` runs the integer greedy rule on exponents $2$ through $R$ at precision $4^R$. The initial capacity is $T_{2R}$ and the subtraction at each step uses the rounded weight $q_{2R}(d)$."
+  },
+  "short.r.integer-greedy-support": {
+    "Erdos249257.twentyOneEvenQuotientGreedySupport": "The finite support $D_R$ selected by the integer greedy rule at precision $2^{2R}=4^R$. Lean starts with $T_{2R}$ and processes the quotient weights for exponents $2,\\ldots,R$. `lowerSupportFromBits 2` turns the resulting Boolean choices into these exponent indices. This support can change when the precision changes. The definition supplies no compatibility between $D_R$ and $D_{R+1}$. Eventual compatibility is a separate conditional theorem."
+  },
+  "short.r.integer-greedy-remainder": {
+    "Erdos249257.twentyOneEvenQuotientGreedyRemainder": "`twentyOneEvenQuotientGreedyRemainder R` is the unspent natural-number capacity after all $R-1$ quotient weights for $d=2,\\ldots,R$ are processed. The real remainder for $1/21$ instead uses the original weights."
+  },
+  "short.r.quotient-conservation": {
+    "Erdos249257.localPrefixQuotient_twentyOneEvenQuotientGreedySupport_add_remainder": "The source assumes $2\\le R$ and states $\\text{sum}+s_R=T_{2R}$. The paper does not restrict this display to $R\\ge2$. Natural-valuedness gives $s_R\\ge0$."
+  },
+  "short.r.fatal-alternative-first-clause": {
+    "Erdos249257.TwentyOneFatalAlignedBranch": "The witness depth in `TwentyOneFatalAlignedBranch` is a stage where the real residual exceeds the total available tail. The conjuncts in this selection specify that the omitted positive exponents are finite and every exponent after that depth is selected."
+  },
+  "short.r.full-integer-alignment": {
+    "Erdos249257.TwentyOneEventuallyEvenFullQuotientRationalAlignment": "Beyond some threshold $R_0$, the entire integer greedy word at precision $4^R$ agrees with the exact rational greedy word through exponent $2R$. The latter is the rational version of the real greedy rule for $1/21$. The definition compares words starting at exponent $2$, since exponent $1$ is skipped for this target. It is an eventual agreement condition, not an assertion that finite precision always reproduces the real decisions."
+  },
+  "short.r.doubling-interval-clause": {
+    "Erdos249257.TwentyOneFatalAlignedBranch": "The final component of `TwentyOneFatalAlignedBranch` is `TwentyOneGreedyEventuallyHitsDoublingBlocks`. It requires a selected exponent in each sufficiently late interval $(K,2K]$ along the greedy orbit for $1/21$."
+  },
+  "short.res-one-over-twenty-one-frontier#1": {
+    "Erdos249257.one_div_twenty_one_mem_iff_not_fatalAlignedBranch": "The right side negates `TwentyOneFatalAlignedBranch`, the conjunction of the eventual behaviors specified above. The equivalence leaves membership open. Excluding the branch would establish that $1/21$ is represented."
+  },
+  "short.r.small-rows-imply-membership": {
+    "Erdos249257.twentyOneCofinalEvenQuotientGreedyDecay_of_closedRows": "`hR` lets the selected ranks tend to infinity, and `hrow` bounds each corresponding $s_R$ by $2^R$. This makes $(s_R+2R+1)/4^R$ tend to zero along those ranks. A separate implication uses that decay to prove membership of $1/21$.",
+    "Erdos249257.one_div_twenty_one_mem_mersenneAchievementSet_of_cofinalGreedyDecay": "The source only requires normalized $\\frac{s_R+2R+1}{4^R}\\to0$ along $R\\to\\infty$, a weaker hypothesis than cofinal $s_R\\le2^R$. $R\\ge2$ can be ensured by dropping finitely many ranks."
+  },
+  "short.r.eventual-large-remainders": {
+    "Erdos249257.twentyOneFatalAlignedBranch_eventually_strict_supercapacity": "Under `hbranch : TwentyOneFatalAlignedBranch`, every sufficiently late quotient remainder satisfies $s_R>2^R$. Lean’s conclusion `∃ K, ∀ R, K ≤ R → ...` is an eventual bound at all later ranks, not merely a subsequence. If arbitrarily late ranks violated it, their small normalized errors would imply membership by closedness, contradicting the branch. The conditional hypothesis is essential."
+  },
+  "short.r.eventual-boundary-selection": {
+    "Erdos249257.twentyOneFatalAlignedBranch_eventually_affine_supercapacity": "Under `hbranch`, the first conjunct gives $D_{R+1}=D_R\\cup\\{R+1\\}$ at every sufficiently large $R$. This is the clause supplying selection of the new boundary rank."
+  },
+  "short.r.eventual-affine-recurrence": {
+    "Erdos249257.twentyOneFatalAlignedBranch_eventually_affine_supercapacity": "Under $\\mathcal F_{21}$, sufficiently late supports satisfy $D_{R+1}=D_R\\cup\\{R+1\\}$ and their remainders obey the displayed two-step recurrence. `twentyOneTargetTwoStepPulse` is the floor involving $2^{2R}\\bmod21$. `localPrefixTwoStepPulse` is $2c_{D_R}(2R+1)+c_{D_R}(2R+2)$. Lean uses natural subtraction. Its proof establishes the required subtraction bounds before the final identity, so this agrees with the paper’s ordinary integer formula. It proves a conditional recurrence, not a contradiction."
+  },
+  "short.r.finite-support-divisor-count": {
+    "Erdos249257.supportCoeff": "Apply `supportCoeff` to the finite set $D_R$ viewed as a support and the index $m$. It counts those divisors of $m$ among the exponents chosen in the quotient row, and supplies the coefficients entering the recurrence."
+  },
+  "short.r.nonmembership-implies-alternative": {
+    "Erdos249257.twentyOneFatalAlignedBranch_of_not_mem": "The input `hnot` assumes nonmembership of $1/21$. The result derives the fatal tail violation, eventual selection and quotient agreement from that assumption, establishing all the clauses of `TwentyOneFatalAlignedBranch` in that direction."
+  },
+  "short.r.rounding-estimate": {
+    "Erdos249257.scaled_localMersennePrefixValue_sub_one_div_twenty_one": "The source is the exact signed fractional-error identity for a finite admissible quotient support. It does not state the paper’s centered absolute bound $\\frac{R+1}{4^R}$, and obtaining that bound requires bounding the discarded fractions and support size."
+  },
+  "short.r.closedness-for-quotient-rows": {
+    "Erdos249257.isClosed_mersenneAchievementSet": "Closedness supplies membership of a limit once convergence of the finite support values is shown. It does not itself assert the quotient-row convergence or its hypotheses."
+  },
+  "short.r.quotient-two-step-identity": {
+    "Erdos249257.localMersenneQuotient_add_two": "For $d\\ge2$, increasing the precision exponent by two gives $q_{M+2}(d)=4q_M(d)+2\\mathbf1_{d\\mid M+1}+\\mathbf1_{d\\mid M+2}$. The source identity holds for every $d\\ge2$ and $M$, independently of membership in $D_R$."
+  },
+  "short.r.target-two-step-identity": {
+    "Erdos249257.twentyOneQuotientTarget_add_two": "The integer target satisfies $T_{M+2}=4T_M+\\lfloor4(2^M\\bmod21)/21\\rfloor$ at every natural depth $M$. The second term is named `twentyOneTargetTwoStepPulse M` in Lean. It records the part of the discarded target fraction that becomes an integer after multiplying by four. This is the target-side contribution to the remainder recurrence. It is separate from the divisor contributions of the selected support."
+  },
+  "short.r.new-boundary-quotient": {
+    "Erdos249257.BooleanMobiusGreedyReduction.localMersenneQuotient_two_mul_self": "At precision $2^{2R}$, the quotient weight for exponent $R$ is exactly $2^R+1$, provided `hR : 2 ≤ R`. This follows from $(2^{2R}-1)=(2^R-1)(2^R+1)$. Substituting $R+1$ for `R` gives the new boundary weight in Theorem D.1. That identity determines the amount subtracted when the boundary exponent is selected. It does not establish that the selection occurs."
+  },
+  "short.r.quotient-separation": {
+    "Erdos249257.localMersenneWeights_two_mul_strong_gapDominates": "`GapDominates` gives separation by at least $2^R+1$ at scale $2^{2R}$. The extra unit makes a remainder as large as $2^R$ still strictly smaller than the gap between competing subset sums."
+  },
+  "short.r.closed-row-uniqueness": {
+    "Erdos249257.twentyOneClosedRow_forces_quotientGreedy": "Any Boolean choice of the quotient weights whose sum plus a natural remainder $s\\le2^R$ equals $T_{2R}$ must be the integer greedy choice, with $s=s_R$. The binders `hlen`, `hrow` and `hclosed` require the correct word length, the exact target equation and the closed remainder bound. This is a finite uniqueness result, including equality at $s=2^R$. It does not assert that such rows occur at unbounded depths."
+  },
+  "short.r.half-terminal-carry": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry": "`terminalPaperCarry` has integer values, allowing the finite coefficient prefix to exceed the target budget. Its index `j + 2` starts the paper's sum at coefficient $2$ for supports omitting exponent $1$."
+  },
+  "short.r.half-carry-recurrence": {
+    "Erdos249257.HalfCarryReachability.integerHalfCarry_succ": "The source states the successor recurrence for the shifted Lean carry. The paper also gives the initial value $K_A(1)=1$, which comes from the recursive definition.",
+    "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_eq_integerHalfCarry": "This source identifies the paper carry with the shifted recursive carry. It does not itself state the initial value or successor recurrence."
+  },
+  "short.r.terminal-half-depth-and-support-hypotheses": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_terminalhalf": "`hM`, `hlim` and `hA` prescribe positive depths tending to infinity and finite supports within $[2,M_j]$. The theorem also needs `herr`, which is vanishing scaled terminal carry along those depths."
+  },
+  "short.r.terminal-half-vanishing-hypothesis": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_terminalhalf": "The condition `herr` is the limit of the absolute terminal carry divided by $2^{M_j}$. This is the small-error premise of the compactness argument. The theorem leaves finding such finite supports as a separate problem."
+  },
+  "short.res-terminalhalf#1": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_terminalhalf": "Finite supports $A_j\\subseteq\\{2,\\ldots,M_j\\}$ with $M_j\\ge1$, $M_j\\to\\infty$ and $|K_{A_j}(M_j)|/2^{M_j}\\to0$ produce an infinite positive support of sum $1/2$. The binders `hM`, `hlim`, `hA` and `herr` state exactly these hypotheses. No consistency between the finite supports or bound on their earlier carries is required. The theorem consumes the approximants. It does not construct a sequence satisfying the hypotheses."
+  },
+  "short.r.finite-half-error-bound": {
+    "Erdos249257.HalfCarryReachability.dist_half_erdosSupportSeries_wordSupport_le_carry_add_tail": "A finite support encoded by a word through depth $M\\ge1$, omitting exponent $1$, satisfies $|X_A(2)-1/2|\\le(|K_A(M)|+2\\sqrt M+4)/2^M$. The binders `hM` and `hone` give these conditions. `wordSupport a` contains only indices through $M$, and an optional zero bit has no effect on the series. The proof separates the signed coefficient error from the omitted coefficient tail and bounds the latter uniformly."
+  },
+  "short.r.tail-control-for-half-approximants": {
+    "Erdos249257.supportCoeff_le_two_mul_sqrt": "The source directly proves $c_A(n)\\le 2\\lfloor\\sqrt n\\rfloor$. It does not state the intermediate divisor-function inequality, and its integer square-root bound implies the final real bound."
+  },
+  "short.r.closedness-for-half-approximants": {
+    "Erdos249257.isClosed_mersenneAchievementSet": "The source states that the achievement set is closed. Existence of a representing support additionally uses the convergence of the finite support values to $1/2$ established in the surrounding argument."
+  },
+  "short.r.finite-half-impossibility": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.paper_no_finite_support_has_value_half": "The source rules out a finite positive support of value $1/2$. Applying it to a support supplied by closedness establishes the infinitude claimed in the prose."
+  },
+  "short.r.carry-quotient-identity": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.paper_integerHalfCarry_eq_two_pow_sub_localPrefixQuotient": "The source only assumes a finite $D$ with $d\\ge2$ and $M\\ge1$. It does not require $d\\le M$. The paper’s $K_D(M)$ is the source `integerHalfCarry` at $M-1$."
+  },
+  "short.r.exact-row-carry-one": {
+    "ErdosProblems.Erdos257.PaperCompleteR21.paper_exact_row_integerHalfCarry_eq_one": "Substituting `hexact` into the carry identity makes the carry at `M - 1` equal to one. With $M\\ge1$, the theorem allows any finite set of exponents at least two. The row's upper index bound is unnecessary for this inference."
+  },
+  "short.r.two-cofinal-half-criteria": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.half_mem_iff_cofinal_exact_rows": "`CofinalExactLocalMersenneHalfRows` asks for exact quotient rows at arbitrarily large depths, with no agreement required across depths. The theorem equates this condition with half-membership. The other terminal approximation test has its own equivalence.",
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_terminalhalf_iff": "The equivalence `paper_terminalhalf_iff` uses finite supports at depths tending to infinity with scaled terminal carry tending to zero. It matches this approximation condition with an infinite positive support of value $1/2$."
+  },
+  "short.r.half-omits-first-weight": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.one_notMem_of_erdosSupportSeries_two_eq_half": "Any support whose Mersenne sum is $1/2$ must omit exponent $1$. The only hypothesis is the value equation `hvalue`. The weight of exponent $1$ is already $1$, and all other terms are nonnegative, so selecting it would make the sum at least $1$. This argument applies before any finiteness question and explains why finite approximants to a half representation are taken inside $\\{2,\\ldots,M\\}$."
+  },
+  "short.r.prefix-carry-tail-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_inter_Iic_eq_binaryCoeffTail": "The source gives the equality of the prefix carry and the full coefficient tail, assuming omission of 1, value $1/2$ and $M\\ge1$. It does not itself state the final square-root inequality.",
+    "ErdosProblems.Erdos257.PaperCompleteR20.terminalPaperCarry_inter_Iic_bounds": "The source gives $0\\le K_{A\\cap[0,M]}(M)\\le 2\\sqrt M+4$ with the same hypotheses. The displayed equality with the tail is in the preceding source."
+  },
+  "short.r.half-terminal-equivalence": {
+    "ErdosProblems.Erdos257.PaperCompleteR20.paper_terminalhalf_iff": "An infinite positive support of Mersenne sum $1/2$ exists exactly when finite supports at depths tending to infinity have vanishing scaled terminal carry. The right side explicitly requires $M_j\\ge1$, $A_j\\subseteq\\{2,\\ldots,M_j\\}$ and $|K_{A_j}(M_j)|/2^{M_j}\\to0$. The reverse implication is Theorem D.2. The forward implication uses the prefixes of a representing support. Neither side is asserted to hold unconditionally."
+  },
+  "short.r.family-carry-bound": {
+    "Erdos249257.HalfCarryReachability.halfStripBound": "The integer bound $B(m)=2\\lfloor\\sqrt m\\rfloor+4$ for the family’s prefix carries. Lean uses `Nat.sqrt m`, the integer square root, rather than a real square root followed by a separate floor. This definition does not assert that any support satisfies the bound. It supplies the size of the required carry interval and the number of members in a full family."
+  },
+  "short.r.family-prefix-and-terminal-conditions": {
+    "Erdos249257.HalfCarryReachability.HalfStripAdmissible": "For a single word `a`, `HalfStripAdmissible` omits indices zero and one and checks every carry at `n - 1` for $1\\le n\\le N$. The latter is the paper's prefix at depth $n$. Prescribing the terminal carry takes an additional field.",
+    "Erdos249257.HalfCarrySelectedWindow.SelectedHalfWindow": "The field `admissible` applies `HalfStripAdmissible` to every indexed word. The separate field `terminal` makes its last carry equal to $k$. Choosing $R=B(M)$ supplies a word for every carry in the displayed range."
+  },
+  "short.r.shared-prefix-condition": {
+    "Erdos249257.SelectedSuffixCylinder.HasSuffixCylinderAt": "The common-prefix field, with the zero bit already false. Lean also compares the zero index in the common prefix, but admissibility already makes it false in every word."
+  },
+  "short.r.suffix-endpoint-bound": {
+    "Erdos249257.SuffixCylinderThreshold.CylinderStage": "The covers field requires this endpoint lower bound. A full family at depth $M$ packages a cutoff $K\\le M$, one admissible support for every carry through $B(M)$, an integer endpoint $E$, and the common-prefix and consecutive-suffix conditions."
+  },
+  "short.r.consecutive-suffix-condition": {
+    "Erdos249257.SelectedSuffixCylinder.HasSuffixCylinderAt": "The suffix equation. The common-prefix requirement is stated separately above. The family’s words have one common prefix through index $K$, and each remaining binary suffix has value $E-k$."
+  },
+  "short.r.shared-prefix-cofinal-hypothesis": {
+    "Erdos249257.SuffixCylinderTerminalOnlyBridge.exists_infinite_positive_support_half_of_cofinalCylinderStages": "`hstages` asks for a full family at a positive depth beyond every cutoff. Under that hypothesis the theorem obtains an infinite positive support of sum $1/2$. Supplying those full families at unbounded depths remains a separate task."
+  },
+  "short.res-cylinderhalf#1": {
+    "Erdos249257.SuffixCylinderTerminalOnlyBridge.exists_infinite_positive_support_half_of_cofinalCylinderStages": "If for every $N$ there is a full family at some depth $M\\ge\\max\\{N,1\\}$, an infinite positive support of sum $1/2$ exists. The hypothesis `hstages` explicitly supplies those families and their unbounded depths. `Nonempty (CylinderStage K M)` means the family satisfies all its defining requirements, including shared prefixes. No compatibility between families at different depths, or growth of the cutoff $K$, is assumed. The proof extracts one terminal approximant from each family. It does not construct the cofinal families."
+  },
+  "short.r.choose-terminal-one": {
+    "Erdos249257.SuffixCylinderTerminalOnlyBridge.SelectedHalfWindow.halfTerminalOnlyStripWitness": "Every nonempty selected family contains a finite support satisfying the terminal approximation bound. The hypothesis `hR : 1 ≤ R` guarantees that the member with terminal carry $1$ is present. The proof chooses precisely that member and carries over its admissibility and terminal equation. It uses neither a shared prefix nor the consecutive-suffix condition. Those additional constraints may matter for constructing families, but not for this compactness step."
+  },
+  "short.r.rational-skip-question": {
+    "Erdos249257.rat_mem_mersenneAchievementSet_iff_cofinal_greedy_skips": "The source proves an equivalence between membership and cofinal skips for nonnegative rational targets. This display is the skip condition requested in an open problem, not an asserted existence theorem. The scaled inequality is an algebraic restatement."
+  },
+  "short.r.borwein-constant": {
+    "Erdos249257.erdosBorweinMersenneConstant": "The constant $E$ is the sum of every positive Mersenne weight, with no omissions. Lean defines it as `mersenneTail 0`, and expanding that tail gives $\\sum_{n\\ge1}(2^n-1)^{-1}$. It is the total against which the skipped-prefix approximation is compared in Problem D.7. This object differs from the endpoint also denoted $E$ in the preceding finite-family construction."
+  },
+  "short.r.last-skip-existence": {
+    "Erdos249257.exists_lastTwentyOneGreedySkip_of_not_mem": "If $1/21$ does not belong to the achievement set, the actual greedy rule has a last skipped exponent. The sole hypothesis `hnot` is that nonmembership assumption. The predicate in the conclusion requires both that this exponent is skipped and that every later exponent is selected. This justifies the conditional choice of $M$ in Problem D.7. It does not assert that such a last skip exists unconditionally."
+  },
+  "short.r.finite-skipped-prefix": {
+    "Erdos249257.twentyOneSkippedPrefix": "The finite set $S_M$ consists of the actual greedy skips for target $1/21$ at indices at most $M$. Lean filters `Finset.range (M + 1)` by membership in the skipped support. The skipped support excludes zero. If $M$ is the last skip, this finite prefix contains all skipped exponents, and without that assumption it records only the skips seen so far."
+  },
+  "short.r.last-skip-gap": {
+    "Erdos249257.mersenneGap": "`mersenneGap M` is `mersenneWeight M - mersenneTail M`. The positive lower bound for this difference uses the strict tail comparison at positive $M$.",
+    "Erdos249257.mersenneGap_pos": "For every positive exponent, the gap $w_M-R_M$ is strictly positive. This theorem supplies strict positivity for a positive exponent, using the separately defined gap. It is not the definition of the gap."
+  },
+  "short.r.last-skip-interval": {
+    "Erdos249257.lastTwentyOneSkip_erdosBorwein_fatalInterval": "If $M$ is the last exponent skipped by the actual greedy rule for $1/21$, its finite skipped-prefix approximation satisfies $0<a_M-E<\\operatorname{gap}_M$. The hypothesis `hlast` includes both that $M$ is skipped and that no later exponent is skipped. The theorem gives the strict interval, not an arithmetic contradiction. Ruling out this interval is the additional input requested by Problem D.7."
+  },
+  "short.e.cyclotomic-order": {
+    "Erdos249257.exists_exactOrderPrimePowerWitness": "The source proves existence of a suitable prime-power witness. The sentence specifies every prime $\\ell$ dividing $\\Phi_n(b)$ and $e$ equal to the full valuation. That universal identification is not this theorem’s conclusion."
+  },
+  "short.e.odd-lifting": {
+    "Erdos249257.odd_prime_order_factorization_pow_sub_one": "For an odd prime $q$, let $d$ be the multiplicative order of $b$ modulo $q$. For nonzero $k$, the valuation of $b^{dk}-1$ is the valuation of $b^d-1$ plus $v_q(k)$. Lean explicitly assumes `hq : Nat.Prime q`, `hq_odd : Odd q`, `hcop : Nat.Coprime b q`, `hd_order`, `hbase_gt_one : 1 < b ^ d`, and `hk_ne_zero`. The expression `.factorization q` is the prime exponent $v_q$ of the positive integer in question."
+  },
+  "short.e.two-adic-lifting": {
+    "Erdos249257.two_adic_pow_sub_one_factorization_even": "Lean allows every positive even exponent $n$. The display is the specialization $n=2^j, j\\ge1$, with the added one moved to the other side."
+  },
+  "short.e.prime-exists": {
+    "Erdos249257.exists_prime_dvd_cyclotomic_eval": "For integer $b\\ge2$ and $n\\ge2$, some prime divides the integer value $\\Phi_n(b)$. These are the hypotheses `hb : 2 ≤ b` and `hn : 2 ≤ n`. The proof first shows that the absolute value of the cyclotomic value exceeds one, then takes a prime divisor. This provides a prime for the finite-denominator proof. It does not assert that the prime itself has order $n$, and a suitable prime power is needed in the later step."
+  },
+  "short.e.log-parameter": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverLogParameter": "The real number $z=\\log_2 t$, written in Lean as `Real.log t / Real.log 2`. It is a change of variable for the scalar optimization of $\\Psi(t)$, not a new support condition. The definition itself accepts every real $t$. The paper uses $t\\ge1$, and the large-value branch assumes $t>4$, equivalently $z>2$. Keeping this parameter distinct from the earlier increment $2^\\alpha-1$ prevents the two uses of the letter $z$ from being confused."
+  },
+  "short.e.change-variable": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.scalar_cost_log_parameter": "This declaration rewrites each cost value for $t>0$. It does not by itself prove equality of the two infima or the correspondence of the admissible intervals."
+  },
+  "short.e.exact-scalar-cost": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverGauge_eq_self_of_one_le_le_four": "The hypotheses `ht1` and `ht4` give the closed interval $1\\le t\\le4$. Taking exponent $1$ attains the cost $t$, and the lower bound in the proof rules out any smaller cost over $0<\\alpha\\le1$.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverGauge_eq_large": "At $t>4$, `coverLogParameter t` is $z=\\log_2 t$. The proof obtains the global cost bound using Bernoulli's inequality and attains it at exponent $\\log_2(z/(z-1))$, giving the upper branch of the display."
+  },
+  "short.e.interior-minimum": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverLargeMinimizer_bounds": "`coverLargeMinimizer t` is the proposed exponent $\\log_2(z/(z-1))$. The two inequalities place it strictly inside the admissible interval under $t>4$. A cost comparison is needed to show that it minimizes.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.scalar_cost_at_large_minimizer": "`scalar_cost_at_large_minimizer` evaluates the cost at the interior exponent, giving `coverLargeValue (coverLogParameter t)`. Together with the lower bound for every admissible exponent, this equality proves that the infimum is attained.",
+    "ErdosProblems.Erdos257.PaperCompleteR8.coverGauge_eq_largeValue": "This target identifies the global infimum with the candidate value. The adjacent admissibility and evaluation lemmas identify its interior minimizer."
+  },
+  "short.e.optimized-cost": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.optimizedLogCoverCost": "The paper directly allows finite or countable covers. This definition ranges over $\\mathbb N$-indexed covers with strictly positive weights, and finite-frame costs are compared through padding and a limit in `PositiveWeightPadding.lean`."
+  },
+  "short.e.divisor-set": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisorCube": "The finite set $\\{qd:d\\mid\\prod_{p\\in P}p\\}$. The definition forms the divisors of the product and multiplies each by $q$. No primality or positivity hypotheses are needed merely to define this `Finset`. The subsequent expansion theorems assume $q>0$ and prime elements of $P$. For $q=2$ and $P=\\{3,5\\}$ it gives $\\{2,6,10,30\\}$. Its divisor count records which of these selected exponents divide the observation index."
+  },
+  "short.e.prime-mass": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.primeReciprocalMass": "The finite sum $S=\\sum_{p\\in P}1/p$. Lean calls it `primeReciprocalMass P`, with each summand interpreted as a real number. The definition accepts a finite set of natural numbers. The hypotheses `hP : ∀ p ∈ P, Nat.Prime p` in subsequent theorems make these selected numbers primes. This parameter controls both the mean number of available prime divisors and the optimized cover cost. The upper bound $eS/q$ later requires $S\\ge1$."
+  },
+  "short.e.optimal-two-sided": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.optimized_cube_cost_two_sided": "Lean gives these bounds for its infimum over countably indexed strictly positive-weight covers, whereas the paper directly includes finite covers. `PositiveWeightPadding` compares a single finite frame with that infimum, and a general equality of the two cover-class infima is not asserted here. Lean also permits $q>0$ and common prime factors between $q$ and $P$."
+  },
+  "short.e.rank-mean": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.cubePrimeRank_mean": "The prose states the mean $\\mathbb E[Z\\mid q\\mid n]=S$. Lean states the unconditional finite mean of the $qp$-divisibility count as $S/q$. Dividing by the frequency $1/q$ identifies the conditional mean."
+  },
+  "short.e.scalar-linear-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.exp_one_mul_sub_one_le_coverGauge_two_rpow": "For every real $z$, the scalar cost at $2^z$ is at least $e(z-1)$. Lean proves this inequality for every real $z$, whereas the paragraph works with $z\\ge0$."
+  },
+  "short.e.product-upper-bound": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.cubeProductCost_le_exp": "Lean bounds $q^{-1}\\prod_{p\\in P}(1+z/p)$ by $\\exp(zS)/q$. The display divides by $z$ and specializes to $z=1/S$. It also calls this a cover cost, which uses the separate cube-majorant construction."
+  },
+  "short.sources.weighted-theorem": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "The first conjunct is the fixed-base irrationality assertion. The source definition spells out its hypotheses. An infinite support with finite weighted sum at an integer base $b\\ge2$ has irrational $X_A(b)$."
+  },
+  "short.sources.weighted-heredity": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.finitePrimeWeighted_fixedBase_hereditary": "`finitePrimeWeighted_fixedBase_hereditary` puts the weighted hypothesis on the positive host `H`. At the fixed base $b\\ge2$, every infinite set `A` contained in that host inherits irrationality of its subseries."
+  },
+  "short.sources.mixed-theorem": {
+    "ErdosProblems.Erdos257.PaperCompleteR8.arbitraryWeightMixedSupport_allBase_hereditary": "`arbitraryWeightMixedSupport_allBase_hereditary` is the proof with positive cover data supplied as `LogBudgetCover V`. It combines them with the weighted hypothesis on $E$ and concludes irrationality for all infinite subsets of the union at each integer base."
+  }
+}

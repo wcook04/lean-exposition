@@ -1,0 +1,554 @@
+{
+  "full_support#2": {
+    "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "The first conjunct, `μ.support = univ`, is the support claim. Here `μ` is supplied with `IsStieltjesMeasure γ μ`, and its underlying type `Time` is the interval $[0,1)$."
+  },
+  "model.gaussian_couplings": {
+    "OAI.SKValue.gaussianProduct": "`Measure.pi` assigns a copy of `standardGaussian` to each coordinate. In the SK model the coordinate type is `Fin n × Fin n`, and the Hamiltonian uses the coordinates with $i<j$."
+  },
+  "scalar.parisi_formula#3": {
+    "OAI.SKValue.hamiltonian": "The two sums run over all ordered pairs, with the `if i < j` branch keeping each coupling once. Lean stores a configuration as a Boolean function and uses `spin` to obtain the factors in $\\{-1,1\\}$."
+  },
+  "scalar.parisi_formula#4": {
+    "OAI.SKValue.groundStateSequence": "`sSup (range (hamiltonian n J))` takes the maximum over the finite spin configurations at fixed disorder $J$. The integral averages that maximum over the Gaussian product measure, and the factor $(n:\\mathbb R)^{-1}$ gives the $n$th term whose limit is displayed.",
+    "OAI.SKValue.groundStateValue": "`limUnder atTop groundStateSequence` names the limit candidate as $n\\to\\infty$. Convergence to that value is the separate statement `groundStateSequence_tendsto`.",
+    "OAI.SKValueG.groundStateSequence_tendsto": "The `Tendsto` statement identifies `groundStateValue` as the limit of the sequence of expected optima per spin. The filter `atTop` is on the size parameter $n$."
+  },
+  "assumptions.full_support_minimizer#1": {
+    "OAI.ZeroTemperatureSK.OrderParameter": "`val` has domain `Time`, the subtype $[0,1)$. The `integrable` field concerns its zero extension to $\\mathbb R$, so it expresses the time integrability in the definition of $\\mathcal U$."
+  },
+  "support.stieltjes_measure#1": {
+    "OAI.ZeroTemperatureSK.IsStieltjesMeasure": "`Set.Iic t` is taken in `Time`, so its real interval is $[0,t]$. The right-hand side uses `ENNReal.ofReal` because the mass is measured in the extended nonnegative reals."
+  },
+  "support.stieltjes_measure#3": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc": "Lean writes $\\gamma(a)+\\mu((a,b])=\\gamma(b)$ in the extended nonnegative reals. Since both cumulative values are finite, the difference in the paper is the mass of `Ioc a b`."
+  },
+  "support.stieltjes_measure#4": {
+    "OAI.ZeroTemperatureSK.parameterMeasure": "`Measure.dirac ⊥` puts mass at the least element of `Time`, which is $0$. The multiplier is `ENNReal.ofReal (γ.val ⊥)`, giving the initial mass needed for $\\mu_\\gamma([0,t])=\\gamma(t)$."
+  },
+  "support.stieltjes_measure#5": {
+    "OAI.ZeroTemperatureSK.Time": "`Time` is a subtype of $\\mathbb R$, so the topology used by `Measure.support` is the relative topology on $[0,1)$. In that type `Set.univ` denotes the whole overlap interval."
+  },
+  "support.stieltjes_measure#6": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap": "`hgap` requires every point of the real interval `Ioo a b` to lie outside the support, with $0\\leq a<b<1$. The conclusion gives a single $c\\geq0$ for every point of that open interval."
+  },
+  "scalar.paper_admissible#4": {
+    "OAI.ZeroTemperatureSK.parisi": "`value W γ 0 0` supplies $\\Phi_\\gamma(0,0)$, and the interval integral supplies the penalty $\\frac12\\int_0^1t\\gamma(t)\\,dt$ using the zero extension of $\\gamma$. This definition implements the functional clause of the display.",
+    "OAI.SKValue.phi_terminal": "Setting the time argument of `phi` to `1` gives $|x|$ for every real $x$ and every admissible coefficient. This supplies the terminal-value clause in the scalar model, without stating the PDE or defining the functional.",
+    "OAI.ZeroTemperatureSK.value_derivative_hasDerivWithinAt_right": "At $0\\le t<T<1$, the right time derivative of $\\partial_x^m\\Phi_\\gamma(t,x)$ is the $m$th spatial derivative of `compactValueRate`, with $m=0$ giving the PDE time derivative. The set `Ioi t` specifies approach from the right, including times when $\\gamma$ jumps.",
+    "OAI.ZeroTemperatureSK.compactValueRate_eq": "On $0\\le t\\le T<1$, `compactGradient` is $\\Phi_x$ and `compactCoeff` is $\\gamma(t)$, making the right side the displayed PDE expression. This definitional equality expands the rate without asserting that $\\Phi$ has that time derivative."
+  },
+  "model.control_representation": {
+    "OAI.ZeroTemperatureSK.value": "For $0\\le t\\le1$, the supremum ranges over expected payoffs of controls progressive for Brownian increments after $t$ and bounded by one in absolute value. In `controlPayoff`, the terminal absolute value is reduced by the quadratic cost $\\frac12\\int_t^1\\gamma(s)\\alpha_{s-t}^2\\,ds$."
+  },
+  "support.regularity#2": {
+    "OAI.ZeroTemperatureSK.approxValue_uniform": "The theorem gives uniform convergence of `approxValue` over all $0\\leq t\\leq1$ and $x\\in\\mathbb R$. That family uses the source’s finite-step coefficients and its smoothed absolute-value terminal data."
+  },
+  "support.regularity#3": {
+    "OAI.ZeroTemperatureSK.value_coefficient_stability": "For $t\\le1$, changing $\\gamma$ to $\\eta$ changes the value at any field $x$ by at most $\\frac32$ times the $L^1$ distance of their zero extensions on $[t,1]$. The bound is uniform in $x$ and requires no minimality hypothesis."
+  },
+  "scalar.parisi_formula#7": {
+    "OAI.SKValue.ground_state_parisi_target": "The hypothesis `hmin` supplies a minimiser in the scalar model. Lean concludes $P_*=\\mathcal P(\\gamma)$ for that supplied parameter, and attainment of the minimum in the display is a separate input."
+  },
+  "model.first_spatial_derivative": {
+    "OAI.ZeroTemperatureSK.gradient": "In `deriv (value W γ t) x` the values `W`, `γ` and `t` are held fixed. Differentiating in `x` gives the paper’s $\\Phi_x$."
+  },
+  "model.second_spatial_derivative": {
+    "OAI.ZeroTemperatureSK.curvature": "`curvature` applies `deriv` to `gradient W γ t` in its remaining argument `x`. The two derivatives are spatial, giving $\\partial_x(\\Phi_x)=\\Phi_{xx}$."
+  },
+  "model.brownian_motion": {
+    "OAI.ZeroTemperatureSK.BrownianSystem": "`law` and `isProbability` specify the probability measure for expectations, while `B` has nonnegative real time. The field `brownian` asserts that this measurable real process is standard Brownian motion under that law."
+  },
+  "assumptions.value_diffusion#3": {
+    "OAI.ZeroTemperatureSK.IsDiffusion": "The second conjunct is the integral SDE with $X_0=0$, imposed almost surely for every $0\\le t\\le1$ on continuous paths. The first conjunct requires progressiveness for the natural Brownian filtration, while the definition of $q$ is elsewhere.",
+    "OAI.ZeroTemperatureSK.squareMoment": "`squareMoment` integrates the square of `gradient` along `X` against `W.law`, giving $q(t)$. The definition takes `X` as an arbitrary process."
+  },
+  "support.diffusion#3": {
+    "OAI.ZeroTemperatureSK.diffusion_isDiffusion": "The constructed `diffusion W γ` satisfies `IsDiffusion`, including progressiveness for the given Brownian motion and the almost-sure integral equation on $[0,1]$. This establishes existence, with uniqueness supplied separately.",
+    "OAI.ZeroTemperatureSK.diffusion_uniqueness": "`hX` assumes another solution driven by the same `W`, and the conclusion gives one event of full probability on which both paths agree for every $0\\le t\\le1$. The time quantifier lies inside the almost-sure statement, so the exceptional set is independent of time."
+  },
+  "scalar.paper_minimizer#2": {
+    "OAI.ZeroTemperatureSK.IsMinimizer": "`IsMinimizer` compares `parisi W γ` with `parisi W η` for every `η : OrderParameter`. This expresses global minimality for the supplied `γ`."
+  },
+  "support.full_relative_support#3": {
+    "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "The first two conjuncts give the displayed conclusions. `μ.support = univ` is relative to `Time`, and `StrictMonoOn` restricts the zero extension of $\\gamma$ to $[0,1)$."
+  },
+  "support.moment_saturation#3": {
+    "OAI.ZeroTemperatureSK.full_support": "The last conjunct of `FullSupportConclusion` gives both identities for every `X` satisfying `IsDiffusion` and every `t : Time`. The proof transfers the identities from `diffusion W γ` by almost-sure equality at each such time.",
+    "OAI.ZeroTemperatureSK.FullSupportConclusion": "The last clause quantifies over every `X` satisfying `IsDiffusion` and every `t : Time`. It gives the two moment identities at all $0\\leq t<1$, including zero."
+  },
+  "support.regularity#4": {
+    "OAI.ZeroTemperatureSK.gradient_zero": "Specialising to $t=0$ gives the selected $u(0,0)=0$, while the declaration gives $u(t,0)=0$ for every $0\\le t<1$ and every admissible $\\gamma$."
+  },
+  "support.contact#3": {
+    "OAI.ZeroTemperatureSK.minimizer_contact": "`InSupport μ t` includes $t\\in[0,1)$, and the two conjuncts give $q(t)=t$ and $\\mathbb E[a(t,X_t)^2]\\le1$ for the constructed diffusion. Reading the latter as $q'(t)\\le1$ uses the moment-derivative identity, with the right derivative at zero."
+  },
+  "support.gap_moment_formulas": {
+    "OAI.ZeroTemperatureSK.stripSecond_eq_actual": "`actualJet` uses unscaled derivatives of $\\Phi$, so the integral is $\\mathbb E[\\Phi_{xxx}^2-2c\\Phi_{xx}^3]$. Multiplication by $c^2$ produces the first displayed polynomial after `stripSecond` has been identified with $q''$ on a constant interval.",
+    "OAI.ZeroTemperatureSK.curvatureMoment_hasDerivAt_on_constant": "The differentiated function is `curvatureMoment`, which equals $q'$, so this identifies `stripSecond` with $q''$ at interior points of $(a,b)$ where $\\gamma=c$ and $0\\le a<b\\le T<1$. The spatial integral in the display requires the separate expansion of `stripSecond`.",
+    "OAI.ZeroTemperatureSK.stripThird_eq_actual": "With `actualJet` denoting unscaled spatial derivatives along the diffusion, `stripThird` is $\\mathbb E[\\Phi_{xxxx}^2-12c\\Phi_{xx}\\Phi_{xxx}^2+6c^2\\Phi_{xx}^4]$. Once it is identified with $q'''$ on a constant interval, multiplication by $c^2$ gives the second displayed formula.",
+    "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant": "The derivative of `deriv (curvatureMoment W γ)` is `stripThird W γ T c t` at interior points of a constant interval with $0\\le a<b\\le T<1$. Since `curvatureMoment` is $q'$, this supplies the time-derivative identification for $q'''$, before expanding its spatial expression."
+  },
+  "support.fixed_time_spatial_coercivity#4": {
+    "OAI.ZeroTemperatureSK.stripThird_coercive": "At a continuity point $0<t\\le T<1$, the inequality bounds $\\gamma(t)^2$ times `stripThird` below by $\\gamma(t)^4\\mathbb E[a^4]/1000$, without assuming a constant interval. Identification with $q'''$ and strict positivity are additional steps.",
+    "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant": "For $\\gamma=c$ on $(a,b)$ with $0\\le a<b\\le T<1$, this identifies `stripThird` with the second derivative of `curvatureMoment`, hence with $q'''$ at interior points. It supplies the derivative identification, without a quantitative or strict lower bound.",
+    "OAI.ZeroTemperatureSK.actualQuartic_pos": "The fourth moment is of the unscaled curvature $a=\\Phi_{xx}$, since `actualJet` at order two is evaluated along `diffusion`. Its strict positivity for $0<t<1$ gives the positive right-hand side after multiplication by $c^4/1000$ when $c>0$."
+  },
+  "support.rational_identity_preview": {
+    "OAI.ZeroTemperatureSK.Certificate.rational_identity": "The identity holds for arbitrary real inputs and retains `WF₂` among the summands alongside squares and `remainder`. It gives the algebraic decomposition before shape assumptions and integration eliminate that term."
+  },
+  "support.flux_identity#2": {
+    "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity": "`hiZero` sets the integral of `certDivergence` over $(0,\\infty)$ to zero, using vanishing flux at zero and infinity. The density is `gaussianLogDensity d U` under the listed shape hypotheses, and identifying it with the law of $X_t$ is an additional step."
+  },
+  "support.integrated_coercivity#3": {
+    "OAI.ZeroTemperatureSK.Certificate.remainder_lower_bound": "For $R,K,v,B,j\\ge0$, `remainder` is bounded below pointwise by $\\kappa v^4$ with $\\kappa=1661507/1521000000>1/1000$. Integrating this estimate supplies the selected quartic contribution."
+  },
+  "support.fixed_time_spatial_coercivity#5": {
+    "OAI.SKValue.IsDiffusion.literal_coercivity": "The binders of `IsDiffusion.literal_coercivity` require a scalar-model diffusion and $0<t<1$. The inequality concerns spatial derivatives evaluated at $X_t$, with no time-derivative condition at $t$."
+  },
+  "support.fixed_time_spatial_coercivity_display": {
+    "OAI.SKValue.IsDiffusion.literal_coercivity": "For $c=\\gamma(t)>0$, `spatialJet` of orders $1,2,3$ gives the second, third and fourth spatial derivatives of $c\\Phi$ in the scalar model. Divide the displayed Lean integrals by $c^2$ to read the unscaled inequality in the paper."
+  },
+  "support.even_value": {
+    "OAI.ZeroTemperatureSK.value_even": "For each $0\\le t\\le1$, `Function.Even (value W γ t)` means $\\Phi_\\gamma(t,-x)=\\Phi_\\gamma(t,x)$ for every real $x$, including at terminal time."
+  },
+  "support.convex_value": {
+    "OAI.ZeroTemperatureSK.value_convex": "Fixing $t$, `ConvexOn ℝ Set.univ (value W γ t)` asserts convexity of $x\\mapsto\\Phi_\\gamma(t,x)$ on all of $\\mathbb R$, under the sole time condition $t\\le1$."
+  },
+  "support.lipschitz_value": {
+    "OAI.ZeroTemperatureSK.value_lipschitz": "The constant in `LipschitzWith 1` gives $|\\Phi_\\gamma(t,x)-\\Phi_\\gamma(t,y)|\\le|x-y|$ for all real $x,y$, for every admissible $\\gamma$ and $t\\le1$."
+  },
+  "support.regularity#7": {
+    "OAI.ZeroTemperatureSK.value_uniform_derivative_bounds": "The order `m+1` ranges over positive spatial derivatives, excluding $\\Phi$ itself. For fixed $W,\\gamma,T,m$, one $C\\ge0$ works for every $0\\le t\\le T<1$ and $x\\in\\mathbb R$, while continuity is supplied separately.",
+    "OAI.ZeroTemperatureSK.value_derivative_continuousOn": "The pair `p` supplies time through `p.1` and the field through `p.2`, so `ContinuousOn` asserts joint continuity of $\\partial_x^m\\Phi_\\gamma$ on the strip. The order $m$ includes zero, hence $\\Phi$ itself, and uniform bounds are separate."
+  },
+  "support.moment_identity#2": {
+    "OAI.ZeroTemperatureSK.squareMoment_hasDerivWithinAt": "The derivative value `curvatureMoment W γ t` is $\\mathbb E[a(t,X_t)^2]$, and `Ici 0` makes the derivative at zero one-sided. For $0<t<1$ this is the usual derivative of $q$, for every admissible $\\gamma$, without asserting the stochastic differential in the display.",
+    "OAI.ZeroTemperatureSK.squareMoment_zero": "The proof rewrites $q(0)$ as $\\int_0^0\\mathbb E[a(s,X_s)^2]\\,ds$, giving the initial condition for the constructed diffusion for every admissible $\\gamma$."
+  },
+  "support.moment_identity#4": {
+    "OAI.ZeroTemperatureSK.curvatureMoment_continuousOn_unit": "The continuous function is `curvatureMoment`, the expectation $\\mathbb E[a(t,X_t)^2]$ identified with $q'$. Continuity holds on $[0,1)$ for every admissible $\\gamma$, so jumps of $\\gamma$ do not create jumps of $q'$, with no assertion at one."
+  },
+  "support.first_variation#2": {
+    "OAI.ZeroTemperatureSK.parisi_chord_derivative": "`perturbation` follows the chord from $\\gamma$ toward $\\beta$ in steps $\\varepsilon_n=1/(n+1)$. The conclusion is the limit of those sampled difference quotients, for direction $\\beta-\\gamma$."
+  },
+  "support.add_atom": {
+    "OAI.ZeroTemperatureSK.OrderParameter.addCDF": "In `val`, `finiteCDF ν t` is $\\nu([0,t])$, so choosing $\\nu=\\delta_s$ adds exactly $\\mathbf1_{[s,1)}(t)$. The remaining fields establish that the sum stays admissible for any finite measure $\\nu$."
+  },
+  "support.contact#5": {
+    "OAI.ZeroTemperatureSK.contactPotential": "The integrand is the moment `squareMoment` minus the time variable, making `contactPotential` exactly $G(s)$ for the constructed diffusion. This definition contains neither a minimality hypothesis nor the inequality $G(s)\\ge0$.",
+    "OAI.ZeroTemperatureSK.contactPotential_nonneg": "The argument `s` belongs to `Time`, so `hmin` gives $G(s)\\ge0$ for $0\\le s<1$. The proof adds a unit Dirac mass at $s$ in the variational inequality and uses `finiteCDF_fubini` to obtain the tail integral."
+  },
+  "support.contact#7": {
+    "OAI.ZeroTemperatureSK.OrderParameter.removeCDF": "The subtraction in `val` removes the cumulative mass of a finite submeasure $\\nu\\le\\mu$, and the structure fields establish admissibility of the result. For the paper's perturbation, instantiate this $\\nu$ with $\\varepsilon(\\mu|_K)$ for $0\\le\\varepsilon\\le1$."
+  },
+  "support.contact#9": {
+    "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal": "The conclusion is $\\int_K G\\,d\\mu\\le0$, the inequality obtained by removing the compact restriction. The proof uses compactness to make $\\mu|_K$ finite and applies `contactPotential_remove`, without asserting the displayed real-parameter directional derivative."
+  },
+  "support.contact#10": {
+    "OAI.ZeroTemperatureSK.finiteCDF_fubini": "For $H=q-t$ and $\\nu=\\mu|_K$, the right side is $\\int_K G(s)\\,d\\mu(s)$. The theorem rewrites the cumulative perturbation integral using interval integrability of $H$ and finiteness of $\\nu$ as assumptions."
+  },
+  "support.contact#11": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.zero_on_support_of_compact_mass_removal": "The proof restricts the measure to a compact initial interval, where `hremove` and nonnegativity force $G=0$ almost everywhere, then uses continuity to reach the support. The Stieltjes hypothesis supplies finite mass on compacts without requiring a probability normalization."
+  },
+  "support.contact_derivatives#3": {
+    "OAI.ZeroTemperatureSK.contactPotential_hasDerivAt": "The derivative value in `HasDerivAt` is $s-q(s)$ for $0<s<1$, with $q$ represented by `squareMoment W γ (diffusion W γ)`. No support or minimality hypothesis appears here, so vanishing of this derivative and the second derivative bound require further arguments.",
+    "OAI.ZeroTemperatureSK.minimizer_contact": "The two conjuncts give $q(t)=t$ and $q'(t)\\le1$ at every support point in $[0,1)$, with `curvatureMoment` representing the derivative of `squareMoment`. At zero this is the right derivative, so the conclusion includes the endpoint without asserting a two-sided derivative there."
+  },
+  "support.contact_origin_zero": {
+    "OAI.ZeroTemperatureSK.squareMoment_zero": "No support or minimality hypothesis is needed. The proof rewrites the second moment as the integral of `curvatureMoment` over the zero-length interval from $0$ to $0$."
+  },
+  "support.contact_derivatives#6": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min": "The right derivative in `hqd` allows $s=0$, but the contact identity $q(s)=s$ is assumed in `hqs`. A slope $d>1$ would give $q(t)>t$ just to the right and hence $G'(t)<0$, contradicting $G(s)=0$ and $G\\ge0$."
+  },
+  "support.positive_curvature#3": {
+    "OAI.ZeroTemperatureSK.stripThird_coercive": "At a positive continuity time, this bounds $c^2$ times `stripThird W γ T c t` below by $c^4\\mathbb E[a^4]/1000$, with $c=\\gamma(t)$ and $t\\le T<1$. Cancellation for $c>0$ and the plateau derivative identity give the non-strict bound for $q'''$.",
+    "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant": "Here `curvatureMoment` is $q'$, so differentiating its `deriv` identifies $q'''(t)$ with `stripThird W γ T c t`. The plateau's upper endpoint satisfies $b\\le T<1$, and the conclusion supplies no quantitative lower bound or strict sign.",
+    "OAI.ZeroTemperatureSK.actualQuartic_pos": "`actualJet W γ t 2` evaluates $\\Phi_{xx}$ along the constructed diffusion, so the integral is $\\mathbb E[a(t,X_t)^4]$. Its strict positivity holds for $0<t<1$ without a plateau or minimizer assumption and supplies the strict sign after multiplication by $c^2/1000$ when $c>0$."
+  },
+  "support.zero_curvature#3": {
+    "OAI.ZeroTemperatureSK.curvatureMoment_hasDerivAt_on_constant": "The `HasDerivAt` conclusion differentiates `curvatureMoment`, which is $q'$, and gives `stripSecond W γ T c t` as $q''(t)$ on a constant interval. Setting $c=0$ leaves the expansion as $\\mathbb E[\\Phi_{xxx}^2]$ and its positivity to separate results.",
+    "OAI.ZeroTemperatureSK.stripSecond_eq_actual": "At $c=0$, the cubic term vanishes and `actualJet W γ t 3` is $\\Phi_{xxx}(t,X_t)$. This gives the squared-third-derivative formula for `stripSecond` whenever $t\\le T<1$, before identifying it with $q''$ or proving strict positivity.",
+    "OAI.ZeroTemperatureSK.stripSecond_zero_pos": "For $0<t\\le T<1$, the proof expands `stripSecond` at $c=0$ and uses the positive second moment of `actualJet W γ t 3`. This supplies the strict sign of $\\mathbb E[\\Phi_{xxx}(t,X_t)^2]$, while equality with $q''(t)$ requires a zero plateau."
+  },
+  "support.positive_curvature#4": {
+    "OAI.ZeroTemperatureSK.positive_gap_curvature": "The theorem takes an arbitrary `OrderParameter`, with no minimizer hypothesis, and assumes a plateau of height $c>0$ on $(a,b)$ with $0\\le a<b<1$. Since `curvatureMoment` is $q'$, its second iterated derivative is $q'''$, whose strict positivity is the conclusion.",
+    "OAI.ZeroTemperatureSK.zero_gap_curvature": "With $\\gamma=0$ on $(a,b)$ and $0\\le a<b<1$, `deriv (curvatureMoment W γ)` is $q''$ and is strictly positive there. This zero-height conclusion holds for an arbitrary `OrderParameter` without a minimality assumption."
+  },
+  "support.no_bounded_gap#4": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap": "The gap hypothesis excludes support inside $(a,b)$ and the conclusion gives one height $c\\geq0$ there. The selected $c>0$ uses the paper’s additional distinction between an interior gap and an initial zero plateau."
+  },
+  "support.endpoint_chord_area#2": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_strictConvex_derivative": "The selected lines use strict convexity in the form $q'(t)<\\max\\{q'(a),q'(b)\\}\\le1$ for $a<t<b$, which is enough to apply `no_gap_of_derivative_lt_one`. The two barycentric weights are not expanded in this proof."
+  },
+  "support.endpoint_chord_area#4": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_gap_of_derivative_lt_one": "Endpoint contact makes the secant slope exactly one. The Lean proof obtains an interior derivative equal to that slope by the mean value theorem, contradicting `hbound`."
+  },
+  "support.no_initial_gap#2": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.zero_on_initial_support_gap": "`h0` and `hgap` make the cumulative mass $\\mu([0,t])$ vanish at each $0<t<b$. The Stieltjes relation then sets $\\gamma(t)=0$ throughout that open interval."
+  },
+  "support.initial_endpoint_conditions": {
+    "OAI.ZeroTemperatureSK.minimizer_contact": "For a minimizer, apply the support implication at $t=\\ell'$. Its first conjunct gives $q(\\ell')=\\ell'$, and its second bounds `curvatureMoment` by $1$ there, which is the slope bound through the derivative identity for the second moment."
+  },
+  "support.initial_zero": {
+    "OAI.ZeroTemperatureSK.squareMoment_zero": "The proof rewrites `squareMoment W γ (diffusion W γ) 0` as a zero-length integral, supplying $q(0)=0$ without assuming $0\\in S$ or $G(0)=0$."
+  },
+  "support.no_initial_gap#5": {
+    "OAI.ZeroTemperatureSK.zero_gap_curvature": "Taking $a=0$ and $b=\\ell'$ gives $q''(t)>0$ on the open zero plateau because `curvatureMoment` is $q'$. The comparison with $q'(\\ell')$ additionally uses continuity up to the right endpoint and its contact bound.",
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_zero_constant_gap": "`strictMonoOn_of_deriv_pos` turns `hcurvature` and `hc'` into strict increase of $q'$ on $[a,b]$. The selected comparison then gives $q'(t)<q'(b)\\le1$ for every $a<t<b$, providing the hypothesis for `no_gap_of_derivative_lt_one`."
+  },
+  "support.no_initial_gap#6": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.no_zero_constant_gap": "The right endpoint bound `hdb` suffices because `hcurvature` makes $q'$ strictly increasing. Lean then finds an interior slope of one by the mean value theorem and contradicts $q'<1$ there."
+  },
+  "support.terminal_chord_barrier#4": {
+    "OAI.ZeroTemperatureSK.terminal_plateau_q_lt_near_one": "The theorem finds a later threshold $b<1$ such that $q(t)<t$ for $b<t<1$. Its proof uses the square-root deficit near one on a terminal plateau of height $c\\geq0$."
+  },
+  "support.terminal_minimality_contradiction": {
+    "OAI.ZeroTemperatureSK.minimizer_no_terminal_plateau": "Lean uses a threshold $b$ chosen near one. The positive integral of $t-q(t)$ on $(b,1)$ is rewritten as `-contactPotential W γ b`, contradicting the nonnegativity at $b$ supplied by `hmin`."
+  },
+  "support.full_relative_support#5": {
+    "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "`μ.support = univ` is equality in the subtype `Time`, whose underlying real interval is $[0,1)$, so it gives the relative-support conclusion. The remaining conjuncts give strict increase of $\\gamma$ and both moment identities for the constructed diffusion throughout that interval."
+  },
+  "support.full_contact_conclusion": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.full_support_of_contact_and_gap_curvature": "After proving `μ.support = univ`, the proof applies the first component of `hcontact` to each $t\\in[0,1)$ to obtain $q(t)=t$. This deterministic theorem assumes the contact conditions, curvature on constant intervals and absence of a terminal plateau, and also concludes strict increase of $\\gamma$."
+  },
+  "support.moment_saturation#5": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_eq_one_of_full_contact": "For $0<t<1$, uniqueness of derivatives compares `hd` with the derivative of the identity function. At zero, `hd0` makes the same comparison within $[0,\\infty)$, so the conclusion $q'(0)=1$ concerns the right derivative."
+  },
+  "support.strict_increase#2": {
+    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support": "The proof uses full support at an interior midpoint to show $\\mu((a,b])>0$, then combines this with `cdf_add_Ioc` to obtain $\\gamma(a)<\\gamma(b)$. The conclusion gives the strict inequality, with the equality involving interval mass supplied separately.",
+    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc": "The equality uses `ENNReal.ofReal` and addition, with `Ioc a b` preserving the endpoint convention $(a,b]$. For nonnegative $\\gamma$ it yields the real increment formula, while the strict sign in the passage follows separately from full support and $a<b$."
+  },
+  "support.terminal_defect#2": {
+    "OAI.ZeroTemperatureSK.terminal_plateau_second_moment_defect": "For each fixed positive $s>a$, the existential constant $C>0$ is uniform in $T$. The bound is restricted to $T\\ge(s+1)/2$ with $8c\\sqrt{1-T}$ times `kernelConstant` at most $1/2$, hence to times sufficiently near one."
+  },
+  "support.backward_shapes#3": {
+    "OAI.SKValue.spatialJet": "Taking $n=0$ and $\\psi=\\Phi(t,\\cdot)$ gives $c\\Phi_x(t,x)=r(t,x)$. Higher indices count spatial derivatives of $\\Phi_x$, so $n=1,2,3$ give $v,w,z$ for smooth $\\Phi$."
+  },
+  "section3.v": {
+    "OAI.ZeroTemperatureSK.Heat.certV": "The argument `r` is a function of $x$ alone, so `deriv r` is the spatial derivative at a fixed time and supplies $v$ when $r=c\\Phi_x$."
+  },
+  "section3.w": {
+    "OAI.ZeroTemperatureSK.Heat.certW": "The index $2$ in `iteratedDeriv 2 r` counts derivatives of $r$, giving $w=\\partial_x^2r=c\\Phi_{xxx}$ when $r=c\\Phi_x$."
+  },
+  "section3.z": {
+    "OAI.ZeroTemperatureSK.Heat.certZ": "The index $3$ differentiates $r$ three times in space, giving $z=c\\Phi_{xxxx}$ under $r=c\\Phi_x$."
+  },
+  "support.backward_shapes#4": {
+    "OAI.ZeroTemperatureSK.compactRate_jet_one": "On $[0,T]$, `compactJet` indices $0,1,2$ represent $\\Phi_x,\\Phi_{xx},\\Phi_{xxx}$, so the right side is $-\\tfrac12\\Phi_{xxx}-\\gamma(t)\\Phi_x\\Phi_{xx}$. Inside a plateau, the separate time-derivative identity and multiplication by its constant height $c$ turn this into the equation for $r_t$."
+  },
+  "section3.drift_pairs": {
+    "OAI.ZeroTemperatureSK.compactJetField_generator_one": "On the plateau, `compactJetField` at index `1` represents $\\Phi_{xx}$, and its `generator` gives $-c(\\Phi_{xx})^2$. Scaling the field by $c$ makes the drift of $v$ equal to $-v^2$.",
+    "OAI.ZeroTemperatureSK.compactJetField_generator_two": "At index `2`, `compactJetField` represents $\\Phi_{xxx}$, and its `generator` gives $-3c\\Phi_{xx}\\Phi_{xxx}$ on the plateau. Scaling the field by $c$ gives the drift $-3vw$."
+  },
+  "support.plateau_transfer#5": {
+    "OAI.ZeroTemperatureSK.stripSecond_eq_actual": "This expands `stripSecond` as $\\mathbb E[\\Phi_{xxx}^2-2c\\Phi_{xx}^3]$ along the actual diffusion for $t\\le T<1$. After multiplication by $c^2$, the right side is $\\mathbb E[w^2-2v^3]$, and a separate plateau derivative identity turns the left side into $c^2q''$.",
+    "OAI.ZeroTemperatureSK.stripThird_eq_actual": "The expansion gives $\\mathbb E[\\Phi_{xxxx}^2-12c\\Phi_{xx}\\Phi_{xxx}^2+6c^2\\Phi_{xx}^4]$ for `stripThird` along the diffusion. Multiplication by $c^2$ produces $\\mathbb E[z^2-12vw^2+6v^4]$, while interpretation as $c^2q'''$ requires the constant-interval derivative identity.",
+    "OAI.ZeroTemperatureSK.curvatureMoment_hasDerivAt_on_constant": "The function being differentiated is `curvatureMoment`, hence $q'$, and its derivative on the constant interval is `stripSecond W γ T c t`. This supplies the time-derivative step for the first line of (4), before expanding the expectation or multiplying by $c^2$.",
+    "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant": "`deriv (curvatureMoment W γ)` is $q''$, so its `HasDerivAt` value is the $q'''$ needed in the second line of (4). The declaration supplies `stripThird W γ T c t` as that value on the plateau, leaving its spatial expansion and multiplication by $c^2$ to other steps."
+  },
+  "section3.coercive_target": {
+    "OAI.ZeroTemperatureSK.actual_coercivity": "The three `actualJet` terms of orders $2,3,4$ are the derivatives before scaling by $c=\\gamma(t)$. The powers of $c$ inside `coerciveJetPolynomial` produce the paper’s $z^2-12vw^2+6v^4$ at a positive continuity point."
+  },
+  "section3.smooth_terminal": {
+    "OAI.ZeroTemperatureSK.Heat.softAbs": "The parameter `M` scales the argument of $\\cosh$ and divides the logarithm, giving $M^{-1}\\log(2\\cosh(Mx))$. Positivity of $M$ and its role as a bound for the coefficient are supplied by the finite-step construction."
+  },
+  "support.step_tails#4": {
+    "OAI.ZeroTemperatureSK.Heat.varianceHeat_exp_eq_exp_log": "The equality identifies $e^{c\\Phi}$ with the heat evolution of $e^{cf}$ when $\\Phi$ is `varianceLogHeat c h f`, and the code's `h` is the variance parameter. The displayed PDE and logarithmic derivative require further differentiation of this semigroup identity."
+  },
+  "support.step_tails#6": {
+    "OAI.ZeroTemperatureSK.Heat.finiteDensity": "At a positive partition time $ih$, splitting the exponential gives $e^{c_i\\Phi_i(x)}e^{-x^2/(2ih)+L_i(x)}$, with `backwardBoundary` as $\\Phi_i$ and `forwardBoundary` as $L_i$. The definition supplies this factorization at partition times without asserting either heat equation within a step.",
+    "OAI.ZeroTemperatureSK.finite_density_identity": "At $ih>0$ with $1\\le i\\le N$, every `BoundedSmooth` test function has the same expectation under the finite-step diffusion and integration against `finiteDensity`. This identifies the density at partition times for positive coefficients and a regular $1$-Lipschitz terminal datum, without stating the within-step heat equations."
+  },
+  "support.forward_shapes#2": {
+    "OAI.ZeroTemperatureSK.Heat.forwardScore": "For the smooth factor $g=e^{-x^2/(2(a+t))+L}$ with $a>0$ and $t\\ge0$, this formula is $-\\partial_x\\log g$ with $L$ given by `forwardCorrection a f t`. The denominator `forwardTime a t` equals $a+t$, including the time elapsed before the step."
+  },
+  "section3.odd_positive": {
+    "OAI.ZeroTemperatureSK.Heat.finiteHead_backward_shape": "`BackwardShape` includes oddness and a strictly positive spatial derivative for the finite-step drift. Hence $r(0)=0$ and $r(x)>0$ for $x>0$ follow for positive nondecreasing step heights bounded by $M$, while this declaration gives no conclusion about $s$.",
+    "OAI.ZeroTemperatureSK.Heat.forwardScore_odd": "The even datum gives an even `forwardCorrection`, whose spatial derivative is odd, and the Gaussian term is also odd. The conclusion is oddness of $s$ for every real time parameter, with positivity on $x>0$ requiring a separate slope bound.",
+    "OAI.ZeroTemperatureSK.Heat.SmoothForward.deriv_ge_inverse": "The surrounding hypothesis `hs` assumes `SmoothForward s`, and `hi` supplies $s_x(0,x)\\ge1/a$. For $a>0$ it propagates $s_x(t,x)\\ge1/(a+t)>0$ for $t\\ge0$, so positivity of $s$ on $x>0$ additionally uses $s(t,0)=0$."
+  },
+  "support.backward_shapes#7": {
+    "OAI.ZeroTemperatureSK.Heat.finiteHead_backward_shape": "On $x>0$, `BackwardShape` gives $v>0$ and $w\\le0$, while `rate_nonpos` and `wronskian_nonneg` express $rH\\le0$ and $r^2H_x\\ge0$. Positivity of $r$ converts these into the stated inequalities for $H$ in the positive nondecreasing finite-step model, with no forward-score conclusions.",
+    "OAI.ZeroTemperatureSK.Heat.SmoothForward.deriv_ge_inverse": "The surrounding `SmoothForward s` hypothesis and the initial bound `hi` are required to propagate $s_x(t,x)\\ge1/(a+t)$ for $a>0$ and $t\\ge0$. The denominator is `forwardTime a t`, so this row supplies only the slope estimate for $s$ in the display.",
+    "OAI.ZeroTemperatureSK.Heat.SmoothForward.second_nonpos": "For a `SmoothForward` solution, `ho` requires oddness at every time and `hi` requires $s_{xx}(0,x)\\le0$ on $x\\ge0$. The conclusion propagates this concavity to all $t\\ge0$, including the boundary $x=0$.",
+    "OAI.ZeroTemperatureSK.Heat.finite_forward_ratio": "On $x>0$, `ratioWronskian` is $rs_x-sr_x=rj$, and positivity of $r$ turns its nonnegativity into $j\\ge0$. The indices $0<i<N$ restrict this result to steps after the first, with local time $0\\le t\\le h$ and positive nondecreasing coefficients bounded by $M$.",
+    "OAI.ZeroTemperatureSK.Heat.certJ": "Substituting `certV r = deriv r` gives exactly $s_x-(s/r)r_x$. For differentiable $r,s$ with $r(x)\\ne0$ this equals $r\\,\\partial_x(s/r)$, but the definition makes no nonnegativity assertion."
+  },
+  "support.forward_shapes#5": {
+    "OAI.ZeroTemperatureSK.Heat.ReverseBurgers.ratio_nonneg": "`hi` gives $rs_x-sr_x\\geq0$ at the initial time. Under the assumed backward shape and forward score signs, Lean propagates that inequality through the closed step, including its endpoint."
+  },
+  "section3.backward_concavity": {
+    "OAI.ZeroTemperatureSK.Heat.SmoothBurgers.second_nonpos": "For `SmoothBurgers r`, the time variable is the paper's backward time $\\tau$. The initial sign `hi` at $\\tau=0$ is the paper's terminal condition, and oddness supplies the boundary value $r_{xx}(\\tau,0)=0$ used to propagate $r_{xx}\\le0$ for $\\tau\\ge0$ and $x\\ge0$."
+  },
+  "support.forward_shapes#7": {
+    "OAI.ZeroTemperatureSK.Heat.tangent_bound_of_concave_odd": "Smoothness, concavity on the positive half-line and $r(0)=0$ give $xr_x\\leq r$ for $x\\geq0$. When $s=x/t$ with $t>0$ and $r(x)>0$, the same inequality reads $j=(r-xr_x)/(tr)\\geq0$.",
+    "OAI.ZeroTemperatureSK.Heat.ratioWronskian_first_jump": "For positive $a,c,d$, the conclusion gives $rs_x-sr_x\\ge0$ after the first jump with $r=d\\phi_x$, without assuming $d\\ge c$. The proof uses the tangent bound to make the Gaussian-score numerator $(c/a)(\\phi_x-x\\phi_{xx})$ nonnegative, then multiplies it by $d/c$."
+  },
+  "support.forward_shapes#8": {
+    "OAI.ZeroTemperatureSK.Heat.datumScore_jump": "Replacing the correction $L$ by $L-\\delta\\phi$ adds $\\delta\\phi_x$ to `datumScore`, since its definition is $x/a-L_x$. Taking $\\delta=c_+-c_-$ gives $s_+=s_-+(k-1)r_-$ when $r_-=c_-\\phi_x$ and $c_->0$, while the scaling of $r$ and invariance of $j$ require separate identities.",
+    "OAI.ZeroTemperatureSK.Heat.ratioWronskian_jump": "The conclusion scales `ratioWronskian`, namely $rs_x-sr_x$, by $d/c$ with $c=c_-$ and $d=c_+$. Where $r_+\\ne0$, this is the scaling of $rj$, and division by $r_+=(d/c)r_-$ gives $j_+=j_-$."
+  },
+  "support.backward_shapes#9": {
+    "OAI.ZeroTemperatureSK.Heat.quotientExtension_continuous": "When $g(0)=0$, `quotientExtension` agrees with $g/r$ off zero and takes $g'(0)/r'(0)$ at zero. Applied to the odd functions $w$ and $s$, the lemma proves continuity of the extensions, while the paper asserts smoothness."
+  },
+  "support.rational_certificate#6": {
+    "OAI.ZeroTemperatureSK.Heat.certR": "The square is taken after evaluating $r$ at $x$, so $R(x)=r(x)^2\\ge0$ requires no regularity or shape assumption.",
+    "OAI.ZeroTemperatureSK.Heat.certK": "`certK` is the pointwise product of the backward and forward scores $r$ and $s$. In the certificate the sign of that product follows from the score estimates.",
+    "OAI.ZeroTemperatureSK.Heat.certB": "`certB` names the raw quotient for lowercase $b=-r_{xx}/r$. At a zero of $r$, Lean’s total division gives zero, while the paper uses the smooth extension of the quotient.",
+    "OAI.ZeroTemperatureSK.Heat.certL": "The second spatial derivative is taken only of $s$, then multiplied by $-r(x)$, giving $L(x)=-r(x)s_{xx}(x)$.",
+    "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs": "The proof rewrites $B$ as $-2$ times `burgersRate` divided by $r$, and $S$ as twice `backwardWronskian` divided by $r$. Their signs follow from `hshape` and $r(x)>0$ on the required domain $x>0$."
+  },
+  "section3.nonnegative_variables": {
+    "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs": "The conclusion lists seven signs for $R,K,v,j,B,L,S$, with $b\\ge0$ following from $B=b-2v\\ge0$ and $v\\ge0$. The hypothesis `hx` restricts these signs to $x>0$, leaving negative $x$ and the smooth extension values at zero outside this statement."
+  },
+  "support.flux_identity#4": {
+    "OAI.ZeroTemperatureSK.Certificate.DF₂": "Each summand multiplies one component of the displayed $\\mathcal D(R,K,v,b,j)$ by the corresponding partial derivative of $F_2$. Thus `DF₂` substitutes the five rules into $\\mathcal DF_2$, without proving those rules for spatial functions.",
+    "OAI.ZeroTemperatureSK.Heat.cert_flux_derivative": "The proof establishes the five differential rules for `certR`, `certK`, `certV`, `certB` and `certJ` at $r(x)\\ne0$. It applies them to the flux for $F_2$, with `hρ` supplying $\\rho'(x)=(r(x)-s(x))\\rho(x)$."
+  },
+  "support.flux_identity#5": {
+    "OAI.ZeroTemperatureSK.Certificate.WF₂": "The term `DF₂` supplies $\\mathcal DF_2$, and `(v+R-K)*F₂` adds the product-rule contribution from $rf$. The definition specializes $\\mathcal W(F)$ to the fixed polynomial $F_2$."
+  },
+  "support.flux_identity#7": {
+    "OAI.ZeroTemperatureSK.Heat.cert_flux_derivative": "Here `certFlux` is $r\\rho F_2$ and `certDivergence` is $\\rho\\mathcal W(F_2)$. Their derivative relation holds at $x$ assuming $r(x)\\ne0$ and $\\rho'(x)=(r(x)-s(x))\\rho(x)$, specializing the paper's identity to $F_2$."
+  },
+  "support.flux_identity#8": {
+    "OAI.ZeroTemperatureSK.Heat.cert_flux_continuous": "The proof replaces $w/r$ and $s/r$ by continuous divided-difference quotients inside $F_2$. At zero the outer factor $r(0)=0$ makes the rewritten expression agree with `certFlux`, establishing continuity across the origin without asserting either limit at infinity.",
+    "OAI.ZeroTemperatureSK.Heat.certificate_growth": "The two conjuncts bound the absolute values of the substituted $F_2$ and $\\mathcal W(F_2)$ by exponentials in $|x|$. Obtaining a vanishing flux also requires multiplication by $r\\rho$ and the Gaussian tail bound.",
+    "OAI.ZeroTemperatureSK.Heat.gaussian_expBound_tendsto_zero": "For $d>0$, the exponential growth bound `hg` gives $e^{-dx^2}g(x)\\to0$ as $x\\to+\\infty$. This supplies one endpoint limit for a general $g$, with the flux substitution and the negative endpoint requiring further arguments."
+  },
+  "support.flux_identity#9": {
+    "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity": "The local equality `hiZero` removes $\\rho\\mathcal W(F_2)$ on $(0,\\infty)$ by integrating the flux derivative. Continuity and $r(0)=0$ give the zero boundary value at the origin, and the tail estimate supplies the limit at $+\\infty$."
+  },
+  "support.rational_certificate#8": {
+    "OAI.ZeroTemperatureSK.Certificate.Q": "The coefficient `k` is $19/16$, so `-2*k*R*b` is the displayed $-19Rb/8$. The remaining abbreviations give $1/13$, $53/24$ and $73/48$ for the other three coefficients of $Q$.",
+    "OAI.ZeroTemperatureSK.Certificate.T": "`g₀` and `h` are $2331/10000$ and $87/2500$. Both terms in `Certificate.T` contain $v$, so the displayed factorisation leaves a linear expression in $R$ and $j$."
+  },
+  "section3.F2b": {
+    "OAI.ZeroTemperatureSK.Certificate.F₂b": "The definition fixes `F₂b` to be $2Q+T$. The chain rule `hasDerivAt_F₂` supplies the identification with the $b$ partial derivative of the separately defined $F_2$.",
+    "OAI.ZeroTemperatureSK.Certificate.hasDerivAt_F₂": "In the chain-rule conclusion, the coefficient of `b'` is `F₂b`, whose definition is $2Q+T$. Holding the other four inputs constant and letting $b$ vary with derivative one yields $\\partial_bF_2=2Q+T$."
+  },
+  "support.rational_certificate#3": {
+    "OAI.ZeroTemperatureSK.Certificate.F₂": "Expanding the subtraction of `F₁` supplies the $b^2$ and $b$ terms, with `g₀` plus twice `T₀` giving the coefficient $98243/30000$ of $Rvb$. The four explicit terms before the subtraction are independent of $b$."
+  },
+  "support.rational_certificate#11": {
+    "OAI.ZeroTemperatureSK.Certificate.rational_identity": "The call `weightedSquares R K v b (b-2*v) j` substitutes $B=b-2v$, and the factor multiplying `T` substitutes $S=z+bv-2Rb$. Expanding `WF₂` and `remainder` gives the displayed identity for arbitrary real inputs, without sign assumptions."
+  },
+  "support.rational_certificate#4": {
+    "OAI.ZeroTemperatureSK.Certificate.remainder": "All 22 monomials are written explicitly in $R,K,v,B,j$, with strictly positive rational coefficients interpreted in $\\mathbb R$. The coefficient of $v^4$ is $1661507/1521000000$, which is retained in the coercive lower bound."
+  },
+  "support.rational_certificate#13": {
+    "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity": "The proof derives $b\\ge0$ from `hB` and `hv`, then proves nonnegativity of $ST$, the weighted squares and the $L$ terms. `remainder_lower_bound` contributes at least $\\frac{1661507}{1521000000}v^4$, while $\\mathcal W(F_2)$ is retained without a sign condition."
+  },
+  "support.rational_certificate#14": {
+    "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity": "In the spatial application, $H_x\\ge0$ supplies `hS`, the assumption $z+bv-2Rb\\ge0$. The selected multiplication combines it with $T\\ge0$, obtained from $R,v,j\\ge0$, to give $ST\\ge0$."
+  },
+  "support.rational_certificate#15": {
+    "OAI.ZeroTemperatureSK.Certificate.pointwise_coercivity": "The selected line treats the two $L$ terms together as $L(\\frac{4663}{5000}v^2+\\frac{87}{2500}bv)$. The concavity input is represented by `hL`, and the mixed term also uses $b\\ge0$, derived from $b-2v\\ge0$ and $v\\ge0$."
+  },
+  "section3.ratio_uses": {
+    "OAI.ZeroTemperatureSK.Certificate.rational_identity": "Expanding `T`, `weightedSquares` and `remainder` reveals the $jv$ term in $T$, the $Rj$ square and the five monomials $Rv^2j,RvBj,RB^2j,Kv^2j,KvBj$. Their nonnegativity uses $j\\ge0$, whereas the polynomial identity itself requires no sign assumptions."
+  },
+  "support.integrated_coercivity#8": {
+    "OAI.ZeroTemperatureSK.Certificate.integrated_coercivity_of_flux": "Given the listed signs, integrability and flux derivative, `hbot` and `htop` remove the correction at both infinities and leave the exact coefficient $\\kappa$. The conclusion uses $Rvb^2$, so its identification with the paper's $vw^2$ additionally requires $Rb^2=w^2$.",
+    "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity": "The local bound `hfull` retains the exact coefficient $\\kappa$ and obtains the full-line integrals by doubling the positive half-line integrals of the two even functions. The theorem's final conclusion then weakens $\\kappa$ to $1/1000$.",
+    "OAI.ZeroTemperatureSK.Certificate.coercivity_constant": "The strict comparison $1/1000<\\kappa$ permits reducing the coefficient in an integral lower bound when the quartic integral is nonnegative. This declaration supplies the numerical comparison alone."
+  },
+  "support.plateau_transfer#7": {
+    "OAI.ZeroTemperatureSK.positiveCoeff": "`positiveCoeff` adds the mesh size `approxMesh n` to the sampled coefficient, after truncating the index at $n$. In the paper the approximation keeps the plateau height exactly $c$ near the chosen time.",
+    "OAI.ZeroTemperatureSK.positiveGamma_L1": "The $L^1$ error here is for the fixed scheme `positiveGamma γ n`, whose sampled heights carry the extra mesh offset. The selection constructs a separate sequence that also preserves the plateau height.",
+    "OAI.ZeroTemperatureSK.positiveCoeff_bound": "The bound holds for every height index `j` at fixed `n`, so `positiveTerminal` dominates all heights of the positive step coefficient. Its definition is $n+1$ plus the last height, but this lemma states neither divergence of the terminal parameters nor preservation of a plateau."
+  },
+  "support.plateau_transfer#9": {
+    "OAI.ZeroTemperatureSK.positiveValue_derivative_uniform": "For each spatial derivative order $m$, Lean gives uniform convergence of `positiveValue` on $[0,T]\\times\\mathbb R$ with $T<1$. The sequence named in the theorem is the fixed positive approximation with the mesh offset.",
+    "OAI.ZeroTemperatureSK.positivePath_uniform_error": "The error bound is uniform in time up to $T$ and in the sample point `ξ`. The processes in the estimate are `positivePath` from the fixed positive approximation and `diffusion W γ` from the original coefficient."
+  },
+  "support.plateau_transfer#10": {
+    "OAI.ZeroTemperatureSK.sampleCoercive_integral_limit": "The limit integrand `coerciveJetPolynomial` uses only $\\gamma(t)$ and `actualJet` of orders $2,3,4$, so no forward score or quotient appears. The proof passes expectations by dominated convergence, with `ht` needed for convergence of the sampled coefficient at $t$."
+  },
+  "support.positive_curvature#5": {
+    "OAI.ZeroTemperatureSK.stripThird_coercive": "At a continuity point $0<t\\le T$, the theorem bounds $c^2$ times `stripThird` below by $c^4\\mathbb E a^4/1000$, with $c=\\gamma(t)$. Assuming $c>0$ permits division by $c^2$, after which the derivative formula on a constant interval identifies `stripThird` with $q'''$."
+  },
+  "support.positive_curvature#6": {
+    "OAI.ZeroTemperatureSK.actualQuartic_pos": "Here `actualJet` of order $2$ is $\\Phi_{xx}(t,X_t)$, whose fourth moment is strictly positive for $0<t<1$. The proof uses nonvanishing somewhere in space and positive diffusion mass on every open interval, without requiring pointwise strict positivity of $\\Phi_{xx}$."
+  },
+  "support.zero_curvature#4": {
+    "OAI.ZeroTemperatureSK.curvatureMoment_hasDerivAt_on_constant": "Here `curvatureMoment` is $\\mathbb E a^2$, and the theorem differentiates it to obtain `stripSecond` when $\\gamma=c$ on an open interval containing $t$. At $c=0$, identifying that derivative with $q''$ and expanding `stripSecond` are separate steps needed to obtain the selected formula.",
+    "OAI.ZeroTemperatureSK.stripSecond_eq_actual": "Setting `c` to zero cancels the cubic-curvature term, leaving the expected square of `actualJet` of order $3$. The assumption $t\\le T$ identifies the strip diffusion with the actual diffusion, while the connection to $q''$ requires a separate time-derivative statement."
+  },
+  "support.zero_curvature#5": {
+    "OAI.ZeroTemperatureSK.actualThirdSquare_pos": "The proof applies positivity of even moments to the third spatial derivative, using `third_not_identically_zero` for nonvanishing. Positive mass on every open interval then makes the expected square strictly positive for $t>0$, without a density assertion in this lemma.",
+    "OAI.ZeroTemperatureSK.diffusion_interval_pos": "The conclusion assigns positive probability to $X_t\\in(a,b)$ whenever $a<b$ and $0<t<1$. This supplies full spatial support of the diffusion law, enough for the strict moment argument without asserting a pointwise positive density.",
+    "OAI.ZeroTemperatureSK.third_not_identically_zero": "If the third derivative vanished identically, the curvature would be constant and the gradient affine. The bound $|\\Phi_x|\\leq1$ then forces that constant to be zero, contrary to nonvanishing of the curvature."
+  },
+  "support.fixed_time_spatial_coercivity#8": {
+    "OAI.ZeroTemperatureSK.stripThird_eq_actual": "Taking `c` to be $\\gamma(t)$ identifies `stripThird` with the displayed $\\mathcal C_\\gamma(t)$, with `actualJet` orders $2,3,4$ representing $a,\\Phi_{xxx},\\Phi_{xxxx}$. The condition $t\\le T$ removes the strip truncation, and neither time differentiation nor continuity of $\\gamma$ at $t$ is assumed."
+  },
+  "support.fixed_time_spatial_coercivity#11": {
+    "OAI.SKValue.IsDiffusion.literal_coercivity": "After expanding the scalar model’s `spatialJet`, the two sides are $c^2\\mathcal C_\\gamma(t)$ and $c^4\\mathbb E[a(t,X_t)^4]/1000$. The paper assumes $c>0$ when it divides by $c^2$.",
+    "OAI.ZeroTemperatureSK.actual_coercivity": "The support-model statement uses the constructed diffusion, with `ht` requiring continuity of $\\gamma$ at $t$. Its polynomials give the displayed inequality after division by $c^2>0$."
+  },
+  "support.fixed_time_spatial_coercivity#12": {
+    "OAI.SKValue.IsDiffusion.literal_coercivity": "The hypotheses are `IsDiffusion W γ X` in the scalar model and $t\\in(0,1)$. In the proof `split_spatialJet_limit` converges to jets with coefficient `γ.coeff t` at that time, including at a jump."
+  },
+  "support.fixed_time_spatial_coercivity#16": {
+    "OAI.ZeroTemperatureSK.actual_coercivity": "Apply `actual_coercivity` to the paper’s modified parameter $\\gamma_\\delta$. Constancy near the positive time $t$ supplies `ContinuousAt`, and its value $c$ there gives the unscaled estimate after division by $c^2$."
+  },
+  "support.fixed_time_spatial_coercivity#21": {
+    "OAI.SKValue.IsDiffusion.literal_coercivity": "Read orders $1,2,3$ in `spatialJet` as $ca,cb,cd$, with $c=\\gamma(t)$ in the scalar model. Cancelling the common $c^2$ for $c>0$ gives the lower bound in the selection."
+  },
+  "scalar.smooth_positive_density#5": {
+    "OAI.ZeroTemperatureSK.compactJetField_generator_one": "`compactJet W γ T 1` is the first spatial derivative of the gradient on the strip, so it represents $a$. The `generator` identity gives the drift $-\\gamma a^2$ in the selected stochastic differential."
+  },
+  "scalar.smooth_positive_density#6": {
+    "OAI.ZeroTemperatureSK.stripA_hasDerivWithinAt_right": "The function `stripA` is the second curvature moment on the strip, and the conclusion gives its derivative from the right at every $0\\le s<T$. The derivative value `stripSecond` is the expected $\\Phi_{xxx}^2-2\\gamma(s)a^3$, while its vanishing requires the separate minimiser identity."
+  },
+  "scalar.smooth_positive_density#7": {
+    "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "The last conjunct gives `curvatureMoment W γ t = 1` for the constructed diffusion. This is the $\\mathbb E[a^2]=1$ inserted in the right-derivative calculation."
+  },
+  "scalar.smooth_positive_density#9": {
+    "OAI.ZeroTemperatureSK.curvature_nonneg": "The derivative of the monotone gradient is nonnegative, giving $a(t,x)\\ge0$ for every $x$ and $0\\le t<1$. Evaluating at $X_t$ supplies the sign used in the moment comparison, without a minimiser assumption."
+  },
+  "scalar.smooth_positive_density#10": {
+    "OAI.SKValue.IsDiffusion.jetMoment_continuous": "The moments in (8) use the square of jet coordinate $2$ and the cube of coordinate $1$, since coordinate $n$ is $\\partial_x^{n+1}\\Phi$. The conclusion makes both continuous on $[0,T]$ for $0\\le T<1$, including zero, without assuming continuity of $\\gamma$."
+  },
+  "density.evenness": {
+    "OAI.ZeroTemperatureSK.value_even": "The `Function.Even` conclusion gives spatial symmetry $\\Phi(t,-x)=\\Phi(t,x)$ for $0\\le t\\le1$, including the terminal profile. At $t=0$ this supplies the parity needed for the separate third-derivative vanishing argument."
+  },
+  "scalar.smooth_positive_density#11": {
+    "OAI.SKValue.even_third_deriv_zero": "With $f(x)=\\Phi(0,x)$, `iteratedDeriv 2 (deriv f) 0` is the third spatial derivative at $(0,0)$. The lemma assumes only evenness and applies to any real function under Lean's total derivative convention."
+  },
+  "scalar.smooth_positive_density#12": {
+    "OAI.SKValue.jetMoment": "The expression `e` encodes $P$, and `polyJet` interprets coordinate $n$ as $\\partial_x^{n+1}\\Phi$. The integral evaluates that polynomial at $X_t$ and averages with respect to `W.μ`, giving $M_P(t)$ for any finite polynomial expression."
+  },
+  "scalar.smooth_positive_density#13": {
+    "OAI.SKValue.IsDiffusion.polyJet_generator": "The expressions `e.sourceA` and `e.sourceP` are the paper's $Q_P$ and $R_P$. The initial term is evaluated at $(0,0)$ because the diffusion starts at zero, so subtracting it gives the displayed moment identity for $0<T<1$."
+  },
+  "scalar.smooth_positive_density#14": {
+    "OAI.SKValue.IsDiffusion.polyJet_generator": "The coefficient appears only as `γ.coeff t` multiplying the `e.sourceP` moment inside the time integral. The source expressions depend on `e`, so no time derivative of $\\gamma$ occurs and no differentiability hypothesis on $\\gamma$ is needed."
+  },
+  "scalar.smooth_positive_density#15": {
+    "OAI.SKValue.IsDiffusion.jetMoment_continuous": "The proof obtains a uniform bound and joint continuity for the polynomial observable from `polyJet_joint`, then averages along almost surely continuous diffusion paths. This gives continuity of the moment on $[0,T]$, including both endpoints, for any finite polynomial `e` and $0\\le T<1$."
+  },
+  "scalar.smooth_positive_density#19": {
+    "OAI.ZeroTemperatureSK.curvatureMoment_deriv_hasDerivAt_on_constant": "With `curvatureMoment` representing $q'=\\mathbb E a^2$, the conclusion identifies $q'''$ with `stripThird`, the expectation of $\\Phi_{xxxx}^2-12ca\\Phi_{xxx}^2+6c^2a^4$. It assumes $\\gamma=c$ on $(a,b)$ and $0\\le a<t<b\\le T<1$, without passing through a formula involving $\\gamma'$."
+  },
+  "scalar.smooth_positive_density#20": {
+    "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "The `StrictMonoOn` conjunct gives $\\gamma(s)<\\gamma(t)$ whenever $0\\le s<t<1$. Taking $s=0$ and using the nonnegativity built into `OrderParameter` yields $\\gamma(t)>0$ for $0<t<1$, without requiring $\\gamma(0)=0$."
+  },
+  "scalar.manuscript_terminal_value#4": {
+    "OAI.SKValue.IsDiffusion.unitMomentMartingale": "The conclusion makes $M_t=u(t,X_t)$ a `UnitMomentMartingale` for `realFiltration`, including the bound $|M_t|\\le1$ and the martingale conditional-expectation identity for $0\\le s\\le t<1$. Its additional identity $\\mathbb E M_t^2=t$ is assumed in `hmom`, while `hreg` and the diffusion hypothesis supply the other properties."
+  },
+  "energy.unit_curvature_moment": {
+    "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "`curvatureMoment` is the square integral of the spatial curvature along `diffusion W γ` under `W.law`. The last conjunct sets it to one at every $0\\leq t<1$ under `hmin` and `hμ`."
+  },
+  "scalar.manuscript_terminal_value#7": {
+    "OAI.SKValue.UnitMomentMartingale.integral_past_mul": "The conclusion supplies the cross term $\\mathbb E[M_sM_t]=s$ for $0\\le s\\le t<1$. Combining it with the two second moments in `UnitMomentMartingale` gives $\\mathbb E[(M_t-M_s)^2]=t-s$, and the zero mean of a martingale increment identifies this with its variance."
+  },
+  "scalar.manuscript_terminal_value#8": {
+    "OAI.SKValue.diffusion_gradient_brownian_covariance": "The integrand `deriv (u t) (X t ω)` is $a(t,X_t)$, so the conclusion gives $\\mathbb E[M_TB_T]=\\int_0^T\\mathbb E[a(t,X_t)]\\,dt$. The assumptions require the stated derivative bounds, Lipschitz bounds and diffusion-path equation on the whole strip $[0,T]$, with $0<T\\le1$."
+  },
+  "scalar_value#3": {
+    "OAI.SKValue.scalar_value_target": "The witness `U` in `ScalarValueConclusion` is the left limit of `gradient W γ t (X t ω)` almost surely. The next convergence clause sends the integral of the squared difference to zero.",
+    "OAI.SKValue.ScalarValueConclusion": "A single existentially quantified $U$ appears in both the almost-sure limit as $t\\uparrow1$ and the following limit $\\mathbb E[(M_t-U)^2]\\to0$. The separate `gradientStopped` clause assigns this $U$ at time $1$ and thereafter."
+  },
+  "scalar_value#5": {
+    "OAI.SKValue.scalar_value_target": "In `ScalarValueConclusion` two successive clauses equate `groundStateValue` to the expectation of `U ω * W.B 1 ω` and the time integral of expected `curvature`. Both use the same supplied scalar-model diffusion and terminal witness.",
+    "OAI.SKValue.ScalarValueConclusion": "The clauses with `U ω * W.B 1 ω` and the time integral of `curvature` both have `groundStateValue` on the left. They give the two equalities in (11) for the same $U$, with interval integrability of the mean curvature required by the final clause."
+  },
+  "energy.terminal_bound": {
+    "OAI.SKValue.ScalarValueConclusion": "The bound $|U|\\le1$ lies inside the almost-everywhere clause, together with $U^2=1$ and $M_t\\to U$ as $t\\uparrow1$. It is a required property of the terminal variable chosen by this definition."
+  },
+  "scalar.manuscript_terminal_value#9": {
+    "OAI.SKValue.UnitMomentMartingale.terminal_square": "The assumptions require an $\\mathcal F_1$-measurable $U$ with $|U|\\le1$ almost surely and convergence along `terminalTime`, namely $1-1/(n+1)$. The proof obtains $\\mathbb E U^2=1$ by dominated convergence, then uses the nonnegative defect $1-U^2$ with zero integral to conclude $U^2=1$ almost surely."
+  },
+  "scalar.manuscript_terminal_value#11": {
+    "OAI.SKValue.IsDiffusion.terminal_gradient_product": "Along almost every path, `hd` supplies differentiability of `phi` at $X_t$ eventually as $t\\uparrow1$, and `hU` supplies the gradient limit. The proof identifies $U=\\operatorname{sign}(X_1)$ when $X_1\\ne0$ and handles $X_1=0$ by multiplication, yielding $UX_1=|X_1|$ in both cases."
+  },
+  "scalar.manuscript_terminal_value#12": {
+    "OAI.SKValue.IsDiffusion.parisi_first_value": "Under `hstrips` and `hmoment`, the proof first obtains $\\mathbb E\\Phi(T,X_T)=\\Phi(0,0)+\\frac12\\int_0^Tt\\gamma(t)\\,dt$ and lets $T\\uparrow1$. Substitution into `parisi`, which subtracts another half of the time integral, gives the full coefficient $-1$ in the selected identity."
+  },
+  "energy.diffusion_at_one": {
+    "OAI.SKValue.IsDiffusion": "The pathwise equality is quantified over $t\\in[0,1]$, so setting $t=1$ gives the selected equation almost surely, with `gradient W γ s (X s ω)` representing $M_s$."
+  },
+  "scalar.manuscript_terminal_value#13": {
+    "OAI.SKValue.UnitMomentMartingale.terminal_past_product": "With $f_t=M_t$, the proof replaces $\\mathbb E[U\\mid\\mathcal F_t]$ by $f_t$ and uses the `secondMoment` field to obtain $\\mathbb E[UM_t]=t$ for $0\\le t<1$. It requires $U$ to be $\\mathcal F_1$-measurable, bounded by one and approached almost surely along `terminalTime`."
+  },
+  "scalar.manuscript_terminal_value#14": {
+    "OAI.SKValue.ground_state_parisi_target": "The conclusion supplies $P_*=\\mathcal P(\\gamma)$ by identifying `groundStateValue` with `parisi W γ` under minimality. The proof uses the constructed diffusion internally, so the statement requires no supplied diffusion $X$."
+  },
+  "scalar.terminal_loss#2": {
+    "OAI.SKValue.IsDiffusion.curvature_mean_integrable": "The proof uses the unit curvature second moment in `ha` and Cauchy–Schwarz to obtain $|\\mathbb E[a(t,X_t)]|\\leq1$ for $t<1$. With continuity of the curvature mean, the bound yields the stated interval integrability through one."
+  },
+  "scalar.terminal_loss#4": {
+    "OAI.SKValue.IsDiffusion.strip_value_le_groundState": "The formal conclusion gives $I_T\\leq P_*$ for $0<T<1$ from the scalar diffusion and its contact identity. The paper additionally controls the size of the remaining error by $1-T$."
+  },
+  "scalar.euler_normalization#4": {
+    "OAI.SKValue.meshTime": "The natural-number index $j$ is cast to a real number and multiplied by `stepSize T N`, giving precisely $t_j=j\\Delta$. For $N>0$, the final mesh point is $t_N=T$."
+  },
+  "qaoa.euler_step_size": {
+    "OAI.SKValue.stepSize": "The quotient casts $N$ to a real number, giving the paper's $\\Delta=T/N$. The definition imposes no $N>0$ hypothesis and takes the value zero at $N=0$ under Lean's division convention."
+  },
+  "scalar.euler_normalization#1": {
+    "OAI.SKValue.gaussianProduct": "The product measure assigns a copy of `standardGaussian` to every coordinate. With index type `Fin (N+1)`, coordinates $0,\\ldots,N$ are the paper's $Z_1,\\ldots,Z_{N+1}$, and their independence comes from `Measure.pi`."
+  },
+  "scalar.euler_normalization#6": {
+    "OAI.SKValue.euler": "The `0` branch gives $Y_0=0$ and, for $j<N$, the `j+1` branch advances $Y_j$ using `coordinate N j`, the paper's $Z_{j+1}$, with drift evaluated at $(t_j,Y_j)$. This row defines the Euler path, leaving $h_j$ and $g_j$ to separate definitions.",
+    "OAI.SKValue.normalizer": "At Lean index $j-1$, this is $\\bigl(\\sqrt{\\mathbb E[a(t_{j-1},Y_{j-1})^2]}\\bigr)^{-1}$ under the finite Gaussian product law. It supplies the deterministic reciprocal denominator without asserting that the second moment is positive.",
+    "OAI.SKValue.gaussianIncrement": "To read the paper's $g_j$, use Lean index $j-1$. The three factors are the reciprocal denominator, $a(t_{j-1},Y_{j-1})$ and $Z_j$, respectively."
+  },
+  "scalar.conditional_rounding#2": {
+    "OAI.SKValue.roundedSign": "The terminal field in the sign is the gradient at the Euler point $Y_N$. The uniform variable for rounding comes from `coordinate N N z`, the last Gaussian $Z_{N+1}$, and `Real.sign` takes the value zero at an exact threshold."
+  },
+  "scalar.conditional_rounding#3": {
+    "OAI.SKValue.finite_rounding_coefficient": "For any measurable $U$ with $|U|\\le1$ and any measurable integrable $K$, both depending only on the first $N$ coordinates, the conclusion is $\\mathbb E[FK]=\\mathbb E[UK]$, where $F$ is the rounded sign in the integral. Taking $U=u(T,Y_N)$ gives the test-function form of the selected conditional expectation."
+  },
+  "scalar.euler_normalization#7": {
+    "OAI.SKValue.finite_gaussian_target": "The first clause of `FiniteGaussianConclusion` is eventual in the mesh size $N$ and simultaneous over every $j<N$. Lean states positivity of `normalizer`, the inverse square root of the second moment of `rawCoefficient`."
+  },
+  "scalar.shifted_gaussian_limit#3": {
+    "OAI.SKValue.shiftedCoefficientSum": "The $j=0$ term vanishes because `coefficientA` is defined to be zero there. For $1\\le j\\le N$, its product with `coefficientB` at $j+1$ is $\\mathbb E[F_Ng_j]\\mathbb E[F_NZ_{j+1}]$, so this declaration defines $S_{T,N}$ without stating a limit.",
+    "OAI.SKValue.finite_gaussian_target": "The middle clause of `FiniteGaussianConclusion` fixes $T\\in(0,1)$ and sends `shiftedCoefficientSum W γ T N` to the expected curvature integral through time $T$. Its separate final clause sends that integral to `groundStateValue` as the cutoff approaches one from below."
+  },
+  "qaoa.multiplier_uses_the_past": {
+    "OAI.SKValue.mesh_raw_depends": "For the paper's $h_j$, apply this lemma at Lean index $j-1$. It shows that the raw numerator `meshRaw` uses only $Z_1,\\ldots,Z_{j-1}$, and multiplication by the deterministic normaliser preserves that dependence."
+  },
+  "scalar.euler_normalization#8": {
+    "OAI.SKValue.normalizedIncrement_mean": "Independence factors the integral of $HZ$, and $\\mathbb E Z=0$ makes the scaled increment centred. The hypotheses require almost-everywhere strong measurability of $H$ and a standard Gaussian law for $Z$, but no positivity assumption on the second moment of $H$."
+  },
+  "qaoa.orthonormal_increments": {
+    "OAI.SKValue.normalized_family_orthonormal": "For any measurable family whose $j$th multiplier depends only on coordinates below $j$ and has positive second moment, the displayed integral is $\\delta_{ij}$. Lean indices $0,\\ldots,N-1$ correspond to the paper's increments $g_1,\\ldots,g_N$."
+  },
+  "qaoa.continuous_second_moment": {
+    "OAI.SKValue.IsDiffusion.curvature_unit_moment_of_contact": "The proof uses $\\mathbb E M_t^2=\\int_0^t\\mathbb E[a(s,X_s)^2]\\,ds$ and the assumed contact identity `hmom` to identify this primitive with $t$. Continuity of the mean square curvature then gives $\\mathbb E[a(t,X_t)^2]=1$ throughout $[0,1)$, including $t=0$."
+  },
+  "qaoa_thermodynamic_first#4": {
+    "OAI.SKValue.finite_gaussian_target": "For the $T$ already chosen in the paper, `FiniteGaussianConclusion` gives convergence in $N$ to the integral up to $T$. That limit supplies a sufficiently large $N$ for the scalar error term."
+  },
+  "circuit.sampled_finite_instance_optimum#3": {
+    "OAI.SKValueG.groundStateSequence_tendsto": "Unfold `groundStateSequence` to get the disorder mean $\\mathbb E_J K_n$. The Lean limit is for that deterministic sequence, and the paper uses concentration for the corresponding convergence in probability of $K_n$."
+  },
+  "lean.full_support#4": {
+    "OAI.ZeroTemperatureSK.full_support": "Unfold `FullSupportConclusion` to read the measure and diffusion witnesses first, then support and strict increase, then the two moments. The moment clauses range over all associated diffusions, using uniqueness in the proof."
+  },
+  "formal.constructed_diffusion": {
+    "OAI.ZeroTemperatureSK.diffusion_isDiffusion": "The witness is the previously defined `diffusion W γ`, and the theorem proves that it satisfies the progressive measurability, continuity, initial value and integral equation required by `IsDiffusion`. It applies to every `OrderParameter`, with no minimiser hypothesis."
+  },
+  "formal.rational_identity": {
+    "OAI.ZeroTemperatureSK.Certificate.rational_identity": "The term `WF₂` is $\\mathcal W(F_2)$, and `weightedSquares` groups the five weighted squares in (5). The arguments $b-2v$ implement $B=b-2v$, and the equality holds for arbitrary real $R,K,v,b,j,z,L$ without sign assumptions."
+  },
+  "support.integrated_coercivity#10": {
+    "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity": "The proof's `hfull` retains the coefficient $\\kappa=1661507/1521000000$ from (6). Its rewrites express each even whole-line integral as twice its integral over $(0,\\infty)$, and the final step weakens $\\kappa$ to $1/1000$ in the theorem's conclusion."
+  },
+  "lean.value_consequences#3": {
+    "OAI.SKValue.value_consequences": "The three parts of `value_consequences` are the scalar value identities, the finite Gaussian limit and $P_*=\\mathcal P(\\gamma)$. The first two take a scalar-model diffusion as an input, while the third uses the internally constructed one."
+  },
+  "scalar.formal_scalar_clause#2": {
+    "OAI.SKValue.scalar_value_target": "With `hmin` and `hX` in the scalar model, `ScalarValueConclusion` supplies a terminal witness `U`. Its value clauses give both the Brownian pairing and the curvature integral in (11)."
+  },
+  "scalar.formal_finite_gaussian_clause#2": {
+    "OAI.SKValue.finite_gaussian_target": "The sum in (12) appears as `shiftedCoefficientSum` in the fixed-cutoff convergence clause. A second clause varies the cutoff from below to recover the full value."
+  },
+  "assumptions.value_minimizer#2": {
+    "OAI.SKValue.IsMinimizer": "The hypothesis means $\\mathcal P(\\gamma)\\le\\mathcal P(\\eta)$ for every `OrderParameter` $\\eta$. That type already imposes nonnegativity, monotonicity, right continuity and integrability of the coefficient."
+  }
+}

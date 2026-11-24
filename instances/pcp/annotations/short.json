@@ -1,0 +1,72 @@
+{
+  "pcp-short-abstract": {
+    "PCP.np_subset_pcp": "The verifier, machine implementation and constants are chosen once for the language. The polynomial in `ReadsBelow` bounds the largest possible proof address even when later queries depend on earlier answers, which lets the converse use a finite witness."
+  },
+  "pcp-short-forward-statement": {
+    "PCP.np_subset_pcp": "`CanonicalRandomness` fixes the exact seed length $\\alpha\\lceil\\log_2(n+2)\\rceil+\\beta$. The bound applies to the machine that produces the query tree, and the separate `ReadsBelow` clause bounds all the addresses the tree can reach.",
+    "PCP.ReferenceNP.inNP_iff_mem": "The forward theorem takes `PCP.InNP Machine.PolyTimeRel` as its hypothesis. To apply it to a language in the reference nondeterministic-machine class, use the right-to-left direction of `inNP_iff_mem` to obtain a concrete witness checker."
+  },
+  "pcp-short-theorem": {
+    "PCP.np_subset_pcp": "`CompleteAt` chooses one proof before the seed, so probability one on the finite uniform seed space means that proof passes on every seed. `SoundAt` bounds the acceptance probability separately for each received proof on a no-input."
+  },
+  "pcp-short-colour-constraints": {
+    "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints": "The existential direction starts with a three-colouring and interpolates its grid values to obtain the degree bound. The reverse direction restricts a witness polynomial to the grid and uses the primitive cube root to identify the solutions of $u^3=1$ with the three colours.",
+    "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies": "On the grid, the adjacency extension is zero at nonedges and one at edges. Thus vanishing of `properPolynomial` requires the cube equation precisely at edges, and `validPolynomial` supplies the separate restriction on vertex values.",
+    "PCP.Algebraic.ThreeColorGrid.totalDegree_validPolynomial_le": "The cube can triple the total degree, while subtracting the constant one cannot increase that bound. The same degree ceiling will apply to a vanishing certificate for the vertex constraint.",
+    "PCP.Algebraic.ThreeColorGrid.totalDegree_edgeExtension_le": "The adjacency table is interpolated in the coordinates of both vertices. Each coordinate contributes at most $h-1$ to total degree, so the graph contributes $2d_0$ to the $5d_0$ bound for the edge constraint.",
+    "PCP.Algebraic.ThreeColorGrid.totalDegree_properPolynomial_le": "Multiplying by $E$ restricts the colouring equation to edges on the grid and costs $\\deg E$ in the degree budget. With $\\deg Q\\le d_0$ and $\\deg E\\le 2d_0$, cubing $Q$ and multiplying gives the $5d_0$ ceiling."
+  },
+  "pcp-short-vanishing-certificate": {
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_certificate": "At a grid point, $Z_H(X)$ is zero, so the two identities in `IsCertificate` force $A(X)=M(X,0)=0$. Nonemptiness gives $h\\ge 1$, which lets the construction replace each degree-$h$ factor by a single certificate variable without increasing total degree. The equivalence holds over an integral domain."
+  },
+  "pcp-short-digit-evaluation": {
+    "PCP.Algebraic.SetMultilinear.eval_encode": "A monomial below degree $b^c$ has room for all its base-$b$ digits. Upon substitution the product of digit powers recovers the original exponent, so the identity works over a commutative semiring and applies to the honest line restrictions."
+  },
+  "pcp-short-proof-table-type": {
+    "PCP.Algebraic.ThreeColorVerifier.Proof": "The `Proof` fields are functions returning bits at typed addresses. There is no consistency premise between a points table and its lines table, so the soundness theorem can start with arbitrary received answers."
+  },
+  "pcp-short-query-type": {
+    "PCP.Algebraic.ThreeColorVerifier.Query": "Each constructor selects a table and fixes the type of label a query can use. A lines-table query also takes the base and slope of an outer line and an inner evaluation point, so it addresses one bit of the encoded restriction.",
+    "PCP.Algebraic.ThreeColorVerifier.read": "`read` dispatches to the selected field of `Proof` and returns one bit. When the proof is honest, the value arises from the construction of the table being read, with the same read operation used for arbitrary proofs."
+  },
+  "pcp-short-honest-value": {
+    "PCP.Algebraic.ThreeColorVerifier.honestProof": "At a points address the bit comes from evaluating the corresponding polynomial at $x$ and applying $R$ to its binary coordinates. In each lines table the encoded value instead comes from the set-multilinear encoding of the restriction to the given line."
+  },
+  "pcp-short-weighted-test": {
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close": "Interpolation uses the generator nodes and their Lagrange weights to predict a value at the base point. The small-error premise lets plurality correction satisfy the weighted equation exactly. The existence and $2\\delta$ conclusion in Lean apply over finite fields of any characteristic."
+  },
+  "pcp-short-binary-decoding": {
+    "PCP.Algebraic.BinaryLocalRowDecoding.exists_polynomial_distance_le": "Both distance clauses refer to the same degree-at-most-$c$ polynomial. A full-label bound alone gives no dimension-independent control of homogeneous labels at higher degree, and the uniform constant also covers large rejection rates via the bound of one on distance."
+  },
+  "pcp-short-point-line": {
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection": "Each base-and-slope index can carry its own degree-$D$ polynomial even when two indices describe the same geometric line. Under the field-size and small-error premises, agreement at random indexed points suffices to obtain a single polynomial on the whole point domain."
+  },
+  "pcp-short-outer-decoding": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "The bound on $J\\kappa$ puts the decoded point-versus-line data in the small-error range. The conclusion estimates two distances to the same polynomial of degree at most $cb^c$, giving both the full-label control used in composed reads and the homogeneous control used in linear checks."
+  },
+  "pcp-short-outer-correction": {
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le": "The comparison value is `some` of the intended bit, so a rejection counts as failure. The target $a$ is fixed before averaging, and $\\kappa_a$ is its own rejection rate, which is essential because global closeness says little about a prescribed point."
+  },
+  "pcp-short-zero": {
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_lower_bound": "If $A$ is nonzero somewhere on the grid, the two certificate identities cannot both be polynomial identities. Schwartz–Zippel and a random homogeneous label give the left-hand bound. The two certificate reads account for the factor two on $\\delta_M$ and the two contributions to the correction cost."
+  },
+  "pcp-short-derived-zero": {
+    "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound": "The composed label need not be uniform, so the verifier reads at a uniform mask and at its translate by the composed label. Each read contributes at most $\\epsilon$ of full-label error. The degree bound $r$ ensures that the composed label is in the table."
+  },
+  "linked-source-12": {
+    "PCP.Algebraic.ThreeColorVerifier.exists_proof_test_eq_true": "The sufficient inequality $5m(h-1)<b^c$ puts both certificate degrees and the colouring degree below the encoding cutoff. It turns a three-colouring into one proof that passes every seed, without requiring a separate degree calculation for that particular colouring.",
+    "PCP.Algebraic.ThreeColorVerifier.test_honestProof": "With the certificate identities supplied directly, every honest read satisfies the check it enters. The strict degree premises allow exact recovery of each honest line restriction under the encoding substitution. The theorem takes a seed as an arbitrary argument, so the same proof works for all seeds."
+  },
+  "linked-source-13": {
+    "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees": "These are the guarantees after fair-bit sampling and repetition. `verification_guarantees` records the chosen positive $R$, the query and seed budgets multiplied by $R$, and the final error $1/2$. The single-run rejection gap appears earlier in the proof."
+  },
+  "pcp-short-complexity": {
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg": "`polyTimeAlg` bounds the running time of the amplified algorithm in the concrete machine model. The field and root searches contribute through the imported construction, so the assertion covers the computation needed to produce queries as well as the queries themselves."
+  },
+  "linked-source-14": {
+    "PCP.pcp_subset_np_concrete": "The address bound lets the NP witness contain just $p(n)$ bits. A concrete checker enumerates the polynomially many seeds and accepts if every run accepts. Perfect completeness supplies a passing witness, while soundness ensures that any candidate on a no-input fails at least one seed."
+  },
+  "pcp-short-reference-np": {
+    "PCP.ReferenceNP.inNP_iff_mem": "The equivalence transports the two PCP implications to the reference definition of NP. The machine-to-checker direction supplies the forward theorem’s hypothesis, and the checker-to-machine direction converts the converse’s output to reference NP membership."
+  }
+}

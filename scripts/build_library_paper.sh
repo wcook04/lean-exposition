@@ -50,6 +50,10 @@ if grep -q '"kind": "companion"' "$I/instance.json" || [ "$LX_ADAPTED" = 1 ]; th
   "$PY" scripts/build_companion_editions.py "$paper" "$LEAN_TREE" "build/$paper-companion-editions" --jobs "${COMPANION_JOBS:-3}"
   cp -R "build/$paper-companion-editions/docs" site/public/edition/
 fi
+# Notes join to the final ties, including companion exports copied from the cache.
+if [ -d "$I/annotations" ]; then
+  "$PY" scripts/apply_passage_annotations.py "$I" site/public/edition --complete --write
+fi
 # Place phrases on the same staged PDF the reader opens (needs poppler's pdftotext).
 rm -rf site/public/pdf-marks
 adapted_slot=""

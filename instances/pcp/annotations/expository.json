@@ -1,0 +1,103 @@
+{
+  "pcp-expository-opening": {
+    "PCP.np_subset_pcp": "The witness checker in the opening is the input to `np_subset_pcp`. The constructed verifier works for the whole language, and the proof whose bits it reads may be a new encoding of the witness."
+  },
+  "pcp-expository-theorem": {
+    "PCP.np_subset_pcp": "`V.queries = q` fixes a constant upper bound on the depth of the adaptive query tree. `ReadsBelow` supplies a different bound, on how far into the proof any branch can read even when each branch reads only a few bits."
+  },
+  "linked-source-17": {
+    "PCP.pcp_subset_np_concrete": "The accessible proof prefix is the NP witness, and the random seeds are enumerated by the deterministic checker. Because the verifier uses logarithmically many bits, the number of seeds is polynomial. Soundness ensures that each guessed prefix for a no-input has a rejecting run."
+  },
+  "pcp-expository-colour-polynomials": {
+    "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies": "`Satisfies` contains the vertex and edge cube equations for the evaluations of one fixed polynomial. On the grid, $E$ is the adjacency indicator. The identification with three colours uses the field calculation preceding the passage.",
+    "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints": "The existence claim adds a degree ceiling to the fixed-polynomial argument. Starting from a colouring, interpolation bounds the degree in each coordinate by $|H|-1$. Starting from a witness polynomial, restriction to the grid gives the colouring."
+  },
+  "pcp-expository-grid-certificate": {
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition": "Each summand contains a coordinate factor that vanishes on the grid, giving the reverse implication immediately. The forward implication removes terms by monic division and uses uniqueness of the low-degree remainder. Those steps work over an integral domain."
+  },
+  "pcp-expository-quotient-degree": {
+    "PCP.Algebraic.GridVanishing.exists_decomposition": "In the division step, cancelling a term of degree at most $\\deg P$ with a monic degree-$h$ factor contributes a quotient term of degree at most $\\deg P-h$. The formal bound excludes zero quotients because their `totalDegree` is defined as zero."
+  },
+  "pcp-expository-digit-encoding": {
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection": "The small disagreement is measured with a uniform parameter on an indexed line. Even if different indices of the same geometric line supply inconsistent polynomials, the theorem recovers one nearby polynomial on the point domain under the stated field-size bound."
+  },
+  "pcp-expository-digit-degree": {
+    "PCP.Algebraic.SetMultilinear.encode_isSetMultilinear": "`IsSetMultilinear` is a condition on monomials in the support. Each supported monomial chooses exactly one variable from each digit group. A zero coefficient leaves no monomial to check.",
+    "PCP.Algebraic.SetMultilinear.totalDegree_encode_le": "There are $c$ groups, so each monomial contributed by the encoder has degree $c$, and the resulting polynomial has total degree at most $c$. The input-degree restriction is needed for exact recovery under substitution."
+  },
+  "pcp-expository-digit-substitution": {
+    "PCP.Algebraic.SetMultilinear.evaluationPoint": "The coordinate exponent is the contribution of digit $j$ in position $i$ to the represented exponent. For $j=0$ this contribution vanishes, so the coordinate is one even at $z=0$."
+  },
+  "pcp-expository-digit-evaluation": {
+    "PCP.Algebraic.SetMultilinear.eval_encode": "Substituting the digit powers adds their exponents, which recovers every exponent of $p$ strictly below $b^c$. This explains both the cutoff and the identity at zero. Lean needs only a commutative semiring for the calculation."
+  },
+  "pcp-expository-weighted-test": {
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close": "The node condition uses successive powers of a generator, with Lagrange weights for evaluation at zero. The strict rejection threshold is used in proving that plurality correction gives an exact solution of the interpolation test. The conclusion concerns existence over any finite field."
+  },
+  "pcp-expository-homogeneous-encoding": {
+    "PCP.Algebraic.Hadamard.linearEncode": "`linearEncode` adds the label’s coordinates with weights given by the message. Since this is a linear map of the label, the difference of its values at $R+L$ and $R$ gives its value at $L$, the identity used for a masked read."
+  },
+  "linked-source-18": {
+    "PCP.Algebraic.Hadamard.relativeDistance_linearEncode": "For distinct messages their difference has a nonzero coordinate. Translating the label by that coordinate vector swaps the agreement and disagreement sets, giving exactly half the labels in each."
+  },
+  "pcp-expository-hadamard": {
+    "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le": "BLR estimates distance to a linear map on the label space. A linear map can still send the constant label to the wrong bit or fail to respect label products, which is why the Hadamard test adds checks for those properties."
+  },
+  "pcp-expository-hadamard-test": {
+    "PCP.Algebraic.Hadamard.test_soundness": "The same message supplies the two distance bounds. Affine consistency is a separate test because for cubic labels the affine subspace can be a tiny fraction of the full label space."
+  },
+  "pcp-expository-cubic-labels": {
+    "PCP.Algebraic.Hadamard.testQueries_length": "The query list has length $2r+4$ for every seed. Length counts repeated positions too, so the result gives a bound on reads even when a particular seed requests the same address more than once."
+  },
+  "pcp-expository-proof-table-type": {
+    "PCP.Algebraic.ThreeColorVerifier.Proof": "The fields of `Proof` allow arbitrary received bits. The colour and difference tables have cubic labels to support the derived cubic checks, and the affine labels on the certificate and line tables suffice for their linear tests and correction."
+  },
+  "pcp-expository-binary-tests": {
+    "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "With $J\\kappa$ below the point-versus-line threshold, a single decoded polynomial gives both conclusions. Full-label distance controls masked reads of composed labels, and distance on homogeneous linear labels controls the linear comparisons."
+  },
+  "pcp-expository-worked-correction-source": {
+    "PCP.Algebraic.BinaryLocalCorrection.run": "The inner test and the comparison at the sampled nonzero parameter must both pass before `run` returns the bit at $\\Phi(0)$. The same slope and label can be used at the two inner targets because the error estimate bounds the chance of either prediction failing."
+  },
+  "pcp-expository-honest-correction": {
+    "PCP.Algebraic.BinaryLocalCorrection.run_eval": "Exact encoding recovery applies because the honest restriction has degree strictly below $b^c$. Both inner corrections then agree with polynomial evaluation for every seed, so the sample-point comparison passes and the returned bit is the homogeneous observation at $a$."
+  },
+  "pcp-expository-local-correction": {
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le": "`failure_le` compares the output to `some` of the right bit at the fixed target. Its rejection term is local to that target. The global distance estimate applies to the comparison at a nonzero line parameter, where a uniform slope makes the point uniform."
+  },
+  "linked-source-16": {
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge": "`rejectionRate_ge` concerns the received tables. The ideal-polynomial rejection is used as a lower bound before subtracting the chances that the primary table or either of the two certificate corrections supplies a bad bit."
+  },
+  "pcp-expository-check-matrix": {
+    "PCP.Algebraic.ThreeColorVerifier.branchTest": "`branchTest` takes one of seven indices and a seed of the corresponding type. In particular, the certificate grid tests can have a different seed shape from the low-degree checks.",
+    "PCP.Algebraic.ThreeColorVerifier.test": "`test` evaluates the conjunction of the seven branch verdicts. The event that a given branch rejects is contained in the event that this conjunction rejects."
+  },
+  "pcp-expository-vertex-branch-source": {
+    "PCP.Algebraic.ThreeColorVerifier.validAuxiliary": "`validAuxiliary` indexes the existing vertex-certificate lines table by target and slope. Reusing it adds no proof table, and each call still checks the entry it reads before returning a correction.",
+    "PCP.Algebraic.ThreeColorVerifier.properAuxiliary": "`properAuxiliary` uses the existing edge-certificate lines table after the pair of vertex coordinates is flattened. The different point type accounts for the two vertices and the certificate coordinates without introducing another table."
+  },
+  "linked-source-14": {
+    "PCP.Algebraic.ThreeColorVerifier.exists_proof_rejectionRate_eq_zero": "The proof is chosen before the seed. The $5m(h-1)$ bound puts the honest certificate degrees below the digit cutoff, and the honest-evaluation lemmas then give zero rejection on the finite seed space."
+  },
+  "pcp-expository-assembly": {
+    "PCP.Algebraic.ThreeColorVerifier.branchRejectionRate_le": "The full seed projects to a uniform seed for any one branch. A rejection in that branch is contained in the full rejection event, so the bound needs no factor for the number of branches."
+  },
+  "pcp-expository-soundness": {
+    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable": "If rejection is below the gap, the low-degree branches first give four nearby polynomials. The remaining checks force the two vanishing identities and the consistency of the difference polynomial, so those polynomials yield a colouring. The field and degree comparisons in the statement are needed to make the error bounds smaller than the ideal rejection bounds."
+  },
+  "pcp-expository-resources": {
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg": "`polyTimeAlg` is a machine-level running-time bound for producing the queries and acceptance data of the amplified verifier. Counting the proof bits read would leave open the time required to compute their addresses."
+  },
+  "pcp-expository-query-budget": {
+    "PCP.Algebraic.ThreeColorVerifier.branchQueries_length_le": "`branchQueries_length_le` bounds the length of the selected branch’s query list for every seed. The two low-degree branches with cubic labels use longer lists than the ones with affine labels, and the grid checks each include two correction calls.",
+    "PCP.Algebraic.ThreeColorVerifier.queries_length_le": "The full list concatenates the seven branch lists, so summing their uniform bounds gives $20c+107$. At $c=4$ this gives the single-run upper bound of $187$ reads used before repetition."
+  },
+  "linked-source-19": {
+    "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees": "The formal clause gives the query and seed budgets in terms of $R$, with soundness $1/2$ after repetition. The numerical single-run gap is established in the fair-bit sampling analysis."
+  },
+  "pcp-expository-clause-flags": {
+    "PCP.Reduction.FiniteBooleanConstraints.clauses": "The flags track whether the current input has differed from a fixed pattern so far. If it matches the pattern, the last flag is zero and the final clause requires the relation at that pattern. Short clauses are padded with false literals."
+  },
+  "pcp-expository-or-gate": {
+    "PCP.Reduction.FiniteBooleanConstraints.orGate_iff": "The first two clauses require $z$ when either input is true. The third requires at least one true input whenever $z$ is true. Together they enforce the OR update for each flag."
+  }
+}

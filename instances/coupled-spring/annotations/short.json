@@ -1,0 +1,54 @@
+{
+  "potential-definition": {
+    "couplingPotential": "In Lean, the potential takes two real displacements. In the three-spring model in §5, unit stiffnesses give $U=\\tfrac12[x_0^2+x_1^2+(x_0+x_1)^2]$ when the coordinates are directed inward from opposite sides. The mixed term comes from expanding the square for the middle spring."
+  },
+  "local-minimum": {
+    "coupled_spring_potential": "Kjos-Hanssen's proof supplies three facts to `second_derivative_test_analyticAt`: analyticity, a vanishing gradient and a positive definite Hessian. The same test applies to the cubic perturbation in §3, where locality matters because the potential can fall below its value at the origin."
+  },
+  "test-statement": {
+    "second_derivative_test_analyticAt": "The proof uses analyticity to obtain a convergent power series near $a$. The zero gradient removes its linear term, leaving $\\tfrac12D^2f(a)[h,h]$ as the first term that can determine the sign of $f(a+h)-f(a)$. Finite dimension provides a uniform positive bound for that term on the unit sphere."
+  },
+  "potential-analytic": {
+    "couplingPotential_analyticAt": "The proof starts with the projections $x\\mapsto x_0$ and $x\\mapsto x_1$, which are continuous linear maps. Their squares and product remain analytic, and so does their sum. Since the proof starts at an arbitrary point $z$, the same argument can be used at the origin without a separate expansion there."
+  },
+  "potential-derivative": {
+    "couplingPotential_hasFDerivAt": "The mixed term $x_0x_1$ contributes $x_1h_0+x_0h_1$: in the product expansion these are the terms with exactly one increment. Its remaining contribution $h_0h_1$ is quadratic in $h$, so it belongs to the remainder."
+  },
+  "potential-gradient": {
+    "couplingPotential_gradient_zero": "Lean's `gradient` is the vector that represents the Fréchet derivative by the inner product. At $x=0$ both coefficients of $DU(x)[h]$ vanish, so this linear functional returns zero for every direction $h$ and its representing vector is zero."
+  },
+  "potential-second-derivative": {
+    "couplingPotential_iteratedFDeriv_two": "If you move the base point $z$ by $u$, the coefficient of $v_0$ in $DU(z)[v]$ changes by $2u_0+u_1$ and that of $v_1$ changes by $u_0+2u_1$. This gives $u^TKv$ for arbitrary directions $u,v$ at every base point."
+  },
+  "potential-positive-definite": {
+    "couplingPotential_posDef": "The identity $h^TKh=h_0^2+h_1^2+(h_0+h_1)^2$ gives a direct reason for the formal positivity claim. If $h\\ne0$, one of the first two squares is positive. Among unit vectors, the sum is smallest when $h_0=-h_1$ and the last square vanishes."
+  },
+  "test-quadratic-map": {
+    "iteratedFDerivQuadraticMap": "Both argument slots of $D^2f(a)$ receive the same displacement $h$. Scaling that displacement by $s$ scales both slots and gives $Q(sh)=s^2Q(h)$. The lower-bound proof uses this identity to extend a bound from unit vectors to every displacement."
+  },
+  "test-lower-bound": {
+    "coercive_of_posdef": "For nonzero $h$, set $u=h/\\lVert h\\rVert$. Compactness gives a unit vector at which $Q$ attains its minimum $C$, so positivity at that vector gives $C>0$. Now $Q(h)=\\lVert h\\rVert^2Q(u)\\ge C\\lVert h\\rVert^2$. At $h=0$ the bound is equality."
+  },
+  "test-zero-dimensional": {
+    "isLocalMin.of_subsingleton": "In dimension zero the unit sphere is empty, so the proof cannot choose a vector that minimises $Q$ there. Every point equals $a$, however, so the defining inequality for a local minimum is just $f(a)\\le f(a)$."
+  },
+  "test-taylor-error": {
+    "littleO_of_powerseries": "Lean's `p.partialSum 3` includes degrees $0,1,2$. The proof bounds the remaining terms by a constant times $\\lVert h\\rVert^3$ near zero. After dividing by $\\lVert h\\rVert^2$ for nonzero $h$, the bound tends to zero with $\\lVert h\\rVert$."
+  },
+  "test-inequality": {
+    "le_of_littleO": "For a point $a+h$ satisfying the remainder bound, $f(a+h)-f(a)\\ge \\tfrac12Q(h)-|R(h)|\\ge0$. The factor $C/2$ comes from the Taylor coefficient $1/2!$. The surrounding proof chooses a neighbourhood where that bound on $R$ holds at every point."
+  },
+  "lean-smoothness": {
+    "isLocalMin_of_posDef_of_littleo": "The second `have ⟨C,hC⟩` in Kjos-Hanssen's proof shadows the first. The remaining steps use $C>0$ to choose the little-o tolerance and use $C\\lVert h\\rVert^2\\le Q(h)$ to apply `le_of_littleO`. The first call already supplies both facts.",
+    "coercive_of_posdef_of_contdiff": "This second call uses smoothness to identify the half polar form of $Q$ with $B(u,v)=D^2f(a)[u,v]$ for arbitrary $u,v$. The resulting lower bound concerns $B(h,h)$ alone, which the first call obtains directly by minimising on the unit sphere."
+  },
+  "hessian-polar-form": {
+    "polarBilin_iteratedFDerivQuadraticMap": "In the expansion of $B(u+v,u+v)$, subtracting the two diagonal terms leaves the two cross terms, one in each order. Substituting $u=v=h$ makes both cross terms $Q(h)$, so half the polar form agrees with $Q$ on the diagonal even without symmetry."
+  },
+  "hessian-symmetry": {
+    "iteratedFDeriv_two_swap": "The smoothness assumption gives equality when the directions are swapped. It therefore lets the proof replace $\\tfrac12[B(u,v)+B(v,u)]$ by $B(u,v)$ off the diagonal. For the minimum argument the only evaluation is at $(h,h)$, where the two summands coincide already."
+  },
+  "power-series-caller": {
+    "second_derivative_test": "The input `h₁` witnesses a convergent power series on a ball. The caller uses it to identify degrees $0,1,2$ with the derivative polynomial, obtain its little-o remainder and supply the smoothness argument. Dropping that last argument still leaves the power series as a hypothesis of this theorem."
+  }
+}
