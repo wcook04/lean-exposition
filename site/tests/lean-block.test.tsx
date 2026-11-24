@@ -53,7 +53,7 @@ describe("LeanBlock's props", () => {
   it("keeps a passage's proof folded and its one annotated reading directly below", async () => {
     const view = await render(
       <DeclView decl={main} module={module} shell={shell} lines={[2, 2]}
-        passageNote={<PassageAnnotation text="In `main`, $x$ is the input to `helper`." />}
+        passageNote={<PassageAnnotation text="In `main`, $x$ is the input to `helper`." creditInSources />}
         noTerms noDependencies noPapers />
     );
     const code = view.querySelector(".lean-code")!;
@@ -63,15 +63,33 @@ describe("LeanBlock's props", () => {
     expect(code.nextElementSibling).toBe(fold);
     expect(fold.getAttribute("aria-expanded")).toBe("false");
     expect(fold.nextElementSibling).toBe(annotation);
+    const note = annotation.textContent?.trim() ?? "";
+    expect(note).toMatch(/^In main,/);
+    expect(note).not.toContain("AI-written");
+    expect(annotation.querySelector(".phrase-card__label")).toBeNull();
     expect([...annotation.querySelectorAll("code")].map(el => el.textContent)).toEqual(["main", "helper"]);
     expect(annotation.querySelector(".katex")).not.toBeNull();
     expect(annotation.nextElementSibling).toBe(details);
+    expect(details.querySelector(":scope > summary > small.lean-block__credit")?.textContent).toBe("AI-written annotation");
+    expect(view.querySelectorAll(".lean-block__credit")).toHaveLength(1);
     expect(details.open).toBe(false);
     expect(details.querySelector(".lean-block__actions")).not.toBeNull();
     await act(async () => fold.click());
     expect(view.querySelector(".lean-block__proof .lean-line.is-lit")).not.toBeNull();
     expect(view.querySelectorAll(".passage-annotation")).toHaveLength(1);
     await act(async () => fold.click());
+  });
+
+  it("credits a standalone graph annotation below its mathematical text", async () => {
+    const view = await render(<PassageAnnotation text="Apply `helper` to $x$." />);
+    const annotation = view.querySelector(".passage-annotation")!;
+    const text = annotation.firstElementChild!;
+    expect(text.classList.contains("passage-annotation__text")).toBe(true);
+    expect(text.textContent).toMatch(/^Apply helper/);
+    expect(annotation.querySelector(".phrase-card__label")).toBeNull();
+    expect(text.nextElementSibling).toBe(annotation.lastElementChild);
+    expect(annotation.lastElementChild?.textContent).toBe("AI-written annotation");
+    expect(annotation.querySelectorAll(".lean-block__credit")).toHaveLength(1);
   });
 
   it("takes several ranges, and leaves the proof folded for lines in the statement", async () => {
