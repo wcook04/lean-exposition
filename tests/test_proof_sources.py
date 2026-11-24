@@ -21,6 +21,9 @@ class CompiledProof:
     def references_among(self, names):
         return {"Foo.first": [], "Foo.second": ["Foo.first"]}
 
+    def known_names(self, names):
+        return set(names) & {"Tests.alias", "Tests.zz"}
+
     def dependency_kinds(self, consumer, prerequisite):
         return ["value"] if (consumer, prerequisite) == ("Foo.second", "Foo.first") else []
 
@@ -133,6 +136,26 @@ class ProofSourceFiles(unittest.TestCase):
         self.assertEqual(declaration["display_title"], "A second theorem")
         self.assertEqual(declaration["name"], "Foo.second")
         self.assertEqual(declaration["neighbourhood"]["dependencies"][0]["display_title"], "The proposition")
+
+    def test_graph_titles_change_text_without_changing_neighbour_selection(self):
+        labels = {"Foo.first": ["First theorem", "Tests"], "Foo.second": ["Second theorem", "Tests"]}
+        names = ["Tests.alias", *(f"Tests.member{i:02d}" for i in range(11)), "Tests.zz"]
+        self.proof.direct_neighbourhood = lambda _: {
+            "scope": "riemann_hypothesis_closure", "users": [],
+            "dependencies": [{"name": name, "origin": "project", "kind": "def", "kinds": ["type"]}
+                             for name in names],
+        }
+        graph_titles = {"Tests.alias": "The supporting operation", "Tests.zz": "The final definition"}
+        self.write_json("reader.json", {"revision": self.revision, "labels": labels, "graph_titles": graph_titles})
+        config = self.paper / "reader.json"
+        sources = ProofSources(self.repository, self.paper, self.proof, reader_config=config)
+        neighbours = sources.module("Foo")["declarations"][1]["neighbourhood"]["dependencies"]
+        self.assertEqual([row["name"] for row in neighbours], names[:12])
+        self.assertEqual(neighbours[0]["display_title"], "The supporting operation")
+        self.assertEqual(sources.names()["declarations"][1]["display_title"], "Second theorem")
+        self.write_json("reader.json", {"revision": self.revision, "labels": labels, "graph_titles": {"Tests.typo": "A term"}})
+        with self.assertRaisesRegex(ValueError, "No compiled graph declaration for Tests.typo"):
+            ProofSources(self.repository, self.paper, self.proof, reader_config=config)
 
     def test_rejects_a_different_paper_revision_of_lean(self):
         self.manifest["lean"]["revision"] = "0" * 40

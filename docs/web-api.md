@@ -82,6 +82,9 @@ hosted reader, route `/api/proof/` to that server on the reader's origin.
 The edition's `reader.json` supplies the display title for every paper-linked
 declaration. The map, reader and Lean API use those titles. The Lean names
 identify the source declarations and their links.
+Its optional `graph_titles` supplies aliases for additional compiled
+neighbours and proof-route helpers. These aliases change display text while
+preserving the neighbour selection and the exact Lean identifiers.
 
 | Reader surface | Input and join |
 | --- | --- |

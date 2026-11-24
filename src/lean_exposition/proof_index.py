@@ -92,6 +92,19 @@ class ProofIndex:
             references[name] = sorted(targets)
         return references
 
+    def known_names(self, names):
+        """Exact names from the compiled closure or its bound statement supplement."""
+        requested = set(names)
+        supplemental = set(self.statement_neighbourhoods) & requested
+        for neighbourhood in self.statement_neighbourhoods.values():
+            for direction in ("dependencies", "users"):
+                supplemental.update(row["name"] for row in neighbourhood[direction] if row["name"] in requested)
+        with closing(self._db()) as db:
+            return supplemental | {
+                name for name in requested - supplemental
+                if db.execute("SELECT 1 FROM node WHERE name = ?", (name,)).fetchone() is not None
+            }
+
     def direct_neighbourhood(self, name: str):
         """Immediate named type and value references, with their recorded scope."""
         supplement = self.statement_neighbourhoods.get(name)

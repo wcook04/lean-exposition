@@ -313,6 +313,7 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
     text = (paper_dir / "paper.txt").read_bytes()
     reviews = statement_reviews(read(INSTANCE / "statement-comparisons.json"), manifest)
     alignment, ties, marks, line_annotations = reading_data(text, assets, catalogue, names, reader["root"], reviews)
+    alignment["names"] = names | sources.graph_titles
     alignment["steps"] = steps
     paper = manifest["paper"]
     lean = manifest["lean"]

@@ -88,6 +88,7 @@ class ProofSources:
         grouped = defaultdict(list)
         bindings = notes["bindings"]
         titles = {}
+        self.graph_titles = {}
         if reader_config is not None:
             reader = json.loads(reader_config.read_bytes())
             if reader["revision"] != revision:
@@ -96,6 +97,18 @@ class ProofSources:
                       if isinstance(label, list) and label and isinstance(label[0], str) and label[0].strip()}
             if missing := sorted(bindings.keys() - titles.keys()):
                 raise ValueError(f"Missing display title for {missing[0]}")
+            graph_titles = reader.get("graph_titles", {})
+            if not isinstance(graph_titles, dict) or any(
+                not name or not isinstance(title, str) or not title or title != title.strip()
+                or any(ord(char) < 32 for char in title)
+                for name, title in graph_titles.items()
+            ):
+                raise ValueError("Graph titles must map exact names to single-line titles")
+            if repeated := sorted(graph_titles.keys() & titles.keys()):
+                raise ValueError(f"Graph title repeats a reader label for {repeated[0]}")
+            if graph_titles and (unknown := sorted(graph_titles.keys() - proof.known_names(graph_titles))):
+                raise ValueError(f"No compiled graph declaration for {unknown[0]}")
+            self.graph_titles = {name: title for name, title in titles.items() if name not in bindings} | graph_titles
         for name, entry in bindings.items():
             source = entry["source"]
             if source["name"] != name or source["revision"] != revision:
@@ -221,7 +234,7 @@ class ProofSources:
             for node in sorted(graph[direction], key=rank)[:NEIGHBOURHOOD_LIMIT]:
                 name = node["name"]
                 item = {key: node[key] for key in ("name", "kind", "origin", "kinds")}
-                item["display_title"] = self._titles.get(name, name)
+                item["display_title"] = self._titles.get(name) or self.graph_titles.get(name, name)
                 if node["origin"] == "project" and node.get("file") and node.get("line"):
                     path = quote(node["file"], safe="/")
                     line = node["line"]
