@@ -202,6 +202,10 @@ def main() -> int:
                 if not old or not isinstance(target, str) or not target.startswith(("?", "#", "@", "lean/")):
                     ap.error(f"invalid verified bookmark for {slug}: {old!r} → {target!r}")
     base = json.loads(args.base_table.read_text()) if args.base_table else {}
+    # A regeneration also keeps verified-only routing when it writes a fresh output.
+    canonical = ROOT / "redirects/proof-reader.json"
+    retained = json.loads(canonical.read_text()).get("pages", {}) if canonical.is_file() else {}
+    retained.update(base.get("pages", {}))
     out = dict(base.get("pages", {}))
     held = set(base.get("held", []))
     live_by_url: dict[str, bool] = {}
@@ -215,7 +219,7 @@ def main() -> int:
                 held.add(slug)
                 continue
         held.discard(slug)
-        older = out.get(slug)
+        older = retained.get(slug)
         if older and "bookmarks" in older and "bookmarks" not in row:
             if (older["to"], older["root"]) != (row["to"], row["root"]):
                 ap.error(f"recheck verified bookmarks for moved Library page {slug}")
