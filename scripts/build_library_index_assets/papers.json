@@ -19,6 +19,19 @@
    "comparator": "Comparator accepted all 51 statements replayed on GitHub Actions."
   },
   {
+   "id": "quantum-programs",
+   "library": true,
+   "artifact": true,
+   "sentence": "Links the paper’s account of five quantum algorithms to the Lean statements for their correctness, error and resource bounds.",
+   "comparator": "The authors report Comparator acceptance for all six challenges. The reader independently replayed the fixed-point arcsin and Grover Find-Any challenges."
+  },
+  {
+   "id": "talagrand-parisi",
+   "library": true,
+   "artifact": true,
+   "sentence": "Talagrand proves Parisi’s variational formula for the limiting free energy of a class of mean-field spin glass models. The linked Lean proof treats the Sherrington–Kirkpatrick case with exact quadratic covariance."
+  },
+  {
    "id": "qaoa-sk",
    "library": true,
    "sentence": "A minimising Parisi order parameter of the Sherrington–Kirkpatrick spin glass has no gaps: it increases across every interval in [0, 1), and its derivative is positive between 0 and 1."

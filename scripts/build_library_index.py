@@ -138,7 +138,10 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
                 text = plain_tex(body[int(at[1]):int(at[2])].decode("utf8", "replace")) if at and body else ""
                 if text:
                     page = f"/{slot_slug[doc['slot']]}" if slot_slug.get(doc["slot"]) else ""
-                    rows_statements.append([tie.get("plain") or "", text, f"{base}{page}/@{pid}"])
+                    href = f"{base}{page}/@{pid}"
+                    if inst.get("artifact") and not (out / paper / page.lstrip("/") / f"@{pid}.html").is_file():
+                        href = f"{base}{page}/?l={tie['at']}"
+                    rows_statements.append([tie.get("plain") or "", text, href])
     # Each numbered result once, in the authors' numbering, before the phrases.
     results: list[list[str]] = []
     core = root / "alignment" / "core.json"
@@ -149,11 +152,15 @@ def library_facts(out: Path, inst: dict) -> tuple[dict, dict]:
         # A paper that moved in from its own reader keeps its records' ids; its numbered results are
         # the records alignment/results.json names, at their addresses.
         named = ROOT / "instances" / paper / "alignment" / "results.json"
+        if inst.get("artifact"):
+            named = out / paper / "library-results.json"
         by_record = {}
         if named.exists():
             by_record = {row["record"]: address for address, row in json.loads(named.read_text())["results"].items() if row.get("record")}
         for rid, record in core_data.get("records", {}).items():
-            if by_record and rid not in by_record:
+            # Standalone artifacts register phrase addresses and opt in to named
+            # result routes through their own addresses.json.
+            if (by_record or inst.get("artifact")) and rid not in by_record:
                 continue
             slug = by_record.get(rid) or (rid.split(".", 1)[1] if "." in rid else rid)
             # The excerpt is the result's canonical target, its statement block: a "statement" slice
@@ -412,6 +419,24 @@ def main() -> None:
         instances[inst["id"]] = inst
         mounts.append(inst["id"])
     listing = json.loads((ASSETS / "papers.json").read_text())["papers"]
+    # A standalone artifact keeps its source and build outside this repository.
+    # It participates in the shelf when its verified export is already present.
+    for item in listing:
+        if not item.get("artifact"):
+            continue
+        pid = item["id"]
+        if only and pid not in only:
+            continue
+        artifact = out / pid
+        metadata = artifact / "library-instance.json"
+        if not metadata.is_file() or not (artifact / "index.html").is_file():
+            continue
+        instance = json.loads(metadata.read_text())
+        if instance["id"] != pid or not instance.get("artifact"):
+            raise ValueError(f"Library artifact identity differs for {pid}")
+        instances[pid] = instance
+        if pid not in mounts:
+            mounts.append(pid)
     listed = {p["id"] for p in listing if p.get("library")}
     # A library paper published but not yet in papers.json is listed after the others, without a sentence.
     listing += [{"id": pid, "library": True} for pid in instances if pid not in listed]
