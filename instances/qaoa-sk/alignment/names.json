@@ -643,7 +643,7 @@
   "OAI.SKValue.UnitMomentMartingale.terminal_past_product": "The terminal spin has correlation t with the martingale at time t",
   "OAI.SKValue.UnitMomentMartingale.terminal_square": "The terminal value is a spin",
   "OAI.SKValue.UnitMomentMartingale.terminal_stopped_martingale": "Extending the gradient by its terminal limit gives a martingale",
-  "OAI.SKValue.UnitMomentMartingale.weighted_terminal_expectation": "Weighted terminal expectation",
+  "OAI.SKValue.UnitMomentMartingale.weighted_terminal_expectation": "Terminal-weighted martingale expectation equals the integral of tγ(t)",
   "OAI.SKValue.ValueStrip": "Compact-strip bounds and regularity for the scalar control value",
   "OAI.SKValue.ValueStrip.K_nonneg": "The value-strip derivative bound K is nonnegative",
   "OAI.SKValue.ValueStrip.L_nonneg": "The value-strip joint Lipschitz bound L is nonnegative",
