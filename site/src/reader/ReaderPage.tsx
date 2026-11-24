@@ -1434,20 +1434,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         return;
       }
       if (typing || event.metaKey || event.ctrlKey || event.altKey || route.beside) return;
+      const mark = target?.closest<HTMLElement>(".paper [data-t]");
       if (event.key === "g") {
         event.preventDefault();
         setMode(modeRef.current === "lean" ? "graph" : "lean");
       } else if (event.key === "j" || event.key === "k") {
         event.preventDefault();
         step(event.key === "j" ? 1 : -1);
-      } else if (["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key) && target?.closest("[data-t]")) {
+      } else if (["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key) && mark) {
         // On a statement the arrows move between statements, as j and k do.
         event.preventDefault();
         step(event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : -1);
-      } else if (event.key === "Enter" || (event.key === " " && target?.closest("[data-t]"))) {
+      } else if (event.key === "Enter" || (event.key === " " && mark)) {
         // Enter on a control belongs to that control.
-        if (target && target !== document.body && !target.closest("[data-t]")) return;
-        const mark = target?.closest<HTMLElement>("[data-t]");
+        if (target && target !== document.body && !mark) return;
         const t = mark ? statementOf(ties, Number(mark.dataset.t)) : current.current;
         if (t === null) return;
         event.preventDefault();
