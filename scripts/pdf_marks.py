@@ -22,16 +22,20 @@ import json
 import re
 import subprocess
 import sys
+import unicodedata
+from bisect import bisect_left
 from pathlib import Path
 
 WORD = re.compile(r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(.*?)</word>')
 PAGE = re.compile(r'<page width="([\d.]+)" height="([\d.]+)">')
 MATH = re.compile(r"\$\$.*?\$\$|\$[^$]*\$", re.S)
 TAG = re.compile(r"\\tag\{([^}]+)\}")
+DISPLAY = re.compile(rb"\$\$.*?\$\$", re.S)
+MATH_IN_PDF = re.compile(r"[=∑≤≥∫√∏+−⋅∈∞→⊢λ]|[\x01-\x08]")
 
 
 def norm(token: str) -> str:
-    return re.sub(r"[^a-z0-9.]", "", token.lower().replace("ﬁ", "fi").replace("ﬂ", "fl")).strip(".")
+    return re.sub(r"[^a-z0-9.]", "", unicodedata.normalize("NFKC", token).lower()).strip(".")
 
 
 def plain_words(text: str) -> list[str]:
@@ -50,7 +54,7 @@ def pdf_words(pdf: Path) -> tuple[list[tuple[float, float]], list[dict]]:
         sizes.append((float(m.group(1)), float(m.group(2))))
         for w in WORD.finditer(chunk):
             text = html.unescape(w.group(5))
-            words.append({"page": page + 1, "box": [float(w.group(i)) for i in range(1, 5)], "text": text, "n": norm(text)})
+            words.append({"index": len(words), "page": page + 1, "box": [float(w.group(i)) for i in range(1, 5)], "text": text, "n": norm(text)})
     return sizes, words
 
 
@@ -118,8 +122,27 @@ def align_pdf_text(text: str, words: list[dict]) -> tuple[list[int], dict[int, i
     return tok_bytes, to_pdf
 
 
+def exact_display(data: bytes, at: tuple[int, int], before: dict, after: dict, every: list[dict],
+                  source_before: int, source_after: int) -> list[dict]:
+    """A sole display between two aligned prose lines on one printed page."""
+    start, stop = at
+    displays = list(DISPLAY.finditer(data, source_before, source_after))
+    if len(displays) != 1:
+        return []
+    match = displays[0]
+    if data[start:stop].strip() != match[0] or before["page"] != after["page"]:
+        return []
+    top, bottom = before["box"][3], after["box"][1]
+    if not 4 < bottom - top < 150:
+        return []
+    between = every[before["index"] + 1:after["index"]]
+    rows = [w for w in between if top - 1 <= w["box"][1] <= bottom - 2]
+    if not rows or not MATH_IN_PDF.search(" ".join(w["text"] for w in rows)):
+        return []
+    return rows
+
+
 def main() -> None:
-    from bisect import bisect_left
     pdf, md, ties_path, out = map(Path, sys.argv[1:5])
     sizes, every = pdf_words(pdf)
     words = stream(every)
@@ -133,21 +156,39 @@ def main() -> None:
         a, b = (int(x) for x in tie["at"][1:].split("-"))
         lo, hi = bisect_left(tok_bytes, a), bisect_left(tok_bytes, b)
         hits = [to_pdf[i] for i in range(lo, hi) if i in to_pdf]
-        tag = TAG.search(data[a:b].decode("utf-8"))
+        source = data[a:b].decode("utf-8")
+        tag = TAG.search(source)
         matched = []
+        prev_pos, next_pos = bisect_left(mapped, lo) - 1, bisect_left(mapped, hi)
+        prev_token = mapped[prev_pos] if prev_pos >= 0 else None
+        next_token = mapped[next_pos] if next_pos < len(mapped) else None
+        prior = words[to_pdf[prev_token]] if prev_token is not None else None
+        following = words[to_pdf[next_token]] if next_token is not None else None
         if tag:
-            # A display: its tag "(n)" on the PDF, after the last word before it that the alignment placed.
-            k = bisect_left(mapped, lo) - 1
-            begin = to_pdf[mapped[k]] if k >= 0 else 0
+            # The equation number has to occur once between nearby aligned text.
+            start = prior["index"] if prior else 0
+            stop = following["index"] if following else min(len(every), start + 400)
             label = f"({tag.group(1)})"
-            for i in range(begin, min(len(words), begin + 400)):
-                if words[i]["text"] == label:
-                    matched = sorted((w for w in every if w["page"] == words[i]["page"] and abs(w["box"][1] - words[i]["box"][1]) < 4), key=lambda w: w["box"][0])
-                    break
+            candidates = [w for w in every[start:min(stop + 1, start + 400)] if w["text"] == label]
+            if len(candidates) == 1:
+                selected = candidates[0]
+                matched = sorted((w for w in every if w["page"] == selected["page"]
+                                  and abs(w["box"][1] - selected["box"][1]) < 4), key=lambda w: w["box"][0])
         elif hits and len(hits) >= max(1, 0.5 * (hi - lo)):
             first, last = min(hits), max(hits)
             if last - first <= 3 * (hi - lo) + 10:
                 matched = words[first:last + 1]
+        if not matched and prior and following and source.strip().startswith("$$"):
+            matched = exact_display(data, (a, b), prior, following, every, tok_bytes[prev_token], tok_bytes[next_token])
+        if not matched and prior and following and (tokens := plain_words(source)) and len(tokens) >= 3:
+            # Look locally for the entire normalized phrase, including code identifiers.
+            first = to_pdf[prev_token] + 1
+            last = to_pdf[next_token]
+            candidates = [i for i in range(first, min(last, first + 250))
+                          if [w["n"] for w in words[i:i + len(tokens)]] == tokens]
+            if len(candidates) == 1:
+                i = candidates[0]
+                matched = words[i:i + len(tokens)]
         if not matched:
             unplaced.append(tie.get("phrase") or tie["at"])
             continue
