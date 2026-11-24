@@ -1,16 +1,4 @@
-// The right page. It has two views, Graph and Lean, each filling the pane, and they share one
-// subject: the declaration of a clicked phrase, a clicked card, a clicked paragraph, or else
-// the paragraph under the reading line. A click changes the subject and never the view; only
-// the view buttons, and a control that names the other view ("Open its Lean"), change it.
-//
-// Graph is the focus graph (FocusGraph, specified in docs/graph-pane.md): the subject in the
-// middle, everything that uses it on the left and everything it uses on the right, grouped by topic, with
-// the dock under it showing one card in detail. The whole proof map stays one button away,
-// in the same place. Lean is the Lean of the subject, the whole height of the pane. Where the
-// paragraph or selection has no Lean linked to it, either view shows the whole proof map instead,
-// headed only "Whole proof map": no notice, and nothing on it presented as that paragraph's Lean. Under
-// 1280px the same page opens as a sheet; under 600px of width the graph folds to one line.
-
+// A linked passage shares its pane with the local graph. Either can be read at full height.
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type MutableRefObject, type ReactNode } from "react";
 import type { Alignment } from "../../api/lean";
 import type { Stage } from "../../api/types";
@@ -111,6 +99,7 @@ interface Props {
   /** The address explicitly asks for the graph, even when the pane is narrow. */
   graphRequested?: boolean;
   onMode(mode: PaneMode): void;
+  onCombine?(): void;
   onPoint(tie: number | null, record?: string): void;
   onName?(walk: LeanWalk): void;
   /** Open the steps and links of the passage being read. */
@@ -127,12 +116,16 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, graphRequested, onMode, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
   const viewRef = useRef<HTMLDivElement>(null);
   const leanButtonRef = useRef<HTMLButtonElement>(null);
+
+  const minimiseRef = useRef<HTMLButtonElement>(null);
+  const layoutFocus = useRef<"tabs" | "split" | "lean" | null>(null);
+  const [separate, setSeparate] = useState(false);
 
   // ---- What the reader is on ---------------------------------------------------------
 
@@ -208,6 +201,13 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
 
   const fresh = useMemo((): { subject: Subject; why: Why } | null => {
     if (decl) return { subject: { kind: "decl", name: decl }, why: "decl" };
+    // In the split layout the graph follows the exact declaration displayed above it,
+    // including an alternative declaration chosen for the same words.
+    if (mode === "lean" && !separate) {
+      const tie = pin ? pinTie : held ? undefined : ties.index.ties[(pointed?.tie ?? follow.tie) ?? -1];
+      const row = tie?.rows?.find(item => item.name === shown?.name) ?? tie?.rows?.[0];
+      if (row) return { subject: { kind: "decl", name: row.name }, why: pin ? "phrase" : "follow" };
+    }
     if (pin) {
       if (pdfOn && pinTie?.rows?.length) {
         const row = pinTie.rows.find((r) => r.name === shown?.name) ?? pinTie.rows[0];
@@ -231,7 +231,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     if (followRecord && onGraph(followRecord)) return { subject: asSubject(followRecord), why: "follow" };
     if (first) return { subject: { kind: "decl", name: first }, why: "follow" };
     return null;
-  }, [decl, pin, pinTie, pdfOn, onGraph, asSubject, showSteps, stepsNear, shown, held, followRecord, follow.tie, ties]);
+  }, [decl, pin, pinTie, mode, separate, pointed, pdfOn, onGraph, asSubject, showSteps, stepsNear, shown, held, followRecord, follow.tie, ties]);
   // A paragraph with nothing tied to it keeps the last subject, and the line over the drawing says whose it is.
   // Before anything has been tied, the statement nearest the reading position, or else the main result,
   // so the graph is never blank and never draws a whole passage at once.
@@ -353,7 +353,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
 
   const [whole, setWhole] = useState(false);
   useEffect(() => setWhole(false), [pin?.record, pin?.tie, decl, held, pdfPick]);
-  const showWhole = whole || unlinked;
+  const showWhole = mode === "graph" && (whole || unlinked);
   const treeRef = useRef<MapViewHandle>(null);
   useKeptCamera(treeRef, useCallback((id: string) => graph.nodes.has(id), [graph]));
   // Shown for want of Lean, the map marks no step: nothing on it stands for the paragraph.
@@ -522,7 +522,9 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const few = mode === "graph" && !showWhole && !drawn;
   // Under the drawing the dock is a short card until the reader opens it.
   const [dockWide, setDockWide] = useState(false);
-  const folded = narrow && !unfolded && !showWhole;
+  const folded = mode === "graph" && narrow && !unfolded && !showWhole;
+  const tabbed = separate || (mode === "graph" && !!graphRequested && !unlinked);
+  const paired = mode === "lean" && !separate && !!fresh && neighbours > 0;
 
   // ---- The subject band, and the two guides that can stand in the pane ----------------------
 
@@ -606,6 +608,28 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     ) : null;
   const fill = !!leanSlot || !!asideSlot;
   const visible = mode === "lean" ? leanOpen : dockOpen;
+  useLayoutEffect(() => {
+    let target: HTMLElement | null = null;
+    if (layoutFocus.current === "tabs") target = leanButtonRef.current;
+    if (layoutFocus.current === "split") target = minimiseRef.current ?? rootRef.current;
+    if (layoutFocus.current === "lean") {
+      target = leanButtonRef.current ?? rootRef.current?.querySelector<HTMLElement>(".lean-page__title") ?? rootRef.current;
+    }
+    if (target) {
+      target.focus({ preventScroll: true });
+      layoutFocus.current = null;
+    }
+  }, [tabbed, paired, mode]);
+  const minimiseGraph = () => {
+    layoutFocus.current = "tabs";
+    setSeparate(true);
+  };
+  const combineViews = () => {
+    layoutFocus.current = "split";
+    setSeparate(false);
+    if (onCombine) onCombine();
+    else onMode("lean");
+  };
   const shownTie = fill || inert || unlinked || preview || visible.via === "pin" ? null : visible.tie;
   // Commit the mark with the pane, after the scroll-follow transition has rendered.
   useLayoutEffect(() => {
@@ -652,17 +676,21 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     </div>
   ) : focus ? (
     <FocusGraph
+      embeddedHeader={paired ? {
+        title: "Dependency graph",
+        action: <button type="button" ref={minimiseRef} className="map-pane__layout-button" onClick={minimiseGraph}>Minimise graph</button>,
+      } : undefined}
       subjects={focus.subjects}
       card={cardOf}
       edges={focus.edges}
-      route={focus.route}
-      routeNote={focus.routeNote}
+      route={paired ? undefined : focus.route}
+      routeNote={paired ? undefined : focus.routeNote}
       routeLabel={focus.routeLabel}
-      label={focus.neighbourhoodNote ?? label}
+      label={paired ? undefined : (focus.neighbourhoodNote ?? label)}
       lit={lit}
       held={previewCard}
       onSubject={onSubject}
-      onHover={onCardHover}
+      onHover={paired ? undefined : onCardHover}
       renderTitle={renderTitle}
       roles={focus.roles}
       manyLabel={current?.why === "paragraph" ? "Tied to this paragraph" : "In this passage"}
@@ -672,12 +700,13 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   );
 
   return (
-    <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The Lean and the proof map" inert={inert ? true : undefined}>
+    <section ref={rootRef} tabIndex={-1} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The Lean and the proof map" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
-        <ModeToggle mode={mode} onMode={(next) => {
+        {tabbed && !fill && <ModeToggle mode={mode} onMode={(next) => {
           if (next === "graph") setUnfolded(true);
           onMode(next);
-        }} leanButtonRef={leanButtonRef} graphCount={focus && !focus.missing.length && !showWhole ? neighbours : null} />
+        }} leanButtonRef={leanButtonRef} graphCount={focus && !focus.missing.length && !showWhole ? neighbours : null} />}
+        {tabbed && !fill && !unlinked && <button type="button" className="map-pane__layout-button" onClick={combineViews}>Combine views</button>}
         {mode === "graph" && !fill && !unlinked && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Neighbours of this step" : "Whole proof map"}
@@ -743,7 +772,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? asideSlot} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
       ) : mode === "lean" && !unlinked ? (
-        <div className="map-pane__lean">
+        <div className={paired ? "map-pane__paired" : "map-pane__lean"}>
           <LeanDock
             open={leanOpen}
             ties={ties}
@@ -757,6 +786,13 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
             onName={onName}
             passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
           />
+          {paired && (
+            <section className="map-pane__local" aria-label="Local dependency graph">
+              <div className="map-pane__drawing">
+                <GraphBoundary scope={`graph around ${focus!.subjects.join(", ")}`}>{drawing}</GraphBoundary>
+              </div>
+            </section>
+          )}
         </div>
       ) : few ? (
         <div className="map-pane__lean map-pane__few" data-neighbours={neighbours}>
@@ -833,9 +869,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
               onRelease={onRelease}
               noClose={!pin && !decl && !held}
               onOpenLean={() => {
-                // The dock button disappears when the view changes. Its corresponding
-                // mode button stays in place and leads into the newly opened pane.
-                leanButtonRef.current?.focus({ preventScroll: true });
+                layoutFocus.current = "lean";
                 onMode("lean");
               }}
               onPick={(id) => onRecord?.(id)}

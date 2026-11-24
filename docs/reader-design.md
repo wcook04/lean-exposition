@@ -41,7 +41,7 @@ Three rules follow, and the rest of this page applies them.
 3. **The subject band** at the head of the pane: the state ("Selected words", "Following the
    paper"), and the place in the paper. It stays put in both views and while the graph pans.
 4. **The Lean pane.** The selected declaration comes first, followed by its proof control
-   and the annotation for these words. The Graph tab opens the local argument.
+   and one annotation for these words. Its dependency graph occupies the lower part of the pane.
 5. **Controls and navigation**, in the sans, at 14px, never amber.
 
 ## States
@@ -168,8 +168,12 @@ conventions and the full quotation open under “Sources and details”. Compare
 recorded assessments. Older editions without edited annotations keep their original
 comparison and reading notes.
 
-In Auto, an unlinked passage opens the graph and a passage with a declaration opens Lean.
-Choosing a tab or following an address that specifies a view keeps that choice.
+In Auto, an unlinked passage opens the graph. When the reader reaches a linked passage,
+the declaration, its folded proof and its annotation occupy the upper three fifths of the
+available space. The lower two fifths show the active declaration and its recorded neighbours.
+Scrolling the text and panning the graph are independent. A declaration without recorded
+neighbours gets the full height. “Minimise graph” restores the full-height Lean and Graph tabs.
+“Combine views” returns to following the passage. Existing explicit view links still work.
 
 ### The legend
 
@@ -244,7 +248,7 @@ system's highlight.
 
 The drawing is as specified in [the graph pane](graph-pane.md), with these changes.
 
-- **The graph earns its space.** The Graph tab carries the number of neighbours the subject has
+- **In the separate full-height Graph view**, the Graph tab carries the number of neighbours the subject has
   in the recorded graph ("Graph · 19"). With four or more, the drawing takes about two thirds of
   the pane, fitted to that area and enlarged up to 1.3 times where the neighbourhood is small,
   and the dock under it is a short card: the title, the comparison's verdict and "Open its
@@ -352,14 +356,14 @@ right, nothing over the text. Widths are CSS pixels of the window.
 | Window | Outline | Paper | Pane | Notes |
 | --- | --- | --- | --- | --- |
 | 390 | drawer | 350 | none beside | inspect and return, below |
-| 1100 | drawer | 550 | 479 | two columns from 1024; the graph is folded to a line at this pane width |
+| 1100 | drawer | 550 | 479 | two columns from 1024; graph cards fit the narrower viewport |
 | 1440 | drawer | 680 | 672 | |
 | 2000 | 208 | 689 | to the edge, at least 600 | |
-| 2560 | 208 | 755 | to the right edge | the comparison and notes sit side by side; equations and Lean can use the whole pane |
+| 2560 | 208 | 755 | to the right edge | the declaration and its annotation share one reading column above the graph |
 
 - The pane is sticky under the top bar and has one vertical scroller per view. Its gutter is
   stable, so content arriving never changes a width.
-- Under the drawing, the dock is a short card and the drawing has the rest, about two thirds
+- In the separate Graph view, the dock under the drawing is a short card and the drawing has the rest, about two thirds
   of the pane or more. Opened with "Show the whole card", the dock takes 40% of the Graph view,
   never less than 240px while the drawing keeps 260px, and its height can be drawn with the
   handle; where both cannot fit, the drawing folds to one line.
@@ -373,7 +377,7 @@ right, nothing over the text. Widths are CSS pixels of the window.
 
 1. **Read.** The paper alone. The hint and the reader-annotation notice are on the first screen.
 2. **Tap linked words.** The inspector opens over the whole screen under the top bar, at once,
-   with the quotation first. Its head is one row: "Back to paper" and the two tabs.
+   with the same split as on desktop. “Back to paper” returns to the selected words.
 3. **Back to paper** (or Escape) closes it. The paper is exactly where it was. A bar stays at
    the foot: the selection's state and place, which returns to the words; "View", which
    reopens the inspector; and the Auto | Manual switch, whose Auto lets the selection go. The paper reserves the
