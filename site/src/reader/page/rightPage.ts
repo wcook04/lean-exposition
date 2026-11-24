@@ -29,6 +29,8 @@ export interface ReaderSignals {
   heading: Signal<string | null>;
   part: Signal<number>;
   follow: Signal<Followed>;
+  /** The annotation whose subject is actually visible in the pane. */
+  shownTie: Signal<{ tie: number; at: string } | null>;
   point: Signal<Pointed | null>;
   /** The passage of an untied paragraph under the pointer. */
   caption: Signal<string | null>;

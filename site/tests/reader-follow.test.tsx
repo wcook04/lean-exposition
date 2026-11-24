@@ -149,6 +149,7 @@ describe("MapPane", async () => {
     heading: new Signal<string | null>(null),
     part: new Signal(0),
     follow: new Signal<Followed>({ tie: null, anchor: null, part: 0 }),
+    shownTie: new Signal<{ tie: number; at: string } | null>(null),
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   };
@@ -208,17 +209,30 @@ describe("MapPane", async () => {
     expect(container.querySelector(".map-pane__dock .lean-page")!.textContent!.trim()).not.toBe("");
   });
 
-  it("shows the whole proof map, headed only so, for an open paragraph with nothing in the Lean linked to it", () => {
-    // These fixtures tie nothing: a paragraph at the reading line is an open, unlinked one.
-    for (const mode of ["graph", "lean"] as const) {
-      show("changed-cases", { mode });
-      expect(container.querySelector(".map-pane .tree")).not.toBeNull();
-      expect(container.querySelector(".fg")).toBeNull();
-      expect(container.querySelector(".map-pane__unlinked")!.textContent).toBe("Whole proof map");
-      expect(container.querySelector(".map-pane__dock")).toBeNull();
-      expect(container.querySelector(".map-pane")!.textContent).not.toContain("No Lean is linked");
-      expect(container.querySelector(".mode-toggle [aria-pressed='true']")!.textContent).toBe(mode === "graph" ? "Graph" : "Lean");
-    }
+  it("reports the exact passage shown in Auto, including a tie with no map record", () => {
+    const passages = tieModel({
+      meaning: "",
+      passages: [],
+      segments: [[0, 5, [0]]],
+      ties: [{ record: "", role: "statement", lean: true, name: "A", module: "M", lines: [1, 2], anchor: "changed-cases", at: "b0-5" }],
+    });
+    show("changed-cases", { mode: "lean", ties: passages });
+    act(() => signals.follow.set({ tie: 0, anchor: "changed-cases", part: 0 }));
+    expect(signals.shownTie.get()).toEqual({ tie: 0, at: "b0-5" });
+    show("changed-cases", { mode: "lean", ties: passages, decl: "A" });
+    expect(signals.shownTie.get()).toBeNull();
+  });
+
+  it("keeps unlinked passages in the selected tab", () => {
+    show("changed-cases", { mode: "lean" });
+    expect(container.querySelector(".map-pane .tree")).toBeNull();
+    expect(container.querySelector(".map-pane__lean .lean-page")).not.toBeNull();
+    expect(signals.shownTie.get()).toBeNull();
+
+    show("changed-cases", { mode: "graph" });
+    expect(container.querySelector(".map-pane .tree")).not.toBeNull();
+    expect(container.querySelector(".map-pane__unlinked")?.textContent).toBe("Whole proof map");
+    expect(container.querySelector(".map-pane__dock")).toBeNull();
   });
 
   it("keeps keyboard focus in the pane when Open its Lean replaces the graph dock", () => {

@@ -82,9 +82,9 @@ what you selected".
 ### Following
 
 The pane shows the linked passage under the reading line. The band says **Following the
-paper** and "Changes as you scroll". The followed passage has a neutral ink tick in the margin
-and no mark on its words. A paragraph with no link says so in words; the previous subject is
-never left under a new heading without saying whose it is.
+paper** and "Changes as you scroll". The linked words or equation carry the same highlight
+as in Manual. The highlight and the pane change together when the reading line settles on a
+new passage. Lean stays open when there is no matching declaration and explains the gap.
 
 ### Preview
 
@@ -477,8 +477,8 @@ loops. Left alone, the page makes no change at all, and `check-idle.py` holds it
 | --- | --- | --- |
 | Colour of underlines | 04: neutral underlines, topic only as a named swatch. 01: topic colour as a secondary cue. | Topic colours stay on the underlines, with a setting to turn them off. The colour coding is wanted and helps a reader see where a topic runs; the risk 04 names (colour read as a verdict) is met by the key's sentence and by giving amber and verdicts their own, separate marks. |
 | How loud a selection is | 01: wash and margin rule, underline unchanged. 04: 3px amber underline as well. | A 2px amber line, the margin rule and a faint wash; a whole statement takes only one margin rule. The exact extent of the selected words is the thing being checked; an underline shows the extent on every wrapped line, where a wash at 1.1:1 cannot. The heavier line first built here made the selected words hard to read, so the line is thin and the wash faint enough to keep 7:1 by night and 4.5:1 by day. |
-| The followed passage's mark | 04: keep the amber margin marker. 01: neutral. | Neutral ink. Amber then has one meaning on the paper. |
-| Default view | 01, 02: the comparison first, unless the reader chose Graph. | Lean view on a first visit; an address or a stored choice of Graph wins. The stored choice is now an explicit value, since the old key could not tell "chose Graph" from "never chose". |
+| The followed passage's mark | 04: keep the amber margin marker. 01: neutral. | The same highlight as in Manual, applied to the passage shown in the pane. |
+| Default view | 01, 02: the comparison first, unless the reader chose Graph. | Lean by default. The Graph tab and addresses that explicitly name Graph still open the drawing. |
 | The tab's name | 01: rename "Lean" to "Comparison". 02: keep "Lean". | "Lean". The sister readers, the addresses (`v=lean`), "Open its Lean" and the checks all use it, and the view is headed by the quotation and comparison whatever the tab is called. |
 | A phone's inspector | 01: a sheet over 60% of the screen, paper usable above. 02: the whole screen, with a bar for the held selection. | The whole screen, with 02's bar and 01's "Resume". The comparison, the note and the Lean need the room, and the quotation at its head means the paper need not show behind it. |
 | The pane at 1100 | 01: a sheet over the paper. 02: two true columns. | Two columns from 1024. A sheet covers the sentence the reader is checking. |

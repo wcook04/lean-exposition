@@ -144,19 +144,6 @@ describe("the pane's remembered choices", async () => {
     document.documentElement.removeAttribute("data-tones");
   });
 
-  it("reads no view when nothing is stored, the stored view, and Lean from the legacy key", () => {
-    expect(prefs.readView()).toBeNull();
-    prefs.saveView("graph");
-    expect(prefs.readView()).toBe("graph");
-    prefs.saveView("lean");
-    expect(prefs.readView()).toBe("lean");
-    localStorage.clear();
-    localStorage.setItem("lx-reader-keep-lean", "open");
-    expect(prefs.readView()).toBe("lean");
-    localStorage.setItem("lx-reader-view", "graph");
-    expect(prefs.readView()).toBe("graph");
-  });
-
   it("remembers the tone switch and sets it on the root", () => {
     expect(prefs.readTones()).toBe(true);
     prefs.saveTones(false);

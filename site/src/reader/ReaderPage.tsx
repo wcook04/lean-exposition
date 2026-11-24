@@ -36,7 +36,7 @@ import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
 import { ModeToggle, type PaneMode } from "./page/ModeToggle";
-import { applyTones, readTones, readView, saveView } from "./page/panePrefs";
+import { applyTones, readTones } from "./page/panePrefs";
 import { RightSheet } from "./page/RightSheet";
 import { HeldBar } from "./page/HeldBar";
 import { READER_HINT } from "./skeleton";
@@ -249,6 +249,26 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   useTopicColours(ties.index.topics);
   const stage = route.stage;
   const structure = paper.structure;
+  const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
+  const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
+  // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
+  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
+  useEffect(() => {
+    let live = true;
+    // Only a document with the authors' PDF has its phrases placed on one.
+    if (!pdfOwn) {
+      setPdfMarks(null);
+      return;
+    }
+    void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
+    return () => {
+      live = false;
+    };
+  }, [stage, pdfOwn]);
+  // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
+  // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
+  const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
+  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
   const wide = useMedia("(min-width: 1360px)");
   const mid = useMedia("(min-width: 1024px)");
   // From 1280px the paper moves left and the argument map stands beside it, the
@@ -287,6 +307,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     heading: new Signal<string | null>(null),
     part: new Signal(0),
     follow: new Signal<Followed>({ tie: null, anchor: null, part: 0 }, sameFollow),
+    shownTie: new Signal<{ tie: number; at: string } | null>(null),
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
@@ -761,24 +782,30 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     path.setAttribute("d", `M${x0.toFixed(1)} ${y0.toFixed(1)}C${mid.toFixed(1)} ${y0.toFixed(1)} ${mid.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`);
   }, [statements, readingTop]);
 
+  useLayoutEffect(() => {
+    const paint = () => {
+      if (pin) {
+        statements.light("follow", null);
+        statements.light("pin", pin.tie);
+      } else {
+        statements.light("pin", null);
+        statements.light("follow", signals.shownTie.get()?.tie ?? null);
+      }
+    };
+    paint();
+    return signals.shownTie.subscribe(paint);
+  }, [pin, signals, statements]);
+
   useEffect(() => {
-    statements.light("pin", pin?.tie ?? null);
     statements.light("on", pin ? null : current.current);
     update.current();
   }, [pin, statements]);
 
   // A statement with no Lean has nothing to open: what is known about that stands under it.
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
-  const noLeanRef = useRef(pinWithoutLean);
-  noLeanRef.current = pinWithoutLean;
-  // The view is the one the address names. An address that names none opens the Lean view: the
-  // quotation, the comparison and the note, then the Lean (docs/reader-design.md). A statement with
-  // no Lean has nothing to compare, so it opens on the graph. Clicks keep the view; only the view
-  // buttons change it.
-  // A view this reader chose with the tabs before is the default in place of Lean; it is read once and is
-  // not written into the address, so an address names a view only when someone chose one for it.
-  const [chosenView] = useState(readView);
-  const mode: PaneMode = route.lean ? "lean" : route.graph ? "graph" : pinWithoutLean ? "graph" : (chosenView ?? "lean");
+  // A normal reading address opens in Lean. A Graph address and a selected
+  // statement with no Lean can still open the graph.
+  const mode: PaneMode = route.lean ? "lean" : route.graph || pinWithoutLean ? "graph" : "lean";
   const modeRef = useRef(mode);
   modeRef.current = mode;
   // The view stays as the reader left it through Back and Forward: an entry keeps its subject,
@@ -884,7 +911,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const run = () => {
       frame = 0;
       const body = bodyRef.current;
-      if (!body) return;
+      if (!body || pdfOn || pdfOnly) return;
       const top = readingTop();
       const line = readingLine();
       let part = partAt(body, doc.parts.length, line);
@@ -988,7 +1015,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfOn, pdfOnly]);
 
   // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
@@ -1191,7 +1218,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     setSectionsSide(false);
     const here = hereRef.current;
     viewKept.current = mode;
-    saveView(mode);
     if (mode === "lean" ? here.lean : here.graph) return;
     // Changing panes keeps the current slice at the reading line until the reader scrolls.
     if (here.at) selfAt.current = here.at;
@@ -1681,32 +1707,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const names = PAPER_NAMES[stage];
   const status = statusWords(structure.state, structure.review_state);
-  const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
-  const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
   const pdfLabel = side === "adapted" ? ADAPTED?.pdfs[0]?.label : undefined;
   const pdf = pdfOwn ? { href: route.page ? `${pdfFile}#page=${route.page}` : pdfFile, pages: pdfOwn.pages, label: pdfLabel } : undefined;
-  // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
-  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
-  useEffect(() => {
-    let live = true;
-    // Only a document with the authors' PDF has its phrases placed on one.
-    if (!pdfOwn) {
-      setPdfMarks(null);
-      return;
-    }
-    void loadPdfMarks(`${import.meta.env.BASE_URL}pdf-marks/${stage}.json`).then((marks) => live && setPdfMarks(marks));
-    return () => {
-      live = false;
-    };
-  }, [stage, pdfOwn]);
-  // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
-  // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
-  const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
-  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
   const pdfPage = useRef<number | null>(null);
-  const onPdfPage = useCallback((page: number) => {
+  const onPdfPosition = useCallback((page: number, at: string | undefined) => {
     pdfPage.current = page;
-  }, []);
+    const tie = at ? statementAt(undefined, at) : null;
+    const part = tie === null ? 0 : statements.partOf(tie);
+    current.current = tie;
+    currentSegment.current = tie === null ? null : ties.segmentsOf[tie][0];
+    signals.part.set(part);
+    signals.follow.set({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part });
+  }, [signals, statementAt, statements, ties]);
   // A PDF page can contain many paragraphs. Remember the exact text position for a
   // round trip on the same page. A new PDF selection or a different page takes precedence.
   const textReturn = useRef<ReadingPosition | null>(null);
@@ -2011,8 +2023,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
             at={route.at}
+            pinned={!!pin}
+            shownTie={signals.shownTie}
             page={route.page}
-            onPage={onPdfPage}
+            readingLine={readingLine}
+            onPosition={onPdfPosition}
             onPick={(id, mark, page) =>
               navigate({ ...route, node: mark.record ?? `${PHRASE_RECORD}${id}`, at: mark.at, pdf: true, page, beside: undefined, graph: modeRef.current === "graph" || undefined, lean: modeRef.current === "lean" || undefined })
             }

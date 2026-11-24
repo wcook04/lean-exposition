@@ -5,10 +5,11 @@
 // it in the text. The view opens at the selected phrase's page, else at `page`, and reports
 // the page in view so a switch back to the text lands at the same place.
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as pdfjs from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import type { PDFDocumentProxy } from "pdfjs-dist";
+import type { ReaderSignals } from "../page/rightPage";
 import "./pdf-view.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
@@ -54,12 +55,15 @@ interface Props {
   marks: PdfMarks;
   /** The selected phrase's place in the text (`b<start>-<end>`), if any. */
   at?: string;
+  pinned: boolean;
+  shownTie: ReaderSignals["shownTie"];
   page?: number;
   onPick(id: string, mark: PdfMark, page: number): void;
-  onPage(page: number): void;
+  readingLine(): number;
+  onPosition(page: number, at: string | undefined): void;
 }
 
-export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) {
+export function PdfView({ url, marks, at, pinned, shownTie, page, label, onPick, readingLine, onPosition }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -137,15 +141,68 @@ export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) 
   useEffect(() => {
     const el = box.current;
     if (!el || !width) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) onPage(Number((entry.target as HTMLElement).dataset.page));
-      },
-      { rootMargin: "-30% 0px -60% 0px" },
-    );
-    el.querySelectorAll(".pdf-view__page").forEach((page) => observer.observe(page));
-    return () => observer.disconnect();
-  }, [width, onPage]);
+    const pages = Array.from(el.querySelectorAll<HTMLElement>(".pdf-view__page"));
+    if (!pages.length) return;
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const line = readingLine();
+      let lo = 0, hi = pages.length - 1;
+      while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (pages[mid].getBoundingClientRect().bottom < line) lo = mid + 1;
+        else hi = mid;
+      }
+      const page = lo + 1;
+      const rect = pages[lo].getBoundingClientRect();
+      const scale = width / marks.pages[lo][0];
+      const y = (line - rect.top) / scale;
+      let best: PdfMark | undefined;
+      let distance = Infinity;
+      for (const [, mark] of byPage.get(page) ?? []) {
+        for (const [p, , top, , bottom] of mark.boxes) {
+          if (p !== page) continue;
+          const gap = Math.max(0, top - y, y - bottom) * scale;
+          if (gap < distance && gap <= window.innerHeight * 0.32) {
+            distance = gap;
+            best = mark;
+          }
+        }
+      }
+      onPosition(page, best?.at);
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(read); };
+    read();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [width, byPage, marks, readingLine, onPosition]);
+
+  // Paint the existing click targets without re-rendering the pages or landing again.
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el || !width) return;
+    let lit: NodeListOf<HTMLElement> | undefined;
+    let currentAt: string | undefined;
+    const paint = () => {
+      const next = pinned ? at : shownTie.get()?.at;
+      if (next === currentAt) return;
+      lit?.forEach((mark) => mark.classList.remove("is-selected"));
+      currentAt = next;
+      lit = next ? el.querySelectorAll<HTMLElement>(`[data-at="${CSS.escape(next)}"]`) : undefined;
+      lit?.forEach((mark) => mark.classList.add("is-selected"));
+    };
+    paint();
+    const unsubscribe = shownTie.subscribe(paint);
+    return () => {
+      unsubscribe();
+      lit?.forEach((mark) => mark.classList.remove("is-selected"));
+    };
+  }, [width, marks, pinned, at, shownTie]);
 
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (
@@ -163,7 +220,8 @@ export function PdfView({ url, marks, at, page, label, onPick, onPage }: Props) 
                     <button
                       key={`${id}-${k}`}
                       type="button"
-                      className={`pdf-view__mark tie${id === selected ? " is-selected" : ""}`}
+                      className="pdf-view__mark tie"
+                      data-at={mark.at}
                       data-mark={k === 0 ? id : undefined}
                       data-tone={mark.tone ?? undefined}
                       style={{ left: b[1] * scale - 1, top: b[2] * scale - 1, width: (b[3] - b[1]) * scale + 2, height: (b[4] - b[2]) * scale + 2 }}

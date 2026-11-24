@@ -48,30 +48,6 @@ export function saveKeepLean(open: boolean) {
   }
 }
 
-const VIEW_KEY = "lx-reader-view";
-
-/**
- * The view this reader chose with the tabs, or null if they never chose. The older key could not
- * tell "chose Graph" from "never chose" (it was removed for Graph), so only its Lean is read.
- */
-export function readView(): "graph" | "lean" | null {
-  try {
-    const stored = localStorage.getItem(VIEW_KEY);
-    if (stored === "graph" || stored === "lean") return stored;
-    return localStorage.getItem(KEEP_KEY) === "open" ? "lean" : null;
-  } catch {
-    return null;
-  }
-}
-
-export function saveView(view: "graph" | "lean") {
-  try {
-    localStorage.setItem(VIEW_KEY, view);
-  } catch {
-    /* storage unavailable: the choice lasts until the page closes */
-  }
-}
-
 const TONES_KEY = "lx-reader-tones";
 
 /** Whether underlines carry their topics' colours. On unless the reader turned it off. */
