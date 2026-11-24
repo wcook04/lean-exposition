@@ -15,7 +15,7 @@
   "coercive_of_posdefHalf": "Half the polar form of a positive definite quadratic map is coercive",
   "coercive_of_posdef_of_contdiff": "A smooth function’s positive definite Hessian is coercive",
   "continuousBilinearMapOfContinuousMultilinearMap": "A continuous bilinear map from a two-argument multilinear map",
-  "coupled_spring_potential": "Local minimum at the origin",
+  "coupled_spring_potential": "The spring potential has a local minimum at the origin",
   "couplingPotential": "The coupled spring potential",
   "couplingPotential_analyticAt": "The spring potential is analytic everywhere",
   "couplingPotential_gradient_zero": "The spring potential has zero gradient at the origin",

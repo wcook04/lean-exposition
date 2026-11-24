@@ -1102,7 +1102,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_mod_twelve_filter": "Witness indices are multiples of twelve",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_next_floor_quotient": "The next floor quotient",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_next_floor_quotient_no_fixed_point": "A stationary quotient must vanish",
-    "ErdosProblems.Erdos257.PaperCompleteR21.paper_next_quotient_sum": "Updating the finite quotient sum",
+    "ErdosProblems.Erdos257.PaperCompleteR21.paper_next_quotient_sum": "The next quotient sum doubles and adds the selected divisor count",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_no_ties": "Neither greedy comparison is equality",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_no_ties_skip": "The safety comparison is strict",
     "ErdosProblems.Erdos257.PaperCompleteR21.paper_no_ties_take": "The take comparison is strict",

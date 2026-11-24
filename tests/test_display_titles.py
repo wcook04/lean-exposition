@@ -78,3 +78,25 @@ class DisplayTitles(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown short part and declaration"):
             project(self.root, "reader", {self.name: "Norm bound"},
                     {"adapted": [{}, {self.name: "Another norm bound"}]})
+
+    def test_rh_graph_names_are_validated_against_neighbours_and_routes(self):
+        index = json.loads((self.edition / "index.json").read_bytes())
+        index["proof_source"] = {"scope": "paper_linked"}
+        index["summaries_by_table"] = {}
+        index["responses"]["/alignment/core"] = "alignment/core.json"
+        self.write("index.json", index)
+        self.write("alignment/core.json", {"names": {}, "records": {},
+                   "steps": {"edge": {"route": [self.name, "Proof.routeHelper"]}}})
+        graph = {"counts": {"dependencies": 1, "users": 0}, "dependencies": [
+            {"name": "Proof.operator", "display_title": "Proof.operator", "kinds": ["type"]}
+        ], "users": []}
+        self.write("lean/module/compiled.json", {"declarations": [{"name": self.name, "neighbourhood": graph}]})
+        names = {"Proof.operator": "Convolution operator", "Proof.routeHelper": "Integral estimate"}
+        files, _ = project(self.root, "reader", names)
+        prefix = Path("reader/edition")
+        core = json.loads(files[prefix / "alignment/core.json"][0])
+        self.assertEqual(core["names"], names)
+        self.assertEqual(core["steps"]["edge"]["route"], [self.name, "Proof.routeHelper"])
+        module = json.loads(files[prefix / "lean/module/compiled.json"][0])
+        graph["dependencies"][0]["display_title"] = "Convolution operator"
+        self.assertEqual(module["declarations"][0]["neighbourhood"], graph)

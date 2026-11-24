@@ -98,7 +98,7 @@
    "titles": {
     "coercive_of_posdef": "A positive definite Hessian bounds squared distance from below",
     "coercive_of_posdef_of_contdiff": "A smooth function’s positive definite Hessian is coercive",
-    "coupled_spring_potential": "Local minimum at the origin",
+    "coupled_spring_potential": "The spring potential has a local minimum at the origin",
     "couplingPotential": "The coupled spring potential",
     "couplingPotential_analyticAt": "The spring potential is analytic everywhere",
     "couplingPotential_gradient_zero": "The spring potential has zero gradient at the origin",

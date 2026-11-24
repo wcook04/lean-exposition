@@ -188,6 +188,11 @@ def project_edition(artifact, root, edition, names, slots, known):
             def module(payload, set_title):
                 for row in payload["declarations"]:
                     set_title(row, "display_title", names.get(row["name"]), "declarations[].display_title")
+                    neighbourhood = row.get("neighbourhood", {})
+                    for direction in ("dependencies", "users"):
+                        for neighbour in neighbourhood.get(direction, ()):
+                            set_title(neighbour, "display_title", names.get(neighbour["name"]),
+                                      "declarations[].neighbourhood[].display_title")
             apply(path, module)
 
     return updates, digest(index_raw), used, used_slots
@@ -204,6 +209,17 @@ def project(artifact, mount, names, slots=None):
         raise ValueError(f"{edition}: missing the compiled declaration name index")
     _, lean = read_capture(lean_path)
     known = {row[0] for row in lean["names"]}
+    if "proof_source" in main_index:
+        core_path = capture_file(edition, main_index, "/alignment/core", "alignment/core.json")
+        if core_path:
+            _, core = read_capture(core_path)
+            known.update(name for step in core.get("steps", {}).values() for name in step.get("route", ()))
+        for file in (edition / "lean/module").glob("*.json"):
+            _, module = read_capture(file)
+            for row in module["declarations"]:
+                neighbourhood = row.get("neighbourhood", {})
+                for direction in ("dependencies", "users"):
+                    known.update(neighbour["name"] for neighbour in neighbourhood.get(direction, ()))
     updates, indexes, used, used_slots = {}, {}, set(), set()
     children = sorted((edition / "docs").glob("*/index.json"))
     for path in [edition, *(child.parent for child in children)]:

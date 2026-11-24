@@ -500,7 +500,7 @@
     "Breakdown.Freq.heatDivFree": "Projected heat flow of $L^2$ data",
     "Breakdown.Freq.heatFactor": "The Gaussian Fourier multiplier",
     "Breakdown.Freq.heatX": "Heat flow on the solenoidal space",
-    "Breakdown.Freq.heat_holds": "The heat semigroup on $X$",
+    "Breakdown.Freq.heat_holds": "Heat semigroup on the homogeneous solenoidal space",
     "Breakdown.Freq.isClosed_sig": "Closedness of the solenoidal space",
     "Breakdown.Freq.mild_holds": "A weak profile curve is mild",
     "Breakdown.Freq.partial_holds": "Reconstructing weak spatial derivatives by Fourier multipliers",
@@ -1444,7 +1444,7 @@
    "partial": true,
    "title_words": [
     2,
-    13
+    12
    ]
   }
  ],
