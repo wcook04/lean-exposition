@@ -1597,7 +1597,9 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
   const userMoved = useRef(false);
   const skipModeFrame = useRef(false);
   const lastAsk = useRef("");
-  const askKeyOf = () => `${selected ?? ""}|${trace ?? ""}|${selectedEdge ?? ""}|${insets.right}|${insets.bottom}|${mode}|${paneW}`;
+  const lastRequest = useRef("");
+  const requestOf = () => `${selected ?? ""}|${trace ?? ""}|${selectedEdge ?? ""}|${mode}`;
+  const askKeyOf = () => `${requestOf()}|${insets.right}|${insets.bottom}|${paneW}`;
 
   const doRevealIds = useCallback(
     (ids: readonly string[]) => {
@@ -1769,6 +1771,7 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
         cameraOnly.current = null;
         if (motion.current) motion.current.view = undefined;
         lastAsk.current = askKeyOf();
+        lastRequest.current = requestOf();
         if (scene.mode !== modeRef.current) skipModeFrame.current = true;
         if (!controlled && !compact) setModeState(scene.mode);
         if (!derived) {
@@ -2114,17 +2117,22 @@ export const ArgumentTree = forwardRef<MapViewHandle, TreeProps>(function Argume
     if (!ready) return;
     const key = askKeyOf();
     if (key === lastAsk.current) return;
-    if (restoreRef.current) {
+    const request = requestOf();
+    // Measuring the canvas again must not bring back a selection the reader panned away from.
+    if (restoreRef.current || (userMovedSinceAsk.current && request === lastRequest.current)) {
       lastAsk.current = key;
+      lastRequest.current = request;
       return;
     }
     const { ids } = askedIds();
     if (!ids.length) {
       lastAsk.current = key;
+      lastRequest.current = request;
       return;
     }
     if (!ids.every((id) => hasRec(layout, id)) || built.provisional) return;
     lastAsk.current = key;
+    lastRequest.current = request;
     userMovedSinceAsk.current = false;
     const v = askViewRef.current();
     walkOnly.current = false;
