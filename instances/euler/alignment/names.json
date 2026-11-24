@@ -3357,7 +3357,7 @@
   "TorusEuler.Paper.S5b.levelPairs_le": "Convolution indices precede total level",
   "TorusEuler.Paper.S5b.levelPairs_spec": "The indices in a hierarchy convolution",
   "TorusEuler.Paper.S5b.levelSource_vrefl": "Reflection preserves the level source",
-  "TorusEuler.Paper.S5b.master_recurrence": "Recurrence for measured expansion norms through any finite derivative order",
+  "TorusEuler.Paper.S5b.master_recurrence": "Recurrence for the expansion norms at each derivative order",
   "TorusEuler.Paper.S5b.material_reflection": "Reflection commutes with material term",
   "TorusEuler.Paper.S5b.material_vrefl": "Reflection commutes with evolution",
   "TorusEuler.Paper.S5b.meanSolution_vrefl": "Reflection preserves mean equation",

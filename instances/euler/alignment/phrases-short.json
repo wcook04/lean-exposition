@@ -544,7 +544,7 @@
     "TorusEuler.Paper.S5b.graph_norm_le_wNorm": "Active weighted norm bounds the phase evaluation for a preactivation-zero profile",
     "TorusEuler.Paper.S5b.lemma_5_8_of_odd": "Odd expansions yield the approximate Euler fields",
     "TorusEuler.Paper.S5b.levelConstant_indep": "The level constants are independent of expansion depth",
-    "TorusEuler.Paper.S5b.master_recurrence": "Recurrence for measured expansion norms through any finite derivative order",
+    "TorusEuler.Paper.S5b.master_recurrence": "Recurrence for the expansion norms at each derivative order",
     "TorusEuler.Paper.S5b.oddExpansions_of": "Oddness of the finite expansion follows from uniqueness",
     "TorusEuler.Paper.S5b.uNorm_le_wNorm": "Weighted norm bound for profiles vanishing before activation",
     "TorusEuler.Paper.S5b.words_general": "Repeated physical differentiation",
