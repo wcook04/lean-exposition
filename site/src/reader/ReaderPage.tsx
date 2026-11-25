@@ -1207,19 +1207,26 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   /** A statement in the paper: one history entry, and the paper does not move. */
   const openStatement = useCallback(
-    (t: number, want?: PaneMode) => {
+    (t: number, want?: PaneMode, land = false) => {
       const tie = ties.index.ties[t];
+      const box = land && pdfOn ? pdfByAt.get(tie.at)?.boxes[0] : undefined;
       selfAt.current = tie.at;
       const opened = nextOpened();
       const here = hereRef.current;
       // "See its Lean" explicitly chooses Lean. Other selections keep the address's view choice.
       const pane = want ? { graph: want === "graph" || undefined, lean: want === "lean" || undefined } : {};
-      go({ ...here, ...pane, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
+      const pageAtPassage = box ? { page: box[0], anchor: undefined } : {};
+      go({ ...here, ...pane, ...pageAtPassage, node: tie.record, at: tie.at, decl: undefined, declModule: undefined, beside: undefined });
       writeEntry(OPENED, opened);
+      if (land && !pdfOn) void landSlice(tie.at, { node: tie.record, smooth: "always" });
+      if (box && here.at === tie.at && here.page === box[0]) {
+        const mark = paperRef.current?.querySelector<HTMLElement>(`.pdf-view [data-mark][data-at="${CSS.escape(tie.at)}"]`);
+        if (mark) window.scrollBy({ top: mark.getBoundingClientRect().top - readingLine(), behavior: prefersReducedMotion() ? "instant" : "smooth" });
+      }
       // A narrow window's inspector opens over the whole screen; the paper stays exactly where it is.
       setSheetCollapsed(false);
     },
-    [ties, go, nextOpened],
+    [ties, go, landSlice, nextOpened, pdfOn, pdfByAt, readingLine],
   );
 
   /** "See its Lean" in a reference's inset: the statement opens as if it had been clicked. */
@@ -2141,10 +2148,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     held,
     onRelease: closeLean,
     placeOf: placeWords,
-    onOpenTie: (t: number, land?: boolean) => {
-      openStatement(t);
-      if (land) void landSlice(ties.index.ties[t].at, { node: ties.index.ties[t].record, smooth: true });
-    },
+    onOpenTie: (t: number, land?: boolean) => openStatement(t, undefined, land),
     onMode: setMode,
     onCombine: combinePane,
     graphRequested: route.graph,
