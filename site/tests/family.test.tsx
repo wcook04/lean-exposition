@@ -200,7 +200,7 @@ describe("the header's lockup", () => {
     root = createRoot(host);
     await act(async () => root!.render(<TopBar route={{ view: "map" }} onSearch={() => undefined} />));
     const title = host.querySelector<HTMLAnchorElement>(".topbar__title")!;
-    expect(title.getAttribute("href")).toBe("/");
+    expect(title.getAttribute("href")).toBe(new URL("library/", FAMILY.owner.home).href);
     expect(title.textContent).toBe("SK Reader");
   });
 
