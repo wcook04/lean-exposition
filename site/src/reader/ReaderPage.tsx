@@ -2392,6 +2392,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     structures,
     signals,
     ties,
+    readingStops: stepModel.stops,
+    readingSourceReady: !(route.pdf || pdfOnly) || pdfOn,
     pin: graphPick ? (graphPick.record ? { record: graphPick.record, tie: null } : null) : (pin ?? referencePin),
     decl: graphPick ? (graphPick.decl?.name ?? null) : (route.decl ?? null),
     declModule: graphPick ? graphPick.decl?.module : route.declModule,
