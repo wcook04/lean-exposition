@@ -111,6 +111,8 @@ const NEAR = "900px 0px";
 export class Statements {
   private sections = new Map<number, HTMLElement>();
   private marks = new Map<number, Mark[]>();
+  /** Mounted marks by part and tie, in manuscript order. */
+  private marksByTie = new Map<number, Map<number, HTMLElement[]>>();
   private ticks = new Map<number, Map<number, SegmentTicks>>();
   /** Each paragraph's control in the margin, and the paragraph it selects. */
   private picks = new WeakMap<HTMLElement, HTMLElement>();
@@ -187,6 +189,7 @@ export class Statements {
     }
     this.sections.delete(part);
     this.marks.delete(part);
+    this.marksByTie.delete(part);
     this.ticks.delete(part);
     this.nearby.delete(part);
     this.measured.delete(part);
@@ -195,9 +198,18 @@ export class Statements {
     const found = Array.from(section.querySelectorAll<HTMLElement>(":scope > .part__text [data-t]")).map((el) => ({ el, segment: Number(el.dataset.t) }));
     if (!found.length) return;
     this.marks.set(part, found);
-    // A phrase carries its topic's colour.
+    const byTie = new Map<number, HTMLElement[]>();
+    this.marksByTie.set(part, byTie);
     for (const { el, segment } of found) {
-      const t = this.model.index.segments[segment]?.[2][0];
+      const members = this.model.index.segments[segment]?.[2];
+      if (!members?.length) continue;
+      for (const member of members) {
+        const spans = byTie.get(member);
+        if (spans) spans.push(el);
+        else byTie.set(member, [el]);
+      }
+      // A phrase carries its topic's colour.
+      const t = members[0];
       const tie = t === undefined ? undefined : this.model.index.ties[t];
       if (tie?.tone === undefined) continue;
       // Write the tone only when it changes. An identical write still records a mutation and invalidates
@@ -415,10 +427,9 @@ export class Statements {
     const parts = new Set([...segments].map((segment) => this.partOfSegment[segment]));
     for (const part of parts) {
       if (only !== undefined && part !== only) continue;
-      for (const mark of this.marks.get(part) ?? []) {
-        if (!segments.has(mark.segment)) continue;
-        if (on) mark.el.setAttribute(name, "");
-        else mark.el.removeAttribute(name);
+      for (const el of this.marksByTie.get(part)?.get(t) ?? []) {
+        if (on) el.setAttribute(name, "");
+        else el.removeAttribute(name);
       }
       const bySegment = this.ticks.get(part);
       if (bySegment) for (const segment of segments) {
@@ -492,7 +503,7 @@ export class Statements {
   spans(t: number): HTMLElement[] {
     const segments = new Set(this.model.segmentsOf[t] ?? []);
     const parts = new Set([...segments].map((segment) => this.partOfSegment[segment]));
-    return [...parts].flatMap((part) => (this.marks.get(part) ?? []).filter((m) => segments.has(m.segment)).map((m) => m.el));
+    return [...parts].flatMap((part) => this.marksByTie.get(part)?.get(t) ?? []);
   }
 
   first(t: number): HTMLElement | null {

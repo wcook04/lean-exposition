@@ -44,7 +44,11 @@ export function SubjectBand({ state, place, title, onResume, onManual }: Props) 
       <ModeSwitch manual={selected} onAuto={onResume} onManual={onManual} />
       <p className="subject-band__state">
         <span className="subject-band__words">{WORDS[state]}</span>
-        {state === "following" && <span className="subject-band__hint">Changes as you scroll</span>}
+        {state === "following" && (
+          <span className="subject-band__hint">
+            {onManual ? <>Select <span className="subject-band__sample">underlined text</span> to keep its annotation open</> : "Changes as you scroll"}
+          </span>
+        )}
         {state === "preview" && <span className="subject-band__hint">Not selected</span>}
         {selected && place && <span className="subject-band__hint">in {place}</span>}
       </p>
