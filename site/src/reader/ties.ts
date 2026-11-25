@@ -172,7 +172,9 @@ export function wrapTies(html: string, document: Document = window.document): st
         }
       } else if (child.nodeType === 1) {
         const element = child as Element;
-        if (element.matches(BLOCK_ATOM)) {
+        // Code figures can contain several separately linked statements inside one example.
+        const codeFigure = element.matches("figure:has(pre)");
+        if (element.matches(BLOCK_ATOM) && (!codeFigure || open.length)) {
           flush();
           if (open.length) {
             element.classList.add("tie");
@@ -180,7 +182,7 @@ export function wrapTies(html: string, document: Document = window.document): st
           }
           // A mark can sit inside a display set in the running text; it still counts.
           closeMarksIn(element);
-        } else if (element.matches(ATOM)) leaf(element);
+        } else if (!codeFigure && element.matches(ATOM)) leaf(element);
         else {
           flush();
           walk(element);
