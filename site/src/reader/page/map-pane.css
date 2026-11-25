@@ -1,7 +1,6 @@
 /* The right page (MapPane.tsx). With the pane shown the reader stops centring: the paper and
    the right page share what the outline leaves, half each, the right page to the window's
-   edge, full height under the top bar. The text keeps its measure inside its half; a PDF
-   fills it. Dragging the divider (PaperSplit.tsx) sets --reader-split-width, and its reset
+   edge, full height under the top bar. The reading copy and PDF fill the paper's half. Dragging the divider (PaperSplit.tsx) sets --reader-split-width, and its reset
    removes it again. From 1680px the outline returns beside them, outside the halves.
    Linked passages share their pane with their dependency graph. Below 1280px the same
    layout opens in a sheet. */
@@ -1515,6 +1514,6 @@ html[data-right-sheet] {
   user-select: none;
 }
 
-.reader.reader--follow[data-paper-split] .reader__paper .paper.prose {
+.reader.reader--follow .reader__paper .paper.prose {
   max-width: 100%;
 }
