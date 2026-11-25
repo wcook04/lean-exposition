@@ -1,18 +1,6 @@
-/* The switch between the two texts, and Show changes, in the reader's strip. */
+/* The switch between the two texts in the reader's strip. */
 .edition-switch {
   flex: none;
-}
-
-.reader-strip .changes-button {
-  flex: none;
-  font: inherit;
-  font-size: 0.85rem;
-  padding: 2px 8px;
-  border: 1px solid var(--rule, #ccc);
-  border-radius: 6px;
-  background: none;
-  color: inherit;
-  cursor: pointer;
 }
 
 /* The pane's change card and list. */

@@ -89,8 +89,7 @@ import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
 import { useTopicColours } from "./topicColours";
-import { lineInView, ADAPTED, carryPlace, clearPlace, counterpart, editionSide, loadChanges, takePlace, type Change, type ChangeMap } from "./adapted/changes";
-import { ChangeCard, ChangeList } from "./adapted/ChangePane";
+import { lineInView, ADAPTED, carryPlace, clearPlace, counterpart, editionSide, loadChanges, takePlace, type ChangeMap } from "./adapted/changes";
 import "./adapted/adapted.css";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
 import "./page/map-pane.css";
@@ -484,7 +483,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- An adapted edition: the switch between the two texts and the changes layer.
   const side = editionSide(stage);
   const [changeMap, setChangeMap] = useState<ChangeMap | null>(null);
-  const [changePane, setChangePane] = useState<{ kind: "change"; id: string } | { kind: "list" } | null>(null);
   const [carried] = useState(() => takePlace(stage));
   const editionNotice = carried?.notice ?? null;
   useEffect(() => {
@@ -1859,29 +1857,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     });
     navigate({ view: "read", stage: target, lean: route.lean, graph: route.graph, pdf: route.pdf, page: undefined });
   };
-  const goToChange = (change: Change) => {
-    setChangePane({ kind: "change", id: change.id });
-    if (route.pdf) return;
-    void landAtLine(change.adapted_lines[0][0]);
-  };
-  const changeView =
-    changePane && changeMap && side === "adapted"
-      ? changePane.kind === "list"
-        ? <ChangeList map={changeMap} current={null} onGo={goToChange} onClose={() => setChangePane(null)} />
-        : (() => {
-            const change = changeMap.changes.find((c) => c.id === changePane.id);
-            return change ? (
-              <ChangeCard
-                change={change}
-                map={changeMap}
-                onClose={() => setChangePane(null)}
-                onList={() => setChangePane({ kind: "list" })}
-                onGo={goToChange}
-                onAuthors={(c) => switchEdition("authors", c.adapted_lines[0][0])}
-              />
-            ) : null;
-          })()
-      : null;
 
   /** From the map: the paper goes to the selected statement. */
   const openFromMap = useCallback(
@@ -1912,26 +1887,47 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           position: pdfOn ? null : measurePosition(), y: window.scrollY, pdf: pdfOn ? pdfPlaceAtLine() : null,
         };
       }
-      const statement = decl
-        ? (ties.stops.find((t) => {
-            const tie = ties.index.ties[t];
-            return tie.name === decl.name || !!tie.rows?.some((row) => row.name === decl.name);
-          }) ?? null)
-        : statementFor(ties, id);
-      const target = inspectionTarget(statement, (t) => ties.index.ties[t].at, decl ? null : firstPassageFor(structure, [id]));
+      // In the PDF only a statement with a mark on its pages is somewhere Go can land.
+      const placed = (t: number) => !pdfOn || !!pdfByAt.get(ties.index.ties[t].at)?.boxes[0];
+      let statement: number | null = null;
+      if (decl) {
+        // The declaration's statements, by its module when the graph names one; with no module, only when unambiguous.
+        const matches = ties.stops.filter((t) => {
+          const tie = ties.index.ties[t];
+          const rows = [...(tie.name ? [{ name: tie.name, module: tie.module }] : []), ...(tie.rows ?? [])];
+          return rows.some((row) => row.name === decl.name && (!decl.module || !row.module || row.module === decl.module));
+        });
+        const modules = new Set(matches.flatMap((t) => {
+          const tie = ties.index.ties[t];
+          return [...(tie.name === decl.name && tie.module ? [tie.module] : []), ...(tie.rows ?? []).filter((row) => row.name === decl.name && row.module).map((row) => row.module)];
+        }));
+        statement = !decl.module && modules.size > 1 ? null : (matches.find(placed) ?? null);
+      } else {
+        const named = statementFor(ties, id);
+        // The record's own statement, else another of its statements the PDF marks.
+        statement = named !== null && placed(named) ? named : (ties.byRecord.get(id)?.find((t) => ties.stops.includes(t) && placed(t)) ?? null);
+      }
+      // A passage of the typeset text is no destination in the PDF.
+      const target = inspectionTarget(statement, (t) => ties.index.ties[t].at, decl || pdfOn ? null : firstPassageFor(structure, [id]));
       setGraphPick(decl ? { decl, target } : { record: id, target });
       setSheetCollapsed(false);
     },
-    [ties, structure],
+    [ties, structure, pdfOn, pdfByAt],
   );
+  /** The pick's destination in the format on screen: none when the PDF cannot land on it. */
+  const pickTarget = (pick: GraphInspection | null) => {
+    const target = pick?.target;
+    if (!target || !pdfOn) return target ?? null;
+    return "at" in target && pdfByAt.get(target.at)?.boxes[0] ? target : null;
+  };
 
   /** Go to passage: the paper follows the graph selection's mapped passage, as one history entry. */
   const goToGraphPick = () => {
     const pick = graphPickRef.current;
     const origin = graphOrigin.current;
-    if (!pick?.target || !origin) return;
+    const target = pickTarget(pick);
+    if (!target || !origin) return;
     const here = hereRef.current;
-    const target = pick.target;
     setGraphPick(null);
     graphOrigin.current = null;
     setHeld(null);
@@ -2345,6 +2341,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       : undefined;
   const inspecting = !!inspect;
   const graphReturn = readEntry<GraphReturn>(GRAPH_RETURN);
+  const goTarget = pickTarget(graphPick);
   // Beside the right page the inspector takes the Lean page's place instead of a column.
   const columnInspector = inspecting && mid && !paneOn;
   const outlineAvailable = mid && !(columnInspector && !wide) && !(paneOn && !outlineRoom);
@@ -2546,11 +2543,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               {pdfOn && <PdfZoom zoom={pdfZoom} onChange={changePdfZoom} />}
             </div>
           )}
-          {side === "adapted" && (
-            <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
-              Show changes
-            </button>
-          )}
           {!paneOn && !sheetShown && (
             <button
               type="button"
@@ -2569,12 +2561,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <span className="reader-strip__word">Show pane</span>
             </button>
           )}
-          {graphPick?.target && !route.beside && (
+          {goTarget && !route.beside && (
             <div className="reader-strip__visit">
               <button
                 type="button"
                 className="control reader-strip__return reader-strip__go"
-                title={`Go to ${"at" in graphPick.target ? placeWords(ties.index.ties[graphPick.target.tie].anchor ?? undefined, graphPick.target.at) : placeWords(graphPick.target.anchor)} in the paper`}
+                title={`Go to ${"at" in goTarget ? placeWords(ties.index.ties[goTarget.tie].anchor ?? undefined, goTarget.at) : placeWords(goTarget.anchor)} in the paper`}
                 onClick={goToGraphPick}
               >
                 Go to passage
@@ -2697,9 +2689,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                 {...paneProps}
                 inert={!!route.beside}
                 leanSlot={
-                  changeView ? (
-                    changeView
-                  ) : inspecting ? (
+                  inspecting ? (
                     inspector
                   ) : sectionsSide ? (
                     <section className="sections-side" aria-label="Sections of this paper">
@@ -2752,11 +2742,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           onView={() => setSheetCollapsed(false)}
           onResume={closeLean}
         />
-      )}
-      {changeView && !paneOn && (
-        <Modal title={changePane?.kind === "list" ? "Show changes" : "Selected change"} placement={phone ? "sheet" : "side-end"} className="modal--inspector" onClose={() => setChangePane(null)}>
-          {changeView}
-        </Modal>
       )}
 
       {!mid && inspect && (

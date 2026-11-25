@@ -1,6 +1,6 @@
 // The pane's view of an adapted edition's changes: one Selected change (the authors' text, the
-// edition's, the kind, the note and the sources), or "Show changes", every change in the order
-// of the text, each opening its passage.
+// edition's, the kind, the note and the sources), or the list of every change in the order of
+// the text, each opening its passage.
 
 import { useMemo } from "react";
 import { documentPaths } from "../documents";
@@ -35,12 +35,11 @@ interface CardProps {
   change: Change;
   map: ChangeMap;
   onClose(): void;
-  onList(): void;
   onGo(change: Change): void;
   onAuthors(change: Change): void;
 }
 
-export function ChangeCard({ change, map, onClose, onList, onGo, onAuthors }: CardProps) {
+export function ChangeCard({ change, map, onClose, onGo, onAuthors }: CardProps) {
   const k = map.changes.findIndex((c) => c.id === change.id);
   const prev = map.changes[k - 1];
   const next = map.changes[k + 1];
@@ -53,7 +52,6 @@ export function ChangeCard({ change, map, onClose, onList, onGo, onAuthors }: Ca
           {kindWords(change.kind)} <span className="change-card__id">{change.id}</span>
         </h3>
         <div className="change-card__controls">
-          <button type="button" className="lean-page__action" onClick={onList}>Show changes</button>
           <button type="button" className="lean-page__action" onClick={onClose}>Close</button>
         </div>
       </header>

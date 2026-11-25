@@ -4,6 +4,8 @@ import { useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEven
 
 const KEY = `lx-reader-paper-share:${import.meta.env.BASE_URL}`;
 const MIN_PANE = 400;
+/** With no width of the reader's own, the paper and its companion share the pair evenly. */
+const DEFAULT_SHARE = 0.5;
 
 function savedShare(): number | null {
   try {
@@ -30,13 +32,17 @@ export function PaperSplit() {
     return { grip, reader, paper, companion };
   }
 
+  /**
+   * A share the reader chose, or null for the automatic even split. Only a chosen share is
+   * returned (and so saved); the automatic one follows the window. `available` is the paper's
+   * column and the companion's together: an outline beside them has its own column.
+   */
   function write(reader: HTMLElement, value: number | null, available: number) {
     const min = Math.min(0.43, Math.max(0.22, MIN_PANE / available));
-    const next = value === null ? null : Math.min(1 - min, Math.max(min, value));
-    reader.toggleAttribute("data-paper-split", next !== null);
-    if (next === null) reader.style.removeProperty("--reader-split-width");
-    else reader.style.setProperty("--reader-split-width", `${Math.round(next * available)}px`);
-    return next;
+    const next = Math.min(1 - min, Math.max(min, value ?? DEFAULT_SHARE));
+    reader.setAttribute("data-paper-split", value === null ? "auto" : "user");
+    reader.style.setProperty("--reader-split-width", `${Math.round(next * available)}px`);
+    return value === null ? null : next;
   }
 
   function save() {
@@ -66,14 +72,14 @@ export function PaperSplit() {
     const { reader, paper, companion } = elements;
     let capacity = paper.clientWidth + companion.clientWidth;
     share.current = savedShare();
-    if (capacity && share.current !== null) write(reader, share.current, capacity);
+    if (capacity) write(reader, share.current, capacity);
     const measure = () => {
       const width = paper.clientWidth + companion.clientWidth;
       if (!width) return;
       if (width !== capacity) {
         capacity = width;
         // A tighter window can limit the CSS width without changing the saved share.
-        if (share.current !== null) write(reader, share.current, width);
+        write(reader, share.current, width);
       }
       const min = Math.round(100 * Math.min(0.43, Math.max(0.22, MIN_PANE / width)));
       setLimits((previous) => previous.min === min ? previous : { min, max: 100 - min });

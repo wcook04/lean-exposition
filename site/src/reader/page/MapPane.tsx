@@ -13,7 +13,7 @@ import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
 import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
-import { passageTopics, phraseTitle, statementFor, type TieModel } from "../ties";
+import { passageTopics, phraseTitle, statementFor, topicOf as tieTopic, type TieModel } from "../ties";
 import { focusOn, indexFocusGraph, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
@@ -592,6 +592,16 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const graphTools = mode === "graph" && !fill && !unlinked;
   const showToolbar = !!guideStage || (!fill && tabbed) || graphTools;
   const visible = mode === "lean" ? leanOpen : dockOpen;
+  // The band names the topic of the annotation the pane shows, as the topic key names it. A
+  // theorem or citation preview, or a passage with nothing tied, has none.
+  const bandTopic = useMemo(() => {
+    if (preview) return null;
+    const t =
+      visible.tie ??
+      statementFor(ties, visible.record ?? undefined) ??
+      (visible.decl ? ties.index.ties.findIndex((tie) => tie.name === visible.decl || tie.rows?.some((row) => row.name === visible.decl)) : -1);
+    return t >= 0 ? tieTopic(ties, t) : null;
+  }, [preview, visible, ties]);
   useLayoutEffect(() => {
     let target: HTMLElement | null = null;
     if (layoutFocus.current === "tabs") target = leanButtonRef.current;
@@ -713,7 +723,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
           </button>
         )}
       </div>}
-      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} topic={bandTopic} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
           <LeanDock {...paperReferenceProps} open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />

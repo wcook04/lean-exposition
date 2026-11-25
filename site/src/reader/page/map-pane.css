@@ -1,7 +1,7 @@
-/* The right page (MapPane.tsx). From 1280px the reader stops centring: the paper at its
-   measure (at least half the window's width from 1280 to 1679px, where the outline folds
-   into "Sections"), then the right page to the window's edge, full height under the top
-   bar. From 1680px the outline returns, which leaves the graph the width it needs.
+/* The right page (MapPane.tsx). From 1024px the reader stops centring: the paper and the
+   right page share what the outline leaves, evenly unless the reader has dragged the divider
+   (PaperSplit.tsx sets --reader-split-width; the columns below are the width before it has
+   measured), the right page to the window's edge, full height under the top bar. From 1680px the outline returns, which leaves the graph the width it needs.
    Linked passages share their pane with their dependency graph. Below 1280px the same
    layout opens in a sheet. */
 
@@ -1035,11 +1035,15 @@ html[data-right-sheet] {
   color: var(--ink);
 }
 
-.subject-band__sample {
+/* The annotation's topic, with its swatch from the sidebar's key. */
+.subject-band__topic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: var(--fs-ui);
+  font-weight: 600;
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--ink-3);
-  text-underline-offset: .2em;
 }
 
 /* ---- The inspector: title and identity ----------------------------------------------- */
