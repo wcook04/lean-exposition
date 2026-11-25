@@ -527,10 +527,9 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
   const allTargets = useMemo(() => [...statement.targets, ...where.flatMap((body) => body.code.targets)], [statement, where]);
 
   const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => {
-    if (previewSlot === false) return;
-    if (target && element) store.read({ target, shell });
+    if (target && element) store.read({ target, shell, anchor: element });
     else store.clear();
-  }, [store, shell, previewSlot]);
+  }, [store, shell]);
 
   const walk = onName ? (next: DeclRow) => onName(walkOf(next, decl.name)) : undefined;
   const plain = shell.plain.get(decl.name);
@@ -689,7 +688,7 @@ export const DeclView = memo(function DeclView({ decl, module, shell, relation, 
       ) : (
         body
       )}
-      {previewSlot !== false && (!row || previewSlot) && <ReadingFoot store={store} slot={previewSlot} />}
+      <ReadingFoot store={store} slot={previewSlot || undefined} popupOnly={previewSlot === false || Boolean(row && !previewSlot)} />
     </article>
   );
 });

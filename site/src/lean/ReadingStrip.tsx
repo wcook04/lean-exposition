@@ -4,7 +4,7 @@
 // whether or not a name is being read. So pointing moves nothing and covers nothing.
 
 import site from "@instance/site";
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { texHtml } from "../figures/tex";
 import { compiled, declIn, docLine, fetchModule, kindWord, moduleIfLoaded, signatureText, type LeanShell } from "./data";
@@ -150,6 +150,7 @@ export function ReadingLine({ target, shell }: { target: NameTarget; shell: Lean
 export interface Reading {
   target: NameTarget;
   shell: LeanShell;
+  anchor: HTMLElement;
 }
 
 /** Moving from one name to the next passes over nothing, so the line does not blink. */
@@ -188,9 +189,73 @@ export function readingStore(): ReadingStore {
   };
 }
 
-function Line({ store }: { store: ReadingStore }) {
+/** Reuse the existing signature and module cache in a preview anchored to the linked token. */
+function NamePreview({ reading, store }: { reading: Reading; store: ReadingStore }) {
+  const id = useId();
+  const ref = useRef<HTMLDivElement>(null);
+  const { anchor } = reading;
+  useLayoutEffect(() => {
+    const tip = ref.current;
+    if (!tip || !anchor.isConnected) return;
+    const priorDescription = anchor.getAttribute("aria-describedby");
+    anchor.setAttribute("aria-describedby", [priorDescription, id].filter(Boolean).join(" "));
+    const place = () => {
+      if (!anchor.isConnected) return hide();
+      const token = anchor.getBoundingClientRect();
+      const width = tip.offsetWidth;
+      const height = tip.offsetHeight;
+      const gap = 8;
+      const left = Math.min(window.innerWidth - width - gap, Math.max(gap, token.left));
+      const below = token.bottom + gap;
+      const top = below + height <= window.innerHeight - gap ? below : Math.max(gap, token.top - height - gap);
+      tip.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
+      tip.style.visibility = "visible";
+    };
+    function hide() {
+      if (tip) tip.style.visibility = "hidden";
+    }
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && tip.style.visibility === "visible") {
+        hide();
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    place();
+    const observer = new ResizeObserver(() => {
+      if (tip.style.visibility === "visible") place();
+    });
+    observer.observe(tip);
+    window.addEventListener("scroll", hide, { passive: true, capture: true });
+    window.addEventListener("resize", hide, { passive: true });
+    window.addEventListener("keydown", key, true);
+    anchor.addEventListener("click", hide, { capture: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", hide, true);
+      window.removeEventListener("resize", hide);
+      window.removeEventListener("keydown", key, true);
+      anchor.removeEventListener("click", hide, true);
+      if (priorDescription === null) anchor.removeAttribute("aria-describedby");
+      else anchor.setAttribute("aria-describedby", priorDescription);
+    };
+  }, [anchor, id]);
+  return createPortal(
+    <div ref={ref} className="lean-name-preview lean-read" id={id} role="tooltip"
+      onPointerEnter={() => store.read(reading)}
+      onPointerLeave={() => { if (!anchor.matches(":focus-visible")) store.clear(); }}>
+      <ReadingLine target={reading.target} shell={reading.shell} />
+    </div>,
+    document.body,
+  );
+}
+
+function Line({ store, popupOnly }: { store: ReadingStore; popupOnly?: boolean }) {
   const now = useSyncExternalStore(store.subscribe, store.now);
   if (!now) return null;
+  const desktop = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (desktop || now.anchor.matches(":focus-visible")) return <NamePreview reading={now} store={store} />;
+  if (popupOnly) return null;
   return (
     <div className="lean-read" role="status">
       <ReadingLine target={now.target} shell={now.shell} />
@@ -199,8 +264,9 @@ function Line({ store }: { store: ReadingStore }) {
 }
 
 /** The block's reading row, or the same line in the host's slot. */
-export function ReadingFoot({ store, slot }: { store: ReadingStore; slot?: HTMLElement | null }) {
-  const line = useMemo(() => <Line store={store} />, [store]);
+export function ReadingFoot({ store, slot, popupOnly }: { store: ReadingStore; slot?: HTMLElement | null; popupOnly?: boolean }) {
+  const line = useMemo(() => <Line store={store} popupOnly={popupOnly} />, [store, popupOnly]);
+  if (popupOnly) return line;
   if (slot) return createPortal(line, slot);
   return <div className="lean-slot">{line}</div>;
 }

@@ -581,7 +581,7 @@ function FileView({ module, shell, slot, file, scroller }: { module: LeanModule;
   const last = range ? Number(range[2] ?? range[1]) : 0;
   const lit = useCallback((line: number) => line >= first && line <= last, [first, last]);
   const store = useMemo(readingStore, []);
-  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? store.read({ target, shell }) : store.clear()), [store, shell]);
+  const read = useCallback((target: NameTarget | null, element: HTMLElement | null) => (target && element ? store.read({ target, shell, anchor: element }) : store.clear()), [store, shell]);
   const open = useCallback(() => undefined, []);
   const path = shell.paths.get(module.module)?.path ?? module.path;
   useEffect(() => {

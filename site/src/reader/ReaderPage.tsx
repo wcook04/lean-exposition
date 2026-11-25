@@ -34,6 +34,7 @@ import { OutlineColumn, PdfLink, Sections } from "./page/Outline";
 import { PAPER_PDFS } from "virtual:paper-pdfs";
 import { GraphBoundary } from "../map/GraphBoundary";
 import type { HeldParagraph, PaneHover } from "./page/MapPane";
+import { PaperSplit } from "./page/PaperSplit";
 import type { PaperReferenceProps, PaperReferenceTarget } from "./page/PhraseCard";
 import type { PaneMode } from "./page/ModeToggle";
 import { applyTones, readTones } from "./page/panePrefs";
@@ -2403,6 +2404,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
       {paneOn && (
         <div className="reader__map">
+          {!route.beside && <PaperSplit />}
           <PaneClose onClose={closeMap} />
           {paneReady && (
             <GraphBoundary scope={`pane beside ${route.stage}`}>
