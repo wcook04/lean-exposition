@@ -1,13 +1,14 @@
-/* The right page (MapPane.tsx). From 1280px the reader stops centring: the paper at its
-   measure (at least half the window's width from 1280 to 1679px, where the outline folds
-   into "Sections"), then the right page to the window's edge, full height under the top
-   bar. From 1680px the outline returns, which leaves the graph the width it needs.
+/* The right page (MapPane.tsx). With the pane shown the reader stops centring: the paper and
+   the right page share what the outline leaves, half each, the right page to the window's
+   edge, full height under the top bar. The text keeps its measure inside its half; a PDF
+   fills it. Dragging the divider (PaperSplit.tsx) sets --reader-split-width, and its reset
+   removes it again. From 1680px the outline returns beside them, outside the halves.
    Linked passages share their pane with their dependency graph. Below 1280px the same
    layout opens in a sheet. */
 
 
 .reader.reader--follow {
-  grid-template-columns: minmax(0, var(--reader-split-width, min(var(--reader-measure), 50vw))) minmax(0, 1fr);
+  grid-template-columns: minmax(0, var(--reader-split-width, 1fr)) minmax(0, 1fr);
   justify-content: start;
   padding-left: 32px;
   padding-right: 0;
@@ -29,7 +30,7 @@
 }
 
 .reader.reader--follow.reader--outlined:not([data-paper-split]) {
-  grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
+  grid-template-columns: var(--reader-outline) minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .reader__map {
@@ -1042,11 +1043,19 @@ html[data-right-sheet] {
   color: var(--ink);
 }
 
-.subject-band__sample {
+/* The topic of the annotation shown: the sidebar key's swatch and name (phrases.css). */
+.subject-band__topic {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  font-size: var(--fs-ui);
+  font-weight: 600;
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--ink-3);
-  text-underline-offset: .2em;
+}
+
+.subject-band__topic .phrase-key__swatch {
+  transform: translateY(-1px);
 }
 
 /* ---- The inspector: title and identity ----------------------------------------------- */

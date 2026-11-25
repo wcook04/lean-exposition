@@ -89,7 +89,7 @@ import "./reader-page.css";
 import "./phrases.css";
 import { useTopicColours } from "./topicColours";
 import { lineInView, ADAPTED, carryPlace, clearPlace, counterpart, editionSide, loadChanges, takePlace, type Change, type ChangeMap } from "./adapted/changes";
-import { ChangeCard, ChangeList } from "./adapted/ChangePane";
+import { ChangeCard } from "./adapted/ChangePane";
 import "./adapted/adapted.css";
 // It sets the columns the page opens in, so it cannot wait for the pane's own code.
 import "./page/map-pane.css";
@@ -475,7 +475,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- An adapted edition: the switch between the two texts and the changes layer.
   const side = editionSide(stage);
   const [changeMap, setChangeMap] = useState<ChangeMap | null>(null);
-  const [changePane, setChangePane] = useState<{ kind: "change"; id: string } | { kind: "list" } | null>(null);
+  const [changePane, setChangePane] = useState<{ kind: "change"; id: string } | null>(null);
   const [carried] = useState(() => takePlace(stage));
   const editionNotice = carried?.notice ?? null;
   useEffect(() => {
@@ -1806,21 +1806,18 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
   const changeView =
     changePane && changeMap && side === "adapted"
-      ? changePane.kind === "list"
-        ? <ChangeList map={changeMap} current={null} onGo={goToChange} onClose={() => setChangePane(null)} />
-        : (() => {
-            const change = changeMap.changes.find((c) => c.id === changePane.id);
-            return change ? (
-              <ChangeCard
-                change={change}
-                map={changeMap}
-                onClose={() => setChangePane(null)}
-                onList={() => setChangePane({ kind: "list" })}
-                onGo={goToChange}
-                onAuthors={(c) => switchEdition("authors", c.adapted_lines[0][0])}
-              />
-            ) : null;
-          })()
+      ? (() => {
+          const change = changeMap.changes.find((c) => c.id === changePane.id);
+          return change ? (
+            <ChangeCard
+              change={change}
+              map={changeMap}
+              onClose={() => setChangePane(null)}
+              onGo={goToChange}
+              onAuthors={(c) => switchEdition("authors", c.adapted_lines[0][0])}
+            />
+          ) : null;
+        })()
       : null;
 
   /** From the map: the paper goes to the selected statement. */
@@ -2330,11 +2327,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </div>
           )}
           {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
-          {side === "adapted" && (
-            <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
-              Show changes
-            </button>
-          )}
           {!paneOn && !sheetShown && (
             <button
               type="button"
@@ -2524,7 +2516,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         />
       )}
       {changeView && !paneOn && (
-        <Modal title={changePane?.kind === "list" ? "Show changes" : "Selected change"} placement={phone ? "sheet" : "side-end"} className="modal--inspector" onClose={() => setChangePane(null)}>
+        <Modal title="Selected change" placement={phone ? "sheet" : "side-end"} className="modal--inspector" onClose={() => setChangePane(null)}>
           {changeView}
         </Modal>
       )}

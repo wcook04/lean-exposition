@@ -1,23 +1,10 @@
-/* The switch between the two texts, and Show changes, in the reader's strip. */
+/* The switch between the two texts in the reader's strip. */
 .edition-switch {
   flex: none;
 }
 
-.reader-strip .changes-button {
-  flex: none;
-  font: inherit;
-  font-size: 0.85rem;
-  padding: 2px 8px;
-  border: 1px solid var(--rule, #ccc);
-  border-radius: 6px;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-/* The pane's change card and list. */
-.change-card,
-.change-list {
+/* The pane's change card. */
+.change-card {
   display: grid;
   gap: var(--space-3, 12px);
   padding: var(--space-4, 16px);
@@ -42,8 +29,7 @@
 
 .change-card__state,
 .change-card__id,
-.change-card__count,
-.change-list__kind {
+.change-card__count {
   font-size: 13px;
   line-height: 19.5px;
   color: var(--ink-2);
@@ -102,35 +88,5 @@
 .change-card__facts dt { color: var(--ink-2); }
 .change-card__facts dd { margin: 0; }
 .change-card__source + .change-card__source::before { content: "; "; }
-
-.change-list__rows {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 2px;
-}
-
-.change-list__row {
-  display: grid;
-  gap: 2px;
-  width: 100%;
-  padding: 8px 10px;
-  border: 0;
-  border-left: 2px dotted var(--change-rule);
-  background: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.change-list__row:hover,
-.change-list__row:focus-visible,
-.change-list__row[aria-current="true"] {
-  background: var(--change-wash);
-}
-
-.change-list__where { font-weight: 600; }
 
 .adapted-credit-link { white-space: nowrap; }

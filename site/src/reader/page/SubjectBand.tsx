@@ -1,6 +1,7 @@
 // The pane’s subject and whether it follows the paper or holds a selection.
 
 import { useEffect, useRef, useState } from "react";
+import type { PhraseTopic } from "../../api/lean";
 import { ModeSwitch } from "./ModeSwitch";
 
 /** `next` and `last`: no link at the reading line, so the pane shows the link Next lands on, or the nearest above. */
@@ -27,9 +28,11 @@ interface Props {
   onResume?(): void;
   /** Manual, while following: keep what the pane shows now. Absent when it shows nothing to keep. */
   onManual?(): void;
+  /** The topic of the annotation the pane shows, named and coloured as in the sidebar's key. */
+  topic?: PhraseTopic | null;
 }
 
-export function SubjectBand({ state, place, title, onResume, onManual }: Props) {
+export function SubjectBand({ state, place, title, onResume, onManual, topic }: Props) {
   const selected = state !== "following" && state !== "preview" && state !== "next" && state !== "last";
   // A change of state is said once to assistive technology; a new subject within one state is not,
   // so scrolling does not read every passage aloud.
@@ -46,13 +49,22 @@ export function SubjectBand({ state, place, title, onResume, onManual }: Props) 
     <div className="subject-band" data-state={state}>
       <ModeSwitch manual={selected} onAuto={onResume} onManual={onManual} />
       <p className="subject-band__state">
-        <span className="subject-band__words">{WORDS[state]}</span>
-        {state === "following" && (
-          <span className="subject-band__hint">
-            {onManual ? <>Select <span className="subject-band__sample">underlined text</span> to keep its annotation open</> : "Changes as you scroll"}
-          </span>
+        {/* The band names the annotation's topic; the state stays in words for assistive technology,
+            and is shown only where there is no topic to name and it says more than the switch. */}
+        {topic ? (
+          <>
+            <span className="visually-hidden">{WORDS[state]}: </span>
+            <span className="subject-band__topic" data-tone={topic.tone} title={topic.description || undefined}>
+              <span className="phrase-key__swatch" aria-hidden="true" />
+              {topic.name}
+            </span>
+          </>
+        ) : state === "following" ? (
+          <span className="visually-hidden">{WORDS[state]}</span>
+        ) : (
+          <span className="subject-band__words">{WORDS[state]}</span>
         )}
-        {state === "preview" && <span className="subject-band__hint">Not selected</span>}
+        {state === "preview" && <span className="subject-band__hint">{topic ? "Preview, not selected" : "Not selected"}</span>}
         {state === "next" && <span className="subject-band__hint">{place ? `In ${place}, below` : "Below"} · Next tied statement goes there</span>}
         {state === "last" && <span className="subject-band__hint">No link below · {place ? `in ${place}, above` : "above"}</span>}
         {selected && place && <span className="subject-band__hint">in {place}</span>}

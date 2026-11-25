@@ -117,7 +117,7 @@ export function AboutPage({ route }: { route: Extract<Route, { view: "about" }> 
           <h2 id="about-adapted">The adapted edition</h2>
           <p>{ADAPTED.credit}</p>
           <p>
-            <a href={routeHref({ view: "read", stage: ADAPTED.slot })}>Read the adapted edition</a> and open “Show changes” to compare both texts, or <a href={routeHref({ view: "read", stage: AUTHORS.slot })}>read the authors’ paper</a>, which keeps
+            <a href={routeHref({ view: "read", stage: ADAPTED.slot })}>Read the adapted edition</a>, or <a href={routeHref({ view: "read", stage: AUTHORS.slot })}>read the authors’ paper</a>, which keeps
             the authors’ own credit above. The switch “Authors’ paper / Adapted edition” keeps your place by paragraph.
           </p>
           <p>

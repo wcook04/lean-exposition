@@ -13,7 +13,7 @@ import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
 import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
-import { passageTopics, phraseTitle, statementFor, type TieModel } from "../ties";
+import { passageTopics, phraseTitle, statementFor, topicOf as tieTopic, type TieModel } from "../ties";
 import { focusOn, indexFocusGraph, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
@@ -113,6 +113,19 @@ function TitleText({ card }: { card: FGCard }) {
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
+
+/** The topic of what the pane shows, as the sidebar's key names it: its phrase's, else that of
+ * the phrase stating its step or declaration, the first as paperPlaces reads them. */
+function shownTopic(ties: TieModel, open: LeanOpen) {
+  const own = open.tie !== null ? tieTopic(ties, open.tie) : null;
+  if (own) return own;
+  const stated = open.record ? statementFor(ties, open.record) : null;
+  const statedTopic = stated !== null ? tieTopic(ties, stated) : null;
+  if (statedTopic) return statedTopic;
+  if (!open.record && !open.decl) return null;
+  const t = ties.index.ties.findIndex((tie) => !!tie.topic && (open.record ? tie.record === open.record : (tie.rows?.some((row) => row.name === open.decl) ?? tie.name === open.decl)));
+  return t < 0 ? null : tieTopic(ties, t);
+}
 
 /** Plan the contents before fitting the graph. A shallow drawing may give space back to
  * the text without reducing the budget used to choose visible neighbours on the next pass. */
@@ -611,6 +624,8 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const graphTools = mode === "graph" && !fill && !unlinked;
   const showToolbar = !!guideStage || (!fill && tabbed) || graphTools;
   const visible = mode === "lean" ? leanOpen : dockOpen;
+  // A reference preview on the right page, or the overview before the first link, has no topic of its own.
+  const bandTopic = useMemo(() => (preview || unlinked ? null : shownTopic(ties, visible)), [preview, unlinked, ties, visible]);
   useLayoutEffect(() => {
     let target: HTMLElement | null = null;
     if (layoutFocus.current === "tabs") target = leanButtonRef.current;
@@ -736,7 +751,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
           </button>
         )}
       </div>}
-      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && !unlinked && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && !unlinked && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} topic={bandTopic} />}
       {fill ? (
         <div className="map-pane__fill">
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />

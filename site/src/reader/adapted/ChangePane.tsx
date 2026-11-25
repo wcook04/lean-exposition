@@ -1,6 +1,5 @@
-// The pane's view of an adapted edition's changes: one Selected change (the authors' text, the
-// edition's, the kind, the note and the sources), or "Show changes", every change in the order
-// of the text, each opening its passage.
+// The pane's view of an adapted edition's change: one Selected change (the authors' text, the
+// edition's, the kind, the note and the sources).
 
 import { useMemo } from "react";
 import { documentPaths } from "../documents";
@@ -17,12 +16,6 @@ function Note({ text, stage }: { text: string; stage: string }) {
   return <div className="change-card__note" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-/** Where a change is: its section, or the front matter for the title block. */
-const placeOf = (id: string | undefined) => {
-  const heading = (id ?? "").split("#")[0];
-  return /^(\d|[A-Z]\.\d|Appendix|Note \d|Auxiliary|Acknowledg|References)/.test(heading) ? heading.replace(/\$([^$]+)\$/g, "$1") : "Front matter";
-};
-
 function Slice({ markdown, stage }: { markdown: string; stage: string }) {
   const html = useMemo(() => {
     const paths = documentPaths();
@@ -35,12 +28,11 @@ interface CardProps {
   change: Change;
   map: ChangeMap;
   onClose(): void;
-  onList(): void;
   onGo(change: Change): void;
   onAuthors(change: Change): void;
 }
 
-export function ChangeCard({ change, map, onClose, onList, onGo, onAuthors }: CardProps) {
+export function ChangeCard({ change, map, onClose, onGo, onAuthors }: CardProps) {
   const k = map.changes.findIndex((c) => c.id === change.id);
   const prev = map.changes[k - 1];
   const next = map.changes[k + 1];
@@ -53,7 +45,6 @@ export function ChangeCard({ change, map, onClose, onList, onGo, onAuthors }: Ca
           {kindWords(change.kind)} <span className="change-card__id">{change.id}</span>
         </h3>
         <div className="change-card__controls">
-          <button type="button" className="lean-page__action" onClick={onList}>Show changes</button>
           <button type="button" className="lean-page__action" onClick={onClose}>Close</button>
         </div>
       </header>
@@ -92,33 +83,6 @@ export function ChangeCard({ change, map, onClose, onList, onGo, onAuthors }: Ca
           <button type="button" className="lean-page__action" onClick={() => onAuthors(change)}>See this paragraph in the authors’ paper</button>
         </p>
       )}
-    </section>
-  );
-}
-
-export function ChangeList({ map, current, onGo, onClose }: { map: ChangeMap; current: string | null; onGo(change: Change): void; onClose(): void }) {
-  return (
-    <section className="change-list" aria-labelledby="changes-title">
-      <header className="change-card__head">
-        <h3 id="changes-title" tabIndex={-1}>Every change in this edition</h3>
-        <div className="change-card__controls">
-          <button type="button" className="lean-page__action" onClick={onClose}>Close</button>
-        </div>
-      </header>
-      <p className="change-card__note">
-        {map.changes.length} changes, in the order of the text. None has been reviewed by the authors.
-      </p>
-      <ol className="change-list__rows">
-        {map.changes.map((c) => (
-          <li key={c.id}>
-            <button type="button" className="change-list__row" aria-current={c.id === current ? "true" : undefined} onClick={() => onGo(c)}>
-              <span className="change-list__where">{placeOf(c.adapted[0])}</span>
-              <span className="change-list__kind">{kindWords(c.kind)} · {c.id}</span>
-              <Note text={c.note} stage={map.adapted} />
-            </button>
-          </li>
-        ))}
-      </ol>
     </section>
   );
 }
