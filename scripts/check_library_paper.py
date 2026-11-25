@@ -434,15 +434,15 @@ def readable_card(card, notes_optional=False):
     if card.get_attribute("aria-label") == "Passage annotation":
         return card.evaluate("""note => {
             const body = note.querySelector(".passage-annotation__text");
-            const after = note.nextElementSibling;
-            const below = after?.matches("small.lean-block__credit")
-                ? after
-                : after?.querySelector(":scope > summary > small.lean-block__credit");
-            const within = note.querySelector("small.lean-block__credit");
-            const authored = credit => credit?.textContent.trim() === "AI-written annotation";
+            const isCredit = el => el?.textContent.trim() === "AI-written annotation";
+            const inline = body?.nextElementSibling;
+            const sourceCredit = [...note.parentElement.children]
+                .map(el => el.matches("small.lean-block__credit") ? el
+                    : el.querySelector(":scope > summary > small.lean-block__credit"))
+                .find(el => isCredit(el) && (note.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING));
             return !!body?.innerText.trim() && note.firstElementChild === body
                 && !note.querySelector(".phrase-card__label")
-                && (within ? body.nextElementSibling === within && !below && authored(within) : authored(below));
+                && (isCredit(inline) ? !sourceCredit : !!sourceCredit);
         }""")
     return "ai-assessed" in text and (notes_optional or "reading note" in text)
 
@@ -1022,7 +1022,7 @@ def main() -> int:
             }""")
             claim = re.search(r"not a step of the paper", words["text"], re.I)
             check(f"{tag} graph says missing data, not a claim", not claim, "found 'Not a step of the paper'" if claim else "")
-            labels = {"users": "Used by", "uses": "Uses"}
+            labels = {"users": "These use the centre", "uses": "The centre uses these"}
             miscounted = [band for band, total, title in words["sides"] if title != f"{labels.get(band)} {total}"]
             check(f"{tag} graph labels give each side's total", words["sides"] and not miscounted, f"sides {words['sides']}")
             check(f"{tag} graph names every line's relation", not words["unnamed"], f"unnamed lines {words['unnamed']}")
