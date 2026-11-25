@@ -336,6 +336,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
+  const paperHighlight = useRef(new Signal<{ tie: number; at: string } | null>(null)).current;
   const statements = useMemo(
     () =>
       new Statements(ties, doc.parts, (t) => {
@@ -822,17 +823,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   useLayoutEffect(() => {
     const paint = () => {
-      if (pin) {
-        statements.light("follow", null);
-        statements.light("pin", pin.tie);
-      } else {
-        statements.light("pin", null);
-        statements.light("follow", signals.shownTie.get()?.tie ?? null);
-      }
+      // The paper can follow even with its companion pane hidden or showing the whole map.
+      const followed = signals.shownTie.get()?.tie ?? signals.follow.get().tie;
+      paperHighlight.set(followed === null ? null : { tie: followed, at: ties.index.ties[followed].at });
+      statements.light("pin", pin?.tie ?? null);
+      statements.light("follow", pin ? null : followed);
     };
     paint();
-    return signals.shownTie.subscribe(paint);
-  }, [pin, signals, statements]);
+    const stopPane = signals.shownTie.subscribe(paint);
+    const stopFollowing = signals.follow.subscribe(paint);
+    return () => { stopPane(); stopFollowing(); };
+  }, [paperHighlight, pin, signals, statements, ties]);
 
   useEffect(() => {
     statements.light("on", pin ? null : current.current);
@@ -1435,7 +1436,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   /** Move to a tied statement in the displayed edition, using the same path for keys and buttons. */
   const step = useCallback(
-    (by: 1 | -1) => {
+    (by: 1 | -1, focusedMark?: HTMLElement) => {
       // Between statements the step starts from where the reader is, not from the paper's start.
       if (pdfOnly && !pdfOn) return;
       const at = signals.part.get();
@@ -1473,12 +1474,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       statements.light("on", next);
       update.current();
       void landSlice(tie.at, { node: tie.record, smooth: "always", isCurrent }).then((landed) => {
-        if (!landed || !isCurrent()) return;
-        const first = statements.first(next);
-        if (first) {
-          first.setAttribute("tabindex", "0");
-          first.focus({ preventScroll: true });
-        }
+        // Keep focus on the keyboard or toolbar control the reader is using. Only move it
+        // between marks when it was already on a mark, so Auto does not draw a focus ring.
+        if (!landed || !isCurrent() || !focusedMark?.matches(":focus")) return;
+        statements.rove(next);
+        statements.first(next)?.focus({ preventScroll: true });
       });
     },
     [ties, stepModel, statements, signals, landSlice, pdfOn, pdfOnly, pdfByAt, clearReferenceLanding, referencePin],
@@ -1511,20 +1511,21 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       if (typing || event.isComposing || event.metaKey || event.ctrlKey || event.altKey || route.beside) return;
       const mark = target?.closest<HTMLElement>(".paper [data-t]");
+      const focusedMark = mark && mark === target ? mark : undefined;
       if (event.key === "g") {
         event.preventDefault();
         setMode(modeRef.current === "lean" ? "graph" : "lean");
       } else if (event.key === "j" || event.key === "k") {
         event.preventDefault();
-        step(event.key === "j" ? 1 : -1);
+        step(event.key === "j" ? 1 : -1, focusedMark);
       } else if (!event.shiftKey && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
         if (!stepModel.stops.length || document.querySelector("dialog[open]")) return;
         event.preventDefault();
-        step(event.key === "ArrowRight" ? 1 : -1);
+        step(event.key === "ArrowRight" ? 1 : -1, focusedMark);
       } else if (mark && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
         // Vertical arrows still move between focused statements.
         event.preventDefault();
-        step(event.key === "ArrowDown" ? 1 : -1);
+        step(event.key === "ArrowDown" ? 1 : -1, focusedMark);
       } else if (event.key === "Enter" || (event.key === " " && mark)) {
         // Enter on a control belongs to that control.
         if (target && target !== document.body && !mark) return;
@@ -2337,7 +2338,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             at={route.at}
             pinned={!!selectedPin}
             selectionAt={referencePin ? selectedTie?.at : undefined}
-            shownTie={signals.shownTie}
+            shownTie={paperHighlight}
             page={route.page}
             position={pdfOrigin?.page === route.page && pdfOrigin?.at === route.at ? pdfOrigin?.pdfLocation : undefined}
             reference={visitedReference?.page !== undefined && visitedReference.y !== undefined
