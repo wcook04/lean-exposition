@@ -30,15 +30,13 @@ export function PaperSplit() {
     return { grip, reader, paper, companion };
   }
 
-  function write(value: number | null, available: number) {
-    const reader = layout()?.reader;
-    if (!reader || !available) return;
+  function write(reader: HTMLElement, value: number | null, available: number) {
     const min = Math.min(0.43, Math.max(0.22, MIN_PANE / available));
     const next = value === null ? null : Math.min(1 - min, Math.max(min, value));
-    share.current = next;
     reader.toggleAttribute("data-paper-split", next !== null);
     if (next === null) reader.style.removeProperty("--reader-split-width");
     else reader.style.setProperty("--reader-split-width", `${Math.round(next * available)}px`);
+    return next;
   }
 
   function save() {
@@ -50,10 +48,13 @@ export function PaperSplit() {
     }
   }
 
-  function resize(value: number | null) {
+  function resize(delta?: number) {
     const elements = layout();
     if (!elements) return;
-    write(value, elements.paper.clientWidth + elements.companion.clientWidth);
+    const width = elements.paper.clientWidth;
+    const available = width + elements.companion.clientWidth;
+    if (!available) return;
+    share.current = write(elements.reader, delta === undefined ? null : width / available + delta, available);
     save();
   }
 
@@ -62,14 +63,15 @@ export function PaperSplit() {
     if (!elements) return;
     const { reader, paper, companion } = elements;
     let capacity = paper.clientWidth + companion.clientWidth;
-    const ratio = savedShare();
-    if (ratio !== null) write(ratio, capacity);
+    share.current = savedShare();
+    if (capacity && share.current !== null) write(reader, share.current, capacity);
     const measure = () => {
       const width = paper.clientWidth + companion.clientWidth;
       if (!width) return;
-      if (width !== capacity && share.current !== null) {
+      if (width !== capacity) {
         capacity = width;
-        write(share.current, width);
+        // A tighter window can limit the CSS width without changing the saved share.
+        if (share.current !== null) write(reader, share.current, width);
       }
       const min = Math.round(100 * Math.min(0.43, Math.max(0.22, MIN_PANE / width)));
       setLimits((previous) => previous.min === min ? previous : { min, max: 100 - min });
@@ -104,7 +106,7 @@ export function PaperSplit() {
     let moved = false;
     const draw = () => {
       frame = 0;
-      if (moved) write((initial + x - start) / available, available);
+      if (moved) share.current = write(reader, (initial + x - start) / available, available);
     };
     const move = (next: globalThis.PointerEvent) => {
       x = next.clientX;
@@ -134,8 +136,8 @@ export function PaperSplit() {
     if (!["ArrowLeft", "ArrowRight", "Home", "Enter"].includes(key)) return;
     event.preventDefault();
     event.stopPropagation();
-    if (key === "Home" || key === "Enter") resize(null);
-    else resize(percent / 100 + (key === "ArrowRight" ? 0.025 : -0.025));
+    if (key === "Home" || key === "Enter") resize();
+    else resize(key === "ArrowRight" ? 0.025 : -0.025);
   }
 
   return (
@@ -144,7 +146,7 @@ export function PaperSplit() {
       aria-valuemin={limits.min} aria-valuemax={limits.max} aria-valuenow={percent}
       aria-valuetext={`Paper ${percent}%`}
       title="Drag to resize. Use arrow keys to adjust or double-click to reset."
-      onPointerDown={drag} onKeyDown={key} onDoubleClick={() => resize(null)}>
+      onPointerDown={drag} onKeyDown={key} onDoubleClick={() => resize()}>
       <span aria-hidden="true" />
     </div>
   );
