@@ -138,6 +138,30 @@ describe("LeanBlock's props", () => {
     ]);
   });
 
+  it("links only the reviewed occurrence and uses the other edition's palette", async () => {
+    const source = "Step (2) precedes Equation (2). See `extE` in the long edition.";
+    const local = { line: 27, tone: 1 };
+    const other = { line: 93, stage: "long", tone: 3, colours: { light: "oklch(0.485 0.190 359.0)", dark: "oklch(0.660 0.190 359.0)" } };
+    const onPaperReference = vi.fn();
+    const span = (text: string, key: string) => ({ start: source.indexOf(text), end: source.indexOf(text) + text.length, key });
+    const view = await render(<PassageAnnotation
+      text={source}
+      reviewed={[span("Equation (2)", "equation:2"), span("`extE`", "long/definition:exte")]}
+      referenceTargets={{ "equation:2": local, "long/definition:exte": other }}
+      paperReferenceHref={({ stage, line }) => `/read/${stage ?? "short"}/?l=${line}`}
+      onPaperReference={onPaperReference}
+    />);
+    const links = [...view.querySelectorAll("a")];
+    expect(links.map((link) => link.textContent)).toEqual(["Equation (2)", "extE"]);
+    expect(links[1].querySelector("code")?.textContent).toBe("extE");
+    expect(links[1].target).toBe("_blank");
+    expect(links[1].getAttribute("href")).toBe("/read/long/?l=93");
+    expect(links[1].style.getPropertyValue("--tone")).toBe("light-dark(oklch(0.485 0.190 359.0), oklch(0.660 0.190 359.0))");
+    const click = new MouseEvent("click", { bubbles: true, cancelable: true });
+    await act(async () => void links[0].dispatchEvent(click));
+    expect(onPaperReference).toHaveBeenCalledExactlyOnceWith(local);
+  });
+
   it("links printed reference abbreviations and lettered targets", async () => {
     const view = await render(<PassageAnnotation
       text="See Eq. (18)/(20), Appendix G.4, Fig. S11, Propositions 8.1–8.2, Lemma A.2, §2.2.1, and Equation (B.30)."

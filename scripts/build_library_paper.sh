@@ -160,5 +160,8 @@ PYEOF
 if [ ! -d site/dist/paper-references ]; then
   "$PY" scripts/build_paper_references.py site/dist --instance site/src/instances/library/current.json
 fi
+if [ -f "$I/reviewed-references.json" ]; then
+  "$PY" scripts/import_annotation_references.py --apply-overlay "$I/reviewed-references.json" site/dist
+fi
 # Put back the tracked placeholder that library-instance.mjs replaced.
 git checkout -- site/src/instances/library/current.json 2>/dev/null || true
