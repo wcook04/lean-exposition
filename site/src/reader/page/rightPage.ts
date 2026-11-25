@@ -4,6 +4,7 @@
 import type { ReactNode } from "react";
 import type { Alignment, Tie } from "../../api/lean";
 import type { PaneMode } from "./ModeToggle";
+import type { LinkPreview } from "./nextLink";
 import { Signal } from "./signal";
 
 /** The statement holding the reading line, once it has held it. */
@@ -15,6 +16,8 @@ export interface Followed {
   part: number | null;
   /** The paper is at its top, where Auto shows the whole map. */
   atTop?: boolean;
+  /** The pane shows a link the reading line has not reached (nextLink.ts), not one under it. */
+  preview?: "next" | "last";
 }
 
 /** The pane for a statement or an explicitly selected record, using its Lean dock's sources. */
@@ -56,6 +59,8 @@ export interface ReaderSignals {
   follow: Signal<Followed>;
   /** The pane keeps its last linked passage while the paper crosses an unlinked area. */
   paneFollow?: Signal<Followed>;
+  /** With no link at the reading line: the link Next lands on, or the last one passed. */
+  linkPreview?: Signal<LinkPreview | null>;
   /** The annotation whose subject is actually visible in the pane. */
   shownTie: Signal<{ tie: number; at: string } | null>;
   point: Signal<Pointed | null>;

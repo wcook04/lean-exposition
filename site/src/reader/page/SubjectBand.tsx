@@ -3,11 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import { ModeSwitch } from "./ModeSwitch";
 
-export type SubjectState = "following" | "preview" | "words" | "paragraph" | "declaration" | "step";
+/** "next" and "last": no link is at the reading line, and the pane shows the one Next lands on, or the last one passed. */
+export type SubjectState = "following" | "preview" | "next" | "last" | "words" | "paragraph" | "declaration" | "step";
 
 const WORDS: Record<SubjectState, string> = {
   following: "Following the paper",
   preview: "Preview",
+  next: "Next link",
+  last: "Last link",
   words: "Selected words",
   paragraph: "Selected paragraph",
   declaration: "Selected declaration",
@@ -27,7 +30,7 @@ interface Props {
 }
 
 export function SubjectBand({ state, place, title, onResume, onManual }: Props) {
-  const selected = state !== "following" && state !== "preview";
+  const selected = state !== "following" && state !== "preview" && state !== "next" && state !== "last";
   // A change of state is said once to assistive technology; a new subject within one state is not,
   // so scrolling does not read every passage aloud.
   const [said, setSaid] = useState("");
@@ -50,6 +53,8 @@ export function SubjectBand({ state, place, title, onResume, onManual }: Props) 
           </span>
         )}
         {state === "preview" && <span className="subject-band__hint">Not selected</span>}
+        {state === "next" && <span className="subject-band__hint">Not reached yet · Next goes here</span>}
+        {state === "last" && <span className="subject-band__hint">Nothing linked further on · the last link before here</span>}
         {selected && place && <span className="subject-band__hint">in {place}</span>}
       </p>
       <span className="visually-hidden" role="status" aria-live="polite">

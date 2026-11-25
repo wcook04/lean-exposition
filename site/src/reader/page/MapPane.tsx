@@ -78,6 +78,8 @@ interface Props extends PaperReferenceProps {
   inert?: boolean;
   /** A record was chosen (a card, a link in the route): it becomes the subject. */
   onRecord?(id: string): void;
+  /** A neighbour chosen in the graph: the pane turns to it and the paper stays put. Without it, onRecord and onDecl. */
+  onInspect?(id: string, decl?: { name: string; module?: string }): void;
   /** A declaration was chosen: it becomes the subject. */
   onDecl?(name: string, module?: string): void;
   /** Auto (or Escape): let go of what was selected and follow the paper from where the reader is. The paper does not move. */
@@ -141,7 +143,7 @@ function usePairedGraphSize(active: boolean) {
   return { pair, layoutHeight, onPaintedHeight };
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection, returnTone }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onInspect, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection, returnTone }: Props) {
   const paperReferenceProps = { referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection, returnTone };
   const edition = useEdition();
   const { graph } = edition;
@@ -331,10 +333,11 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     (id: string) => {
       setPreviewCard(null);
       const name = tools.declOf(id);
-      if (name) onDecl?.(name, tools.rowOf(name)?.module);
+      if (onInspect) onInspect(id, name ? { name, module: tools.rowOf(name)?.module } : undefined);
+      else if (name) onDecl?.(name, tools.rowOf(name)?.module);
       else onRecord?.(id);
     },
-    [tools, onDecl, onRecord],
+    [tools, onDecl, onRecord, onInspect],
   );
 
   // ---- What the dock and the Lean view show ----------------------------------------------
@@ -400,6 +403,12 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   const onTrace = useCallback((id: string) => navigate({ view: "map", goal, node: id, trace: "rests" }), [goal]);
   const onTreeSelect = useCallback((id: string | null) => {
     if (!id) return;
+    // Beside a reader that inspects graph choices, the whole map is a graph too: the paper stays put.
+    if (onInspect) {
+      setPreviewCard(null);
+      onSubject(id);
+      return;
+    }
     const declaration = tools.declOf(id);
     const statement = statementFor(ties, id) ?? (declaration ? ties.stops.find((t) => {
       const tie = ties.index.ties[t];
@@ -412,7 +421,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       return;
     }
     onSubject(id);
-  }, [onOpenTie, onSubject, ties, tools]);
+  }, [onOpenTie, onInspect, onSubject, ties, tools]);
 
   // ---- The dock's height, and the fold on a narrow pane ---------------------------------
 
@@ -573,7 +582,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
         ? "paragraph"
         : preview || (mode === "lean" && pointed)
           ? "preview"
-          : "following";
+          : follow.preview ?? "following";
   const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined, pinTie.at) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
   const bandTitle = pin?.tie != null ? phraseTitle(ties, pin.tie) : decl ? plainName(alignment, decl) : subjectTitle;
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;

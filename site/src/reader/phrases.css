@@ -136,6 +136,18 @@
   background-size: calc(100% - 3px) 2px;
 }
 
+/* The link Next lands on, before the reader takes it (page/nextLink.ts): the selection's amber,
+   dashed and faint, so it reads as where the next step goes and never as the one being read. */
+.paper .tie[data-next]:not([data-pin], [data-follow]) {
+  background-color: color-mix(in oklab, var(--lit-wash) 45%, transparent);
+  outline: 1.5px dashed var(--lit-line);
+  outline-offset: 1px;
+}
+
+.paper .math-display.tie[data-next]:not([data-pin], [data-follow]) {
+  box-shadow: inset 2px 0 0 var(--lit-line);
+}
+
 /* A whole selected statement has one amber rule in the margin. */
 .paper .tie[data-pin][data-pin-block],
 .paper .tie[data-follow][data-pin-block] {

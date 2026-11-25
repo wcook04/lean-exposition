@@ -513,6 +513,10 @@ html.is-reading {
   background: var(--follow-ink);
 }
 
+.tick[data-next]:not([data-pin], [data-follow]) {
+  background: var(--follow-ink);
+}
+
 .tick[data-pin],
 .tick[data-follow] {
   width: var(--sel-rail);

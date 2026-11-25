@@ -182,6 +182,8 @@ interface Props {
   /** A temporary selection for the highlights, independent of the address that opens the PDF. */
   selectionAt?: string;
   shownTie: ReaderSignals["shownTie"];
+  /** The link the reader's next step lands on, shown before it is taken (page/nextLink.ts). */
+  preview?: ReaderSignals["linkPreview"];
   page?: number;
   position?: PdfLocation;
   reference?: PdfLocation & { tone?: number };
@@ -190,7 +192,7 @@ interface Props {
   onPosition(page: number, at: string | undefined, byte?: number): void;
 }
 
-export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, page, position, reference, label, onPick, readingLine, onPosition, zoom, onTextFit }: Props) {
+export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, preview, page, position, reference, label, onPick, readingLine, onPosition, zoom, onTextFit }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -406,21 +408,33 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
     if (!el || !width) return;
     let lit: NodeListOf<HTMLElement> | undefined;
     let currentAt: string | undefined;
+    let ahead: NodeListOf<HTMLElement> | undefined;
+    let aheadAt: string | undefined;
     const paint = () => {
       const next = pinned ? selectionAt ?? at : shownTie.get()?.at;
-      if (next === currentAt) return;
-      lit?.forEach((mark) => mark.classList.remove("is-selected"));
-      currentAt = next;
-      lit = next ? el.querySelectorAll<HTMLElement>(`[data-at="${CSS.escape(next)}"]`) : undefined;
-      lit?.forEach((mark) => mark.classList.add("is-selected"));
+      if (next !== currentAt) {
+        lit?.forEach((mark) => mark.classList.remove("is-selected"));
+        currentAt = next;
+        lit = next ? el.querySelectorAll<HTMLElement>(`[data-at="${CSS.escape(next)}"]`) : undefined;
+        lit?.forEach((mark) => mark.classList.add("is-selected"));
+      }
+      const shown = pinned ? undefined : preview?.get()?.at;
+      if (shown === aheadAt) return;
+      ahead?.forEach((mark) => mark.classList.remove("is-next"));
+      aheadAt = shown;
+      ahead = shown ? el.querySelectorAll<HTMLElement>(`[data-at="${CSS.escape(shown)}"]`) : undefined;
+      ahead?.forEach((mark) => mark.classList.add("is-next"));
     };
     paint();
     const unsubscribe = shownTie.subscribe(paint);
+    const unsubscribePreview = preview?.subscribe(paint);
     return () => {
       unsubscribe();
+      unsubscribePreview?.();
       lit?.forEach((mark) => mark.classList.remove("is-selected"));
+      ahead?.forEach((mark) => mark.classList.remove("is-next"));
     };
-  }, [width, marks, pinned, at, selectionAt, shownTie]);
+  }, [width, marks, pinned, at, selectionAt, shownTie, preview]);
 
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (

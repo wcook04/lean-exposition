@@ -22,6 +22,7 @@
   mix-blend-mode: multiply;
 }
 .pdf-view__mark:hover, .pdf-view__mark:focus-visible { background: color-mix(in oklab, var(--pdf-mark-ink) 21%, transparent); border-bottom: 2px solid color-mix(in oklab, var(--pdf-mark-ink) 55%, transparent); }
+.pdf-view__mark.is-next:not(.is-selected) { background: color-mix(in oklab, var(--pdf-mark-ink) 12%, transparent); outline: 1.5px dashed var(--pdf-mark-ink); outline-offset: 1px; }
 .pdf-view__mark.is-selected { background: color-mix(in oklab, var(--pdf-mark-ink) 25%, transparent); border-bottom: 2px solid var(--pdf-mark-ink); }
 .pdf-view__mark:focus-visible { outline: 2px solid var(--pdf-mark-ink); outline-offset: 1px; }
 .pdf-view__failed { color: var(--muted); }
