@@ -181,7 +181,7 @@ export interface PaperReferenceTarget {
 
 export interface PaperReferenceProps {
   referenceTargets?: Readonly<Record<string, PaperReferenceTarget>>;
-  onPaperReference?: (target: PaperReferenceTarget) => void;
+  onPaperReference?: (target: PaperReferenceTarget, key: string) => void;
   paperReferenceHref?: (target: PaperReferenceTarget) => string;
 }
 
@@ -252,10 +252,11 @@ function referenceClick({ referenceTargets, onPaperReference }: PaperReferencePr
   return (event: MouseEvent<HTMLElement>) => {
     if (event.defaultPrevented || event.button !== 0 || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const source = event.target instanceof Element && event.target.closest<HTMLAnchorElement>("a[data-paper-reference]");
-    const target = source && referenceTargets[source.dataset.paperReference ?? ""];
+    const key = source && source.dataset.paperReference;
+    const target = key && referenceTargets[key];
     if (!target || target.stage || target.pdfFile) return;
     event.preventDefault();
-    onPaperReference(target);
+    onPaperReference(target, key);
   };
 }
 

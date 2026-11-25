@@ -180,6 +180,19 @@ html.is-reading {
 /* --------------------------------------------- the location strip (sticky) */
 
 /* The strip keeps the section's name: Sections shrinks to its icon first. */
+.reader-strip__reading-controls {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 100%;
+  gap: 2px var(--space-2);
+}
+
+.reader-strip__reading-controls .pdf-zoom {
+  flex: none;
+}
+
 .reader-strip__steps {
   display: inline-flex;
   align-items: center;
@@ -839,14 +852,14 @@ html.is-reading {
     flex-wrap: wrap;
     row-gap: 2px;
   }
-  .reader-strip__steps {
-    margin-left: auto;
+  .reader-strip__reading-controls {
+    margin-inline-start: auto;
   }
 
   .reader-strip__formats > .view-toggle button {
     padding-inline: var(--space-2);
   }
-  .reader-strip[data-away]:not([data-referencing]) {
+  .reader-strip[data-away]:not([data-referencing], [data-pdf]) {
     transform: translateY(-100%);
   }
   .reader-strip .crumbs {

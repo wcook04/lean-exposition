@@ -57,6 +57,7 @@ export interface HeldParagraph {
 
 interface Props extends PaperReferenceProps {
   onReturnToSelection?: () => void;
+  returnTone?: number;
   stage: Stage;
   structures: Structures;
   /** What changes as the reader reads; the page re-renders here, never above. */
@@ -140,8 +141,8 @@ function usePairedGraphSize(active: boolean) {
   return { pair, layoutHeight, onPaintedHeight };
 }
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection }: Props) {
-  const paperReferenceProps = { referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection };
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection, returnTone }: Props) {
+  const paperReferenceProps = { referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection, returnTone };
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);

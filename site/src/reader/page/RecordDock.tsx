@@ -69,6 +69,7 @@ interface Props extends PaperReferenceProps {
   brief?: boolean;
   onBrief?(whole: boolean): void;
   onReturnToSelection?(): void;
+  returnTone?: number;
 }
 
 /** The Lean a statement means, or the record's own rows where it names none, without repeats. */
@@ -179,7 +180,7 @@ function Passage({ records, ties, alignment, onPick, onPoint }: { records: reado
   );
 }
 
-export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot, brief, onBrief, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection }: Props) {
+export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, onName, from, passageHref, onOpenLean, onOpenGraph, emptySlot, brief, onBrief, referenceTargets, onPaperReference, paperReferenceHref, onReturnToSelection, returnTone }: Props) {
   const { graph } = useEdition();
   const page = useRef<HTMLDivElement>(null);
   const scroller = useRef<HTMLDivElement>(null);
@@ -435,8 +436,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
             </button>
           )}
           {onReturnToSelection && !empty && (
-            <button type="button" className="lean-page__action lean-page__return" onClick={onReturnToSelection}>
-              Return to selected passage
+            <button type="button" className="lean-page__action reference-return" data-tone={returnTone} onClick={onReturnToSelection}>
+              Return to original passage
             </button>
           )}
         </header>

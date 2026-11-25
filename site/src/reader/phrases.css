@@ -383,14 +383,39 @@
 }
 
 .annotation-paper-reference:focus-visible,
-.lean-page__return:focus-visible {
+.reference-return:focus-visible {
   outline: var(--focus-ring);
   outline-offset: 2px;
 }
 
-.lean-page__action.lean-page__return {
+.lean-page__action.reference-return {
   max-inline-size: 45%;
   white-space: normal;
+}
+
+.lean-page__action.reference-return,
+.reader-strip .reference-return {
+  --reference-accent: var(--ink-3);
+  color: color-mix(in oklab, var(--reference-accent) 45%, var(--ink));
+  background: color-mix(in oklab, var(--reference-accent) 19%, var(--surface));
+  border-color: color-mix(in oklab, var(--reference-accent) 70%, var(--surface));
+  box-shadow: 0 0 10px color-mix(in oklab, var(--reference-accent) 24%, transparent);
+  font-weight: 800;
+}
+
+.reference-return[data-tone] { --reference-accent: var(--tone); }
+
+.lean-page__action.reference-return:hover,
+.reader-strip .reference-return:hover {
+  background: color-mix(in oklab, var(--reference-accent) 26%, var(--surface));
+}
+
+[data-reference-landing] {
+  --reference-accent: var(--reference-topic, var(--ink-3));
+  border-radius: 3px;
+  background-color: color-mix(in oklab, var(--reference-accent) 9%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--reference-accent) 16%, transparent),
+    0 0 14px 4px color-mix(in oklab, var(--reference-accent) 18%, transparent);
 }
 
 .lean-block__details {

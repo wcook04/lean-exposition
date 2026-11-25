@@ -82,7 +82,7 @@ import {
   type ReadingPosition,
   type VisitOrigin,
 } from "./page/position";
-import { PDF_FIT, PdfView, PdfZoom, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, type PdfLocation, type PdfMarks } from "./pdf/PdfView";
+import { PDF_FIT, PdfView, PdfZoom, atOnPage, loadPdfMarks, pageAtByte, pdfLocationAtByte, type PdfLocation, type PdfMarks, type PdfViewHandle, type PdfZoomState } from "./pdf/PdfView";
 import "./reader-content.css";
 import "./reader-page.css";
 import "./phrases.css";
@@ -102,7 +102,7 @@ if (window.matchMedia?.("(min-width: 1024px)").matches) mapPane.start();
 type ReadRoute = Extract<Route, { view: "read" }>;
 type ReferenceOrigin =
   | { format: "text"; position: ReadingPosition }
-  | { format: "pdf"; position: PdfLocation; inset: number; left: number; scrolled: boolean };
+  | { format: "pdf"; position: PdfLocation; inset: number; x: number; scrolled: boolean };
 
 type PaperReferenceTargets = NonNullable<PaperReferenceProps["referenceTargets"]>;
 
@@ -276,7 +276,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
-  const [pdfZoom, setPdfZoom] = useState(PDF_FIT);
+  const [pdfZoom, setPdfZoom] = useState<PdfZoomState>(PDF_FIT);
+  const pdfView = useRef<PdfViewHandle>(null);
+  const changePdfZoom = (zoom: PdfZoomState) => {
+    if (zoom.factor === pdfZoom.factor && zoom.textFit === pdfZoom.textFit) return;
+    pdfView.current?.captureZoom();
+    setPdfZoom(zoom);
+  };
+  const setPdfTextFit = useCallback((factor: number) => {
+    setPdfZoom((zoom) => zoom.textFit === undefined || zoom.factor === factor ? zoom : { ...zoom, factor });
+  }, []);
   const paperReferences = useResource<PaperReferenceTargets | null>(`paper-references:${stage}`, async () => {
     const response = await fetch(`${import.meta.env.BASE_URL}paper-references/${encodeURIComponent(stage)}.json`);
     if (!response.ok) return null;
@@ -1278,6 +1287,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     navigate({ ...here, graph: undefined, lean: undefined }, { replace: true });
   }, [pdfOn, pdfByAt, readingLine]);
 
+  const referenceLanding = useRef<HTMLElement | null>(null);
+  const clearReferenceLanding = useCallback(() => {
+    const block = referenceLanding.current;
+    if (!block) return;
+    block.removeAttribute("data-reference-landing");
+    block.style.removeProperty("--reference-topic");
+    referenceLanding.current = null;
+  }, []);
+
   /**
    * Auto and Escape: let go of what was selected and follow the paper from where the
    * reader now is. The paper stays in place, and an explicit view choice stays in effect.
@@ -1287,10 +1305,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     setSheetCollapsed(false);
     referenceOrigin.current = null;
     referenceNavigation.current++;
-    setAwayFromSelection(false);
+    setVisitedReference(null);
+    clearReferenceLanding();
     setReferencePin(null);
     releaseInPlace();
-  }, [releaseInPlace]);
+  }, [releaseInPlace, clearReferenceLanding]);
 
   const closeMap = useCallback(() => {
     showMap(false);
@@ -1863,15 +1882,19 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
   const referenceOrigin = useRef<ReferenceOrigin | null>(null);
   const referenceNavigation = useRef(0);
-  const [awayFromSelection, setAwayFromSelection] = useState(false);
+  const [visitedReference, setVisitedReference] = useState<PaperReferenceTarget | null>(null);
+  const awayFromSelection = visitedReference !== null;
   const [referencePin, setReferencePin] = useState<Pin | null>(null);
   useEffect(() => {
     referenceOrigin.current = null;
     referenceNavigation.current++;
-    setAwayFromSelection(false);
+    setVisitedReference(null);
     setReferencePin(null);
-    return () => { referenceNavigation.current++; };
-  }, [subjectKey, stage, pdfOn]);
+    return () => {
+      referenceNavigation.current++;
+      clearReferenceLanding();
+    };
+  }, [subjectKey, stage, pdfOn, clearReferenceLanding]);
 
   const scrollToReference = (target: () => number, navigation: number, done?: () => void) => {
     const from = window.scrollY;
@@ -1899,7 +1922,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       + position.y * element.clientWidth / paperWidth - (inset ?? readingTop() + 16), navigation, after);
   };
 
-  const followPaperReference = (target: PaperReferenceTarget) => {
+  const followPaperReference = (target: PaperReferenceTarget, key: string) => {
     if (pdfOn && (target.page === undefined || target.y === undefined)) return;
     if (!referenceOrigin.current) {
       if (pdfOn) {
@@ -1912,7 +1935,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         if (!element || !width || !view) return;
         // The origin can be in the margin above page one or between pages.
         const y = (line - element.getBoundingClientRect().top) * width / element.clientWidth;
-        referenceOrigin.current = { format: "pdf", position: { page, y }, inset: line, left: view.scrollLeft, scrolled: scrolledPdf.current };
+        const x = (view.getBoundingClientRect().left + view.clientWidth / 2 - element.getBoundingClientRect().left) / element.clientWidth;
+        referenceOrigin.current = { format: "pdf", position: { page, y }, inset: line, x, scrolled: scrolledPdf.current };
       } else {
         const position = measurePosition();
         if (!position) return;
@@ -1925,7 +1949,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const record = tie?.record ?? (tie?.phrase ? `${PHRASE_RECORD}${tie.phrase}` : null);
       if (shown && record) setReferencePin({ tie: shown.tie, record });
     }
-    setAwayFromSelection(true);
+    clearReferenceLanding();
+    setVisitedReference(target);
     if (!paneRoom) setSheetCollapsed(true);
     restoring.current?.();
     const navigation = ++referenceNavigation.current;
@@ -1944,10 +1969,21 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       void body.ensure(nearby).then(() => {
         if (referenceNavigation.current !== navigation) return;
         body.settle(nearby);
-        const element = blocksOf(body.partElement(part), doc.parts[part].lines.end, { start: line, end: line })[0];
+        const mounted = body.partElement(part);
+        const equation = /^equation:(?:m\.)?(.+)$/.exec(key)?.[1];
+        const display = equation && Array.from(mounted?.querySelectorAll(".math-display[id]") ?? [])
+          .find((el) => el.id.toLowerCase() === `eq-${equation}`);
+        const element = display || blocksOf(mounted, doc.parts[part].lines.end, { start: line, end: line })[0];
         if (!element) return;
         scrollToReference(() => element.getBoundingClientRect().top + window.scrollY - readingTop() - 16,
-          navigation, () => body.hold(element));
+          navigation, () => {
+            if (element instanceof HTMLElement) {
+              if (target.tone !== undefined) element.style.setProperty("--reference-topic", `var(--tone-${target.tone})`);
+              element.setAttribute("data-reference-landing", "");
+              referenceLanding.current = element;
+            }
+            body.hold(element);
+          });
       });
     });
   };
@@ -1956,14 +1992,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const origin = referenceOrigin.current;
     if (!origin) return;
     referenceOrigin.current = null;
-    setAwayFromSelection(false);
+    setVisitedReference(null);
+    clearReferenceLanding();
     const navigation = ++referenceNavigation.current;
     const current = () => referenceNavigation.current === navigation;
     const finish = () => { if (current()) setReferencePin(null); };
     if (origin.format === "pdf") {
       pdfReferenceScroll(origin.position, navigation, () => {
-        const view = pdfReferencePage(origin.position.page)?.closest<HTMLElement>(".pdf-view");
-        if (view) view.scrollLeft = origin.left;
+        const sheet = pdfReferencePage(origin.position.page);
+        const view = sheet?.closest<HTMLElement>(".pdf-view");
+        if (view && sheet) view.scrollLeft = Math.max(0, origin.x * sheet.clientWidth - view.clientWidth / 2);
         scrolledPdf.current = origin.scrolled;
         finish();
       }, origin.inset);
@@ -2032,6 +2070,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const paneProps = {
     ...referenceProps,
     onReturnToSelection: awayFromSelection ? returnToSelected : undefined,
+    returnTone: visitedReference?.tone,
     stage,
     structures,
     signals,
@@ -2137,7 +2176,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             Skip to the Lean and the graph
           </a>
         )}
-        <div className="reader-strip" ref={stripRef} data-referencing={awayFromSelection || undefined}>
+        <div className="reader-strip" ref={stripRef} data-referencing={awayFromSelection || undefined} data-pdf={pdfOn || undefined}>
           {mid && !outlineColumn && (
             <button type="button" className="sections-toggle" ref={sectionsToggleRef} aria-expanded={sectionsSide} onClick={() => outlineAvailable ? setOutline(true) : setSectionsSide(!sectionsSide)}>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -2171,9 +2210,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               )}
             </div>
           )}
-          {pdfOn && <PdfZoom level={pdfZoom} onChange={setPdfZoom} />}
-          {!paneRoom && awayFromSelection && <button type="button" className="control" onClick={returnToSelected}>Return to selected</button>}
-          {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
+          {!paneRoom && awayFromSelection && (
+            <button type="button" className="control reference-return" data-tone={visitedReference?.tone} onClick={returnToSelected}>
+              Return to original
+            </button>
+          )}
+          {(ties.stops.length > 0 || pdfOn) && (
+            <div className="reader-strip__reading-controls">
+              {ties.stops.length > 0 && <StepControls signals={signals} ties={ties} pinned={pin?.tie} onStep={step} />}
+              {pdfOn && <PdfZoom zoom={pdfZoom} onChange={changePdfZoom} />}
+            </div>
+          )}
           {side === "adapted" && (
             <button type="button" className="changes-button" aria-pressed={changePane?.kind === "list"} onClick={() => setChangePane(changePane?.kind === "list" ? null : { kind: "list" })}>
               Show changes
@@ -2239,7 +2286,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         {pdfOn && pdfDisclosure && <p className="account-line" dangerouslySetInnerHTML={{ __html: pdfDisclosure }} />}
         {pdfOn && pdfMarks && (
           <PdfView
-            zoomLevel={pdfZoom}
+            ref={pdfView}
+            zoom={pdfZoom}
+            onTextFit={setPdfTextFit}
             url={pdfFile}
             label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
@@ -2249,6 +2298,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             shownTie={signals.shownTie}
             page={route.page}
             position={pdfOrigin?.page === route.page && pdfOrigin?.at === route.at ? pdfOrigin?.pdfLocation : undefined}
+            reference={visitedReference?.page !== undefined && visitedReference.y !== undefined
+              ? { page: visitedReference.page, y: visitedReference.y, tone: visitedReference.tone }
+              : undefined}
             readingLine={readingLine}
             onPosition={onPdfPosition}
             onPick={(id, mark, page) => {

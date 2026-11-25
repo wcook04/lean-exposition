@@ -116,7 +116,7 @@ describe("LeanBlock's props", () => {
     const click = new MouseEvent("click", { bubbles: true, cancelable: true });
     await act(async () => void links[0].dispatchEvent(click));
     expect(click.defaultPrevented).toBe(true);
-    expect(onPaperReference).toHaveBeenCalledExactlyOnceWith(first);
+    expect(onPaperReference).toHaveBeenCalledExactlyOnceWith(first, "equation:1.1");
 
     links[0].href = "#equation";
     const modifiedClick = new MouseEvent("click", { bubbles: true, cancelable: true, metaKey: true });
@@ -159,7 +159,7 @@ describe("LeanBlock's props", () => {
     expect(links[1].style.getPropertyValue("--tone")).toBe("light-dark(oklch(0.485 0.190 359.0), oklch(0.660 0.190 359.0))");
     const click = new MouseEvent("click", { bubbles: true, cancelable: true });
     await act(async () => void links[0].dispatchEvent(click));
-    expect(onPaperReference).toHaveBeenCalledExactlyOnceWith(local);
+    expect(onPaperReference).toHaveBeenCalledExactlyOnceWith(local, "equation:2");
   });
 
   it("links printed reference abbreviations and lettered targets", async () => {
