@@ -42,7 +42,7 @@ const DESTINATIONS = [
 ] as const;
 
 export function TopBar({ route, onSearch }: { route: Route; onSearch(): void }) {
-  const titleHref = site.library ? routeHref({ view: "read", stage: site.library.main }) : routeHref({ view: "home" });
+  const titleHref = new URL("library/", FAMILY.owner.home).href;
   const mark = paperMarkHtml(site.library?.paper ?? site.id);
   return (
     <header className="topbar">
