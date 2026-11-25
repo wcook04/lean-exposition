@@ -304,11 +304,20 @@ export function statementFor(model: TieModel, record: string | undefined, at?: s
 
 /** The next stop after this segment, by a step of +1 or -1; from nothing, the first or the last. */
 export function stepFrom(model: TieModel, segment: number | null, step: 1 | -1): number | null {
-  const firstSegment = (t: number) => model.segmentsOf[t][0];
-  if (segment === null) return model.stops[step > 0 ? 0 : model.stops.length - 1] ?? null;
-  if (step > 0) return model.stops.find((t) => firstSegment(t) > segment) ?? null;
-  for (let i = model.stops.length - 1; i >= 0; i--) if (firstSegment(model.stops[i]) < segment) return model.stops[i];
-  return null;
+  const { stops, segmentsOf } = model;
+  if (segment === null) return stops[step > 0 ? 0 : stops.length - 1] ?? null;
+  // Stops are emitted in opening-segment order. The upper and lower bounds
+  // skip the current segment in either direction, including when it has no stop.
+  const forward = step > 0;
+  let lo = 0;
+  let hi = stops.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    const opening = segmentsOf[stops[mid]][0];
+    if (opening < segment || (forward && opening === segment)) lo = mid + 1;
+    else hi = mid;
+  }
+  return stops[forward ? lo : lo - 1] ?? null;
 }
 
 /**
