@@ -103,6 +103,8 @@ interface Props {
   /** From an opened statement to the Lean following the text. */
   onFollowText?(): void;
   mode: PaneMode;
+  /** The address explicitly asks for the graph, even when the pane is narrow. */
+  graphRequested?: boolean;
   onMode(mode: PaneMode): void;
   onPoint(tie: number | null, record?: string): void;
   onName?(walk: LeanWalk): void;
@@ -120,7 +122,7 @@ function TitleText({ card }: { card: FGCard }) {
 }
 const renderTitle = (card: FGCard) => <TitleText card={card} />;
 
-export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, onMode, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, inModal, onHide, onRecord, onDecl, onRelease, onReturn, placeOf, onOpenTie, mode, graphRequested, onMode, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -373,7 +375,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // ---- The dock's height, and the fold on a narrow pane ---------------------------------
 
   const [narrow, setNarrow] = useState(false);
-  const [unfolded, setUnfolded] = useState(false);
+  const [unfolded, setUnfolded] = useState(!!graphRequested);
+  useEffect(() => {
+    if (graphRequested) setUnfolded(true);
+  }, [graphRequested]);
   useLayoutEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -638,7 +643,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   return (
     <section ref={rootRef} className="map-pane" data-view={fill ? "panel" : mode} aria-label="The proof beside the text" inert={inert ? true : undefined}>
       <div className="map-pane__bar">
-        <ModeToggle mode={mode} onMode={onMode} graphCount={focus ? neighbours : null} />
+        <ModeToggle mode={mode} onMode={(next) => {
+          if (next === "graph") setUnfolded(true);
+          onMode(next);
+        }} graphCount={focus ? neighbours : null} />
         {mode === "graph" && !fill && (
           <button type="button" className="map-pane__whole" aria-pressed={whole} onClick={() => setWhole(!whole)}>
             {whole ? "Around this step" : "Whole proof map"}
