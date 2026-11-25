@@ -47,6 +47,9 @@ def add_text_format(edition, config, addresses, manuscript, binding_file):
     sections = _paper_sections(data, paper_ref, lines)
     edges = [0, len(data)]
     for section in sections:
+        # Keep YAML and the title in one part so the front matter takes no reading space.
+        if section["level"] == 1:
+            continue
         start = section["heading_span"]["start_byte"]
         if data[start-2:start] == b"\n\n" and not any(a < start < b for a, b in spans.values()):
             edges.append(start)
