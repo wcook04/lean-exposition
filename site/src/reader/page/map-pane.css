@@ -7,7 +7,7 @@
 
 
 .reader.reader--follow {
-  grid-template-columns: minmax(0, min(var(--reader-measure), 50vw)) minmax(0, 1fr);
+  grid-template-columns: minmax(0, var(--reader-split-width, min(var(--reader-measure), 50vw))) minmax(0, 1fr);
   justify-content: start;
   padding-left: 32px;
   padding-right: 0;
@@ -25,6 +25,10 @@
 }
 
 .reader.reader--follow.reader--outlined {
+  grid-template-columns: var(--reader-outline) minmax(0, var(--reader-split-width, var(--reader-measure))) minmax(0, 1fr);
+}
+
+.reader.reader--follow.reader--outlined:not([data-paper-split]) {
   grid-template-columns: var(--reader-outline) minmax(0, var(--reader-measure)) minmax(600px, 1fr);
 }
 
@@ -107,12 +111,19 @@
   min-height: 0;
 }
 
-.map-pane__camera-tools {
+.map-pane__overview-bar {
+  flex: none;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+}
+
+.map-pane__camera-tools {
+  flex: none;
+  display: flex;
   gap: 1px;
   padding: 2px 12px;
-  border-top: 1px solid var(--rule);
 }
 
 .map-pane__camera-tools button {
@@ -809,7 +820,6 @@ html[data-right-sheet] {
 
 /* Nothing in the Lean is linked to what is being read: the whole map, under its plain title. */
 .map-pane__unlinked {
-  flex: none;
   margin: 0;
   padding: 6px 14px;
   font-family: var(--font-sans);
@@ -817,7 +827,6 @@ html[data-right-sheet] {
   font-weight: 600;
   line-height: 1.4;
   color: var(--ink-2);
-  border-bottom: 1px solid var(--rule, color-mix(in srgb, currentColor 18%, transparent));
 }
 
 .map-pane__none {
@@ -1450,4 +1459,47 @@ html[data-right-sheet] {
 .reader__map .lean-page,
 .right-sheet .lean-page {
   scrollbar-width: none;
+}
+
+/* The divider lives in the reader gutter and leaves both panes' grid tracks intact. */
+.reader__split {
+  position: absolute;
+  z-index: 2;
+  inset: 0 auto 0 -8px;
+  width: 16px;
+  display: grid;
+  place-items: center;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.reader__split > span {
+  width: 4px;
+  height: 30px;
+  border-radius: 4px;
+  background: var(--rule-control);
+}
+
+.reader__split:focus-visible {
+  outline: none;
+}
+
+.reader__split:focus-visible > span {
+  outline: 2px solid var(--ink-2);
+  outline-offset: 2px;
+}
+
+.reader__split:hover > span,
+.reader__split:focus-visible > span,
+.reader--resizing .reader__split > span {
+  background: var(--ink-2);
+}
+
+.reader--resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.reader.reader--follow[data-paper-split] .reader__paper .paper.prose {
+  max-width: 100%;
 }

@@ -625,6 +625,14 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
 
   const drawing = showWhole ? (
     <div className="map-pane__canvas" data-unlinked={unlinked ? "" : undefined}>
+      <div className="map-pane__overview-bar">
+        <h3 className="map-pane__unlinked">Whole proof map</h3>
+        <div className="map-pane__camera-tools" role="group" aria-label="Whole proof map camera">
+          <button type="button" aria-label="Zoom out" onClick={() => treeRef.current?.zoomBy(1 / 1.25)}>−</button>
+          <button type="button" aria-label="Zoom in" onClick={() => treeRef.current?.zoomBy(1.25)}>+</button>
+          <button type="button" onClick={() => treeRef.current?.fit()}>Fit</button>
+        </div>
+      </div>
       <ArgumentTree
         key={goal}
         ref={treeRef}
@@ -649,11 +657,6 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
         onHover={onTreeHover}
         onTrace={onTrace}
       />
-      <div className="map-pane__camera-tools" role="group" aria-label="Whole proof map camera">
-        <button type="button" aria-label="Zoom out" onClick={() => treeRef.current?.zoomBy(1 / 1.25)}>−</button>
-        <button type="button" aria-label="Zoom in" onClick={() => treeRef.current?.zoomBy(1.25)}>+</button>
-        <button type="button" onClick={() => treeRef.current?.fit()}>Fit</button>
-      </div>
     </div>
   ) : folded ? (
     <div className="map-pane__strip" role="group" aria-label="The graph, folded">
@@ -784,9 +787,6 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
       ) : (
         <div ref={viewRef} className={`map-pane__graphview${folded ? " is-folded" : ""}${dockWide || folded ? "" : " is-brief"}`}>
           <div className="map-pane__drawing">
-            {unlinked && (
-              <h3 className="map-pane__unlinked">Whole proof map</h3>
-            )}
             <GraphBoundary scope={showWhole ? `whole proof map of ${goal}` : `graph around ${focus?.subjects.join(", ") || "nothing"}`}>{drawing}</GraphBoundary>
           </div>
           {!folded && dockWide && !(unlinked && !preview) && (
