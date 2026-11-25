@@ -281,6 +281,17 @@ describe("the model", () => {
     expect(stepFrom(model, 1, -1)).toBe(0);
   });
 
+  it("moves in either direction between sparse or filtered stops", () => {
+    const sparse = tieModel({ ...index, segments: [[0, 5, [0]], [6, 9, [0]], [10, 12, [1]]] });
+    expect(stepFrom(sparse, 1, 1)).toBe(1);
+    expect(stepFrom(sparse, 1, -1)).toBe(0);
+    const filtered = { ...sparse, stops: [1] };
+    expect(stepFrom(filtered, 0, 1)).toBe(1);
+    expect(stepFrom(filtered, 1, -1)).toBeNull();
+    expect(stepFrom(filtered, 2, -1)).toBeNull();
+    expect(stepFrom({ ...sparse, stops: [] }, 1, 1)).toBeNull();
+  });
+
   it("stops once where several statements open on the same words, so a step always moves", () => {
     const same = tieModel({ ...index, segments: [[0, 5, [0, 1]], [6, 9, [1]]] });
     expect(same.stops).toEqual([0]);

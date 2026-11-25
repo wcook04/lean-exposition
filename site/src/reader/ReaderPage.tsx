@@ -40,7 +40,7 @@ import { applyTones, readTones } from "./page/panePrefs";
 import { PaneClose, RightSheet } from "./page/RightSheet";
 import { HeldBar } from "./page/HeldBar";
 import { READER_HINT } from "./skeleton";
-import { FOLLOW_HOLD, leanPage, paneForStatement, pdfReadingAt, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
+import { FOLLOW_HOLD, paneForStatement, pdfReadingAt, POINT_DWELL, type Followed, type Pin, type Pointed, type ReaderSignals } from "./page/rightPage";
 import { Signal, useSignal } from "./page/signal";
 import { Statements } from "./page/statements";
 import { ReaderSkeleton, useFirstScreenDone } from "./skeletonView";
@@ -219,8 +219,6 @@ function blocksOf(part: HTMLElement | null | undefined, last: number, lines: { s
 const LINE_REACH = 0.32;
 /** Further than this share of the window in one hold is flying, not reading. */
 const FLYING = 0.5;
-/** What the thread reaches on the Lean page: the lit lines where they are drawn, else the step's title. */
-const LEAN_TARGET = ".lean-line.is-lit, .lean-page__title";
 /** On an entry: it was reached by opening something here, and how many entries back that began. */
 const OPENED = "opened";
 interface Opened {
@@ -231,6 +229,12 @@ const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", 
 function cssPx(name: string, fallback: number): number {
   const value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
   return Number.isFinite(value) ? value : fallback;
+}
+
+function readingLineFrom(top: number, height = 0): number {
+  const sheet = document.querySelector(".right-sheet--phone")?.getBoundingClientRect();
+  const bottom = sheet ? Math.min(window.innerHeight, sheet.top) : window.innerHeight;
+  return statementLine(top, bottom, height);
 }
 
 /** The part at a viewport line, by binary search over the parts in order. */
@@ -599,12 +603,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   );
 
   /** The reading line, in pixels from the top of the window. */
-  const readingLine = useCallback((height = 0) => {
-    const top = readingTop();
-    const sheet = document.querySelector(".right-sheet--phone")?.getBoundingClientRect();
-    const bottom = sheet ? Math.min(window.innerHeight, sheet.top) : window.innerHeight;
-    return statementLine(top, bottom, height);
-  }, [readingTop]);
+  const readingLine = useCallback((height = 0) => readingLineFrom(readingTop(), height), [readingTop]);
 
   /**
    * The exact landing of an address. A statement comes to the reading line and is lit there.
@@ -848,40 +847,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pointAtRef = useRef<(t: number | null, record?: string) => void>(() => undefined);
   const movedAt = useRef(0);
   const update = useRef<() => void>(() => undefined);
-  const thread = useRef<SVGPathElement>(null);
-
-  /**
-   * The thread: a short line across the gutter from the statement to the Lean beside it. It
-   * only ever crosses the empty gutter, so it can touch no card and no text, and it goes
-   * whenever either end is off the screen. Drawn from what is on screen, with no state.
-   */
-  const drawThread = useCallback(() => {
-    const path = thread.current;
-    if (!path) return;
-    const t = pinRef.current?.tie ?? current.current;
-    const first = t !== null ? statements.first(t) : null;
-    const paper = paperRef.current?.querySelector(".paper")?.getBoundingClientRect();
-    const page = leanPage.current;
-    const pane = page?.getBoundingClientRect();
-    const target = (page?.querySelector(LEAN_TARGET) ?? null)?.getBoundingClientRect();
-    const box = first?.getClientRects()[0];
-    const top = readingTop();
-    if (!box || !paper || !pane || !target || pane.left - paper.right < 16 || box.top < top || box.bottom > window.innerHeight || target.top < pane.top || target.bottom > pane.bottom) {
-      // Gone, not empty: a window-sized layer would cost every frame of scrolling.
-      if (path.getAttribute("d")) {
-        path.setAttribute("d", "");
-        path.ownerSVGElement!.style.display = "none";
-      }
-      return;
-    }
-    path.ownerSVGElement!.style.display = "";
-    const y0 = box.top + box.height / 2;
-    const y1 = target.top + Math.min(target.height, 22) / 2;
-    const x0 = paper.right + 4;
-    const x1 = pane.left - 1;
-    const mid = (x0 + x1) / 2;
-    path.setAttribute("d", `M${x0.toFixed(1)} ${y0.toFixed(1)}C${mid.toFixed(1)} ${y0.toFixed(1)} ${mid.toFixed(1)} ${y1.toFixed(1)} ${x1.toFixed(1)} ${y1.toFixed(1)}`);
-  }, [statements, readingTop]);
 
   useLayoutEffect(() => {
     const paint = () => {
@@ -1003,8 +968,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     let addressTimer = 0;
     let settled = "";
     /** The passage that holds the reading line, or the nearest; every statement belongs to one. */
-    const passageAt = (body: BodyHandle, line: number) => {
-      const at = partAt(body, doc.parts.length, line);
+    const passageAt = (at: number) => {
       let follow = at;
       while (follow >= 0 && doc.parts[follow]?.kind !== "passage") follow--;
       if (follow < 0) {
@@ -1032,7 +996,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       const body = bodyRef.current;
       if (!body || pdfOn || pdfOnly) return;
       const top = readingTop();
-      const line = readingLine();
+      const line = readingLineFrom(top);
       let part = partAt(body, doc.parts.length, line);
       const atLine = part;
       // Unmapped text at the reading line (a title block, a bridge paragraph):
@@ -1057,7 +1021,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         current.current = visible ? tie : null;
         if (!pinRef.current) statements.light("on", current.current);
       }
-      const passage = passageAt(body, line);
+      const passage = passageAt(atLine);
       const atTop = window.scrollY < 8 && !stepped.current;
       const key = `${current.current}|${passage}|${atTop}`;
       if (key !== settled) {
@@ -1084,7 +1048,6 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       if (window.scrollY < 8) heading = null;
       signals.heading.set(heading);
-      drawThread();
     };
     update.current = () => {
       if (!frame) frame = requestAnimationFrame(run);
@@ -1140,19 +1103,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfOn, pdfOnly, setReadingFollow]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, pdfOn, pdfOnly, setReadingFollow]);
 
-  // The Lean page changes and scrolls on its own; the thread keeps up.
-  useEffect(() => {
-    const redraw = () => requestAnimationFrame(drawThread);
-    const off = signals.follow.subscribe(() => window.setTimeout(redraw, 120));
-    const onInner = (event: Event) => (event.target as Element).closest?.(".lean-page") && redraw();
-    window.addEventListener("scroll", onInner, { capture: true, passive: true });
-    return () => {
-      off();
-      window.removeEventListener("scroll", onInner, { capture: true });
-    };
-  }, [signals, drawThread]);
 
 
   // The place being left, named once for every way of leaving it.
@@ -1544,6 +1496,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       current.current = next;
       currentSegment.current = ties.segmentsOf[next][0];
       statements.light("on", next);
+      // A button press picks a specific annotation. The scroll hold still
+      // applies when the reader moves the paper by hand.
+      if (!manual) {
+        const part = statements.partOf(next);
+        setReadingFollow({ tie: next, anchor: doc.parts[part]?.anchor ?? null, part });
+      }
       update.current();
       void landSlice(tie.at, { node: tie.record, smooth: "always", isCurrent }).then((landed) => {
         // Keep focus on the keyboard or toolbar control the reader is using. Only move it
@@ -1553,7 +1511,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         statements.first(next)?.focus({ preventScroll: true });
       });
     },
-    [ties, stepModel, statements, signals, landSlice, pdfOn, pdfOnly, pdfByAt, clearReferenceLanding, referencePin],
+    [doc, ties, stepModel, statements, signals, setReadingFollow, landSlice, pdfOn, pdfOnly, pdfByAt, clearReferenceLanding, referencePin],
   );
 
   useEffect(() => {

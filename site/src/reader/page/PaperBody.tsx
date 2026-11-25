@@ -81,6 +81,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const handle = useRef<BodyHandle | null>(null);
   const [rendered, setRendered] = useState<ReadonlySet<number>>(() => new Set(initial));
   const elements = useRef(new Map<number, HTMLElement>());
+  const orderedElements = useRef<[number, HTMLElement][] | null>(null);
   const waiters = useRef<{ parts: number[]; resolve: () => void }[]>([]);
   const renderedRef = useRef(rendered);
   renderedRef.current = rendered;
@@ -123,7 +124,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
       anchor.current = null;
       return;
     }
-    const sorted = [...elements.current.entries()].sort((a, b) => a[0] - b[0]);
+    const sorted = orderedElements.current ??= [...elements.current.entries()].sort((a, b) => a[0] - b[0]);
     // Binary search for the first part whose bottom is below the line.
     let lo = 0;
     let hi = sorted.length - 1;
@@ -276,6 +277,7 @@ export const PaperBody = forwardRef<BodyHandle, Props>(function PaperBody(props,
   const register = useCallback((index: number, el: HTMLElement | null) => {
     const map = elements.current;
     const prior = map.get(index);
+    if (prior !== (el ?? undefined)) orderedElements.current = null;
     if (prior && prior !== el) {
       nearObserver.current?.unobserve(prior);
       resizeObserver.current?.unobserve(prior);
