@@ -232,8 +232,15 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
       view.scrollLeft = Math.max(0, (centre ?? point.x) * pageEl.clientWidth - view.clientWidth / 2);
     };
     zoomAnchor.current = { point, requested: anchor?.requested ?? false };
-    // The page rectangles settle after their canvases and the strip have resized.
-    let frame = requestAnimationFrame(() => {
+    // The paper can still report its old dimensions while the canvases resize.
+    const expectedHeight = Math.round(marks.pages[point.page - 1][1] * width / marks.pages[point.page - 1][0]);
+    const deadline = performance.now() + 1000;
+    let frame = 0;
+    const afterResize = (now: number) => {
+      if (now < deadline && (pageEl.clientWidth !== width || pageEl.clientHeight !== expectedHeight)) {
+        frame = requestAnimationFrame(afterResize);
+        return;
+      }
       place();
       frame = requestAnimationFrame(() => {
         place();
@@ -241,7 +248,8 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
         readingPoint.current = { ...point, x };
         if (zoom.textFit === undefined || centre !== undefined) zoomAnchor.current = null;
       });
-    });
+    };
+    frame = requestAnimationFrame(afterResize);
     return () => cancelAnimationFrame(frame);
   }, [centre, width, zoom.textFit, marks, readingLine]);
 
