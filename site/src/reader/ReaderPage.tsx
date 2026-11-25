@@ -318,6 +318,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
+  const paperHighlight = useRef(new Signal<{ tie: number; at: string } | null>(null)).current;
   const statements = useMemo(
     () =>
       new Statements(ties, doc.parts, (t) => {
@@ -549,7 +550,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
    * the target, under the strip.
    */
   const landSlice = useCallback(
-    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean; follow?: boolean; node?: string } = {}) => {
+    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean | "always"; follow?: boolean; node?: string; isCurrent?: () => boolean } = {}) => {
       const body = bodyRef.current;
       const root = paperRef.current;
       if (!body || !root) return false;
@@ -560,6 +561,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (statement !== null) {
         const part = statements.partOf(statement);
         await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : [part - 2, part - 1, part, part + 1, part + 2]);
+        if (options.isCurrent?.() === false) return false;
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll !== false) {
@@ -598,10 +600,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         landing = () => target!.getBoundingClientRect().top + window.scrollY - readingTop() - 16;
       }
       setNotice(null);
-      const smooth = !!options.smooth && !prefersReducedMotion() && Math.abs(landing() - window.scrollY) < window.innerHeight * 1.5;
+      const smooth = !!options.smooth && !prefersReducedMotion()
+        && (options.smooth === "always" || Math.abs(landing() - window.scrollY) < window.innerHeight * 1.5);
       window.scrollTo({ top: Math.max(0, landing()), behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
       const settle = () => {
-        if (!target?.isConnected) return;
+        if (!target?.isConnected || options.isCurrent?.() === false) return;
         if (Math.abs(landing() - window.scrollY) > 6) window.scrollTo({ top: Math.max(0, landing()), behavior: "instant" as ScrollBehavior });
         body.hold(target!);
         // Lazy parts, the phone sheet and late fonts can all change this geometry.
@@ -715,7 +718,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const own = selfAt.current === route.at;
     selfAt.current = null;
     // A jump puts the reader somewhere new: the line is theirs again.
-    if (!own) stepped.current = false;
+    if (!own) {
+      stepped.current = false;
+      if (fromPop || anchorChanged || atChanged || route.node || route.decl || (route.page ?? 1) > 1) unstarted.current = false;
+    }
     if (pdfOnly || route.pdf) return;
     const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
     // Back restores the saved paper position and its exact followed slice independently.
@@ -760,6 +766,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const currentSegment = useRef<number | null>(null);
   /** Stepped to by keys: the line leaves it alone until the reader scrolls by hand. */
   const stepped = useRef(false);
+  const stepRequest = useRef(0);
+  const unstarted = useRef(!route.at && !route.node && !route.decl && !route.anchor && (route.page ?? 1) === 1);
   const scrolledPdf = useRef(false);
   const pointed = useRef<number | null>(null);
   const pointAtRef = useRef<(t: number | null, record?: string) => void>(() => undefined);
@@ -802,17 +810,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   useLayoutEffect(() => {
     const paint = () => {
-      if (pin) {
-        statements.light("follow", null);
-        statements.light("pin", pin.tie);
-      } else {
-        statements.light("pin", null);
-        statements.light("follow", signals.shownTie.get()?.tie ?? null);
-      }
+      // The paper can follow even with its companion pane hidden or showing the whole map.
+      const followed = signals.shownTie.get()?.tie ?? signals.follow.get().tie;
+      paperHighlight.set(followed === null ? null : { tie: followed, at: ties.index.ties[followed].at });
+      statements.light("pin", pin?.tie ?? null);
+      statements.light("follow", pin ? null : followed);
     };
     paint();
-    return signals.shownTie.subscribe(paint);
-  }, [pin, signals, statements]);
+    const stopPane = signals.shownTie.subscribe(paint);
+    const stopFollowing = signals.follow.subscribe(paint);
+    return () => { stopPane(); stopFollowing(); };
+  }, [paperHighlight, pin, signals, statements, ties]);
 
   useEffect(() => {
     statements.light("on", pin ? null : current.current);
@@ -1024,6 +1032,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     /** The reader's own hand on the page gives the line back to the reader. */
     const onHand = () => {
       stepped.current = false;
+      unstarted.current = false;
+      stepRequest.current++;
       if (hereRef.current.pdf || pdfOnly) scrolledPdf.current = true;
     };
     const onKeyScroll = (event: KeyboardEvent) => {
@@ -1398,43 +1408,58 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   /** Move to the next tied statement: to the reading line, as though the reader had scrolled there. */
   const step = useCallback(
-    (by: 1 | -1) => {
+    (by: 1 | -1, focusedMark?: HTMLElement) => {
+      if (pdfOnly && !pdfOn) return;
+      const here = hereRef.current;
+      const manual = !!(pinRef.current || heldRef.current || here.decl);
+      const pinned = pinRef.current?.tie;
+      const start = unstarted.current && pinned == null;
       if (pdfOn) {
         const ordered = pdfStops;
-        const followed = pinRef.current?.tie ?? current.current;
+        const followed = pinned ?? current.current;
         const i = followed === null ? -1 : ordered.indexOf(ties.stops[ties.place[followed]]);
         const page = pdfPage.current ?? 1;
-        const next = i >= 0 ? ordered[i + by] : (by > 0 ? ordered : [...ordered].reverse()).find((t) => {
+        const next = start ? ordered[0] : i >= 0 ? ordered[i + by] : (by > 0 ? ordered : [...ordered].reverse()).find((t) => {
           const box = pdfByAt.get(ties.index.ties[t].at)?.boxes[0];
           return box && (box[0] === page ? (box[2] - pdfY.current) * by >= 0 : (box[0] - page) * by > 0);
         });
         if (next === undefined) return;
         const tie = ties.index.ties[next];
-        const mark = pdfByAt.get(tie.at);
-        if (mark) navigate({ ...hereRef.current, anchor: undefined, node: undefined, decl: undefined, at: tie.at, pdf: true, page: mark.boxes[0][0] });
+        const box = pdfByAt.get(tie.at)?.boxes[0];
+        if (!box) return;
+        unstarted.current = false;
+        writeEntry("pdfOrigin", undefined);
+        selfAt.current = tie.at;
+        navigate({ ...here, anchor: undefined, node: manual ? tie.record : undefined, decl: undefined, declModule: undefined, at: tie.at, page: box[0] }, { replace: true });
         return;
       }
       // Between statements the step starts from where the reader is, not from the paper's start.
       const at = signals.part.get();
-      const pinned = pinRef.current?.tie;
       const from = pinned == null ? currentSegment.current : ties.segmentsOf[pinned][0];
-      const next = from !== null ? stepFrom(ties, from, by) : by > 0 ? (ties.stops.find((t) => statements.partOf(t) >= at) ?? null) : ([...ties.stops].reverse().find((t) => statements.partOf(t) < at) ?? null);
-      if (next === null) return;
-      if (pinRef.current) releaseInPlace(ties.index.ties[next].at);
+      const next = start ? ties.stops[0] : from !== null ? stepFrom(ties, from, by)
+        : by > 0 ? ties.stops.find((t) => statements.partOf(t) >= at)
+          : ties.stops.findLast((t) => statements.partOf(t) < at);
+      if (next == null) return;
+      unstarted.current = false;
+      const tie = ties.index.ties[next];
+      if (manual) {
+        selfAt.current = tie.at;
+        navigate({ ...here, node: tie.record, at: tie.at, anchor: undefined, decl: undefined, declModule: undefined }, { replace: true });
+      }
+      const request = ++stepRequest.current;
+      const isCurrent = () => stepRequest.current === request;
       stepped.current = true;
       current.current = next;
       currentSegment.current = ties.segmentsOf[next][0];
       statements.light("on", next);
       update.current();
-      void landSlice(ties.index.ties[next].at, { node: ties.index.ties[next].record, smooth: true }).then(() => {
-        const first = statements.first(next);
-        if (first) {
-          first.setAttribute("tabindex", "0");
-          first.focus({ preventScroll: true });
-        }
+      void landSlice(tie.at, { node: tie.record, smooth: "always", isCurrent }).then((landed) => {
+        if (!landed || !isCurrent() || !focusedMark?.matches(":focus")) return;
+        statements.rove(next);
+        statements.first(next)?.focus({ preventScroll: true });
       });
     },
-    [ties, statements, signals, landSlice, releaseInPlace, pdfOn, pdfStops, pdfByAt],
+    [ties, statements, signals, landSlice, pdfOn, pdfOnly, pdfStops, pdfByAt],
   );
 
   useEffect(() => {
@@ -1462,18 +1487,22 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         }
         return;
       }
-      if (typing || event.metaKey || event.ctrlKey || event.altKey || route.beside) return;
+      if (typing || event.isComposing || event.metaKey || event.ctrlKey || event.altKey || route.beside) return;
       const mark = target?.closest<HTMLElement>(".paper [data-t]");
+      const focusedMark = mark && mark === target ? mark : undefined;
       if (event.key === "g") {
         event.preventDefault();
         setMode(modeRef.current === "lean" ? "graph" : "lean");
       } else if (event.key === "j" || event.key === "k") {
         event.preventDefault();
-        step(event.key === "j" ? 1 : -1);
-      } else if (["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key) && mark) {
-        // On a statement the arrows move between statements, as j and k do.
+        step(event.key === "j" ? 1 : -1, focusedMark);
+      } else if (!event.shiftKey && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
+        if (!(pdfOn ? pdfStops : ties.stops).length || document.querySelector("dialog[open]")) return;
         event.preventDefault();
-        step(event.key === "ArrowDown" || event.key === "ArrowRight" ? 1 : -1);
+        step(event.key === "ArrowRight" ? 1 : -1, focusedMark);
+      } else if (mark && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+        event.preventDefault();
+        step(event.key === "ArrowDown" ? 1 : -1, focusedMark);
       } else if (event.key === "Enter" || (event.key === " " && mark)) {
         // Enter on a control belongs to that control.
         if (target && target !== document.body && !mark) return;
@@ -1487,7 +1516,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [route.beside, inspect, sectionsSide, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, closeLean, step, openStatement, setMode, held]);
+  }, [route.beside, inspect, sectionsSide, mid, action, closeVisit, closeInspector, sheetOpen, paneOn, closeSheet, closeLean, step, openStatement, setMode, held, pdfOn, pdfStops, ties]);
 
   // ---- Clicks inside the paper ---------------------------------------------------------
 
@@ -2167,7 +2196,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             marks={pdfMarks}
             at={route.at}
             pinned={!!pin}
-            shownTie={signals.shownTie}
+            shownTie={paperHighlight}
             page={route.page}
             position={!pdfSection && pdfOrigin?.page === route.page && pdfOrigin?.at === route.at ? pdfOrigin?.pdfLocation : undefined}
             section={pdfSection}
@@ -2401,7 +2430,7 @@ function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignal
   );
   return (
     <div className="reader-strip__steps" role="group" aria-label="Tied statements">
-      <button type="button" aria-label="Previous tied statement" title="Previous tied statement (k)" onClick={() => onStep(-1)}>
+      <button type="button" aria-label="Previous tied statement" aria-keyshortcuts="ArrowLeft K" title="Previous tied statement (← or k)" onClick={() => onStep(-1)}>
         {arrow("M7.5 2.5L4 6l3.5 3.5")}
       </button>
       {/* As wide as its longest wording from the start, so a selection that changes it moves nothing beside it. */}
@@ -2414,7 +2443,7 @@ function StepControls({ signals, ties, pinned, onStep }: { signals: ReaderSignal
             ? `Statement ${place + 1} of ${ties.stops.length}`
             : `${ties.stops.length} statements`}
       </span>
-      <button type="button" aria-label="Next tied statement" title="Next tied statement (j)" onClick={() => onStep(1)}>
+      <button type="button" aria-label="Next tied statement" aria-keyshortcuts="ArrowRight J" title="Next tied statement (→ or j)" onClick={() => onStep(1)}>
         {arrow("M4.5 2.5L8 6l-3.5 3.5")}
       </button>
     </div>

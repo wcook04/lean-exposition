@@ -2,6 +2,7 @@
 
 export const SITE_KEYS: readonly { keys: readonly string[]; does: string }[] = [
   { keys: ["j", "k"], does: "Next or previous statement in a paper, next or previous step in Compare" },
+  { keys: ["←", "→"], does: "Previous or next linked statement in a paper" },
   { keys: ["↑", "↓"], does: "On a statement, the same as j and k" },
   { keys: ["Enter"], does: "Open the statement, with its Lean" },
   { keys: ["g"], does: "In a paper, switch the right pane between Graph and Lean" },
