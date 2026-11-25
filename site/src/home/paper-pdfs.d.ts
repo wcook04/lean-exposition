@@ -26,7 +26,7 @@ declare module "virtual:record-index" {
     /** The strongest thing each paper does with the record: "statement", "mention" and so on. */
     levels: Partial<Record<"long" | "short" | "expository", string>>;
   }
-  export const RECORD_INDEX: Record<string, RecordLine>;
+  export const RECORD_INDEX: Record<string, RecordLine | string | undefined>;
 }
 
 // What the site states about itself, read at build time (siteFacts.ts).

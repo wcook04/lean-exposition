@@ -265,7 +265,15 @@ function recordIndexModule(): Plugin {
   return {
     name: "record-index",
     resolveId: (source) => (source === id ? `\0${id}` : null),
-    load: (resolved) => (resolved === `\0${id}` ? `export const RECORD_INDEX = ${JSON.stringify(recordIndex())};` : null),
+    load(resolved) {
+      if (resolved !== `\0${id}`) return null;
+      const compact = Object.fromEntries(Object.entries(recordIndex()).map(([id, line]) => [
+        id, line.lean || line.relations.length || Object.keys(line.levels).length ? line : line.short,
+      ]));
+      // Large editions have tens of thousands of title-only entries. Parse the
+      // index as JSON instead of compiling each entry into JavaScript.
+      return `export const RECORD_INDEX = JSON.parse(${JSON.stringify(JSON.stringify(compact))});`;
+    },
   };
 }
 
