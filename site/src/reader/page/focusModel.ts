@@ -162,12 +162,21 @@ function recordTitle(node: ArgNode): string {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
-export function makeFocus(input: FocusInput) {
-  const { graph, stage, alignment, shell } = input;
-
+/** Lookups shared by neighbourhoods of the same graph and paper home. */
+export function indexFocusGraph(graph: ArgGraph, home: string) {
   // Declaration identity: an argument record of kind declaration stands for its declaration.
   const nodeOfDecl = new Map<string, string>();
-  for (const node of graph.nodes.values()) if (node.kind === "declaration" && node.declaration) nodeOfDecl.set(node.declaration, node.id);
+  const goals = new Set([home]);
+  for (const node of graph.nodes.values()) {
+    if (node.kind === "declaration" && node.declaration) nodeOfDecl.set(node.declaration, node.id);
+    if (node.kind === "goal") goals.add(node.id);
+  }
+  return { nodeOfDecl, goals };
+}
+
+export function makeFocus(input: FocusInput, index = indexFocusGraph(input.graph, input.home)) {
+  const { graph, stage, alignment, shell } = input;
+  const { nodeOfDecl, goals } = index;
   const declCard = (name: string) => nodeOfDecl.get(name) ?? `${DECL}${name}`;
   /** The declaration a card stands for, if it stands for one. */
   const declOf = (id: string): string | null => {
@@ -267,8 +276,6 @@ export function makeFocus(input: FocusInput) {
   };
   const card = (id: string): FGCard | undefined => (id.startsWith(DECL) ? declCardOf(id.slice(DECL.length), id) : recordCard(id));
 
-  /** The paper's main results: its own main result first, then the other results the argument ends in. */
-  const goals = [input.home, ...[...graph.nodes.values()].filter((n) => n.kind === "goal" && n.id !== input.home).map((n) => n.id)];
   /** The shortest chain of uses from a record up to `to`, through the argument's own links. */
   const chainTo = (id: string, to: ReadonlySet<string>): string[] | null => {
     if (to.has(id)) return [];
@@ -346,7 +353,7 @@ export function makeFocus(input: FocusInput) {
     return best;
   };
   /** To the paper's main result, else along a route into it, else to the nearest other result the argument ends in. */
-  const routeFrom = (id: string): string[] | null => chainTo(id, new Set([input.home])) ?? routeInto(id) ?? chainTo(id, new Set(goals));
+  const routeFrom = (id: string): string[] | null => chainTo(id, new Set([input.home])) ?? routeInto(id) ?? chainTo(id, goals);
 
   return { declCard, declOf, recordDecls, statedBy, card, routeFrom, rowOf, declTitleOf };
 }

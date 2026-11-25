@@ -14,7 +14,7 @@ import { recordMark } from "../../map/leanMarks";
 import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
 import { passageTopics, phraseTitle, statementFor, type TieModel } from "../ties";
-import { focusOn, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
+import { focusOn, indexFocusGraph, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
 import { passageOf, passageRecords, type Structures } from "./model";
 import { LeanDock, ParagraphLinks, plainName, recordOfDecl, type LeanOpen } from "./RecordDock";
 import { SubjectBand, type SubjectState } from "./SubjectBand";
@@ -197,7 +197,9 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [graph, stage, home, selected, reachOf, alignment, shell, places, readAt, loaded],
   );
-  const tools = useMemo(() => makeFocus(input), [input]);
+  // The stored records can fill declaration identities on the live graph.
+  const focusIndex = useMemo(() => indexFocusGraph(graph, home), [graph, home, edition.context]);
+  const tools = useMemo(() => makeFocus(input, focusIndex), [input, focusIndex]);
 
   // ---- The subject -----------------------------------------------------------------------
 
