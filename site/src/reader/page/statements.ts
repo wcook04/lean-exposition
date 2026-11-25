@@ -178,22 +178,6 @@ export class Statements {
     cancelAnimationFrame(this.frame);
   }
 
-  /**
-   * Give each phrase its topic colour before placing the part on the page.
-   */
-  decorate(html: string): string {
-    if (typeof document === "undefined" || !html.includes("data-t=")) return html;
-    const box = document.createElement("template");
-    box.innerHTML = html;
-    for (const el of Array.from(box.content.querySelectorAll<HTMLElement>("[data-t]"))) {
-      const t = this.model.index.segments[Number(el.dataset.t)]?.[2][0];
-      const tie = t === undefined ? undefined : this.model.index.ties[t];
-      if (tie?.tone === undefined) continue;
-      el.dataset.tone = String(tie.tone);
-    }
-    return box.innerHTML;
-  }
-
   /** A part's text has been placed on the page, or has left it. */
   adopt(part: number, section: HTMLElement | null) {
     const old = this.sections.get(part);

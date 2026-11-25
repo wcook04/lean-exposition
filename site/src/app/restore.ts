@@ -36,7 +36,7 @@ export const SCROLLERS = [
 const ENTRY_NAME = "scroll";
 /**
  * How long a place must hold still, in ms, before the loop stops. Generous: the
- * cost is a few reads a frame, and a section that arrives above a restored
+ * cost is a few reads, and a section that arrives above a restored
  * place would otherwise carry it off (the browser anchors to whatever is on screen).
  */
 const SETTLE = 1200;
@@ -79,14 +79,17 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
   let begun = 0;
   let still = 0;
   let frame = 0;
+  let retry: ReturnType<typeof setTimeout> | undefined;
   let watch: ReturnType<typeof setTimeout> | undefined;
   let tall = -1;
   let ended = false;
+  const inner = Object.entries(kept.inner ?? {});
 
   const end = () => {
     if (ended) return;
     ended = true;
     cancelAnimationFrame(frame);
+    clearTimeout(retry);
     clearTimeout(watch);
     fonts?.removeEventListener("loadingdone", begin);
     for (const type of INPUT) window.removeEventListener(type, end, { capture: true });
@@ -103,11 +106,13 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
   const step = () => {
     let waiting = false;
     let moved = false;
+    const windowHeight = document.documentElement.scrollHeight;
+    let height = windowHeight;
     if (kept.window !== undefined) {
       const y = typeof kept.window === "function" ? kept.window() : kept.window;
       if (y === null) waiting = true;
       else {
-        const room = document.documentElement.scrollHeight - window.innerHeight;
+        const room = windowHeight - window.innerHeight;
         if (y > room + 1) waiting = true;
         const wanted = Math.max(0, Math.min(y, room));
         // Half a pixel: a looser test lets each save and restore creep by one. A jump to a place
@@ -118,26 +123,29 @@ export function restoreScroll(kept: KeptScroll, options: { onDone?(): void; limi
         }
       }
     }
-    for (const [id, [top, left]] of Object.entries(kept.inner ?? {})) {
+    for (const [id, [top, left]] of inner) {
       const el = find(id);
       if (!el) {
         waiting = true;
         continue;
       }
-      if (top > el.scrollHeight - el.clientHeight + 1 || left > el.scrollWidth - el.clientWidth + 1) waiting = true;
+      const scrollHeight = el.scrollHeight;
+      height += scrollHeight;
+      if (top > scrollHeight - el.clientHeight + 1 || left > el.scrollWidth - el.clientWidth + 1) waiting = true;
       if (Math.abs(el.scrollTop - top) > 1 || Math.abs(el.scrollLeft - left) > 1) {
         el.scrollTo({ top, left, behavior: "instant" as ScrollBehavior });
         if (Math.abs(el.scrollTop - top) > 1 || Math.abs(el.scrollLeft - left) > 1) waiting = true;
         moved = true;
       }
     }
-    const height = document.documentElement.scrollHeight + Object.keys(kept.inner ?? {}).reduce((sum, id) => sum + (find(id)?.scrollHeight ?? 0), 0);
     if (height !== tall) moved = true;
     tall = height;
     const now = performance.now();
     if (moved || waiting) still = now;
     if (now - still >= settle || now - begun >= limit) settled();
-    else frame = requestAnimationFrame(step);
+    else if (moved) frame = requestAnimationFrame(step);
+    // When the position holds, check for late content without measuring it on every frame.
+    else retry = setTimeout(step, 64);
   };
 
   function begin() {

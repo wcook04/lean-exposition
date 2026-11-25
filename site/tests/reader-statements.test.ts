@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { TieIndex } from "../src/api/lean";
 import type { PreparedPart } from "../src/reader/engine";
 import { isBlock, Statements } from "../src/reader/page/statements";
-import { tieModel } from "../src/reader/ties";
+import { closeMark, openMark, tieModel, wrapTies } from "../src/reader/ties";
 
 const index: TieIndex = {
   meaning: "",
@@ -65,7 +65,7 @@ describe("statements on the page", () => {
   it("colours linked passages with no native tooltip", () => {
     const model = tieModel({ ...index, ties: [{ ...index.ties[0], tone: 0 }, index.ties[1]] });
     const reader = new Statements(model, parts);
-    const markup = reader.decorate('<span class="tie" data-t="0">Link</span>');
+    const markup = wrapTies(`${openMark(0)}Link${closeMark(0)}`, document, [0]);
     const template = document.createElement("template");
     template.innerHTML = markup;
     expect(template.content.querySelector(".tie")?.getAttribute("data-tone")).toBe("0");

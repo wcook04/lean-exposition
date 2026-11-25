@@ -94,6 +94,8 @@ export interface PrepareInput {
   referenceTable?: ReferenceTable | null;
   /** The paper's tied segments, by byte range; their spans come out in the rendered HTML. */
   ties?: readonly TieSegment[];
+  /** Topic colours by tied segment, already known before the markup is emitted. */
+  tieTones?: ReadonlyArray<number | undefined>;
   /**
    * What the formal development does in each section, by section number ("5.6") or heading. One is
    * set under its section's head as a reader annotation; the authors' text is not changed.
@@ -768,7 +770,7 @@ function renderTokens(
   env: RenderEnv,
   typesetSpan: (span: MathSpan) => MathResult,
   /** The whole paper's references; a slice has none, and no ids, since the original stands elsewhere. */
-  refs?: { index: RefIndex | null },
+  refs?: { index: RefIndex | null; tieTones?: ReadonlyArray<number | undefined> },
 ): { html: string; mathErrors: { tex: string; message: string }[] } {
   let html = md.renderer.render(st.tokens, md.options, env);
   const equationAttr = (n: string) => {
@@ -837,7 +839,7 @@ function renderTokens(
       return `<span class="math-nobreak${whole}">${typeset(n)}${marks}${punct}</span>`;
     },
   );
-  return { html: wrapTies(html), mathErrors };
+  return { html: wrapTies(html, undefined, refs?.tieTones), mathErrors };
 }
 
 export interface SliceInput {
@@ -1058,7 +1060,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       documentPaths: input.documentPaths,
       linkClose: [],
     };
-    const made = renderTokens(st, env, typesetSpan, { index: refs });
+    const made = renderTokens(st, env, typesetSpan, { index: refs, tieTones: input.tieTones });
     const headings = parts[index]?.headings ?? [];
     st.rendered = { index, ...made, html: withCredit(index, input.sectionAids && headings.length ? withSectionAids(made.html, headings, input.sectionAids) : made.html) };
     return st.rendered;
@@ -1075,7 +1077,7 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     let done = plainParts.get(index);
     if (!done) {
       const env: RenderEnv = { references, stage: input.stage, documentPath: input.documentPath, documentPaths: input.documentPaths, linkClose: [] };
-      const made = renderTokens(st, env, plainSpan, { index: refs });
+      const made = renderTokens(st, env, plainSpan, { index: refs, tieTones: input.tieTones });
       done = { index, ...made, html: withCredit(index, made.html) };
       plainParts.set(index, done);
     }

@@ -636,12 +636,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         landing = () => target!.getBoundingClientRect().top + window.scrollY - readingTop() - 16;
       }
       setNotice(null);
+      const destination = landing();
       const smooth = !!options.smooth && !prefersReducedMotion()
-        && (options.smooth === "always" || Math.abs(landing() - window.scrollY) < window.innerHeight * 1.5);
-      window.scrollTo({ top: Math.max(0, landing()), behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
+        && (options.smooth === "always" || Math.abs(destination - window.scrollY) < window.innerHeight * 1.5);
+      window.scrollTo({ top: Math.max(0, destination), behavior: smooth ? "smooth" : ("instant" as ScrollBehavior) });
       const settle = () => {
         if (!target?.isConnected || options.isCurrent?.() === false) return;
-        if (Math.abs(landing() - window.scrollY) > 6) window.scrollTo({ top: Math.max(0, landing()), behavior: "instant" as ScrollBehavior });
+        const settledTop = landing();
+        if (Math.abs(settledTop - window.scrollY) > 6) window.scrollTo({ top: Math.max(0, settledTop), behavior: "instant" as ScrollBehavior });
         body.hold(target!);
         // Lazy parts, the phone sheet and late fonts can all change this geometry.
         // Reuse the saved-position restorer; any reader input stops it immediately.
