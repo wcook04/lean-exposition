@@ -252,20 +252,19 @@ def short_names(people: list[str], limit: int = 4) -> str:
 SECTIONS = [
     ("lead", "Lead papers",
      "Finite-time blow-up for the Navier–Stokes and Euler equations, each read beside the authors’ own Lean."),
-    ("research", "Other researchers’ papers, read beside their Lean",
-     "The authors’ text in the reader, with each linked phrase opening the Lean that states it."),
-    ("companion", "Explanations of results proved by others",
-     "Accounts by Will Cook, written with AI, of results whose proofs and Lean are other people’s. Where the "
-     "original paper or the formalizer’s own guide is in the library, it is the first choice on the entry."),
-    ("own", "Will Cook’s own research",
-     "Eight problems posed by Paul Erdős, researched with AI agents and written up through the funnel in the video "
-     "above: a short paper and a longer record for each, with Lean proofs of selected statements. Erdős #257 also "
-     "has a reader here. The answer for #1041 refutes one formal statement; the other seven problems remain open. "
+    ("research", "Other researchers’ papers",
+     "Read the authors’ text alongside the linked Lean."),
+    ("companion", "My explanations of other people’s results",
+     "I wrote these explanations with AI. Where I include the original paper or the formaliser’s guide, I list it first."),
+    ("own", "My research",
+     "I worked on eight of Paul Erdős’s problems with AI agents. For each problem there’s a short paper and a longer "
+     "record, with Lean proofs of selected statements. You can also read #257 alongside its Lean here. The counterexample "
+     "for #1041 refutes one formal statement. The other seven problems remain open. "
      "No independent mathematician has reviewed these papers."),
 ]
 
 # Short names for the section links under the introduction.
-JUMP = {"lead": "Lead papers", "research": "Other researchers", "companion": "Explanations", "own": "Will Cook’s research"}
+JUMP = {"lead": "Lead papers", "research": "Other researchers", "companion": "Explanations", "own": "My research"}
 
 # Who the credit goes to. The colour only repeats the label printed on the entry.
 PROVENANCE = [
@@ -274,14 +273,14 @@ PROVENANCE = [
     ("google", "Google DeepMind"),
     ("academic", "Academic authors or open-source projects"),
     ("community", "The Lean community"),
-    ("will", "Will Cook"),
+    ("will", "My research"),
 ]
 
 VERSION_KEY = [
-    ("Authors’ paper", "the authors’ own text in the reader, with Lean links and notes added"),
-    ("Adapted edition", "a reading text changed by Will Cook with AI; every change is marked"),
+    ("Author’s paper or Authors’ paper", "the original text with links to Lean and reading notes"),
+    ("Adapted edition", "a version I adapted with AI assistance. Every change is marked"),
     ("Original PDF", "the source file on its own"),
-    ("Companion account", "Will Cook’s explanation, written with AI, of someone else’s result"),
+    ("Companion account", "an explanation I wrote with AI about someone else’s result"),
 ]
 
 
@@ -348,11 +347,11 @@ def film_html(film: dict | None) -> str:
     return f"""<figure class="film-slot intro__film">
 <a class="film-slot__frame" {open_} aria-hidden="true" tabindex="-1"><img src="{BASE}_index/films/{film["still"]}-640.webp" srcset="{BASE}_index/films/{film["still"]}-640.webp 640w, {BASE}_index/films/{film["still"]}-1280.webp 1280w" sizes="(max-width: 64em) 100vw, 560px" alt="" width="1280" height="720" decoding="async" fetchpriority="high"><span class="film-slot__play"></span><span class="film-slot__time">{m}:{sec:02d}</span></a>
 <figcaption class="film-slot__caption"><p class="intro__film-kicker">{esc(film["kicker"])}</p><p class="film-slot__title"><a {open_}>{esc(film["title"])}<span class="sr-only">, video on YouTube, {spoken}</span></a></p>
-<p class="intro__film-note">In the video Will Cook follows one Lean proof into a long record, a short paper, an exposition and a video, all written with AI. His own research and the companion explanations in this library were written up this way.</p></figcaption>
+<p class="intro__film-note">I start with one Lean proof. With AI, I turn it into a long record, a short paper, an explanation and a video. I used the same process for my research and the explanations here.</p></figcaption>
 </figure>"""
 
 
-OWNER = """<a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="All of Will Cook's websites and videos"><img src="{base}_index/plectis.svg" alt="" width="26" height="26"><span class="fam-lockup__owner" translate="no">Will Cook</span></a>"""
+OWNER = """<a class="fam-lockup__home" href="https://wcook04.github.io/" rel="author" title="My websites and videos"><img src="{base}_index/plectis.svg" alt="" width="26" height="26"><span class="fam-lockup__owner" translate="no">Will Cook</span></a>"""
 
 SCHEME = """<button type="button" class="scheme-toggle" aria-label="Switch to dark colours" data-scheme-toggle>
 <svg class="scheme-toggle__moon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.2 10.1A5.6 5.6 0 0 1 5.9 2.8a5.6 5.6 0 1 0 7.3 7.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
@@ -365,18 +364,20 @@ def search_scope(papers: list[dict]) -> str:
     (statements and Lean names) and those matched by title, authors and summary only."""
     full = sum(1 for p in papers if p.get("shard"))
     titles = len(papers) - full
-    paper = lambda k: f"{k} paper" if k == 1 else f"{k} papers"
-    parts = [f"{paper(full)}’ contents indexed (statements and Lean names)" if full != 1 else "1 paper’s contents indexed (statements and Lean names)"]
+    if not full:
+        return "Search by title, author or summary."
+    papers_label = "paper" if full == 1 else "papers"
+    scope = f"Search statements and Lean names in {full} {papers_label}."
     if titles:
-        parts.append(f"{titles} by title, authors and summary only")
-    return "Covers " + ", ".join(parts) + "."
+        scope += f" For the other {titles}, search by title, author or summary."
+    return scope
 
 
 def key_html() -> str:
     prov = "".join(f'<li class="prov-{k}"><span class="tag__dot" aria-hidden="true"></span>{esc(label)}</li>' for k, label in PROVENANCE)
     versions = "".join(f'<div class="key__row"><dt>{esc(label)}</dt><dd>{esc(text)}</dd></div>' for label, text in VERSION_KEY)
     return (f'<section class="key" aria-labelledby="key-title"><h2 id="key-title" class="key__title">How each entry is labelled</h2>'
-            f'<div class="key__cols"><div><p class="key__head">Who the credit goes to</p><ul class="key__prov">{prov}</ul></div>'
+            f'<div class="key__cols"><div><p class="key__head">Who gets credit</p><ul class="key__prov">{prov}</ul></div>'
             f'<div><p class="key__head">What you can open</p><dl class="key__versions">{versions}</dl></div></div></section>')
 
 
@@ -405,7 +406,7 @@ def jump_html(entries: list[dict]) -> str:
 
 def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash: str, spec: dict | None = None) -> str:
     data = json.dumps(search_meta, ensure_ascii=False).replace("</", "<\\/")
-    notice = '<p class="notice">There is no page at this address. These are the papers.</p>' if missing else ""
+    notice = '<p class="notice">Page not found. Browse or search the library below.</p>' if missing else ""
     count = len(entries)
     scope = search_scope(search_meta["papers"])
     return f"""<!doctype html>
@@ -440,11 +441,11 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 <div class="intro__text">
 {notice}
 <h1 id="library-title">Mathematics papers, read beside their Lean</h1>
-<p class="lede">Each phrase of a paper that a Lean declaration states is underlined. Click it and the Lean opens beside the text, with a plain title, a comparison of what the paper and the Lean each say, and a reading note.</p>
-<p class="affiliation">Will Cook is not affiliated with Anthropic, OpenAI, Google DeepMind or any other lab. Each paper’s credit goes to its authors and to the organisations they name; the labels below repeat that credit.</p>
+<p class="lede">Click an underlined phrase to open the Lean declaration beside the paper. You’ll see a short title, a comparison of the two statements and a reading note.</p>
+<p class="affiliation">I am not affiliated with Anthropic, OpenAI, Google DeepMind or any other lab. I credit the authors and the organisations they name in their papers.</p>
 {jump_html(entries)}
 <form class="search" role="search" action="{BASE}" onsubmit="return false">
-<label class="search__label" for="q">Search every paper</label>
+<label class="search__label" for="q">Search the library</label>
 <div class="search__field">
 <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><circle cx="7" cy="7" r="4.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10.4 10.4 L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
 <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="vorticity, Lemma 2.1, Navier–Stokes, theorem11" aria-describedby="search-scope search-status">
@@ -458,10 +459,10 @@ def page_html(entries: list[dict], search_meta: dict, missing: bool, asset_hash:
 {film_html(spec)}
 </section>
 {sections_html(entries)}
-<p class="caveat">The links from the text to the Lean, the plain titles, the reading notes and the comparisons were made with AI. The authors and other mathematicians have not reviewed them.</p>
+<p class="caveat">I used AI to add links to Lean, short titles, comparisons and reading notes. The authors and other mathematicians have not reviewed these additions.</p>
 </main>
 <footer class="foot">
-<p>Hosted by <a href="https://wcook04.github.io/">Will Cook</a>, who is not affiliated with any of the labs named here. Each paper is its authors’ work and is credited in full on its own page. The reader is <a href="https://github.com/wcook04/lean-exposition">lean-exposition</a>, under the MIT licence.</p>
+<p>I run this library and have no affiliation with the labs named here. Each paper’s page gives its full credits. The reader is <a href="https://github.com/wcook04/lean-exposition">lean-exposition</a>, under the MIT licence. <a href="https://wcook04.github.io/">My other sites and videos</a>.</p>
 </footer>
 <script type="application/json" id="library-data">{data}</script>
 </body>
