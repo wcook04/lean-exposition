@@ -13,6 +13,8 @@ export interface Followed {
   anchor: string | null;
   /** Null until the reading position is measured. */
   part: number | null;
+  /** The paper is at its top, where Auto shows the whole map. */
+  atTop?: boolean;
 }
 
 /** The pane for a statement or an explicitly selected record, using its Lean dock's sources. */
@@ -52,6 +54,8 @@ export interface ReaderSignals {
   heading: Signal<string | null>;
   part: Signal<number>;
   follow: Signal<Followed>;
+  /** The pane keeps its last linked passage while the paper crosses an unlinked area. */
+  paneFollow?: Signal<Followed>;
   /** The annotation whose subject is actually visible in the pane. */
   shownTie: Signal<{ tie: number; at: string } | null>;
   point: Signal<Pointed | null>;

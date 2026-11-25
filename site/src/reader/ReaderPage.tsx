@@ -310,14 +310,23 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const paneHover = useRef<PaneHover | null>(null);
 
   // Written by the scroll path and pointer; read by small leaves and by the right page.
+  const paneFollow = useRef(new Signal<Followed>({ tie: null, anchor: null, part: null }, sameFollow)).current;
+  const lastLinked = useRef<Followed | null>(null);
   const signals = useRef<ReaderSignals>({
     heading: new Signal<string | null>(null),
     part: new Signal(0),
     follow: new Signal<Followed>({ tie: null, anchor: null, part: null }, sameFollow),
+    paneFollow,
     shownTie: new Signal<{ tie: number; at: string } | null>(null),
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
+  const setReadingFollow = useCallback((position: Followed) => {
+    const reading = position.atTop ? { ...position, tie: null, anchor: null } : position;
+    if (reading.tie !== null) lastLinked.current = reading;
+    signals.follow.set(reading);
+    paneFollow.set(!reading.atTop && reading.tie === null ? lastLinked.current ?? reading : reading);
+  }, [paneFollow, signals]);
   const paperHighlight = useRef(new Signal<{ tie: number; at: string } | null>(null)).current;
   const statements = useMemo(
     () =>
@@ -810,16 +819,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   useLayoutEffect(() => {
     const paint = () => {
-      // The paper can follow even with its companion pane hidden or showing the whole map.
-      const followed = signals.shownTie.get()?.tie ?? signals.follow.get().tie;
+      // Highlight only what is at the reading line, even when the pane keeps another subject.
+      const followed = signals.follow.get().tie;
       paperHighlight.set(followed === null ? null : { tie: followed, at: ties.index.ties[followed].at });
       statements.light("pin", pin?.tie ?? null);
       statements.light("follow", pin ? null : followed);
     };
     paint();
-    const stopPane = signals.shownTie.subscribe(paint);
-    const stopFollowing = signals.follow.subscribe(paint);
-    return () => { stopPane(); stopFollowing(); };
+    return signals.follow.subscribe(paint);
   }, [paperHighlight, pin, signals, statements, ties]);
 
   useEffect(() => {
@@ -841,12 +848,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const fixedMode = requestedMode ?? selectedMode;
   const getMode = () => {
     if (fixedMode) return fixedMode;
-    const follow = signals.follow.get();
+    const follow = paneFollow.get();
+    if (follow.atTop) return "graph";
     const read = follow.part === null ? initial.slice : follow;
     if (!read) return "lean";
     return paneForStatement(read.tie === null ? undefined : ties.index.ties[read.tie], loadedAlignment);
   };
-  const mode = useSyncExternalStore(signals.follow.subscribe, getMode);
+  const mode = useSyncExternalStore(paneFollow.subscribe, getMode);
   const modeRef = useRef(mode);
   modeRef.current = mode;
   // After Back or Forward, keep an explicit tab choice. Auto follows the restored reading position.
@@ -939,12 +947,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       return follow < doc.parts.length ? follow : -1;
     };
-    const settle = (tie: number | null, part: number) => {
+    const settle = (tie: number | null, part: number, atTop: boolean) => {
       const anchor = doc.parts[part]?.anchor ?? null;
-      signals.follow.set({ tie, anchor, part });
+      setReadingFollow({ tie, anchor, part, atTop });
       // The address keeps up with the reader once they have stopped, never as a history entry.
       window.clearTimeout(addressTimer);
-      if (tie === null || pinRef.current) return;
+      if (atTop || tie === null || pinRef.current) return;
       addressTimer = window.setTimeout(() => {
         const here = hereRef.current;
         const at = ties.index.ties[tie].at;
@@ -976,12 +984,16 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       signals.part.set(part);
       if (!stepped.current) {
         const segment = statements.atLine(line, (window.innerHeight - top) * LINE_REACH, atLine);
-        currentSegment.current = segment;
-        current.current = segment === null ? null : statementOf(ties, segment);
+        const tie = segment === null ? null : statementOf(ties, segment);
+        const extent = tie === null ? null : statements.extent(tie);
+        const visible = extent && extent.bottom > top && extent.top < window.innerHeight;
+        currentSegment.current = visible ? segment : null;
+        current.current = visible ? tie : null;
         if (!pinRef.current) statements.light("on", current.current);
       }
       const passage = passageAt(body, line);
-      const key = `${current.current}|${passage}`;
+      const atTop = window.scrollY < 8 && !stepped.current;
+      const key = `${current.current}|${passage}|${atTop}`;
       if (key !== settled) {
         settled = key;
         window.clearTimeout(holdTimer);
@@ -992,7 +1004,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           const moved = Math.abs(window.scrollY - from);
           from = window.scrollY;
           if (moved > window.innerHeight * FLYING) holdTimer = window.setTimeout(hold, FOLLOW_HOLD);
-          else settle(held, passage);
+          else settle(held, passage, atTop);
         };
         holdTimer = window.setTimeout(hold, FOLLOW_HOLD);
       }
@@ -1062,7 +1074,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfOn, pdfOnly]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, drawThread, pdfOn, pdfOnly, setReadingFollow]);
 
   // The Lean page changes and scrolls on its own; the thread keeps up.
   useEffect(() => {
@@ -1831,8 +1843,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     current.current = tie;
     currentSegment.current = tie === null ? null : ties.segmentsOf[tie][0];
     signals.part.set(part);
-    signals.follow.set({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part });
-  }, [signals, statements, statementAt, ties]);
+    const atTop = window.scrollY < 8 && (scrolledPdf.current || !hereRef.current.at);
+    setReadingFollow({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part, atTop });
+  }, [signals, setReadingFollow, statements, statementAt, ties]);
   useLayoutEffect(() => {
     if (!pdfOn) return;
     scrolledPdf.current = false;
@@ -2371,7 +2384,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 }
 
 function sameFollow(a: Followed, b: Followed): boolean {
-  return a.tie === b.tie && a.anchor === b.anchor && a.part === b.part;
+  return a.tie === b.tie && a.anchor === b.anchor && a.part === b.part && a.atTop === b.atTop;
 }
 
 /** Renders with the section being read: the one thing here that changes while scrolling. */

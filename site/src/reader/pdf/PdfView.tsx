@@ -215,7 +215,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, sect
       let distance = Infinity;
       for (const [, mark] of byPage.get(page) ?? []) {
         for (const [p, , top, , bottom] of mark.boxes) {
-          if (p !== page) continue;
+          if (p !== page || rect.top + bottom * scale <= 0 || rect.top + top * scale >= window.innerHeight) continue;
           const gap = Math.max(0, top - y, y - bottom) * scale;
           if (gap < distance && gap <= window.innerHeight * 0.32) {
             distance = gap;
