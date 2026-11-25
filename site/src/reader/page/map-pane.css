@@ -1031,6 +1031,13 @@ html[data-right-sheet] {
   color: var(--ink);
 }
 
+.subject-band__sample {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ink-3);
+  text-underline-offset: .2em;
+}
+
 /* ---- The inspector: title and identity ----------------------------------------------- */
 
 .lean-page__head {

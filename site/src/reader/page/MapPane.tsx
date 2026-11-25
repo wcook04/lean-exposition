@@ -260,7 +260,10 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
   // so the graph is never blank and never draws a whole passage at once.
   const kept = useRef<{ subject: Subject; why: Why; anchor: string | null } | null>(null);
   if (fresh) kept.current = { ...fresh, anchor: held?.anchor ?? anchor };
-  const opening = useMemo((): { subject: Subject; why: Why } => {
+  const active = fresh ?? kept.current;
+  const needsOpening = active === null;
+  const opening = useMemo((): { subject: Subject; why: Why } | null => {
+    if (!needsOpening) return null;
     let best: string | null = null;
     let gap = Infinity;
     for (const t of ties.order) {
@@ -270,8 +273,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
       if (d < gap) [best, gap] = [tie.record, d];
     }
     return { subject: best ? asSubject(best) : { kind: "records", ids: [home] }, why: "follow" };
-  }, [ties, onGraph, asSubject, readAt, home]);
-  const current = fresh ?? kept.current ?? opening;
+  }, [needsOpening, ties, onGraph, asSubject, readAt, home]);
+  const current = active ?? opening;
   const subjectKey = current ? (current.subject.kind === "decl" ? `d:${current.subject.name}` : `r:${current.subject.ids.join("|")}`) : "";
 
   // The Lean modules the drawing reads, fetched once each.
