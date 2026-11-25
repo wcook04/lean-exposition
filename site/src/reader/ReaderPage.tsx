@@ -21,7 +21,7 @@ import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { hostLean, type LeanWalk } from "../lean/walk";
 import { INPUT, restoreScroll } from "../app/restore";
-import { arrivedBy, entryKey, namePlace, onLeave, readEntry, useEntryState, writeEntry } from "../app/trail";
+import { arrivedBy, entryKey, namePlace, onLeave, readEntry, readEntryOf, useEntryState, writeEntry } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
 import { paperAlignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
@@ -258,6 +258,18 @@ function partAt(body: BodyHandle | null, count: number, line: number): number {
     else hi = mid;
   }
   return lo;
+}
+
+/**
+ * On an entry read in the PDF: where its reading line was, as a page and a height on that page in
+ * the PDF's own units, so Back or a return puts the same line back at any width. `top`: the window
+ * was at its top, which is restored exactly.
+ */
+const PDF_READING = "pdfReading";
+interface PdfReading {
+  page: number;
+  y: number;
+  top: boolean;
 }
 
 interface PdfOrigin {
@@ -528,10 +540,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const saveNow = useCallback(() => {
     // Nothing has moved it since it was restored: measuring again could only add the
     // rounding of idle rendering, and each save and restore would then creep.
-    if (route.pdf || heldEntry.current === entryKey()) return;
+    // The PDF keeps its own place: the text under it is hidden and has no position to measure.
+    if (pdfWanted) {
+      if (pdfOn && pdfPage.current !== null) writeEntry(PDF_READING, { page: pdfPage.current, y: pdfY.current, top: window.scrollY < 1 } satisfies PdfReading);
+      return;
+    }
+    if (heldEntry.current === entryKey()) return;
     const position = measurePosition();
     if (position) savePosition(position);
-  }, [measurePosition, route.pdf]);
+  }, [measurePosition, pdfWanted, pdfOn]);
   useEffect(() => {
     const release = () => (heldEntry.current = null);
     for (const type of INPUT) window.addEventListener(type, release, { passive: true, capture: true });
@@ -779,6 +796,23 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const pdfMarksRef = useRef(pdfMarks);
+  pdfMarksRef.current = pdfMarks;
+  /** Put a PDF reading line back once its page is laid out; the reader's own input ends it. */
+  const restorePdf = useCallback((kept: PdfReading) => {
+    restoring.current?.();
+    restoring.current = restoreScroll({
+      window: () => {
+        if (kept.top) return 0;
+        const page = paperRef.current?.querySelector<HTMLElement>(`.pdf-view__page[data-page="${kept.page}"]`);
+        const width = page?.closest<HTMLElement>(".pdf-view")?.clientWidth ?? 0;
+        const size = pdfMarksRef.current?.pages[kept.page - 1];
+        if (!page || !width || !size) return null;
+        return page.getBoundingClientRect().top + window.scrollY + (kept.y * width) / size[0] - readingLine();
+      },
+    }, { settle: 1500 });
+  }, [readingLine]);
+
   // Every history entry gets a key and the position the reader is at. An entry
   // returned to by Back or Forward already has a key: its saved line is
   // restored, even when its #anchor is the same as the one being left.
@@ -808,7 +842,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       stepped.current = false;
       if (fromPop || anchorChanged || atChanged || route.node || route.decl || (route.page ?? 1) > 1) unstarted.current = false;
     }
-    if (pdfOnly || route.pdf) return;
+    if (pdfWanted) {
+      // Back, Forward or a return to a PDF entry: its own reading line, over any landing on its mark.
+      const kept = fromPop ? readEntry<PdfReading>(PDF_READING) : from ? readEntryOf<PdfReading>(from, PDF_READING) : undefined;
+      if (kept) restorePdf(kept);
+      return;
+    }
     const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
     // Back restores the saved paper position and its exact followed slice independently.
     const restoreFollow = !!saved && !!route.at && !route.node && !route.decl;
@@ -827,7 +866,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       saveNow();
     }
     selfAnchor.current = undefined;
-  }, [route, jumpTo, landSlice, restorePosition, saveNow]);
+  }, [route, jumpTo, landSlice, restorePosition, saveNow, pdfWanted, restorePdf]);
 
   // ---- What is on the right page ------------------------------------------------------
 
@@ -1821,13 +1860,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   /** The passage the graph's selection is tied to in this paper, or null: no mapping is made up. */
   const tripTarget = useMemo(() => {
     if (!trip || (!route.node && !route.decl)) return null;
-    const t = route.node
-      ? statementFor(ties, route.node)
-      : (ties.stops.find((s) => ties.index.ties[s].name === route.decl || !!ties.index.ties[s].rows?.some((row) => row.name === route.decl)) ?? null);
-    if (t === null) return null;
-    if (pdfOn && !pdfByAt.get(ties.index.ties[t].at)?.boxes[0]) return null;
-    return t;
-  }, [trip, route.node, route.decl, ties, pdfOn, pdfByAt]);
+    // In the PDF only a passage with a mark on its pages can be gone to.
+    const shown = (t: number) => !pdfOn || !!pdfByAt.get(ties.index.ties[t].at)?.boxes[0];
+    if (route.node) {
+      const t = statementFor(ties, route.node);
+      return t !== null && shown(t) ? t : null;
+    }
+    // A declaration: the first passage tied to it, in its own module when the address names one,
+    // since one short name can be declared in more than one module.
+    const same = (name: string | null | undefined, module: string | null | undefined) => name === route.decl && (!route.declModule || !module || module === route.declModule);
+    return ties.stops.find((s) => {
+      const tie = ties.index.ties[s];
+      return (same(tie.name, tie.module) || !!tie.rows?.some((row) => same(row.name, row.module))) && shown(s);
+    }) ?? null;
+  }, [trip, route.node, route.decl, route.declModule, ties, pdfOn, pdfByAt]);
   /** "Go to passage": the paper follows from the target, the graph's selection let go. */
   const goToPassage = useCallback(() => {
     if (!trip || tripTarget === null) return;
