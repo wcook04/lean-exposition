@@ -2060,9 +2060,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   };
 
   /** Below 1024px, or with the pane turned off: the inspector over the whole screen, opened on demand. */
-  const sheetShown = !paneRoom && !route.beside && !sheetCollapsed && (sheetOpen || !!pin || !!route.decl || !!held || !!requestedMode);
+  const selectedPin = pin ?? referencePin;
+  const sheetAvailable = !paneRoom && !route.beside;
+  const sheetSelection = !!selectedPin || !!route.decl || !!held;
+  const sheetShown = sheetAvailable && !sheetCollapsed && (sheetOpen || sheetSelection || !!requestedMode);
+  const sheetMounted = sheetShown || (sheetAvailable && sheetCollapsed && sheetSelection);
   sheetShownRef.current = sheetShown;
-  const selectedTie = pin?.tie != null ? ties.index.ties[pin.tie] : null;
+  const selectedTie = selectedPin?.tie != null ? ties.index.ties[selectedPin.tie] : null;
   const heldPlace = held ? placeWords(held.anchor ?? undefined) : selectedTie ? placeWords(selectedTie.anchor ?? undefined, selectedTie.at) : "";
 
   const inspector = inspect && (
@@ -2321,8 +2325,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         </div>
       )}
 
-      {sheetShown && (
-        <RightSheet onClose={closeSheet}>
+      {sheetMounted && (
+        <RightSheet onClose={closeSheet} visible={sheetShown}>
           <GraphBoundary scope={`sheet beside ${route.stage}`}>
             <Suspense fallback={<p className="right-sheet__wait">Loading the Lean</p>}>
               <MapPane {...paneProps} />
@@ -2331,7 +2335,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         </RightSheet>
       )}
 
-      {!paneRoom && !route.beside && sheetCollapsed && (!!pin || !!route.decl || !!held) && (
+      {sheetAvailable && sheetCollapsed && sheetSelection && (
         <HeldBar
           state={held ? "Selected paragraph" : route.decl ? "Selected declaration" : "Selected words"}
           place={heldPlace}

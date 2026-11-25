@@ -542,6 +542,10 @@
   outline: none;
 }
 
+.right-sheet[hidden] {
+  display: none;
+}
+
 .right-sheet .map-pane {
   border-left: 0;
 }

@@ -2,11 +2,12 @@
 // tapping linked words or from a button. "Back to paper" closes it and the paper is exactly where
 // it was; what was selected stays selected (HeldBar). Scrolling never opens it.
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 
-export function RightSheet({ onClose, children }: { onClose(): void; children: ReactNode }) {
+export function RightSheet({ onClose, visible = true, children }: { onClose(): void; visible?: boolean; children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!visible) return;
     const opener = document.activeElement as HTMLElement | null;
     ref.current?.focus({ preventScroll: true });
     document.documentElement.setAttribute("data-right-sheet", "");
@@ -14,9 +15,9 @@ export function RightSheet({ onClose, children }: { onClose(): void; children: R
       document.documentElement.removeAttribute("data-right-sheet");
       if (opener?.isConnected && opener !== document.body) opener.focus({ preventScroll: true });
     };
-  }, []);
+  }, [visible]);
   return (
-    <aside ref={ref} className="right-sheet" aria-label="The Lean and the graph for what you selected" tabIndex={-1}>
+    <aside ref={ref} className="right-sheet" hidden={!visible} aria-label="The Lean and the graph for what you selected" tabIndex={-1}>
       <PaneClose onClose={onClose} />
       {children}
     </aside>
