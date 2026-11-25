@@ -11,7 +11,7 @@ import { mainGoal, startingGoals } from "../../map/TheoremPlate";
 import { useKeptCamera } from "../../map/scene";
 import { chooseGoal, reach, scopedGraph } from "../../map/treeModel";
 import { recordMark } from "../../map/leanMarks";
-import { fetchModule, moduleIfLoaded, useLeanShell } from "../../lean/data";
+import { fetchModule, moduleIfLoaded, useLeanLookahead, useLeanShell } from "../../lean/data";
 import type { LeanWalk } from "../../lean/walk";
 import { passageTopics, phraseTitle, statementFor, topicOf as tieTopic, type TieModel } from "../ties";
 import { focusOn, indexFocusGraph, makeFocus, modulesFor, paperPlaces, passageStart, startOf, type Subject } from "./focusModel";
@@ -63,6 +63,8 @@ interface Props {
   /** What changes as the reader reads; the page re-renders here, never above. */
   signals: ReaderSignals;
   ties: TieModel;
+  readingStops?: readonly number[];
+  readingSourceReady?: boolean;
   /** What the address has pinned: a clicked phrase or card. */
   pin: Pin | null;
   /** A declaration the address names: a card clicked, or a name walked to in the Lean. */
@@ -159,7 +161,7 @@ function usePairedGraphSize(active: boolean) {
   return { pair, layoutHeight, onPaintedHeight };
 }
 
-export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onInspect, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, readingStops = ties.stops, readingSourceReady = true, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onInspect, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -180,6 +182,34 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const passage = useMemo(() => passageRecords(anchor ? passageOf(structures[stage], anchor) : undefined), [anchor, structures, stage]);
   const followRecord = follow.tie !== null ? ties.index.ties[follow.tie].record : null;
   const pinTie = pin && pin.tie !== null ? ties.index.ties[pin.tie] : null;
+
+  // The caption can preview the very link Next will open, before the reader gets there.
+  const readingTie = pin?.tie ?? follow.tie;
+  const previewNext = !pin && follow.ahead === "next";
+  const warmModules = useMemo(() => {
+    if (readingTie === null || inert || leanSlot || !readingSourceReady || decl || held || (pin && pin.tie === null)) return "";
+    const segments = ties.segmentsOf;
+    const segment = segments[readingTie]?.[0];
+    if (segment === undefined) return "";
+    let position = 0, end = readingStops.length;
+    while (position < end) {
+      const middle = (position + end) >>> 1;
+      if (segments[readingStops[middle]][0] < segment) position = middle + 1;
+      else end = middle;
+    }
+    const next = !previewNext && segments[readingStops[position]]?.[0] === segment ? position + 1 : position;
+    const modules = new Set<string>();
+    for (const index of [next, next + 1, position - 1]) {
+      const tie = ties.index.ties[readingStops[index]];
+      if (!tie?.lean) continue;
+      const record = tie.record ? alignment?.records[tie.record] : undefined;
+      const statement = record?.statements.find((item) => item.at === tie.at);
+      const module = tie.rows ? tie.rows[0]?.module : statement?.lean?.[0]?.module ?? record?.lean?.[0]?.module ?? tie.module;
+      if (module) modules.add(module);
+    }
+    return [...modules].join("\n");
+  }, [alignment, decl, held, inert, leanSlot, pin, previewNext, readingSourceReady, readingStops, readingTie, ties]);
+  useLeanLookahead(warmModules);
 
   // ---- The paper's argument and its main result ----------------------------------------
 
@@ -302,10 +332,10 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
 
   // The Lean modules the drawing reads, fetched once each.
   const needed = useMemo(() => (current ? modulesFor(current.subject, tools) : []), [current, tools]);
+  const missing = useMemo(() => needed.filter((name) => !moduleIfLoaded(name)), [needed, loaded]);
   useEffect(() => {
     let live = true;
-    for (const name of needed) {
-      if (moduleIfLoaded(name)) continue;
+    for (const name of missing) {
       fetchModule(name).then(
         () => live && setLoaded((n) => n + 1),
         () => undefined,
@@ -314,7 +344,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     return () => {
       live = false;
     };
-  }, [needed]);
+  }, [missing]);
 
   const focus = useMemo(() => (current ? focusOn(current.subject, input, tools) : null), [current, input, tools]);
   const cardOf = useCallback((id: string) => focus?.cards.get(id), [focus]);

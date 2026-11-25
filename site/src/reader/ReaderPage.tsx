@@ -2191,6 +2191,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     structures,
     signals,
     ties,
+    readingStops: pdfOn ? pdfStops : ties.stops,
+    readingSourceReady: !pdfWanted || pdfOn,
     pin,
     decl: route.decl ?? null,
     declModule: route.declModule,

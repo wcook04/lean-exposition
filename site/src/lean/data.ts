@@ -158,23 +158,131 @@ export function useLeanShell(): ShellState {
 
 const modules = new Map<string, LeanModule>();
 const modulesPending = new Map<string, Promise<LeanModule>>();
+const foregroundModules = new Set<string>();
+
+let lookahead: { names: string[]; next: number } | undefined;
+let cancelWake: (() => void) | undefined;
+let speculativeLoad = false;
+
+const LOOKAHEAD_SETTLE_MS = 180;
+
+function loadModuleOnce(name: string): Promise<LeanModule> {
+  const cached = modules.get(name);
+  if (cached) return Promise.resolve(cached);
+
+  const pending = modulesPending.get(name);
+  if (pending) return pending;
+
+  const request = Promise.resolve()
+    .then(() => loadLeanModule(name))
+    .then((module) => {
+      modules.set(name, module);
+      return module;
+    })
+    .finally(() => {
+      modulesPending.delete(name);
+      foregroundModules.delete(name);
+      scheduleLookahead();
+    });
+
+  modulesPending.set(name, request);
+  return request;
+}
 
 export function fetchModule(name: string): Promise<LeanModule> {
-  let pending = modulesPending.get(name);
-  if (!pending) {
-    pending = loadLeanModule(name).then(
-      (value) => {
-        modules.set(name, value);
-        return value;
-      },
-      (error) => {
-        modulesPending.delete(name);
-        throw error;
-      },
-    );
-    modulesPending.set(name, pending);
+  if (!modules.has(name)) {
+    foregroundModules.add(name);
+    stopLookaheadWake();
   }
-  return pending;
+  return loadModuleOnce(name);
+}
+
+function stopLookaheadWake(): void {
+  cancelWake?.();
+  cancelWake = undefined;
+}
+
+function constrainedConnection(): boolean {
+  const { connection } = navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  };
+
+  return connection?.saveData === true
+    || connection?.effectiveType === "slow-2g"
+    || connection?.effectiveType === "2g";
+}
+
+function scheduleLookahead(): void {
+  if (
+    typeof window === "undefined"
+    || !lookahead
+    || lookahead.next >= lookahead.names.length
+    || cancelWake
+    || speculativeLoad
+    || foregroundModules.size
+  ) return;
+
+  const plan = lookahead;
+  const run = () => {
+    cancelWake = undefined;
+    if (
+      lookahead !== plan
+      || speculativeLoad
+      || foregroundModules.size
+      || document.visibilityState === "hidden"
+      || constrainedConnection()
+    ) return;
+
+    while (plan.next < plan.names.length) {
+      const name = plan.names[plan.next++];
+      if (modules.has(name) || modulesPending.has(name)) continue;
+
+      speculativeLoad = true;
+      const settled = () => {
+        speculativeLoad = false;
+        scheduleLookahead();
+      };
+      void loadModuleOnce(name).then(settled, settled);
+      return;
+    }
+  };
+
+  const timer = window.setTimeout(() => {
+    if (
+      typeof window.requestIdleCallback === "function"
+      && typeof window.cancelIdleCallback === "function"
+    ) {
+      const idle = window.requestIdleCallback(run);
+      cancelWake = () => window.cancelIdleCallback(idle);
+    } else {
+      run();
+    }
+  }, LOOKAHEAD_SETTLE_MS);
+
+  cancelWake = () => window.clearTimeout(timer);
+}
+
+/** Warm a small list without making a speculative fetch part of the rendered state. */
+export function useLeanLookahead(key: string): void {
+  useEffect(() => {
+    if (!key) return;
+    const plan = { names: key.split("\n"), next: 0 };
+    stopLookaheadWake();
+    lookahead = plan;
+    const onScroll = () => {
+      if (lookahead !== plan || !cancelWake) return;
+      stopLookaheadWake();
+      scheduleLookahead();
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    scheduleLookahead();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (lookahead !== plan) return;
+      lookahead = undefined;
+      stopLookaheadWake();
+    };
+  }, [key]);
 }
 
 export const moduleIfLoaded = (name: string | undefined) => (name ? modules.get(name) : undefined);
@@ -184,8 +292,9 @@ export type ModuleState = { status: "loading" } | { status: "failed" } | { statu
 export function useLeanModule(name: string | undefined): ModuleState {
   const [, refresh] = useState(0);
   const [failed, setFailed] = useState<string | null>(null);
+  const module = name ? modules.get(name) : undefined;
   useEffect(() => {
-    if (!name || modules.has(name)) return;
+    if (!name || module) return;
     let alive = true;
     fetchModule(name).then(
       () => alive && refresh((n) => n + 1),
@@ -194,8 +303,7 @@ export function useLeanModule(name: string | undefined): ModuleState {
     return () => {
       alive = false;
     };
-  }, [name]);
-  const module = name ? modules.get(name) : undefined;
+  }, [name, module]);
   if (module) return { status: "ready", module };
   return failed === name ? { status: "failed" } : { status: "loading" };
 }
@@ -204,7 +312,9 @@ export function useLeanModule(name: string | undefined): ModuleState {
 export function useLeanModules(names: readonly string[]): LeanModule[] {
   const [, refresh] = useState(0);
   const key = names.join(" ");
+  const loaded = names.flatMap((name) => modules.get(name) ?? []);
   useEffect(() => {
+    if (names.filter((name) => modules.has(name)).length !== loaded.length) refresh((n) => n + 1);
     let alive = true;
     for (const name of names) if (!modules.has(name)) fetchModule(name).then(() => alive && refresh((n) => n + 1), () => undefined);
     return () => {
@@ -213,7 +323,7 @@ export function useLeanModules(names: readonly string[]): LeanModule[] {
     // The names are compared through their joined key.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
-  return names.flatMap((name) => modules.get(name) ?? []);
+  return loaded;
 }
 
 const declMaps = new WeakMap<LeanModule, Map<string, LeanDeclaration>>();
