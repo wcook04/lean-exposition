@@ -1935,13 +1935,15 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         return;
       }
       const body = bodyRef.current;
-      const part = doc.parts.findIndex((piece) => !piece.blank && piece.lines.start <= target.line && piece.lines.end >= target.line);
+      const line = target.line;
+      if (line === undefined) return;
+      const part = doc.parts.findIndex((piece) => !piece.blank && piece.lines.start <= line && piece.lines.end >= line);
       if (!body || part < 0) return;
       const nearby = [part - 1, part, part + 1].filter((index) => index >= 0 && index < doc.parts.length);
       void body.ensure(nearby).then(() => {
         if (referenceNavigation.current !== navigation) return;
         body.settle(nearby);
-        const element = blocksOf(body.partElement(part), doc.parts[part].lines.end, { start: target.line, end: target.line })[0];
+        const element = blocksOf(body.partElement(part), doc.parts[part].lines.end, { start: line, end: line })[0];
         if (!element) return;
         scrollToReference(() => element.getBoundingClientRect().top + window.scrollY - readingTop() - 16,
           navigation, () => body.hold(element));
@@ -2012,13 +2014,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   const targets = paperReferences.status === "ready" ? paperReferences.value : null;
   const referenceProps: PaperReferenceProps = {
-    referenceTargets: targets ? (pdfOn ? Object.fromEntries(Object.entries(targets).filter(([, value]) =>
-      value.stage || value.pdfFile || (value.page !== undefined && value.y !== undefined))) : targets) : undefined,
+    referenceTargets: targets ? Object.fromEntries(Object.entries(targets).flatMap(([key, value]) => {
+      if (pdfOn) return value.stage || value.pdfFile || (value.page !== undefined && value.y !== undefined) ? [[key, value]] : [];
+      if (value.line === undefined) return [];
+      const { pdfFile, ...textTarget } = value;
+      return [[key, textTarget]];
+    })) : undefined,
     onPaperReference: followPaperReference,
     paperReferenceHref: (target) => {
       if (target.pdfFile) return `${import.meta.env.BASE_URL}pdf/${encodeURIComponent(target.pdfFile)}#page=${target.page ?? 1}`;
       const usePdf = pdfOn && (!target.stage || target.page !== undefined);
-      return routeHref({ view: "read", stage: target.stage ?? stage, at: String(target.line),
+      return routeHref({ view: "read", stage: target.stage ?? stage, at: target.line?.toString(),
         pdf: usePdf || undefined, page: usePdf ? target.page : undefined });
     },
   };

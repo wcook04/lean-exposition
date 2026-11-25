@@ -170,7 +170,7 @@ export function assessmentsOf(row: PhraseLean, merged: readonly MergedPhrase[] |
 }
 
 export interface PaperReferenceTarget {
-  line: number;
+  line?: number;
   page?: number;
   y?: number;
   tone?: number;
