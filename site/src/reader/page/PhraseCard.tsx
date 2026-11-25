@@ -174,6 +174,7 @@ export interface PaperReferenceTarget {
   page?: number;
   y?: number;
   tone?: number;
+  colours?: { light: string; dark: string };
   stage?: string;
   pdfFile?: string;
 }
@@ -263,8 +264,12 @@ function reviewedAnnotation(text: string, reviewed: readonly AnnotationReference
   const link = (html: string, key: string, target: PaperReferenceTarget) => {
     const href = paperReferenceHref?.(target) ?? `?l=${target.line}`;
     const tone = target.tone === undefined ? "" : ` data-tone="${escapeHtml(String(target.tone))}"`;
+    const swatch = /^oklch\([\d.]+ [\d.]+ [\d.]+\)$/;
+    const colours = target.colours;
+    const style = colours && swatch.test(colours.light) && swatch.test(colours.dark)
+      ? ` style="--tone: light-dark(${colours.light}, ${colours.dark})"` : "";
     const separate = target.stage || target.pdfFile ? ' target="_blank" rel="noopener" title="Opens in a new tab"' : "";
-    return `<a class="annotation-paper-reference" data-paper-reference="${escapeHtml(key)}"${tone}${separate} href="${escapeHtml(href)}">${html}</a>`;
+    return `<a class="annotation-paper-reference" data-paper-reference="${escapeHtml(key)}"${tone}${style}${separate} href="${escapeHtml(href)}">${html}</a>`;
   };
   return noteHtml(text, (plain, start) => {
     let cursor = 0;
