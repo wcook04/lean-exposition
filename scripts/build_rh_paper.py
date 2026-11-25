@@ -369,7 +369,7 @@ def note_sources(args, config, targets):
     return data
 
 
-def reader_notes(sources):
+def reader_notes(sources, overrides=None):
     """Project reading notes while preserving the original excerpts in the source records."""
     notes = {}
     for name, entries in sources.items():
@@ -385,6 +385,10 @@ def reader_notes(sources):
             text = re.sub(r"\*+(\[[\w-]+\])\*+", r"\1", entry["markdown"]).replace("**", "")
             paragraphs.append(f'{entry["title"]}\n\n{text}\n\n{author_credit} · {entry["license"]}')
         notes[name] = {"text": "\n\n".join(paragraphs)}
+    for name, text in (overrides or {}).items():
+        if name not in notes or not isinstance(text, str) or not text.strip():
+            raise ValueError(f"Invalid declaration reading note for {name}")
+        notes[name] = {"text": text}
     return notes
 
 
@@ -725,6 +729,7 @@ def build(args) -> None:
             if item["topic"] not in binding["topics"]:
                 binding["topics"].append(item["topic"])
         notes = note_sources(args, config, targets)
+        note_overrides = json.loads((INSTANCE / "lean-notes.json").read_bytes()).get("reader_notes")
         for name, target in targets.items():
             bindings[name]["source"] = target
         with closing(sqlite3.connect(root, uri=True)) as db:
@@ -737,7 +742,7 @@ def build(args) -> None:
                                               "lean_revision": proof["revision"], "passages": passages})
         write_json(stage / "lean-notes.json", {
             "schema": 1, "paper_revision": revision, "lean_revision": proof["revision"],
-            "notes": reader_notes(notes), "sources": notes, "bindings": bindings,
+            "notes": reader_notes(notes, note_overrides), "sources": notes, "bindings": bindings,
         })
         write_json(stage / "lean-lines.json", {
             "schema": "rh-lean-lines/1", "paper_revision": revision, "lean_revision": proof["revision"],

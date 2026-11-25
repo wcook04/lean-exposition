@@ -62,6 +62,21 @@ describe("statements on the page", () => {
     expect(first.querySelectorAll("[data-on]").length).toBe(0);
   });
 
+  it("colours linked passages with no native tooltip", () => {
+    const model = tieModel({ ...index, ties: [{ ...index.ties[0], tone: 0 }, index.ties[1]] });
+    const reader = new Statements(model, parts);
+    const markup = reader.decorate('<span class="tie" data-t="0">Link</span>');
+    const template = document.createElement("template");
+    template.innerHTML = markup;
+    expect(template.content.querySelector(".tie")?.getAttribute("data-tone")).toBe("0");
+    expect(template.content.querySelector(".tie[title]")).toBeNull();
+    const page = section(0, [[0, 100, 120]]);
+    reader.adopt(0, page);
+    expect(page.querySelector(".tie")?.getAttribute("data-tone")).toBe("0");
+    expect(page.querySelector(".tie[title]")).toBeNull();
+    reader.dispose();
+  });
+
   it("keeps one tab stop, with a role and a name, which moves and stays between statements", () => {
     statements.light("on", 0);
     const stop = () => first.querySelector<HTMLElement>("[tabindex='0']")!;

@@ -5,7 +5,7 @@
 
 import { Fragment, memo, useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { routeHref } from "../app/router";
-import { Prose } from "./ReadingStrip";
+import { noteHtml } from "../reader/math";
 import { mathlibUrl, resolveName, type NameTarget, type Scope } from "./resolve";
 import { tokenLines, type LeanToken } from "./tokenize";
 
@@ -109,7 +109,7 @@ function LineAnnotations({ line, entries }: { line: number; entries: LineAnnotat
     <summary className="linklike">Annotations for line {line}</summary>
     {entries.map((entry, i) => "url" in entry ? (
       <div key={i}>
-        <p><Prose text={entry.text} /></p>
+        <p dangerouslySetInnerHTML={{ __html: noteHtml(entry.text).html }} />
         {entry.adapted && "Original note · "}
         <a href={entry.url}>{entry.title}</a> · {entry.authors.join(" and ")} · {entry.licence}
       </div>

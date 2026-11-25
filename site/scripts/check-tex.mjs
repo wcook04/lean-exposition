@@ -89,7 +89,11 @@ for (const review of read("statement-comparisons.json")?.reviews ?? []) {
   fields.push([where, review.fidelity_note], [where, review.note]);
   explanation(where, review.explanation);
 }
-for (const [name, excerpts] of Object.entries(read("lean-notes.json")?.excerpts ?? {})) {
+const readingNotes = read("lean-notes.json");
+for (const [name, text] of Object.entries(readingNotes?.reader_notes ?? {})) {
+  fields.push([`Lean note ${name}`, text]);
+}
+for (const [name, excerpts] of Object.entries(readingNotes?.excerpts ?? {})) {
   for (const excerpt of excerpts) fields.push([`Lean excerpt ${name}`, excerpt.reading_note]);
 }
 

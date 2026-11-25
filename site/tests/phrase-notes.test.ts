@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { isFidelity, phraseVerdict } from "../src/compare/fidelityWords";
 import { noteHtml } from "../src/reader/math";
-import { tieModel, phraseHint, isPhraseRecord, partAt } from "../src/reader/ties";
+import { tieModel, topicOf, isPhraseRecord, partAt } from "../src/reader/ties";
 import type { TieIndex } from "../src/api/lean";
 
 const EXAMPLES = resolve(__dirname, "../../examples");
@@ -36,6 +36,14 @@ describe("phrase notes", () => {
     expect(html).toContain("&lt;b&gt;");
     expect(html).toContain("$ sign");
     expect(noteHtml("$\\frac{1$").errors).toHaveLength(1);
+  });
+
+  it("links the reviewed PDF destination and escapes its label", () => {
+    const { html, errors } = noteHtml("See [Statement 2.2 <here>](pdf#theorem.2.2).");
+    expect(errors).toEqual([]);
+    expect(html).toContain('href="/pdf/paper.pdf#nameddest=theorem.2.2"');
+    expect(html).toContain('target="_blank" rel="noopener">Statement 2.2 &lt;here&gt;</a>');
+    expect(noteHtml("[Unsafe](pdf#../elsewhere)").html).not.toContain("<a ");
   });
 
   it("reports broken math delimiters without dropping the prose", () => {
@@ -84,7 +92,7 @@ describe("phrase notes", () => {
     };
     const model = tieModel(index);
     expect(isPhraseRecord(model.index.ties[0].record)).toBe(true);
-    expect(phraseHint(model, 0)).toBe("Topic: Topic one. Lean: The b. Click to open it.");
+    expect(topicOf(model, 0)?.name).toBe("Topic one");
     expect(partAt(model, 150)).toBe(1);
   });
 });

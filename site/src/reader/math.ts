@@ -159,8 +159,12 @@ interface NoteMarkup {
 // Following the paper can show the same note on consecutive renders and on a return visit.
 const notes = new Map<string, NoteMarkup>();
 
+const PDF_REFERENCE = /\[([^\[\]\n]+)\]\(pdf#([a-zA-Z0-9.*_-]+)\)/g;
+
 /**
- * A reading note as HTML: `$…$` typeset by KaTeX, `name` as code, the rest as text.
+ * A reading note as HTML: inline KaTeX, backticked code and reviewed PDF references.
+ * A PDF reference has the form `[Statement 2.2](pdf#theorem.2.2)`. It opens the
+ * authors’ destination in a new tab so the paper and chosen Lean stay in place.
  * `errors` lists any formula KaTeX could not set; the formula then shows as its source.
  */
 export function noteHtml(text: string): NoteMarkup {
@@ -202,7 +206,10 @@ export function noteHtml(text: string): NoteMarkup {
       const plain = text.slice(i, j);
       const command = /\\[A-Za-z]+/.exec(plain);
       if (command) errors.push(`TeX command outside $…$: ${command[0]}`);
-      html += escapeHtml(plain);
+      html += escapeHtml(plain).replace(PDF_REFERENCE, (_, label: string, destination: string) => {
+        const base = import.meta.env?.BASE_URL ?? "/";
+        return `<a class="annotation-paper-reference" href="${base}pdf/paper.pdf#nameddest=${encodeURIComponent(destination)}" target="_blank" rel="noopener">${label}</a>`;
+      });
       i = j;
     }
   }

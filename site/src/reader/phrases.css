@@ -1061,3 +1061,20 @@
 .phrase-card__passage blockquote.phrase-card__quote :is(.math-display, .math-cue) {
   max-inline-size: 100%;
 }
+
+.annotation-paper-reference {
+  color: inherit;
+  text-decoration: underline dotted var(--ink-3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.annotation-paper-reference:hover {
+  text-decoration-style: solid;
+  text-decoration-color: currentColor;
+}
+
+.annotation-paper-reference:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
