@@ -54,7 +54,9 @@ export function PaperSplit() {
     const width = elements.paper.clientWidth;
     const available = width + elements.companion.clientWidth;
     if (!available) return;
-    share.current = write(elements.reader, delta === undefined ? null : width / available + delta, available);
+    const requestedWidth = Number.parseFloat(elements.reader.style.getPropertyValue("--reader-split-width"));
+    const current = (requestedWidth || width) / available;
+    share.current = write(elements.reader, delta === undefined ? null : current + delta, available);
     save();
   }
 
