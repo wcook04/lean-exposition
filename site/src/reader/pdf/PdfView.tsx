@@ -127,7 +127,14 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, sect
     task.promise.then((doc) => live && setPdf(doc), () => live && setFailed(true));
     return () => {
       live = false;
-      void task.destroy();
+      // PDF.js can report a worker error if interrupted while it parses the header.
+      // Let an in-flight open settle, with a deadline for a stalled request.
+      const release = () => {
+        window.clearTimeout(deadline);
+        if (!task.destroyed) void task.destroy().catch(() => {});
+      };
+      const deadline = window.setTimeout(release, 30_000);
+      void task.promise.then(release, release);
     };
   }, [url]);
 
@@ -319,6 +326,8 @@ function PdfCanvas({ pdf, number, width }: { pdf: PDFDocumentProxy; number: numb
       el.height = Math.floor(viewport.height);
       task = page.render({ canvasContext: el.getContext("2d")!, viewport });
       task.promise.catch(() => {});
+    }, (error: unknown) => {
+      if (live) console.error("Could not load PDF page", error);
     });
     return () => {
       live = false;
