@@ -777,7 +777,7 @@ function katexFacesLoaded(): Promise<unknown> {
   return Promise.all([fonts.load("1em KaTeX_Main"), fonts.load("italic 1em KaTeX_Math")]).catch(() => undefined);
 }
 
-export function markWideMaths(root: HTMLElement): () => void {
+export function markWideMaths(root: HTMLElement, offerExpand = true): () => void {
   const boxes = Array.from(root.querySelectorAll<HTMLElement>(".math-display"));
   if (!boxes.length) return () => {};
   // Until it is first fitted a display is hidden, so a formula wider than its column is never
@@ -808,7 +808,7 @@ export function markWideMaths(root: HTMLElement): () => void {
     }
     // A display shrunk below the floor offers its full size in a dialog. It sits under the
     // display, outside the measured box, so showing it changes no width.
-    const squeezed = box.dataset.fit === "squeezed";
+    const squeezed = offerExpand && box.dataset.fit === "squeezed";
     let cue = cues.get(box);
     if (squeezed && !cue) {
       cue = makeCue(box);
@@ -978,7 +978,7 @@ function expandFormula(box: HTMLElement, opener: HTMLElement): void {
   inner.querySelector<HTMLButtonElement>(".modal__close")!.addEventListener("click", close);
   dialog.showModal();
   // Fitted like the paper's displays, and again if the dialog settles at another width.
-  unfit = markWideMaths(body);
+  unfit = markWideMaths(body, false);
   inner.querySelector<HTMLElement>(".modal__title")!.focus({ preventScroll: true });
 }
 
