@@ -17,8 +17,8 @@
 .pdf-view__mark {
   --pdf-mark-ink: var(--tone, #6a8fd8);
   position: absolute; padding: 0; border: 0; margin: 0; cursor: pointer;
-  background: color-mix(in oklab, var(--pdf-mark-ink) var(--tie-rest-fill-opacity), transparent);
-  border-bottom: var(--tie-rule) solid color-mix(in oklab, var(--pdf-mark-ink) var(--tie-rest-line-opacity), transparent);
+  background: color-mix(in oklab, var(--pdf-mark-ink) var(--reference-preview-fill, var(--tie-rest-fill-opacity)), transparent);
+  border-bottom: var(--tie-rule) solid color-mix(in oklab, var(--pdf-mark-ink) var(--reference-preview-line, var(--tie-rest-line-opacity)), transparent);
   mix-blend-mode: multiply;
 }
 .pdf-view__mark:hover, .pdf-view__mark:focus-visible { background: color-mix(in oklab, var(--pdf-mark-ink) 21%, transparent); border-bottom: 2px solid color-mix(in oklab, var(--pdf-mark-ink) 55%, transparent); }

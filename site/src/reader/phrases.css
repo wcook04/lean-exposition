@@ -12,8 +12,8 @@
 .paper .tie {
   --tie-color: var(--tone, var(--ink-3));
   --tie-fill: var(--tie-rest-fill-opacity);
-  --tie-line: color-mix(in oklab, var(--tie-color) var(--tie-line-rest, var(--tie-rest-line-opacity)), transparent);
-  background-color: color-mix(in oklab, var(--tie-color) var(--tie-fill), transparent);
+  --tie-line: color-mix(in oklab, var(--tie-color) var(--reference-preview-line, var(--tie-line-rest, var(--tie-rest-line-opacity))), transparent);
+  background-color: color-mix(in oklab, var(--tie-color) var(--reference-preview-fill, var(--tie-fill)), transparent);
   background-image: linear-gradient(var(--tie-line), var(--tie-line));
   background-repeat: no-repeat;
   background-position: 0 100%;
