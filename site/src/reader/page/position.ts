@@ -29,7 +29,7 @@ export interface ReadingPosition {
    * run to thousands of pixels and its height settle late; the block cannot move
    * under the reader's eyes that way.
    */
-  block?: { index: number; offset: number };
+  block?: { index: number; offset: number; line?: string };
 }
 
 export interface VisitOrigin {
@@ -120,15 +120,28 @@ export function blockAtLine(part: Element, line: number): ReadingPosition["block
   const blocks = text ? Array.from(text.children) : [];
   for (let index = 0; index < blocks.length; index++) {
     const box = blocks[index].getBoundingClientRect();
-    if (box.bottom > line) return { index, offset: line - box.top };
+    if (box.bottom > line) return { index, offset: line - box.top, line: blocks[index].getAttribute("data-line") ?? undefined };
   }
   return undefined;
 }
 
 /** The window's scroll that puts a saved position back on its line, as the part now lays out. */
 export function scrollForPosition(part: Element, position: ReadingPosition, line: number): number {
-  const block = position.block && part.querySelector(":scope > .part__text")?.children[position.block.index];
-  const top = block ? block.getBoundingClientRect().top + position.block!.offset : part.getBoundingClientRect().top + position.offset;
+  const saved = position.block;
+  const blocks = part.querySelector(":scope > .part__text")?.children;
+  let block = saved && blocks?.[saved.index];
+  if (blocks && saved?.line !== undefined && block?.getAttribute("data-line") !== saved.line) {
+    // A rendered insert can change the ordinal without changing the source block.
+    let nearest = Infinity;
+    for (let index = 0; index < blocks.length; index++) {
+      const distance = Math.abs(index - saved.index);
+      if (distance < nearest && blocks[index].getAttribute("data-line") === saved.line) {
+        nearest = distance;
+        block = blocks[index];
+      }
+    }
+  }
+  const top = block && saved ? block.getBoundingClientRect().top + saved.offset : part.getBoundingClientRect().top + position.offset;
   return top + window.scrollY - line;
 }
 
