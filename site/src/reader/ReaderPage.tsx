@@ -102,7 +102,7 @@ if (window.matchMedia?.("(min-width: 1024px)").matches) mapPane.start();
 type ReadRoute = Extract<Route, { view: "read" }>;
 type ReferenceOrigin =
   | { format: "text"; position: ReadingPosition }
-  | { format: "pdf"; position: PdfLocation; left: number; scrolled: boolean };
+  | { format: "pdf"; position: PdfLocation; inset: number; left: number; scrolled: boolean };
 
 type PaperReferenceTargets = NonNullable<PaperReferenceProps["referenceTargets"]>;
 
@@ -1891,12 +1891,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfReferencePage = (page: number) =>
     paperRef.current?.querySelector<HTMLElement>(`.pdf-view [data-page="${page}"]`) ?? null;
 
-  const pdfReferenceScroll = (position: PdfLocation, navigation: number, after?: () => void) => {
+  const pdfReferenceScroll = (position: PdfLocation, navigation: number, after?: () => void, inset?: number) => {
     const element = pdfReferencePage(position.page);
     const paperWidth = pdfMarks?.pages[position.page - 1]?.[0];
     if (!element || !paperWidth) return;
     scrollToReference(() => element.getBoundingClientRect().top + window.scrollY
-      + position.y * element.clientWidth / paperWidth - readingTop() - 16, navigation, after);
+      + position.y * element.clientWidth / paperWidth - (inset ?? readingTop() + 16), navigation, after);
   };
 
   const followPaperReference = (target: PaperReferenceTarget) => {
@@ -1910,8 +1910,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const width = pdfMarks?.pages[page - 1]?.[0];
         const view = element?.closest<HTMLElement>(".pdf-view");
         if (!element || !width || !view) return;
-        const y = Math.max(0, (line - element.getBoundingClientRect().top) * width / element.clientWidth);
-        referenceOrigin.current = { format: "pdf", position: { page, y }, left: view.scrollLeft, scrolled: scrolledPdf.current };
+        // The origin can be in the margin above page one or between pages.
+        const y = (line - element.getBoundingClientRect().top) * width / element.clientWidth;
+        referenceOrigin.current = { format: "pdf", position: { page, y }, inset: line, left: view.scrollLeft, scrolled: scrolledPdf.current };
       } else {
         const position = measurePosition();
         if (!position) return;
@@ -1965,7 +1966,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         if (view) view.scrollLeft = origin.left;
         scrolledPdf.current = origin.scrolled;
         finish();
-      });
+      }, origin.inset);
     } else {
       void restorePosition(origin.position, current).then(finish);
     }
