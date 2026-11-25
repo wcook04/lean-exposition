@@ -140,6 +140,14 @@ describe("a segment in the rendered text", () => {
     expect(html).toBe('<ul>\n<li><span class="tie" data-t="2">x</span></li>\n</ul>');
   });
 
+  it("keeps separately linked statements inside a code figure", () => {
+    const source = "<figure>\n\n```haskell\ndata Ty = Unit | Ty :-> Ty\ndata Ctx = Empty | Ctx :/: Ty\n```\n\n</figure>\n";
+    const { box, plain, tied } = render(source, [["data Ty", ":-> Ty"], ["data Ctx", ":/: Ty"]]);
+    expect(box.querySelector('figure pre code [data-t="0"]')?.textContent).toBe("data Ty = Unit | Ty :-> Ty");
+    expect(box.querySelector('figure pre code [data-t="1"]')?.textContent).toBe("data Ctx = Empty | Ctx :/: Ty");
+    expect(unwrap(tied)).toBe(plain);
+  });
+
   it("marks bytes, so words after a non-ASCII character land exactly", () => {
     const source = "Erdős wrote “this”.";
     const bytes = new TextEncoder().encode(source);

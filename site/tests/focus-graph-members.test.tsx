@@ -311,7 +311,7 @@ describe("a large group opens as a list of its members", () => {
 describe("the graph's labels", () => {
   it("counts each side's neighbours and names the relation on the line itself", () => {
     draw();
-    expect($('.fg__side[data-band="uses"] .fg__sidehead')!.textContent).toBe("Uses 36");
+    expect($('.fg__side[data-band="uses"] .fg__sidehead')!.textContent).toBe("The centre uses these 36");
     expect($('.fg__side[data-band="users"]')).toBeNull();
     expect($(".fg__key")).toBeNull();
     // Each line carries its relation's name, and a group's line is no heavier than any other.

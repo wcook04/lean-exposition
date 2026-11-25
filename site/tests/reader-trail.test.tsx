@@ -1,5 +1,5 @@
 // The reading trail, slices of a paper, and the Lean page.
-import { act } from "react";
+import { act, type ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { graphFixture, structureFixture } from "./fixtures";
@@ -102,7 +102,11 @@ vi.mock("../src/app/router", async (load) => {
   return { ...real, navigate: vi.fn() };
 });
 vi.mock("../src/panels/RecordPanel", () => ({ RecordPanel: ({ nodeId }: { nodeId: string }) => <p data-testid="panel">{nodeId}</p> }));
-vi.mock("../src/lean/lazy", () => ({ LazyLeanBlock: ({ name, lines }: { name: string; lines?: number[] }) => <p data-testid="lean">{`${name} ${lines?.join("-")}`}</p> }));
+vi.mock("../src/lean/lazy", () => ({
+  LazyLeanBlock: ({ name, lines, below }: { name: string; lines?: number[]; below?: ReactNode }) => (
+    <><p data-testid="lean">{`${name} ${lines?.join("-")}`}</p>{below}</>
+  ),
+}));
 
 describe("the Lean page", async () => {
   const { LeanDock, clampDock, DOCK_MAX, DOCK_MIN, plainName, readDockShare, readKeepLean, recordOfDecl, saveDockShare, saveKeepLean } = await import("../src/reader/page/RecordDock");
@@ -146,10 +150,9 @@ describe("the Lean page", async () => {
     act(() => root.render(<LeanDock open={{ via: "pin", record: null, tie: null, decl: null, ...open }} ties={ties} stage="short" alignment={alignment} onRelease={() => {}} onPick={() => {}} onPoint={() => {}} passageHref={() => "#"} {...props} />));
   const button = (words: string) => [...container.querySelectorAll("button")].find((b) => b.textContent === words);
 
-  it("heads the Lean with the step in plain words and its raw name small beside it", () => {
+  it("heads the Lean with the step in plain words", () => {
     show({ record, tie: 0 });
     expect(container.querySelector(".lean-page__title")!.textContent).not.toContain("OAI.");
-    expect(container.querySelector(".lean-page__raw")!.textContent).toBe("full_support");
     expect(container.querySelector("[data-testid=lean]")!.textContent).toBe("OAI.a.full_support 5-6");
   });
 
@@ -177,7 +180,12 @@ describe("the Lean page", async () => {
 
   it("offers each declaration of a step, one at a time", () => {
     show({ record, tie: 0 });
-    expect(container.querySelectorAll(".lean-page__rows button").length).toBe(2);
+    const choices = container.querySelectorAll<HTMLButtonElement>(".lean-page__rows button");
+    expect(choices).toHaveLength(2);
+    expect(choices[0].getAttribute("aria-pressed")).toBe("true");
+    act(() => choices[1].click());
+    expect(container.querySelectorAll(".lean-page__rows button")[1].getAttribute("aria-pressed")).toBe("true");
+    expect(container.querySelector("[data-testid=lean]")!.textContent).toBe("OAI.b.full_support 5-6");
   });
 
   it("says plainly when a step has no Lean", () => {

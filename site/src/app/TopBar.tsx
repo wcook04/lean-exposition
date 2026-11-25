@@ -4,6 +4,7 @@ import site from "@instance/site";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Stage } from "../api/types";
 import { BackControl } from "./BackControl";
+import { LIBRARY_HOME, LIBRARY_NAME } from "./libraryHome";
 import { navigate, routeHref, type Route } from "./router";
 import { currentScheme, onSchemeChange, setScheme } from "./theme";
 import { EXTERNAL_DOCUMENTS, PAPER_NAMES, STAGE_ORDER } from "./papers";
@@ -47,8 +48,13 @@ export function TopBar({ route, onSearch }: { route: Route; onSearch(): void }) 
   return (
     <header className="topbar">
       <a className="skip-link" href="#main">Skip to content</a>
-      <a className="topbar__title" href={titleHref} translate="no">
+      <a className="topbar__library" href={LIBRARY_HOME} translate="no" aria-label={`${LIBRARY_NAME}, all papers`}>
         {mark && <span className="topbar__mark" aria-hidden="true" dangerouslySetInnerHTML={{ __html: mark }} />}
+        <span className="topbar__library-full">{LIBRARY_NAME}</span>
+        <span className="topbar__library-short" aria-hidden="true">Library</span>
+      </a>
+      <span className="topbar__sep" aria-hidden="true">/</span>
+      <a className="topbar__title" href={titleHref} translate="no">
         <span className="topbar__title-text">{SITE_NAME}</span>
       </a>
       {route.view !== "read" && <BackControl />}

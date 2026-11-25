@@ -152,17 +152,22 @@ class ConvertedEdition(unittest.TestCase):
             if row["authors"] is None or row["adapted"] is None:
                 self.assertIsNotNone(row["change"], row)
 
-    def test_the_credit_is_verbatim(self):
-        # The edition's own credit (document.credit in its edition.json) stands once in its reading copy,
-        # as one line, read as the reader sees it: the reading copy sets straight apostrophes as
-        # typographic ones, may emphasise the line and may link words of it.
-        typeset = lambda text: re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text).replace("\u2019", "'").strip("*_ ")
+    def test_the_reading_copy_contains_the_edition_notice(self):
+        # The reader's short credit and About text are checked by check_adapted_edition.py.
+        # The manuscript can carry a longer notice, identified by its opening in credit_note.
+        def visible(text):
+            return re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text).replace("\u2019", "'").strip("*_ ")
+
         for folder in sorted((ROOT / "instances").glob("*/adapted")):
             with self.subTest(paper=folder.parent.name):
-                credit = json.loads((folder / "edition.json").read_text())["document"]["credit"]
+                document = json.loads((folder / "edition.json").read_text())["document"]
+                credit = document["credit"]
                 self.assertTrue(credit.strip())
-                lines = (folder / "paper.md").read_text().split("\n")
-                self.assertEqual(sum(1 for line in lines if typeset(line) == credit), 1, credit)
+                lines = [visible(line) for line in (folder / "paper.md").read_text().splitlines()]
+                if notice := document.get("credit_note"):
+                    self.assertEqual(sum(line.startswith(visible(notice)) for line in lines), 1, notice)
+                else:
+                    self.assertEqual(lines.count(visible(credit)), 1, credit)
 
     def test_the_edition_is_off_until_published(self):
         if not self.edition["published"]:

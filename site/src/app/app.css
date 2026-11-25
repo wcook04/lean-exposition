@@ -66,8 +66,48 @@ html[data-view="map"] .app {
 }
 
 .topbar__title:hover,
+.topbar__library:hover,
 .topbar__brand:hover {
   text-decoration: underline;
+}
+
+/* The library wordmark, then the paper: "Reading library / <paper>". The wordmark opens the
+   library's index (LIBRARY_HOME) on every reader; the paper's title opens the paper's start. */
+.topbar__library {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+  min-height: calc(var(--topbar-h) - 1px);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.topbar__library:hover {
+  color: var(--ink);
+}
+
+.topbar__library-short {
+  display: none;
+}
+
+.topbar__sep {
+  flex: none;
+  color: var(--ink-3);
+  user-select: none;
+}
+
+@media (max-width: 40em) {
+  .topbar__library-full {
+    display: none;
+  }
+  .topbar__library-short {
+    display: inline;
+  }
 }
 
 /* The Lean index and Compare use this space for a pointed name. */
