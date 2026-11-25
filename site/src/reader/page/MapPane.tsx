@@ -611,7 +611,10 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const [dockWide, setDockWide] = useState(false);
   const folded = mode === "graph" && narrow && !unfolded && !showWhole;
   const tabbed = separate || (mode === "graph" && !!graphRequested && !unlinked);
-  const paired = mode === "lean" && !separate && !!fresh && neighbours > 0;
+  const pairedLocal = mode === "lean" && !separate && !!fresh && neighbours > 0;
+  const overviewFallback = !!fresh && !separate && !showWhole && !preview &&
+    neighbours === 0 && !focus?.missing.length && reachOf(home).size > 1;
+  const paired = pairedLocal || overviewFallback;
 
   // ---- The subject band and the Lean guide ----------------------
 
@@ -650,10 +653,10 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
   const guide = guideOpen && guideStage ? <GuidePanel stage={guideStage} onClose={() => setGuideOpen(false)} /> : null;
   const fill = !!leanSlot || !!guide;
-  const graphSize = usePairedGraphSize(paired && !fill);
+  const graphSize = usePairedGraphSize(pairedLocal && !fill);
   const graphTools = mode === "graph" && !fill && !unlinked;
   const showToolbar = !!guideStage || (!fill && tabbed) || graphTools;
-  const visible = mode === "lean" ? leanOpen : dockOpen;
+  const visible = mode === "lean" || overviewFallback ? leanOpen : dockOpen;
   // A reference preview on the right page, or the overview before the first link, has no topic of its own.
   const bandTopic = useMemo(() => (preview || unlinked ? null : shownTopic(ties, visible)), [preview, unlinked, ties, visible]);
   useLayoutEffect(() => {
@@ -671,6 +674,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const minimiseGraph = () => {
     layoutFocus.current = "tabs";
     setSeparate(true);
+    if (overviewFallback && mode === "graph") onMode("lean");
   };
   const combineViews = () => {
     layoutFocus.current = "split";
@@ -685,8 +689,16 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   }, [signals, shownTie, ties]);
   useLayoutEffect(() => () => signals.shownTie.set(null), [signals]);
 
-  const drawing = showWhole ? (
+  const minimiseButton = <button type="button" ref={minimiseRef} className="map-pane__layout-button" onClick={minimiseGraph}>Minimise graph</button>;
+
+  const drawing = (showWhole || overviewFallback) ? (
     <div className="map-pane__canvas" data-unlinked={unlinked ? "" : undefined}>
+      {overviewFallback && (
+        <header className="map-pane__local-head">
+          <h3>Whole proof map</h3>
+          {minimiseButton}
+        </header>
+      )}
       <div className="map-pane__overview-bar">
         <h3 className="map-pane__unlinked">Whole proof map</h3>
         <div className="map-pane__camera-tools" role="group" aria-label="Whole proof map camera">
@@ -696,10 +708,10 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
         </div>
       </div>
       <ArgumentTree
-        key={goal}
+        key={overviewFallback ? home : goal}
         ref={treeRef}
         graph={graph}
-        goal={goal}
+        goal={overviewFallback ? home : goal}
         insets={insets}
         persist={false}
         mode="overview"
@@ -712,7 +724,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
         tileWidth={PANE_TILE_W}
         tileHeight={PANE_TILE_H}
         statusOf={recordMark}
-        litIds={litIds}
+        litIds={overviewFallback ? null : litIds}
         previewIds={previewIds}
         coverage={coverage.size ? coverage : undefined}
         onSelect={onTreeSelect}
@@ -736,7 +748,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
       onPaintedHeight={paired ? graphSize.onPaintedHeight : undefined}
       embeddedHeader={paired ? {
         title: "Dependency graph",
-        action: <button type="button" ref={minimiseRef} className="map-pane__layout-button" onClick={minimiseGraph}>Minimise graph</button>,
+        action: minimiseButton,
       } : undefined}
       subjects={focus.subjects}
       card={cardOf}
@@ -786,8 +798,8 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
         <div className="map-pane__fill">
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />
         </div>
-      ) : mode === "lean" && !unlinked ? (
-        <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"}>
+      ) : ((mode === "lean" && !unlinked) || overviewFallback) ? (
+        <div ref={graphSize.pair} className={paired ? "map-pane__paired" : "map-pane__lean"} data-overview-fallback={overviewFallback || undefined}>
           <LeanDock
             open={leanOpen}
             ties={ties}
@@ -801,9 +813,9 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
             passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))}
           />
           {paired && (
-            <section className="map-pane__local" aria-label="Local dependency graph">
+            <section className="map-pane__local" aria-label={overviewFallback ? "Whole-paper graph" : "Local dependency graph"}>
               <div className="map-pane__drawing">
-                <GraphBoundary scope={`graph around ${focus!.subjects.join(", ")}`}>{drawing}</GraphBoundary>
+                <GraphBoundary scope={overviewFallback ? "the whole-paper graph" : `graph around ${focus!.subjects.join(", ")}`}>{drawing}</GraphBoundary>
               </div>
             </section>
           )}
