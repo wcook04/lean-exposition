@@ -117,9 +117,9 @@
    "artifact": true,
    "sentence": "Talagrand proves Parisi’s variational formula for the limiting free energy of a class of mean-field spin glass models. The linked Lean proof treats the Sherrington–Kirkpatrick case with exact quadratic covariance.",
    "tier": "research",
-   "kind": "Authors’ paper · Independent Lean",
+   "kind": "Author’s paper · Independent Lean",
    "provenance": "academic",
-   "provenance_label": "Credit: the authors",
+   "provenance_label": "Credit: the author",
    "credits": [
     [
      "Paper",
@@ -136,7 +136,7 @@
    ],
    "versions": [
     {
-     "label": "Authors’ paper",
+     "label": "Author’s paper",
      "href": "/library/talagrand-parisi/",
      "note": "linked to Wu’s Lean"
     },
@@ -461,7 +461,7 @@
    "tier": "companion",
    "kind": "Explanation of an existing Lean result",
    "provenance": "academic",
-   "provenance_label": "Credit: the authors",
+   "provenance_label": "Credit: the author",
    "credits": [
     [
      "Lean",
