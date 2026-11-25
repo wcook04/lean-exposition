@@ -9,6 +9,7 @@ import { useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useSt
 import * as pdfjs from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import type { PDFDocumentProxy } from "pdfjs-dist";
+import { prefersReducedMotion } from "../../app/theme";
 import type { ReaderSignals } from "../page/rightPage";
 import "./pdf-view.css";
 
@@ -335,9 +336,9 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
     const target = !position && selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
     const pageEl = !target && page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
     const el = target ?? pageEl;
-    if (!el) return;
     const first = !opened.current;
     opened.current = true;
+    if (!el) return;
     const landOn = (behavior: ScrollBehavior) => {
       if (position) {
         const y = position.y * el.clientWidth / marks.pages[position.page - 1][0];
@@ -346,7 +347,7 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
         el.scrollIntoView({ block: target ? "center" : "start", behavior });
       }
     };
-    landOn(first ? "instant" as ScrollBehavior : "smooth");
+    landOn(first || prefersReducedMotion() ? "instant" as ScrollBehavior : "smooth");
     // On first opening the reader is still settling its own place and may move the window; land
     // again until the target is in view, unless the reader has started scrolling by hand.
     if (!first) return;
