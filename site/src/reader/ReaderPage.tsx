@@ -939,11 +939,11 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       signals.follow.set({ tie, anchor, part });
       // The address keeps up with the reader once they have stopped, never as a history entry.
       window.clearTimeout(addressTimer);
-      if (tie === null || pinRef.current) return;
+      if (tie === null || pinRef.current || referenceOrigin.current) return;
       addressTimer = window.setTimeout(() => {
         const here = hereRef.current;
         const at = ties.index.ties[tie].at;
-        if (current.current !== tie || here.at === at || here.node || here.beside || here.pdf) return;
+        if (referenceOrigin.current || current.current !== tie || here.at === at || here.node || here.beside || here.pdf) return;
         selfAt.current = at;
         navigate({ ...here, at }, { replace: true });
       }, 1400);
@@ -2013,10 +2013,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const targets = paperReferences.status === "ready" ? paperReferences.value : null;
   const referenceProps: PaperReferenceProps = {
     referenceTargets: targets ? (pdfOn ? Object.fromEntries(Object.entries(targets).filter(([, value]) =>
-      value.page !== undefined && value.y !== undefined)) : targets) : undefined,
+      value.stage || value.pdfFile || (value.page !== undefined && value.y !== undefined))) : targets) : undefined,
     onPaperReference: followPaperReference,
-    paperReferenceHref: (target) => routeHref({ view: "read", stage, at: String(target.line),
-      pdf: pdfOn || undefined, page: pdfOn ? target.page : undefined }),
+    paperReferenceHref: (target) => {
+      if (target.pdfFile) return `${import.meta.env.BASE_URL}pdf/${encodeURIComponent(target.pdfFile)}#page=${target.page ?? 1}`;
+      const usePdf = pdfOn && (!target.stage || target.page !== undefined);
+      return routeHref({ view: "read", stage: target.stage ?? stage, at: String(target.line),
+        pdf: usePdf || undefined, page: usePdf ? target.page : undefined });
+    },
   };
   const paneProps = {
     ...referenceProps,

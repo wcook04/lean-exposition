@@ -4,11 +4,11 @@
 // The note's mathematics is typeset with KaTeX, and its `names` are set as code.
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from "react";
-import { loadPhraseNotes, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
+import { loadPhraseNotes, type AnnotationReference, type ComparisonMatters, type MergedPhrase, type PhraseAssessment, type PhraseExplanation, type PhraseLean, type PhraseNotes, type PhraseTopic } from "../../api/lean";
 import type { Stage } from "../../api/types";
 import { FIDELITIES, isFidelity, NOT_ASSESSED, NOT_ASSESSED_DETAIL, phraseVerdict, type Fidelity } from "../../compare/fidelityWords";
 import { cardKeys, conventionsFor, useAids } from "../aids";
-import { noteHtml, renderTex } from "../math";
+import { escapeHtml, noteHtml, renderTex } from "../math";
 import { plainNumber } from "../texBreaks";
 import { fitNow, markWideMaths } from "./PaperBody";
 import site from "@instance/site";
@@ -174,6 +174,8 @@ export interface PaperReferenceTarget {
   page?: number;
   y?: number;
   tone?: number;
+  stage?: string;
+  pdfFile?: string;
 }
 
 export interface PaperReferenceProps {
@@ -250,15 +252,43 @@ function referenceClick({ referenceTargets, onPaperReference }: PaperReferencePr
     if (event.defaultPrevented || event.button !== 0 || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const source = event.target instanceof Element && event.target.closest<HTMLAnchorElement>("a[data-paper-reference]");
     const target = source && referenceTargets[source.dataset.paperReference ?? ""];
-    if (!target) return;
+    if (!target || target.stage || target.pdfFile) return;
     event.preventDefault();
     onPaperReference(target);
   };
 }
 
+/** Link reviewed prose and named code tokens without modifying their contents. */
+function reviewedAnnotation(text: string, reviewed: readonly AnnotationReference[], { referenceTargets, paperReferenceHref }: PaperReferenceProps): string {
+  const link = (html: string, key: string, target: PaperReferenceTarget) => {
+    const href = paperReferenceHref?.(target) ?? `?l=${target.line}`;
+    const tone = target.tone === undefined ? "" : ` data-tone="${escapeHtml(String(target.tone))}"`;
+    const separate = target.stage || target.pdfFile ? ' target="_blank" rel="noopener" title="Opens in a new tab"' : "";
+    return `<a class="annotation-paper-reference" data-paper-reference="${escapeHtml(key)}"${tone}${separate} href="${escapeHtml(href)}">${html}</a>`;
+  };
+  return noteHtml(text, (plain, start) => {
+    let cursor = 0;
+    let html = "";
+    for (const span of reviewed) {
+      const target = referenceTargets?.[span.key];
+      const from = span.start - start;
+      const to = span.end - start;
+      if (!target || from < cursor || to <= from || to > plain.length) continue;
+      html += escapeHtml(plain.slice(cursor, from));
+      html += link(escapeHtml(plain.slice(from, to)), span.key, target);
+      cursor = to;
+    }
+    return html + escapeHtml(plain.slice(cursor));
+  }, (code, start, end) => {
+    const key = reviewed.find((span) => span.start === start && span.end === end)?.key;
+    const target = key && referenceTargets?.[key];
+    return target ? link(code, key, target) : code;
+  }).html;
+}
+
 /** The note is edited for this passage and its active declaration. */
-export function PassageAnnotation({ text, creditInSources = false, ...references }: PaperReferenceProps & { text: string; creditInSources?: boolean }) {
-  const html = linkPaperReferences(noteHtml(text).html, references);
+export function PassageAnnotation({ text, reviewed, creditInSources = false, ...references }: PaperReferenceProps & { text: string; reviewed?: readonly AnnotationReference[]; creditInSources?: boolean }) {
+  const html = reviewed ? reviewedAnnotation(text, reviewed, references) : linkPaperReferences(noteHtml(text).html, references);
   return (
     <section className="phrase-card passage-annotation" aria-label="Passage annotation" onClick={referenceClick(references)}>
       <p className="passage-annotation__text" dangerouslySetInnerHTML={{ __html: html }} />
@@ -507,7 +537,7 @@ export function PhraseCard({ row, note, quote, merged, phrase, names, explanatio
       <NoteBody text={note} initiallyOpen={inLean} summary={leanNote && leanNote.text.trim() === note.trim() ? leanNote.summary : undefined} />
     </div>
   );
-  if (row.annotation) return <PassageAnnotation text={row.annotation} {...references} />;
+  if (row.annotation) return <PassageAnnotation text={row.annotation} reviewed={row.annotation_references} {...references} />;
   const foldNotes = inLean && Boolean(explanation?.text || note);
   return (
     <section className={inLean ? "phrase-card phrase-card--lean" : "phrase-card"} aria-label="These words and how the Lean compares with them">

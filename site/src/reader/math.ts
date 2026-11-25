@@ -129,7 +129,7 @@ export interface MathResult {
   error?: string;
 }
 
-const escapeHtml = (s: string) =>
+export const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export function renderTex(tex: string, display: boolean): MathResult {
@@ -163,8 +163,8 @@ const notes = new Map<string, NoteMarkup>();
  * A reading note as HTML: `$…$` typeset by KaTeX, `name` as code, the rest as text.
  * `errors` lists any formula KaTeX could not set; the formula then shows as its source.
  */
-export function noteHtml(text: string): NoteMarkup {
-  const cached = notes.get(text);
+export function noteHtml(text: string, renderProse?: (plain: string, start: number) => string, renderCode?: (html: string, start: number, end: number) => string): NoteMarkup {
+  const cached = renderProse ? undefined : notes.get(text);
   if (cached) return cached;
   let html = "";
   const errors: string[] = [];
@@ -194,7 +194,8 @@ export function noteHtml(text: string): NoteMarkup {
         html += escapeHtml(text.slice(i));
         break;
       }
-      html += `<code>${escapeHtml(text.slice(i + 1, j))}</code>`;
+      const code = `<code>${escapeHtml(text.slice(i + 1, j))}</code>`;
+      html += renderCode ? renderCode(code, i, j + 1) : code;
       i = j + 1;
     } else {
       let j = i;
@@ -202,12 +203,14 @@ export function noteHtml(text: string): NoteMarkup {
       const plain = text.slice(i, j);
       const command = /\\[A-Za-z]+/.exec(plain);
       if (command) errors.push(`TeX command outside $…$: ${command[0]}`);
-      html += escapeHtml(plain);
+      html += renderProse ? renderProse(plain, i) : escapeHtml(plain);
       i = j;
     }
   }
   const markup = { html, errors };
-  if (notes.size === 128) notes.delete(notes.keys().next().value!);
-  notes.set(text, markup);
+  if (!renderProse) {
+    if (notes.size === 128) notes.delete(notes.keys().next().value!);
+    notes.set(text, markup);
+  }
   return markup;
 }

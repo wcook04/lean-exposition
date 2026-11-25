@@ -216,9 +216,19 @@ export interface Alignment {
  * and how it compares with the phrase, as an AI agent judged it. `note` is the row's link
  * note (at most 25 words), `plain` the declaration's title in this part of this paper.
  */
+export interface AnnotationReference {
+  /** UTF-16 offsets in the exact exported annotation, excluding the end. */
+  start: number;
+  end: number;
+  /** A target key in this edition's paper-reference manifest. */
+  key: string;
+}
+
 export interface PhraseLean extends FidelityFields {
   /** Edited note for this passage and this declaration in this edition. */
   annotation?: string;
+  /** An empty list records a review with no local destination. */
+  annotation_references?: AnnotationReference[];
   name: string;
   module: string;
   line: number;

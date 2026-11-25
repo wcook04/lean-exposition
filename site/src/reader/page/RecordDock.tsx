@@ -329,7 +329,8 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       </div>
     );
   const inLean = Boolean(onOpenGraph);
-  const phraseAnnotation = phrase ? (row as unknown as PhraseLean | null)?.annotation : undefined;
+  const annotationRow = phrase ? row as unknown as PhraseLean | null : null;
+  const phraseAnnotation = annotationRow?.annotation;
   const annotation = inLean && phraseAnnotation;
   const references = { referenceTargets, onPaperReference, paperReferenceHref };
   const relatedPaper = phrase && open.tie !== null && <OurStatements phrase={tie?.phrase} />;
@@ -373,7 +374,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       clause={row?.clause}
       lines={row?.lines}
       compact
-      passageNote={annotation ? <PassageAnnotation text={annotation} creditInSources {...references} /> : undefined}
+      passageNote={annotation ? <PassageAnnotation text={annotation} reviewed={annotationRow?.annotation_references} creditInSources {...references} /> : undefined}
       foldDependencies={inLean && phrase}
       onName={onName}
       noPapers
@@ -442,7 +443,7 @@ export function LeanDock({ open, ties, stage, alignment, slot, onPick, onPoint, 
       )}
       {!slot && onBrief && !empty && (
         <div className="lean-page__brief">
-          {brief && phrase && row && (phraseAnnotation ? <PassageAnnotation text={phraseAnnotation} {...references} /> : (
+          {brief && phrase && row && (phraseAnnotation ? <PassageAnnotation text={phraseAnnotation} reviewed={annotationRow?.annotation_references} {...references} /> : (
             <section className="phrase-card phrase-card--brief" aria-label="How the Lean compares with these words, in short">
               {assessmentsOf(row as unknown as PhraseLean, tie?.merged)
                 .slice(0, 1)
