@@ -395,12 +395,13 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
       readingPoint.current = point;
       const { page } = point;
       const scale = width / marks.pages[page - 1][0];
+      const pageTop = pages[page - 1].getBoundingClientRect().top;
       const y = Math.max(0, Math.min(marks.pages[page - 1][1], point.y));
       let best: PdfMark | undefined;
       let distance = Infinity;
       for (const [, mark] of byPage.get(page) ?? []) {
         for (const [p, , top, , bottom] of mark.boxes) {
-          if (p !== page) continue;
+          if (p !== page || pageTop + bottom * scale <= 0 || pageTop + top * scale >= window.innerHeight) continue;
           const gap = Math.max(0, top - y, y - bottom) * scale;
           if (gap < distance && gap <= window.innerHeight * 0.32) {
             distance = gap;

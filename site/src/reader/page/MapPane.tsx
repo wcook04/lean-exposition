@@ -155,7 +155,7 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
 
   // ---- What the reader is on ---------------------------------------------------------
 
-  const follow = useSlowSignal(signals.follow);
+  const follow = useSlowSignal(signals.paneFollow ?? signals.follow);
   const pointed = useSignal(signals.point);
   const preview = useSignal(rightPreview);
   const anchor = follow.anchor;
@@ -366,9 +366,8 @@ export const MapPane = memo(function MapPane({ stage, structures, signals, ties,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin, decl, openRecord, declModule, held, heldFirst, tools, ties, pointed, followRecord, follow.tie, anchor, passage]);
 
-  // The Graph tab can show the whole map when the passage has no neighbourhood.
-  const opened = !!(pin || decl || held || anchor);
-  const unlinked = mode === "graph" && !leanSlot && opened && !fresh;
+  // Auto shows the overview at the top. Away from the top the last linked passage stays in the pane.
+  const unlinked = mode === "graph" && !leanSlot && follow.atTop === true && !pin && !decl && !held;
 
   // ---- The whole proof map, one button away ------------------------------------------------
 
