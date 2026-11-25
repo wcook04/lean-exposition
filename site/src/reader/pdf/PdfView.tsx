@@ -331,7 +331,7 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
   // Open at the selected phrase, else at the page asked for.
   const opened = useRef(false);
   const measured = fitWidth > 0;
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!measured || !pdf) return;
     const target = !position && selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
     const pageEl = !target && page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
@@ -348,37 +348,6 @@ export function PdfView({ ref, url, marks, at, pinned, selectionAt, shownTie, pa
       }
     };
     landOn(first || prefersReducedMotion() ? "instant" as ScrollBehavior : "smooth");
-    // On first opening the reader is still settling its own place and may move the window; land
-    // again until the target is in view, unless the reader has started scrolling by hand.
-    if (!first) return;
-    let touched = false;
-    const touch = () => (touched = true);
-    window.addEventListener("wheel", touch, { passive: true, once: true });
-    window.addEventListener("keydown", touch, { once: true });
-    window.addEventListener("touchstart", touch, { passive: true, once: true });
-    window.addEventListener("pointerdown", touch, { passive: true, once: true });
-    const land = () => {
-      const r = el.getBoundingClientRect();
-      if (!touched && (r.bottom < 0 || r.top > window.innerHeight)) landOn("instant" as ScrollBehavior);
-    };
-    let frame = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(land);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const timers = [300, 800, 1500, 2500, 4000].map((ms) => window.setTimeout(land, ms));
-    const stop = window.setTimeout(() => window.removeEventListener("scroll", onScroll), 4000);
-    return () => {
-      timers.forEach((t) => window.clearTimeout(t));
-      window.clearTimeout(stop);
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("wheel", touch);
-      window.removeEventListener("keydown", touch);
-      window.removeEventListener("touchstart", touch);
-      window.removeEventListener("pointerdown", touch);
-    };
   }, [measured, pdf, selected, page, position?.page, position?.y, marks, readingLine]);
 
   // Report the page at the reading line.

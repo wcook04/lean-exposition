@@ -258,7 +258,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
   const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
   // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
-  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>(null);
+  const [pdfMarks, setPdfMarks] = useState<PdfMarks | null>();
   useEffect(() => {
     let live = true;
     // Only a document with the authors' PDF has its phrases placed on one.
@@ -276,6 +276,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
+  const pdfPending = (!!route.pdf || pdfOnly) && !!pdfOwn && pdfMarks === undefined;
   const [pdfZoom, setPdfZoom] = useState<PdfZoomState>(PDF_FIT);
   const pdfView = useRef<PdfViewHandle>(null);
   const changePdfZoom = (zoom: PdfZoomState) => {
@@ -491,7 +492,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (!body || part === null) return false;
       await body.ensure([part - 1, part, part + 1]);
       const el = body.partElement(part);
-      if (!el || !current()) return false;
+      if (!el || bodyRef.current !== body || !current()) return false;
       const line = position.top ?? readingTop();
       const y = () => scrollForPosition(el, position, line);
       window.scrollTo({ top: Math.max(0, y()), behavior: "instant" as ScrollBehavior });
@@ -519,6 +520,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       setNotice(null);
       await body.ensure([hit.part - 1, hit.part, hit.part + 1]);
+      if (bodyRef.current !== body) return false;
       const root = paperRef.current;
       let target = hit.id ? root?.querySelector<HTMLElement>(`#${CSS.escape(hit.id)}`) : body.partElement(hit.part);
       // A passage whose section heading closes the part before it lands with that heading in view.
@@ -541,6 +543,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       // A smooth scroll can be cut short by parts rendering on the way; land exactly.
       const settle = () => {
+        if (!target.isConnected) return;
         // Edition and history controls can wrap. Leave the heading below the strip as rendered.
         const delta = target.getBoundingClientRect().top - (readingTop() + 16);
         if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
@@ -587,7 +590,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       if (statement !== null) {
         const part = statements.partOf(statement);
         await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : [part - 2, part - 1, part, part + 1, part + 2]);
-        if (options.isCurrent?.() === false) return false;
+        if (bodyRef.current !== body || options.isCurrent?.() === false) return false;
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll !== false) {
@@ -610,6 +613,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const parts = lines ? partsOfLines(doc.parts, lines) : [];
         if (!lines || !parts.length) return false;
         await body.ensure(options.scroll === false ? [parts[0] - 1, ...parts, parts[parts.length - 1] + 1] : [parts[0] - 2, parts[0] - 1, ...parts, parts[parts.length - 1] + 1, parts[parts.length - 1] + 2]);
+        if (bodyRef.current !== body) return false;
         const blocks = parts.flatMap((part) => blocksOf(body.partElement(part), part === parts[parts.length - 1] ? doc.parts[part].lines.end : doc.parts[part + 1]?.lines.start - 1, lines));
         if (!blocks.length) return false;
         blocks.forEach((el) => el.setAttribute("data-slice", ""));
@@ -668,13 +672,24 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [saveNow],
   );
 
-  // Open at the saved line, the anchor, or the top.
   useLayoutEffect(() => {
-    // The page holds the reading position itself (PaperBody); the browser's
-    // own scroll anchoring would pick nodes in the sticky columns and add to it.
+    // The paper holds the reading position itself.
     const root = document.documentElement;
     const previousAnchor = root.style.overflowAnchor;
     root.style.overflowAnchor = "none";
+    return () => { root.style.overflowAnchor = previousAnchor; };
+  }, []);
+
+  const initialLanding = useRef(false);
+  useLayoutEffect(() => {
+    if (pdfPending || initialLanding.current) return;
+    initialLanding.current = true;
+    if (pdfOn || pdfOnly) {
+      if (restoreKey()) patchHistoryState({ lxRestore: undefined });
+      lastHref.current = window.location.href;
+      return;
+    }
+    const root = document.documentElement;
     // A record's address opened cold lands on its statement, with or without `l`.
     const named = statementAt(route.node, route.at);
     const at = named !== null ? ties.index.ties[named].at : route.at;
@@ -708,12 +723,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     }
     if (restoreKey()) patchHistoryState({ lxRestore: undefined });
     lastHref.current = window.location.href;
-    return () => {
-      root.style.overflowAnchor = previousAnchor;
-    };
-    // Once per mounted paper.
+    // The only startup landing is for the format first shown.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pdfPending, pdfOn, pdfOnly]);
+
+  useLayoutEffect(() => {
+    if (pdfOn) restoring.current?.();
+  }, [pdfOn]);
 
   // Every history entry gets a key and the position the reader is at. An entry
   // returned to by Back or Forward already has a key: its saved line is
@@ -744,6 +760,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       stepped.current = false;
       if (fromPop || anchorChanged || atChanged || route.node || route.decl || (route.page ?? 1) > 1) unstarted.current = false;
     }
+    if (pdfPending || pdfOn || pdfOnly) return;
     const paperMoves = !own && !saved && (atChanged ? !!route.at : false);
     // Back restores the saved paper position and its exact followed slice independently.
     const restoreFollow = !!saved && !!route.at && !route.node && !route.decl;
@@ -762,7 +779,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       saveNow();
     }
     selfAnchor.current = undefined;
-  }, [route, jumpTo, landSlice, restorePosition, saveNow]);
+  }, [route, pdfPending, pdfOn, pdfOnly, jumpTo, landSlice, restorePosition, saveNow]);
 
   // ---- What is on the right page ------------------------------------------------------
 
@@ -2369,8 +2386,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             }}
           />
         )}
-        <div hidden={pdfOn || pdfOnly}>
-        <PaperBody
+        {pdfPending && <p className="reader-notice" role="status">Opening PDF…</p>}
+        {!pdfPending && !pdfOn && !pdfOnly && <PaperBody
           ref={bodyRef}
           stage={stage}
           doc={doc}
@@ -2381,8 +2398,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
           inspected={inspect?.kind === "passage" ? inspect.anchor : null}
           statements={statements}
           onReferenceLean={openReferenceLean}
-        />
-        </div>
+        />}
       </div>
 
       {columnInspector && (
