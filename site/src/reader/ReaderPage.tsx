@@ -463,9 +463,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       }
       // A smooth scroll can be cut short by parts rendering on the way; land exactly.
       const settle = () => {
-        const off = target.getBoundingClientRect().top;
-        const expected = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) + parseFloat(getComputedStyle(target).scrollMarginTop || "0");
-        if (Math.abs(off - expected) > 6) target.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior });
+        // Edition and history controls can wrap. Leave the heading below the strip as rendered.
+        const delta = target.getBoundingClientRect().top - (readingTop() + 16);
+        if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: "instant" as ScrollBehavior });
         body.hold(target);
       };
       if (smooth) {
@@ -481,7 +481,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       } else requestAnimationFrame(settle);
       return true;
     },
-    [doc, stage],
+    [doc, stage, readingTop],
   );
 
   /** The reading line, in pixels from the top of the window. */
