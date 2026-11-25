@@ -658,6 +658,7 @@ html[data-right-sheet] {
   min-height: 0;
   min-width: 0;
 }
+.map-pane__paired[data-overview-fallback] { --paired-graph-size: 40%; }
 .map-pane__paired > .lean-page {
   flex: 0 1 auto;
   max-height: calc(100% - min(40%, var(--paired-graph-size)));
