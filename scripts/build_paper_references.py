@@ -5,6 +5,7 @@ Run after the edition export and PDF copy, passing the reader's output directory
 Poppler's pdftotext provides printed destinations when available. A verified
 byte-to-PDF point is also enough for a label. Each target always has a Markdown
 line, with a PDF page and top coordinate only when they can be established.
+A tone is emitted when the destination has one verified edition topic.
 """
 from __future__ import annotations
 
@@ -12,6 +13,7 @@ import argparse
 from collections import defaultdict
 from dataclasses import dataclass
 from html import unescape
+from itertools import groupby
 import json
 import math
 from pathlib import Path
@@ -282,22 +284,94 @@ def locate_reference(
     return aligned if not points else None
 
 
+def topic_ranges(ties: dict, length: int) -> list[tuple[int, int, int | None]]:
+    """Read topic assignments against this edition's byte ranges and palette."""
+    topics = [
+        (row.get("id"), row["tone"]) for row in ties.get("topics", [])
+        if type(row.get("tone")) is int and row["tone"] >= 0 and row.get("light") and row.get("dark")
+    ]
+    palette = {
+        name: tone for name, tone in topics
+        if sum(other_name == name or other_tone == tone for other_name, other_tone in topics) == 1
+    }
+    ranges = []
+    for tie in ties.get("ties", []):
+        at = tie.get("at")
+        if not isinstance(at, str) or not (match := re.fullmatch(r"b(\d+)-(\d+)", at)):
+            continue
+        start, end = map(int, match.groups())
+        if not 0 <= start < end <= length:
+            continue
+        tone = tie.get("tone")
+        topic = tie.get("topic")
+        if tone is None and topic is None:
+            continue
+        verified = type(tone) is int and tone == palette.get(topic)
+        ranges.append((start, end, tone if verified else None))
+    return ranges
+
+
+def destination_blocks(ties: dict, structure: dict, length: int) -> list[tuple[int, int]]:
+    """Return exact containing ranges, from the smallest statement to the section."""
+    paper = structure.get("paper", {})
+    spans = []
+    if paper.get("byte_length") == length:
+        spans.extend(row.get("content_span", {}) for row in paper.get("passages", []))
+        spans.extend(row.get("span", {}) for row in paper.get("sections", []))
+    ranges = [(span.get("start_byte"), span.get("end_byte")) for span in spans]
+    ranges.extend((span[1], span[2]) for span in ties.get("canonical", {}).values()
+                  if isinstance(span, list) and len(span) == 3)
+    valid = {
+        (a, b) for a, b in ranges if type(a) is int and type(b) is int and 0 <= a < b <= length
+    }
+    return sorted(valid, key=lambda span: (span[1] - span[0], span[0]))
+
+
+def destination_tone(
+    ref: Reference, topics: list[tuple[int, int, int | None]], blocks: list[tuple[int, int]],
+) -> int | None:
+    if not topics:
+        return None
+    direct = {tone for a, b, tone in topics if a < ref.end and ref.start < b}
+    if direct:
+        return next(iter(direct)) if len(direct) == 1 else None
+
+    # The smallest containing published block with topical evidence wins.
+    # A shared label or block carrying several topics has no single colour.
+    enclosing = ((start, end) for start, end in blocks if start <= ref.start and ref.end <= end)
+    for _, group in groupby(enclosing, key=lambda span: span[1] - span[0]):
+        local = set()
+        for start, end in group:
+            local.update(tone for a, b, tone in topics if start <= a and b <= end)
+        if local:
+            return next(iter(local)) if len(local) == 1 else None
+    return None
+
+
 def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def edition_documents(dist: Path) -> dict[str, tuple[Path, Path]]:
+def edition_documents(dist: Path) -> dict[str, tuple[Path, Path, Path]]:
     edition = dist / "edition"
     documents = {}
     root_index = read_json(edition / "index.json")
-    for slot, filename in root_index["documents"].items():
-        if re.fullmatch(r"[a-z0-9-]+", slot):
-            documents[slot] = (edition / filename, edition / root_index["responses"].get(f"/ties/{slot}", ""))
-    for index in sorted(edition.glob("docs/*/index.json")):
-        slot = index.parent.name
-        doc = read_json(index)
-        if re.fullmatch(r"[a-z0-9-]+", slot) and (filename := doc["documents"].get("short")):
-            documents[slot] = (edition / filename, edition / doc["responses"].get("/ties/short", ""))
+    indexes = [(None, root_index)]
+    indexes.extend((index.parent.name, read_json(index)) for index in sorted(edition.glob("docs/*/index.json")))
+    for companion, index in indexes:
+        for stage, filename in index["documents"].items():
+            if companion and stage != "short":
+                continue
+            slot = companion or stage
+            if not re.fullmatch(r"[a-z0-9-]+", slot):
+                continue
+            routes = index["responses"]
+            structure = f"/papers/{stage}/structure"
+            documents[slot] = (
+                edition / filename,
+                edition / routes.get(f"/ties/{stage}", ""),
+                edition / routes.get(f"{structure}?representation=reader", routes.get(structure, "")),
+            )
     return documents
 
 
@@ -325,10 +399,13 @@ def reader_pdf(dist: Path, slot: str, instance: dict) -> Path | None:
 
 
 def build(dist: Path, output: Path, instance: dict) -> None:
-    for slot, (markdown, tie_file) in edition_documents(dist).items():
+    for slot, (markdown, tie_file, structure_file) in edition_documents(dist).items():
         data = markdown.read_bytes()
         text = data.decode("utf-8")
         ties = read_json(tie_file) if tie_file.is_file() else {}
+        structure = read_json(structure_file) if structure_file.is_file() else {}
+        topics = topic_ranges(ties, len(data))
+        blocks = destination_blocks(ties, structure, len(data))
         candidates = source_references(text)
         targets = choose_references(candidates, ties, "References with prefix M refer to that paper." in text)
         pdf = reader_pdf(dist, slot, instance)
@@ -349,13 +426,18 @@ def build(dist: Path, output: Path, instance: dict) -> None:
             result[key] = {"line": ref.line}
             if point:
                 result[key].update(page=point.page, y=point.y)
+            tone = destination_tone(ref, topics, blocks)
+            if tone is not None:
+                result[key]["tone"] = tone
 
         output.mkdir(parents=True, exist_ok=True)
         (output / f"{slot}.json").write_text(
             json.dumps({"schema": "paper-references/1", "targets": result}, separators=(",", ":")) + "\n",
             encoding="utf-8",
         )
-        print(f"{dist.name}/{slot}: {len(result)} Markdown targets, {sum('page' in row for row in result.values())} PDF targets")
+        print(f"{dist.name}/{slot}: {len(result)} Markdown targets, "
+              f"{sum('page' in row for row in result.values())} PDF targets, "
+              f"{sum('tone' in row for row in result.values())} with a verified topic")
 
 
 def main() -> None:

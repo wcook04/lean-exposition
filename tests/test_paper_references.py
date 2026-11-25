@@ -10,10 +10,13 @@ from scripts.build_paper_references import (
     aligned_points,
     build,
     choose_references,
+    destination_blocks,
+    destination_tone,
     locate_reference,
     pdf_references,
     reader_pdf,
     source_references,
+    topic_ranges,
 )
 
 
@@ -97,6 +100,33 @@ class PaperReferencesTest(unittest.TestCase):
         self.assertEqual(aligned_points(marks, ties, [(600, 810)] * 2, 26), {})
         self.assertEqual(aligned_points({**marks, "positions": [[15, 2, 100], [3, 1, 30]]}, ties, sizes, 26), {})
 
+    def test_destination_topic_uses_exact_bytes_then_the_smallest_published_block(self):
+        ties = {
+            "topics": [
+                {"id": "analysis", "tone": 0, "light": "#123", "dark": "#abc"},
+                {"id": "model", "tone": 3, "light": "#456", "dark": "#def"},
+            ],
+            "ties": [
+                {"topic": "analysis", "tone": 0, "at": "b10-20"},
+                {"topic": "model", "tone": 3, "at": "b28-39"},
+                {"topic": "analysis", "tone": 3, "at": "b60-65"},
+            ],
+        }
+        structure = {"paper": {
+            "byte_length": 90,
+            "passages": [{"content_span": {"start_byte": 20, "end_byte": 40}}],
+            "sections": [{"span": {"start_byte": 0, "end_byte": 55}}],
+        }}
+        topics = topic_ranges(ties, 90)
+        blocks = destination_blocks(ties, structure, 90)
+        self.assertEqual(destination_tone(Reference(1, 11, 15), topics, blocks), 0)
+        self.assertEqual(destination_tone(Reference(2, 21, 25), topics, blocks), 3)
+        self.assertIsNone(destination_tone(Reference(3, 15, 32), topics, blocks))
+        self.assertIsNone(destination_tone(Reference(4, 44, 50), topics, blocks))
+        self.assertIsNone(destination_tone(Reference(5, 61, 62), topics, blocks))
+        self.assertIsNone(destination_tone(Reference(6, 70, 75), topics, blocks))
+        self.assertEqual(destination_blocks(ties, structure, 89), [])
+
     def test_build_processes_the_exact_companion_and_reader_pdf(self):
         with TemporaryDirectory() as tmp:
             dist = Path(tmp)
@@ -106,7 +136,13 @@ class PaperReferencesTest(unittest.TestCase):
             (dist / "pdf").mkdir()
             (dist / "pdf/reading.pdf").touch()
             (dist / "pdf/marked.pdf").touch()
-            (edition / "index.json").write_text(json.dumps({"documents": {"short": "main.md"}, "responses": {}}))
+            (edition / "index.json").write_text(json.dumps({
+                "documents": {"short": "main.md"}, "responses": {"/ties/short": "main-ties.json"},
+            }))
+            (edition / "main-ties.json").write_text(json.dumps({
+                "topics": [{"id": "analysis", "tone": 0, "light": "#123", "dark": "#abc"}],
+                "ties": [{"topic": "analysis", "tone": 0, "at": "b19-40"}],
+            }))
             (edition / "main.md").write_text("## 1 Introduction\n\n**Theorem 1.** Original.\n")
             (docs / "index.json").write_text(json.dumps({
                 "documents": {"short": "docs/adapted/document.md"}, "responses": {},
@@ -122,7 +158,7 @@ class PaperReferencesTest(unittest.TestCase):
             main = json.loads((output / "short.json").read_text())
             adapted = json.loads((output / "adapted.json").read_text())
             self.assertEqual(main["schema"], "paper-references/1")
-            self.assertEqual(main["targets"]["theorem:1"], {"line": 3})
+            self.assertEqual(main["targets"]["theorem:1"], {"line": 3, "tone": 0})
             self.assertEqual(adapted["targets"]["theorem:1"], {"line": 5})
 
 
