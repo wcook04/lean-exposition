@@ -100,6 +100,23 @@ if (window.matchMedia?.("(min-width: 1024px)").matches) mapPane.start();
 
 type ReadRoute = Extract<Route, { view: "read" }>;
 
+/** Turn a shared paper target into a reading position. An in-app choice still pins it. */
+function followSharedTarget(route: ReadRoute, loaded: LoadedDocument): ReadRoute {
+  const { ties, paper } = loaded;
+  if (!route.node && !route.decl) return route;
+  const named = statementFor(ties, route.node, route.at);
+  const declaration = route.decl && ties.order.find((index) => {
+    const tie = ties.index.ties[index];
+    return tie.name === route.decl && (!route.declModule || tie.module === route.declModule);
+  });
+  if (route.decl && typeof declaration !== "number") return route;
+  const tie = typeof declaration === "number" ? declaration : named;
+  const block = route.node ? ties.index.canonical?.[route.node] : undefined;
+  const at = tie !== null ? ties.index.ties[tie].at : route.at ?? (block ? `b${block[1]}-${block[2]}` : undefined);
+  const anchor = route.anchor ?? (!at && route.node ? firstPassageFor(paper.structure, [route.node]) ?? undefined : undefined);
+  return { ...route, at, anchor, node: undefined, decl: undefined, declModule: undefined };
+}
+
 export function ReaderPage({ route }: { route: ReadRoute }) {
   const loaded = useDocument(route.stage);
   // The other accounts' structures name destinations; the paper never waits for them.
@@ -112,6 +129,16 @@ export function ReaderPage({ route }: { route: ReadRoute }) {
   const othersValue = others.status === "ready" ? others.value : null;
   const structures = useMemo<Structures>(() => ({ ...(othersValue ?? {}), ...(own ? { [route.stage]: own } : {}) }), [othersValue, own, route.stage]);
   const account = PAPER_NAMES[route.stage].short;
+
+  const readRoute = useMemo(() => {
+    if (loaded.status !== "ready" || !own || arrivedBy() !== "load") return route;
+    return followSharedTarget(route, loaded.value);
+  }, [route, loaded, own]);
+
+  useLayoutEffect(() => {
+    // Use the automatic address in history too, so clicking the same passage can pin it.
+    if (readRoute !== route) navigate(readRoute, { replace: true });
+  }, [route, readRoute]);
 
   if (loaded.status === "error") {
     const { title, detail } = describeError(loaded.error);
@@ -127,7 +154,7 @@ export function ReaderPage({ route }: { route: ReadRoute }) {
       <ReaderSkeleton words={`Loading the ${account.toLowerCase()}…`} />
     );
   }
-  return <Reader key={route.stage} route={route} loaded={loaded.value} structures={structures} />;
+  return <Reader key={route.stage} route={readRoute} loaded={loaded.value} structures={structures} />;
 }
 
 function useMedia(query: string): boolean {
