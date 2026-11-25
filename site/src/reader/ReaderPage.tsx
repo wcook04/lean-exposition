@@ -470,11 +470,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const named = statementAt(route.node, route.at);
     const start = savedPart ?? (named !== null ? statements.partOf(named) : undefined) ?? (lines ? partsOfLines(doc.parts, lines)[0] : undefined) ?? hit?.part ?? 0;
     const parts = new Set<number>();
-    for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
+    const target = doc.parts[start];
+    const largeTarget = target && target.span.end - target.span.start >= 64 * 1024;
+    const linkedStart = start >= 4 && savedPart === null && (named !== null || !!lines) && largeTarget;
+    // The exact target is needed for a cold landing. Nearby sections typeset as
+    // they enter the viewport, using the body's existing scroll anchor.
+    if (linkedStart) parts.add(start);
+    else for (let i = start - 2; i <= start + 3; i++) if (i >= 0 && i < doc.parts.length) parts.add(i);
     // Reading from the opening, every part the first screen can show is typeset in the first render,
     // so none of them is filled in, and its margin drawn, after the page has painted.
     if (start < 4) for (let i = 0; i < Math.min(7, doc.parts.length); i++) parts.add(i);
-    return { parts: [...parts], saved: savedPart !== null ? saved : null, slice: savedPart === null && (named !== null || !!lines) ? { tie: named } : null };
+    return { parts: [...parts], targetOnly: linkedStart, saved: savedPart !== null ? saved : null, slice: savedPart === null && (named !== null || !!lines) ? { tie: named } : null };
     // Computed once per mounted paper.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -606,7 +612,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
    * the target, under the strip.
    */
   const landSlice = useCallback(
-    async (at: string | undefined, options: { scroll?: boolean; smooth?: boolean | "always"; follow?: boolean; node?: string; isCurrent?: () => boolean } = {}) => {
+    async (at: string | undefined, options: { scroll?: boolean; targetOnly?: boolean; smooth?: boolean | "always"; follow?: boolean; node?: string; isCurrent?: () => boolean } = {}) => {
       const body = bodyRef.current;
       const root = paperRef.current;
       if (!body || !root) return false;
@@ -616,13 +622,14 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       let landing: () => number;
       if (statement !== null) {
         const part = statements.partOf(statement);
-        await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : [part - 2, part - 1, part, part + 1, part + 2]);
+        const nearby = options.targetOnly ? [part] : [part - 2, part - 1, part, part + 1, part + 2];
+        await body.ensure(options.scroll === false ? [part - 1, part, part + 1] : nearby);
         if (bodyRef.current !== body || options.isCurrent?.() === false) return false;
         target = statements.first(statement) ?? undefined;
         if (!target) return false;
         if (options.scroll !== false) {
           // Lay out the landing before measuring it. Its anchor holds through formula fitting.
-          body.settle([part - 2, part - 1, part, part + 1, part + 2]);
+          body.settle(nearby);
         }
         if (options.scroll !== false || options.follow) {
           stepped.current = true;
@@ -740,7 +747,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       void restorePosition(initial.saved);
       if (at) void landSlice(at, { scroll: false, follow: !route.node && !route.decl, node: route.node });
     } else if (at) {
-      land(landSlice(at, { node: route.node }).then((ok) => {
+      land(landSlice(at, { targetOnly: initial.targetOnly, node: route.node }).then((ok) => {
         if (!ok && route.anchor) return jumpTo(route.anchor);
       }));
     } else if (route.anchor) land(jumpTo(route.anchor));
