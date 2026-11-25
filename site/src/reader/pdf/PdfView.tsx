@@ -113,6 +113,8 @@ interface Props {
   /** The selected phrase's place in the text (`b<start>-<end>`), if any. */
   at?: string;
   pinned: boolean;
+  /** A temporary selection for the highlights, independent of the address that opens the PDF. */
+  selectionAt?: string;
   shownTie: ReaderSignals["shownTie"];
   page?: number;
   position?: PdfLocation;
@@ -121,7 +123,7 @@ interface Props {
   onPosition(page: number, at: string | undefined, byte?: number): void;
 }
 
-export function PdfView({ url, marks, at, pinned, shownTie, page, position, label, onPick, readingLine, onPosition, zoomLevel }: Props) {
+export function PdfView({ url, marks, at, pinned, selectionAt, shownTie, page, position, label, onPick, readingLine, onPosition, zoomLevel }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -278,7 +280,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
     let lit: NodeListOf<HTMLElement> | undefined;
     let currentAt: string | undefined;
     const paint = () => {
-      const next = pinned ? at : shownTie.get()?.at;
+      const next = pinned ? selectionAt ?? at : shownTie.get()?.at;
       if (next === currentAt) return;
       lit?.forEach((mark) => mark.classList.remove("is-selected"));
       currentAt = next;
@@ -291,7 +293,7 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, labe
       unsubscribe();
       lit?.forEach((mark) => mark.classList.remove("is-selected"));
     };
-  }, [width, marks, pinned, at, shownTie]);
+  }, [width, marks, pinned, at, selectionAt, shownTie]);
 
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (

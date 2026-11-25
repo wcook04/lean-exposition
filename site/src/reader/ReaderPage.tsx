@@ -2243,7 +2243,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             label={side === "adapted" ? `Adapted edition · ${pdfLabel ?? "PDF"}` : undefined}
             marks={pdfMarks}
             at={route.at}
-            pinned={!!pin}
+            pinned={!!selectedPin}
+            selectionAt={referencePin ? selectedTie?.at : undefined}
             shownTie={signals.shownTie}
             page={route.page}
             position={pdfOrigin?.page === route.page && pdfOrigin?.at === route.at ? pdfOrigin?.pdfLocation : undefined}
