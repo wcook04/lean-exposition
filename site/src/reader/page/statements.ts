@@ -5,7 +5,8 @@
 import type { PreparedPart } from "../engine";
 import type { TieModel } from "../ties";
 
-export type Light = "on" | "point" | "pin" | "follow";
+/** `ahead` marks the link Next would land on while the reading line is between links. */
+export type Light = "on" | "point" | "pin" | "follow" | "ahead";
 
 interface Mark {
   el: HTMLElement;
@@ -117,7 +118,7 @@ export class Statements {
   /** Each paragraph's control in the margin, and the paragraph it selects. */
   private picks = new WeakMap<HTMLElement, HTMLElement>();
   private heldBlock: HTMLElement | null = null;
-  private lit: Record<Light, number | null> = { on: null, point: null, pin: null, follow: null };
+  private lit: Record<Light, number | null> = { on: null, point: null, pin: null, follow: null, ahead: null };
   /** A declaration pointed at in the Lean pane: its phrases are lit. */
   private decl: string | null = null;
   private partOfSegment: number[];
@@ -224,7 +225,7 @@ export class Statements {
       this.queue(part);
     }
     this.resized?.observe(section);
-    for (const kind of ["on", "point", "pin", "follow"] as Light[]) {
+    for (const kind of ["on", "point", "pin", "follow", "ahead"] as Light[]) {
       const t = this.lit[kind];
       if (t !== null) this.write(kind, t, true, part);
     }
@@ -356,7 +357,7 @@ export class Statements {
     this.drawPicks(section, hits, box.top);
     this.ticks.set(part, bySegment);
     this.measured.add(part);
-    for (const kind of ["on", "point", "pin", "follow"] as Light[]) {
+    for (const kind of ["on", "point", "pin", "follow", "ahead"] as Light[]) {
       const t = this.lit[kind];
       if (t !== null) this.write(kind, t, true, part);
     }
@@ -496,7 +497,8 @@ export class Statements {
     if (was !== null) this.write(kind, was, false);
     this.lit[kind] = t;
     if (t !== null) this.write(kind, t, true);
-    if (kind !== "point" && t !== null) this.rove(t);
+    // Pointing and a preview of the next link leave the keyboard where it was.
+    if (kind !== "point" && kind !== "ahead" && t !== null) this.rove(t);
   }
 
   /** The statement's marks on the page, in reading order; empty while its parts wait to render. */

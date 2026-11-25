@@ -136,6 +136,13 @@
   background-size: calc(100% - 3px) 2px;
 }
 
+/* Between links: the link Next lands on, outlined and not selected. Nothing has moved to it. */
+.paper .tie[data-ahead]:not([data-pin], [data-follow]) {
+  background-color: var(--tie-wash);
+  outline: 1px dashed var(--follow-ink);
+  outline-offset: 2px;
+}
+
 /* A whole selected statement has one amber rule in the margin. */
 .paper .tie[data-pin][data-pin-block],
 .paper .tie[data-follow][data-pin-block] {
@@ -182,6 +189,9 @@
   .paper .tie[data-follow],
   .paper .tie:focus-visible {
     outline: 2px solid Highlight;
+  }
+  .paper .tie[data-ahead]:not([data-pin], [data-follow]) {
+    outline: 1px dashed Highlight;
   }
 }
 

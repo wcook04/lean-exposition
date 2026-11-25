@@ -1017,6 +1017,12 @@ html[data-right-sheet] {
   box-shadow: inset var(--sel-rail) 0 0 var(--sel-ink);
 }
 
+/* Between links: the grey of the reading line, as the outlined link in the paper. Not a selection. */
+.subject-band[data-state="next"],
+.subject-band[data-state="last"] {
+  box-shadow: inset var(--sel-rail) 0 0 var(--follow-ink);
+}
+
 .subject-band__state {
   flex: 1 1 0;
   display: flex;

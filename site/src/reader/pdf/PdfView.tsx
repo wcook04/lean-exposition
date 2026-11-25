@@ -101,6 +101,8 @@ interface Props {
   at?: string;
   pinned: boolean;
   shownTie: ReaderSignals["shownTie"];
+  /** With no mark at the reading line: the mark Next lands on, outlined without moving the page. */
+  ahead?: ReaderSignals["shownTie"];
   page?: number;
   position?: PdfLocation;
   section?: PdfSection;
@@ -109,7 +111,7 @@ interface Props {
   onPosition(page: number, at: string | undefined, section: string | undefined, y: number, byte?: number): void;
 }
 
-export function PdfView({ url, marks, at, pinned, shownTie, page, position, section, label, onPick, readingLine, onPosition }: Props) {
+export function PdfView({ url, marks, at, pinned, shownTie, ahead, page, position, section, label, onPick, readingLine, onPosition }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
   const [failed, setFailed] = useState(false);
@@ -150,8 +152,14 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, sect
 
   // Open at the selected phrase, else at the page asked for.
   const opened = useRef(false);
+  /** The page and section last landed on: letting go of a phrase there is no reason to move. */
+  const landedOn = useRef<{ page?: number; section?: string }>({});
   useEffect(() => {
     if (!width || !pdf) return;
+    const was = landedOn.current;
+    landedOn.current = { page, section: section?.section };
+    // A selection let go of, or made away from the page (from the graph), leaves the page where it is.
+    if (opened.current && !selected && !position && was.page === page && was.section === section?.section) return;
     const target = !position && selected ? box.current?.querySelector<HTMLElement>(`[data-mark="${CSS.escape(selected)}"]`) : null;
     const sectionEl = section ? box.current?.querySelector<HTMLElement>(`[data-section="${CSS.escape(section.section)}"]`) : null;
     const pageEl = page ? box.current?.querySelector<HTMLElement>(`[data-page="${page}"]`) : null;
@@ -265,6 +273,27 @@ export function PdfView({ url, marks, at, pinned, shownTie, page, position, sect
       lit?.forEach((mark) => mark.classList.remove("is-selected"));
     };
   }, [width, marks, pinned, at, shownTie]);
+
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el || !width || !ahead) return;
+    let lit: NodeListOf<HTMLElement> | undefined;
+    let currentAt: string | undefined;
+    const paint = () => {
+      const next = pinned ? undefined : ahead.get()?.at;
+      if (next === currentAt) return;
+      lit?.forEach((mark) => mark.classList.remove("is-ahead"));
+      currentAt = next;
+      lit = next ? el.querySelectorAll<HTMLElement>(`[data-at="${CSS.escape(next)}"]`) : undefined;
+      lit?.forEach((mark) => mark.classList.add("is-ahead"));
+    };
+    paint();
+    const unsubscribe = ahead.subscribe(paint);
+    return () => {
+      unsubscribe();
+      lit?.forEach((mark) => mark.classList.remove("is-ahead"));
+    };
+  }, [width, marks, pinned, ahead]);
 
   if (failed) return <p className="pdf-view__failed">The PDF could not be opened here. Open PDF opens it in a new tab.</p>;
   return (

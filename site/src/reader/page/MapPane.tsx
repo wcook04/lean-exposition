@@ -23,7 +23,7 @@ import site from "@instance/site";
 import { clampDock, DOCK_MAX, DOCK_MIN, readDockShare, saveDockShare } from "./panePrefs";
 import { ModeToggle, type PaneMode } from "./ModeToggle";
 import { POINT_DWELL, rightPreview, type Pin, type ReaderSignals } from "./rightPage";
-import { useSignal, useSlowSignal } from "./signal";
+import { useSignal } from "./signal";
 import { noteHtml } from "../math";
 import { dockDecl, prefetchPhraseNotes } from "./PhraseCard";
 import { loadComparator } from "../../lean/comparatorMark";
@@ -80,6 +80,11 @@ interface Props {
   onRecord?(id: string): void;
   /** A declaration was chosen: it becomes the subject. */
   onDecl?(name: string, module?: string): void;
+  /**
+   * A neighbour chosen in the graph (a card, or a name in the short list): it becomes the subject
+   * and the paper stays where it is. Without it, a neighbour opens as `onRecord` or `onDecl`.
+   */
+  onInspect?(target: { record?: string; decl?: string; declModule?: string }): void;
   /** Auto (or Escape): let go of what was selected and follow the paper from where the reader is. The paper does not move. */
   onRelease(): void;
   /** Where a passage is in the paper, in words: "§5.6", a heading. */
@@ -141,7 +146,7 @@ function usePairedGraphSize(active: boolean) {
   return { pair, layoutHeight, onPaintedHeight };
 }
 
-export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
+export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures, signals, ties, pin, decl = null, declModule, held = null, alignment = null, hoverRef, leanSlot, inert, onRecord, onDecl, onInspect, onRelease, placeOf, onOpenTie, mode, graphRequested, onMode, onCombine, onPoint, onName, passageHref }: Props) {
   const edition = useEdition();
   const { graph } = edition;
   const rootRef = useRef<HTMLElement>(null);
@@ -154,7 +159,8 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
 
   // ---- What the reader is on ---------------------------------------------------------
 
-  const follow = useSlowSignal(signals.paneFollow ?? signals.follow);
+  // The same settled value the view is chosen from, so the overview and the view hand over together.
+  const follow = useSignal(signals.paneFollow ?? signals.follow);
   const pointed = useSignal(signals.point);
   const preview = useSignal(rightPreview);
   const anchor = follow.anchor;
@@ -335,10 +341,11 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     (id: string) => {
       setPreviewCard(null);
       const name = tools.declOf(id);
-      if (name) onDecl?.(name, tools.rowOf(name)?.module);
+      if (onInspect) onInspect(name ? { decl: name, declModule: tools.rowOf(name)?.module } : { record: id });
+      else if (name) onDecl?.(name, tools.rowOf(name)?.module);
       else onRecord?.(id);
     },
-    [tools, onDecl, onRecord],
+    [tools, onDecl, onRecord, onInspect],
   );
 
   // ---- What the dock and the Lean view show ----------------------------------------------
@@ -375,7 +382,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin, decl, openRecord, declModule, held, heldFirst, tools, ties, pointed, followRecord, follow.tie, anchor, passage]);
 
-  // Auto shows the overview at the top. Away from the top the last linked passage stays in the pane.
+  // Auto shows the overview until the reader reaches the first link. Later gaps keep the last link.
   const unlinked = mode === "graph" && !leanSlot && follow.atTop === true && !pin && !decl && !held;
 
   // ---- The whole proof map, one button away ------------------------------------------------
@@ -411,6 +418,13 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const onTrace = useCallback((id: string) => navigate({ view: "map", goal, node: id, trace: "rests" }), [goal]);
   const onTreeSelect = useCallback((id: string | null) => {
     if (!id) return;
+    // A card on the whole map is inspected in the graph like a neighbour; the paper stays, and the
+    // strip offers its passage where it has one.
+    if (onInspect) {
+      setWhole(false);
+      onSubject(id);
+      return;
+    }
     const declaration = tools.declOf(id);
     const statement = statementFor(ties, id) ?? (declaration ? ties.stops.find((t) => {
       const tie = ties.index.ties[t];
@@ -423,7 +437,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
       return;
     }
     onSubject(id);
-  }, [onOpenTie, onSubject, ties, tools]);
+  }, [onInspect, onOpenTie, onSubject, ties, tools]);
 
   // ---- The dock's height, and the fold on a narrow pane ---------------------------------
 
@@ -584,8 +598,11 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
         ? "paragraph"
         : preview || (mode === "lean" && pointed)
           ? "preview"
-          : "following";
-  const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined, pinTie.at) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : "";
+          : follow.ahead && !unlinked
+            ? follow.ahead
+            : "following";
+  const aheadTie = bandState === "next" || bandState === "last" ? ties.index.ties[follow.tie!] : null;
+  const bandPlace = pinTie ? (placeOf?.(pinTie.anchor ?? undefined, pinTie.at) ?? "") : held ? (placeOf?.(held.anchor ?? undefined) ?? "") : aheadTie ? (placeOf?.(aheadTie.anchor ?? undefined, aheadTie.at) ?? "") : "";
   const bandTitle = pin?.tie != null ? phraseTitle(ties, pin.tie) : decl ? plainName(alignment, decl) : subjectTitle;
   const heldList = held?.ties?.length && !pin && !decl && onOpenTie ? <ParagraphLinks ties={ties} list={held.ties} onOpen={(t) => onOpenTie(t)} onPoint={onPoint} /> : null;
   const guide = guideOpen && guideStage ? <GuidePanel stage={guideStage} onClose={() => setGuideOpen(false)} /> : null;
@@ -719,7 +736,7 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
           </button>
         )}
       </div>}
-      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
+      {!fill && <SubjectBand state={bandState} place={bandPlace} title={bandTitle} onResume={holding ? onRelease : undefined} onManual={!holding && !unlinked && follow.tie !== null && onOpenTie ? () => onOpenTie(follow.tie!) : undefined} />}
       {fill ? (
         <div className="map-pane__fill">
           <LeanDock open={leanOpen} ties={ties} stage={stage} alignment={alignment} slot={leanSlot ?? guide} onRelease={onRelease} onPick={(id) => onRecord?.(id)} onPoint={onPoint} onName={onName} passageHref={passageHref ?? ((s, a) => routeHref({ view: "read", stage: s, anchor: a }))} />

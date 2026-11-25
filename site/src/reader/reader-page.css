@@ -496,7 +496,8 @@ html.is-reading {
 }
 
 /* The reading line can reach a mark before the pane settles on it. */
-.tick[data-on] {
+.tick[data-on],
+.tick[data-ahead] {
   background: var(--follow-ink);
 }
 

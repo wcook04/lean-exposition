@@ -13,8 +13,13 @@ export interface Followed {
   anchor: string | null;
   /** Null until the reading position is measured. */
   part: number | null;
-  /** The paper is at its top, where Auto shows the whole map. */
+  /** The reading line has not yet reached the first linked annotation: Auto shows the whole map. */
   atTop?: boolean;
+  /**
+   * Set on the pane's copy when no link is at the reading line: `tie` is then the link Next lands
+   * on ("next"), or, with nothing further on, the nearest link above ("last"). The paper has not moved.
+   */
+  ahead?: "next" | "last";
 }
 
 /** The pane for a statement or an explicitly selected record, using its Lean dock's sources. */

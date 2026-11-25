@@ -21,7 +21,7 @@ import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { hostLean, type LeanWalk } from "../lean/walk";
 import { INPUT, restoreScroll } from "../app/restore";
-import { arrivedBy, entryKey, namePlace, onLeave, readEntry, writeEntry } from "../app/trail";
+import { arrivedBy, entryKey, namePlace, onLeave, readEntry, useEntryState, writeEntry } from "../app/trail";
 import { sectionLabel } from "../map/TheoremPlate";
 import { paperAlignmentResource, shortTitle } from "../compare/useAlignment";
 import { code, lazyCode } from "../app/code";
@@ -220,6 +220,18 @@ const OPENED = "opened";
 interface Opened {
   steps: number;
 }
+/**
+ * On an entry reached from the graph: the entry before the first graph click (`depth` entries
+ * back), the view it had, and whether "Go to passage" has since moved the paper (`went`).
+ */
+const GRAPH_TRIP = "graphTrip";
+interface GraphTrip {
+  depth: number;
+  label: string;
+  graph?: boolean;
+  lean?: boolean;
+  went?: boolean;
+}
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"]);
 
 function cssPx(name: string, fallback: number): number {
@@ -304,9 +316,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   }, [stage, pdfOwn]);
   // A document whose only form is the authors' PDF (a standard with no reading copy) is read in its PDF,
   // with no Text toggle; its phrases, cards and search come from the index of passages behind it.
-  const pdfOn = (!!route.pdf || pdfOnly) && !!pdfMarks;
+  /** PDF asked for: the text's own reading position stays out of it while the marks load. */
+  const pdfWanted = !!route.pdf || pdfOnly;
+  const pdfOn = pdfWanted && !!pdfMarks;
   const pdfByAt = useMemo(() => new Map(Object.values(pdfMarks?.marks ?? {}).map((mark) => [mark.at, mark])), [pdfMarks]);
   const pdfStops = useMemo(() => ties.stops.filter((t) => pdfByAt.has(ties.index.ties[t].at)), [ties, pdfByAt]);
+  /** Where this edition's first mapped mark is in its PDF: before it, Auto keeps the opening overview. */
+  const firstPdfBox = useMemo(() => {
+    let first: readonly number[] | undefined;
+    for (const t of pdfStops) {
+      const box = pdfByAt.get(ties.index.ties[t].at)?.boxes[0];
+      if (box && (!first || box[0] < first[0] || (box[0] === first[0] && box[2] < first[2]))) first = box;
+    }
+    return first;
+  }, [pdfStops, pdfByAt, ties]);
   const pdfPage = useRef<number | null>(null);
   const pdfByte = useRef<number | undefined>(undefined);
   const pdfY = useRef(0);
@@ -346,7 +369,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const paneHover = useRef<PaneHover | null>(null);
 
   // Written by the scroll path and pointer; read by small leaves and by the right page.
-  const paneFollow = useRef(new Signal<Followed>({ tie: null, anchor: null, part: null }, sameFollow)).current;
+  // A paper opened at its beginning starts before its first link, so the opening overview is drawn
+  // from the first frame rather than after a local graph of the main result.
+  const opensAtStart = !route.at && !route.node && !route.decl && !route.anchor && (route.page ?? 1) === 1;
+  const paneFollow = useRef(new Signal<Followed>({ tie: null, anchor: null, part: null, atTop: opensAtStart || undefined }, sameFollow)).current;
   const lastLinked = useRef<Followed | null>(null);
   const signals = useRef<ReaderSignals>({
     heading: new Signal<string | null>(null),
@@ -357,12 +383,30 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     point: new Signal<Pointed | null>(null),
     caption: new Signal<string | null>(null),
   }).current;
+  /** The link Next (1) or Previous (-1) would land on from here; filled in with `step` below. */
+  const stepTarget = useRef<(by: 1 | -1) => number | undefined>(() => undefined);
   const setReadingFollow = useCallback((position: Followed) => {
     const reading = position.atTop ? { ...position, tie: null, anchor: null } : position;
     if (reading.tie !== null) lastLinked.current = reading;
     signals.follow.set(reading);
-    paneFollow.set(!reading.atTop && reading.tie === null ? lastLinked.current ?? reading : reading);
-  }, [paneFollow, signals]);
+    if (reading.tie !== null) return paneFollow.set(reading);
+    const manual = !!(pinRef.current || heldRef.current || hereRef.current.decl);
+    // Before the first link (`atTop`): Auto's opening overview, where the view shows one, and
+    // otherwise a preview of the first link, the one Next lands on. Nothing moves or is selected.
+    if (reading.atTop) {
+      const first = manual ? undefined : stepTarget.current(1);
+      return paneFollow.set(first === undefined ? reading : { ...reading, tie: first, anchor: ties.index.ties[first].anchor ?? null, ahead: "next" });
+    }
+    // A later gap keeps the last link read. Arrived in a gap by a jump, with none read yet:
+    // the nearest link above, else the next, each said as such.
+    if (manual || lastLinked.current) return paneFollow.set(lastLinked.current ?? reading);
+    const last = stepTarget.current(-1);
+    const ahead = last === undefined ? stepTarget.current(1) : undefined;
+    const shown = last ?? ahead;
+    paneFollow.set(shown === undefined ? reading : { ...reading, tie: shown, anchor: ties.index.ties[shown].anchor ?? reading.anchor, ahead: last !== undefined ? "last" : "next" });
+  }, [paneFollow, signals, ties]);
+  /** The pane's previewed link, as the paper and the PDF outline it. */
+  const aheadHighlight = useRef(new Signal<{ tie: number; at: string } | null>(null)).current;
   const paperHighlight = useRef(new Signal<{ tie: number; at: string } | null>(null)).current;
   const statements = useMemo(
     () =>
@@ -830,8 +874,10 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 
   useEffect(() => {
     statements.light("on", pin ? null : current.current);
+    // Let go between links: the pane previews the next link again, without waiting for a scroll.
+    if (!pin && signals.follow.get().part !== null) setReadingFollow(signals.follow.get());
     update.current();
-  }, [pin, statements]);
+  }, [pin, statements, signals, setReadingFollow]);
 
   // A statement with no Lean has nothing to open: what is known about that stands under it.
   const pinWithoutLean = !!pin && pin.tie !== null && !ties.index.ties[pin.tie].lean;
@@ -856,6 +902,20 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const mode = useSyncExternalStore(paneFollow.subscribe, getMode);
   const modeRef = useRef(mode);
   modeRef.current = mode;
+
+  // The link the pane previews between links is outlined in the paper too, unless a selection holds
+  // the pane or the opening whole proof map stands in for it at the top.
+  useLayoutEffect(() => {
+    const paint = () => {
+      const pane = paneFollow.get();
+      const opening = pane.atTop && mode === "graph";
+      const t = !pin && !held && !route.decl && pane.ahead && !opening ? pane.tie : null;
+      statements.light("ahead", t);
+      aheadHighlight.set(t === null ? null : { tie: t, at: ties.index.ties[t].at });
+    };
+    paint();
+    return paneFollow.subscribe(paint);
+  }, [aheadHighlight, paneFollow, statements, ties, pin, held, route.decl, mode]);
   // After Back or Forward, keep an explicit tab choice. Auto follows the restored reading position.
   const viewKept = useRef(requestedMode);
   const viewEntry = useRef(keyRef.current);
@@ -962,11 +1022,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const run = () => {
       frame = 0;
       const body = bodyRef.current;
-      if (!body || pdfOn || pdfOnly) return;
+      if (!body || pdfWanted) return;
       const top = readingTop();
       const line = readingLineFrom(top);
       let part = partAt(body, doc.parts.length, line);
       const atLine = part;
+      // Before the first link: the reading line has not reached its mark (or Next has landed on it).
+      const firstStop = ties.stops[0];
+      const firstPart = firstStop === undefined ? Infinity : statements.partOf(firstStop);
+      const firstMark = atLine === firstPart ? statements.first(firstStop) : null;
+      const beforeFirst = !(stepped.current && current.current !== null)
+        && (atLine < firstPart || (atLine === firstPart && (!firstMark || firstMark.getBoundingClientRect().top > line)));
       // Unmapped text at the reading line (a title block, a bridge paragraph):
       // follow the first mapped passage on screen instead, if there is one.
       if (doc.parts[part]?.kind !== "passage") {
@@ -985,12 +1051,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const tie = segment === null ? null : statementOf(ties, segment);
         const extent = tie === null ? null : statements.extent(tie);
         const visible = extent && extent.bottom > top && extent.top < window.innerHeight;
-        currentSegment.current = visible ? segment : null;
-        current.current = visible ? tie : null;
+        // The follow radius can see the first link before the reader reaches it; it waits.
+        currentSegment.current = visible && !beforeFirst ? segment : null;
+        current.current = visible && !beforeFirst ? tie : null;
         if (!pinRef.current) statements.light("on", current.current);
       }
       const passage = passageAt(atLine);
-      const atTop = window.scrollY < 8 && !stepped.current;
+      const atTop = beforeFirst;
       const key = `${current.current}|${passage}|${atTop}`;
       if (key !== settled) {
         settled = key;
@@ -1071,7 +1138,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
       window.clearTimeout(addressTimer);
       window.clearTimeout(first);
     };
-  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, pdfOn, pdfOnly, setReadingFollow]);
+  }, [doc, outline, ties, statements, signals, saveNow, readingTop, readingLine, pdfWanted, setReadingFollow]);
 
 
 
@@ -1412,11 +1479,8 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   // ---- Keys ----------------------------------------------------------------------------
 
   /** Move to the next tied statement: to the reading line, as though the reader had scrolled there. */
-  const step = useCallback(
-    (by: 1 | -1, focusedMark?: HTMLElement) => {
-      if (pdfOnly && !pdfOn) return;
-      const here = hereRef.current;
-      const manual = !!(pinRef.current || heldRef.current || here.decl);
+  const target = useCallback(
+    (by: 1 | -1): number | undefined => {
       const pinned = pinRef.current?.tie;
       const start = unstarted.current && pinned == null;
       if (pdfOn) {
@@ -1424,10 +1488,33 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         const followed = pinned ?? current.current;
         const i = followed === null ? -1 : ordered.indexOf(ties.stops[ties.place[followed]]);
         const page = pdfPage.current ?? 1;
-        const next = start ? ordered[0] : i >= 0 ? ordered[i + by] : (by > 0 ? ordered : [...ordered].reverse()).find((t) => {
+        return start ? ordered[0] : i >= 0 ? ordered[i + by] : (by > 0 ? ordered : [...ordered].reverse()).find((t) => {
           const box = pdfByAt.get(ties.index.ties[t].at)?.boxes[0];
           return box && (box[0] === page ? (box[2] - pdfY.current) * by >= 0 : (box[0] - page) * by > 0);
         });
+      }
+      // Between statements the step starts from where the reader is, not from the paper's start.
+      const at = signals.part.get();
+      const from = pinned == null ? currentSegment.current : ties.segmentsOf[pinned][0];
+      const next = start ? ties.stops[0] : from !== null ? stepFrom(ties, from, by)
+        : by > 0 ? ties.stops.find((t) => statements.partOf(t) >= at)
+          : ties.stops.findLast((t) => statements.partOf(t) < at);
+      return next ?? undefined;
+    },
+    [ties, statements, signals, pdfOn, pdfStops, pdfByAt],
+  );
+  stepTarget.current = target;
+
+  const step = useCallback(
+    (by: 1 | -1, focusedMark?: HTMLElement) => {
+      if (pdfOnly && !pdfOn) return;
+      const here = hereRef.current;
+      const manual = !!(pinRef.current || heldRef.current || here.decl);
+      // From a gap, Next lands on the link the pane is previewing, whatever has been measured since.
+      const pane = paneFollow.get();
+      const previewed = by > 0 && !manual && current.current === null && pane.ahead === "next" ? pane.tie ?? undefined : undefined;
+      const next = previewed ?? target(by);
+      if (pdfOn) {
         if (next === undefined) return;
         const tie = ties.index.ties[next];
         const box = pdfByAt.get(tie.at)?.boxes[0];
@@ -1438,13 +1525,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         navigate({ ...here, anchor: undefined, node: manual ? tie.record : undefined, decl: undefined, declModule: undefined, at: tie.at, page: box[0] }, { replace: true });
         return;
       }
-      // Between statements the step starts from where the reader is, not from the paper's start.
-      const at = signals.part.get();
-      const from = pinned == null ? currentSegment.current : ties.segmentsOf[pinned][0];
-      const next = start ? ties.stops[0] : from !== null ? stepFrom(ties, from, by)
-        : by > 0 ? ties.stops.find((t) => statements.partOf(t) >= at)
-          : ties.stops.findLast((t) => statements.partOf(t) < at);
-      if (next == null) return;
+      if (next === undefined) return;
       unstarted.current = false;
       const tie = ties.index.ties[next];
       if (manual) {
@@ -1470,7 +1551,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
         statements.first(next)?.focus({ preventScroll: true });
       });
     },
-    [doc, ties, statements, signals, setReadingFollow, landSlice, pdfOn, pdfOnly, pdfStops, pdfByAt],
+    [doc, ties, statements, paneFollow, target, setReadingFollow, landSlice, pdfOn, pdfOnly, pdfByAt],
   );
 
   useEffect(() => {
@@ -1717,6 +1798,52 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     [go, ties, landSlice, nextOpened],
   );
 
+  // ---- Graph trips: neighbours inspected in the graph, the paper left where it was ---------
+
+  const [trip, setTrip] = useEntryState<GraphTrip | undefined>(GRAPH_TRIP, undefined);
+  /** A neighbour chosen in the graph: one history entry, the view kept, the paper not moved. */
+  const inspectInGraph = useCallback(
+    (target: { record?: string; decl?: string; declModule?: string }) => {
+      const here = hereRef.current;
+      const prior = readEntry<GraphTrip>(GRAPH_TRIP);
+      const mode = modeRef.current;
+      const next: GraphTrip = prior
+        ? { ...prior, depth: prior.depth + 1 }
+        : { depth: 1, label: placeLabel(here.anchor ?? doc.parts[signals.part.get()]?.anchor), graph: here.graph, lean: here.lean };
+      const opened = nextOpened();
+      // `at` goes so the address does not land the paper on the record's statement.
+      go({ ...here, graph: mode === "graph" || undefined, lean: mode === "lean" || undefined, node: target.record, at: undefined, decl: target.decl, declModule: target.declModule, beside: undefined });
+      writeEntry(OPENED, opened);
+      setTrip(next);
+    },
+    [go, nextOpened, placeLabel, doc, signals, setTrip],
+  );
+  /** The passage the graph's selection is tied to in this paper, or null: no mapping is made up. */
+  const tripTarget = useMemo(() => {
+    if (!trip || (!route.node && !route.decl)) return null;
+    const t = route.node
+      ? statementFor(ties, route.node)
+      : (ties.stops.find((s) => ties.index.ties[s].name === route.decl || !!ties.index.ties[s].rows?.some((row) => row.name === route.decl)) ?? null);
+    if (t === null) return null;
+    if (pdfOn && !pdfByAt.get(ties.index.ties[t].at)?.boxes[0]) return null;
+    return t;
+  }, [trip, route.node, route.decl, ties, pdfOn, pdfByAt]);
+  /** "Go to passage": the paper follows from the target, the graph's selection let go. */
+  const goToPassage = useCallback(() => {
+    if (!trip || tripTarget === null) return;
+    const tie = ties.index.ties[tripTarget];
+    const box = pdfOn ? pdfByAt.get(tie.at)?.boxes[0] : undefined;
+    const here = hereRef.current;
+    if (pdfOn) writeEntry("pdfOrigin", undefined);
+    go({ ...here, graph: trip.graph, lean: trip.lean, node: undefined, decl: undefined, declModule: undefined, at: tie.at, anchor: undefined, beside: undefined, ...(box ? { page: box[0] } : {}) });
+    setTrip({ ...trip, depth: trip.depth + 1, went: true });
+  }, [trip, tripTarget, ties, pdfOn, pdfByAt, go, setTrip]);
+  /** "Return to original": Back to the entry before the first graph click, with its place and view. */
+  const returnFromTrip = useCallback(() => {
+    if (trip) window.history.go(-trip.depth);
+  }, [trip]);
+  const dismissTrip = useCallback(() => setTrip(undefined), [setTrip]);
+
   /** A declaration's card becomes the subject as one history entry. */
   const openDeclHere = useCallback(
     (name: string, module?: string) => {
@@ -1836,14 +1963,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     }
     return counts;
   }, [pdfSections, ties]);
-  const followPdf = useCallback((at: string | undefined) => {
-    const tie = statementAt(undefined, at);
+  const followPdf = useCallback((at: string | undefined, beforeFirst = false) => {
+    const tie = beforeFirst ? null : statementAt(undefined, at);
     const part = tie === null ? 0 : statements.partOf(tie);
     current.current = tie;
     currentSegment.current = tie === null ? null : ties.segmentsOf[tie][0];
     signals.part.set(part);
-    const atTop = window.scrollY < 8 && (scrolledPdf.current || !hereRef.current.at);
-    setReadingFollow({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part, atTop });
+    setReadingFollow({ tie, anchor: tie === null ? null : ties.index.ties[tie].anchor, part, atTop: beforeFirst });
   }, [signals, setReadingFollow, statements, statementAt, ties]);
   useLayoutEffect(() => {
     if (!pdfOn) return;
@@ -1857,8 +1983,12 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     pdfByte.current = byte;
     pdfY.current = y;
     signals.heading.set(section ? pdfSectionId(section) : null);
-    followPdf(pdfReadingAt(pdfByAt, hereRef.current.at, at, scrolledPdf.current));
-  }, [signals, pdfByAt, followPdf]);
+    // An exact mapped address (an opened mark, or Next) is a deliberate landing; otherwise the
+    // reader is before the first link until the reading line reaches this edition's first mark.
+    const addressed = pdfReadingAt(pdfByAt, hereRef.current.at, undefined, scrolledPdf.current);
+    const beforeFirst = !addressed && (!firstPdfBox || page < firstPdfBox[0] || (page === firstPdfBox[0] && y < firstPdfBox[2]));
+    followPdf(addressed ?? at, beforeFirst);
+  }, [signals, pdfByAt, firstPdfBox, followPdf]);
   // A PDF page can contain many paragraphs. Remember the exact text position for a
   // round trip on the same page. A new PDF selection or a different page takes precedence.
   const textReturn = useRef<ReadingPosition | null>(null);
@@ -2025,6 +2155,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     hoverRef: paneHover,
     onRecord: openFromMap,
     onDecl: openDeclHere,
+    onInspect: inspectInGraph,
     held,
     onRelease: closeLean,
     placeOf: placeWords,
@@ -2176,7 +2307,29 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
               <span className="reader-strip__word">Show pane</span>
             </button>
           )}
-          {visit && !route.beside && (
+          {!route.beside && trip && (tripTarget !== null || trip.went) ? (
+            <div className="reader-strip__visit">
+              {tripTarget !== null ? (
+                <button type="button" className="control reader-strip__return" title={`The paper moves to ${placeWords(ties.index.ties[tripTarget].anchor ?? undefined, ties.index.ties[tripTarget].at)}`} onClick={goToPassage}>
+                  Go to passage
+                </button>
+              ) : (
+                <>
+                  <button type="button" className="control reader-strip__return" title={`Back to ${trip.label}, as it was before the graph`} onClick={returnFromTrip}>
+                    <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                      <path d="M7.5 2.5L4 6l3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    Return to original
+                  </button>
+                  <button type="button" className="reader-strip__dismiss" aria-label={`Stay here and remove the button that returns to ${trip.label}`} onClick={dismissTrip}>
+                    <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+                      <path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+          ) : visit && !route.beside && (
             <div className="reader-strip__visit">
               <button type="button" className="control reader-strip__return" onClick={returnToOrigin}>
                 <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
@@ -2223,6 +2376,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             at={route.at}
             pinned={!!pin}
             shownTie={paperHighlight}
+            ahead={aheadHighlight}
             page={route.page}
             position={!pdfSection && pdfOrigin?.page === route.page && pdfOrigin?.at === route.at ? pdfOrigin?.pdfLocation : undefined}
             section={pdfSection}
@@ -2398,7 +2552,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
 }
 
 function sameFollow(a: Followed, b: Followed): boolean {
-  return a.tie === b.tie && a.anchor === b.anchor && a.part === b.part && a.atTop === b.atTop;
+  return a.tie === b.tie && a.anchor === b.anchor && a.part === b.part && a.atTop === b.atTop && a.ahead === b.ahead;
 }
 
 /** Renders with the section being read: the one thing here that changes while scrolling. */
