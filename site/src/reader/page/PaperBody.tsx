@@ -420,10 +420,9 @@ const Part = memo(function Part({ part, stage, doc, rendered, structures, lit, s
   // out of layout and paint until it comes near (or find reveals it), when it is typeset once.
   const html = useMemo(() => {
     if (part.blank) return null;
-    if (!rendered) return statements ? statements.decorate(doc.renderPlain(part.index).html) : doc.renderPlain(part.index).html;
-    const raw = doc.render(part.index).html;
-    return prepareMarkup(statements ? statements.decorate(raw) : raw);
-  }, [rendered, part, doc, statements]);
+    if (!rendered) return doc.renderPlain(part.index).html;
+    return prepareMarkup(doc.render(part.index).html);
+  }, [rendered, part, doc]);
   const anchor = part.kind === "passage" ? part.anchor : undefined;
   const passage = anchor ? passageOf(structures[stage], anchor) : undefined;
   const records = useMemo(() => passageRecords(passage), [passage]);
@@ -636,10 +635,12 @@ function fitDisplay(box: HTMLElement): void {
   // Font sizes round to whole device pixels and KaTeX's spacing does not scale exactly, so check
   // again after each step, a few times at most.
   for (let step = 0; step < 4; step++) {
+    const width = box.clientWidth;
+    if (box.scrollWidth <= width) break;
     const extent = formulaExtent(box);
-    if (!(extent > box.clientWidth + 0.5 && extent > 0)) break;
+    if (extent <= width + 0.5) break;
     const tagPart = choice.size.tag ? choice.size.tag + TAG_GAP : 0;
-    scale = Math.floor(scale * Math.max(0, box.clientWidth - tagPart) / Math.max(1, extent - tagPart) * 0.99 * 1000) / 1000;
+    scale = Math.floor(scale * Math.max(0, width - tagPart) / Math.max(1, extent - tagPart) * 0.99 * 1000) / 1000;
     setScale(box, choice.size, scale);
   }
   const fit = scale >= 1 ? undefined : scale >= FIT_FLOOR ? "scaled" : "squeezed";
@@ -825,8 +826,11 @@ export function quoteOfDisplay(box: HTMLElement): string {
 
 /** A display drawn, as it stands, past its column's edge (formula or number). */
 function overflowsColumn(box: HTMLElement): boolean {
+  const width = box.clientWidth;
   const math = mathOf(box);
-  return Math.max(formulaExtent(box), math ? math.scrollWidth : 0) > box.clientWidth + 1;
+  if (math && math.scrollWidth > width + 1) return true;
+  // Use fragment bounds only for overflow that may be a KaTeX strut.
+  return box.scrollWidth > width && formulaExtent(box) > width + 1;
 }
 
 /** Displays fitted at least once, across mounts. */
@@ -864,8 +868,12 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
   // seen cut off by the column's edge before the fitter has shrunk or broken it.
   // Only a display wider than its column is hidden: one that already fits is shown as it is, and
   // fitting it later writes nothing, so a display that needs no change never changes the page.
-  // (All the widths are read before any is written, in one layout.)
-  const wide = boxes.filter((box) => !widthsSeen.has(box) && box.dataset.unfitted === undefined && overflowsColumn(box));
+  // Only inspect displays that will paint now. The ahead observer handles the rest
+  // before they enter the viewport. Read the entire visible batch before writing.
+  const observed = typeof IntersectionObserver !== "undefined";
+  const firstScreen = observed ? new Set(boxes.filter((box) => onScreen(box.getBoundingClientRect()))) : null;
+  const needsFit = (box: HTMLElement) => !widthsSeen.has(box) && box.dataset.unfitted === undefined && overflowsColumn(box);
+  const wide = [...(firstScreen ?? boxes)].filter(needsFit);
   for (const box of wide) box.dataset.unfitted = "";
   const cues = new Map<HTMLElement, HTMLElement>();
   const widths = new WeakMap<HTMLElement, { now: number; before: number | null; at: number }>();
@@ -927,12 +935,12 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
     }
   });
   const fitted = new Set<HTMLElement>();
-  const fit = (box: HTMLElement) => {
+  const fit = (box: HTMLElement, checked = false) => {
     fitted.add(box);
     observer.observe(box);
-    // A width measured in a fallback font is wrong: a display reached before KaTeX's main faces
-    // load waits for them, hidden (data-unfitted), and is fitted the moment they arrive.
+    // Measure in the real fonts. A visibly wide display waits hidden until they arrive.
     if (!katexFacesReady()) {
+      if (!checked && needsFit(box)) box.dataset.unfitted = "";
       waiting.add(box);
       stale.add(box);
       return;
@@ -945,8 +953,8 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
   const onSelect = () => {
     const node = document.getSelection()?.anchorNode;
     const el = node && (node.nodeType === 1 ? (node as Element) : node.parentElement);
-    const box = el?.closest<HTMLElement>(".math-display[data-unfitted]");
-    if (!box || !boxes.includes(box)) return;
+    const box = el?.closest<HTMLElement>(".math-display");
+    if (!box || !boxes.includes(box) || (fitted.has(box) && box.dataset.unfitted === undefined)) return;
     near?.unobserve(box);
     if (!fitted.has(box)) fit(box);
     else update(box, true);
@@ -958,7 +966,7 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
   document.addEventListener("selectionchange", onSelect);
   // Each measurement forces a layout, so a formula is fitted as it comes near the screen.
   const near =
-    typeof IntersectionObserver === "undefined"
+    !observed
       ? null
       : new IntersectionObserver(
           (entries) => {
@@ -976,10 +984,8 @@ export function markWideMaths(root: HTMLElement, offerExpand = true): () => void
         );
   // The displays on the first screen are fitted now, before the page paints (this runs in a layout
   // effect), so nothing about them changes once it is shown; the rest are fitted as they come near.
-  // Read visibility for the whole batch before any fit changes the layout.
-  const firstScreen = near ? new Set(boxes.filter((box) => onScreen(box.getBoundingClientRect()))) : null;
   for (const box of boxes) {
-    if (!firstScreen || firstScreen.has(box)) fit(box);
+    if (!firstScreen || firstScreen.has(box)) fit(box, true);
     else near?.observe(box);
   }
   let refitting = false;

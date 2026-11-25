@@ -111,7 +111,7 @@ const BLOCK_ATOM = ".math-display, figure";
  * inside, so each stays inline and the markup around the words is unchanged. An unclosed
  * mark ends with the part. Text is otherwise untouched; the marks go.
  */
-export function wrapTies(html: string, document: Document = window.document): string {
+export function wrapTies(html: string, document: Document = window.document, tones?: ReadonlyArray<number | undefined>): string {
   if (!hasMarks(html)) return html;
   const box = document.createElement("template");
   box.innerHTML = html;
@@ -119,11 +119,17 @@ export function wrapTies(html: string, document: Document = window.document): st
   let run: ChildNode[] = [];
   let runSegment = -1;
 
+  const markElement = (element: Element, segment: number) => {
+    element.setAttribute("data-t", String(segment));
+    const tone = tones?.[segment];
+    if (tone !== undefined) element.setAttribute("data-tone", String(tone));
+  };
+
   const flush = () => {
     if (run.length && run.some((node) => node.nodeType !== 3 || (node as Text).data.trim())) {
       const span = document.createElement("span");
       span.className = "tie";
-      span.dataset.t = String(runSegment);
+      markElement(span, runSegment);
       run[0].before(span);
       span.append(...run);
     }
@@ -176,7 +182,7 @@ export function wrapTies(html: string, document: Document = window.document): st
           flush();
           if (open.length) {
             element.classList.add("tie");
-            element.setAttribute("data-t", String(open[open.length - 1]));
+            markElement(element, open[open.length - 1]);
           }
           // A mark can sit inside a display set in the running text; it still counts.
           closeMarksIn(element);
