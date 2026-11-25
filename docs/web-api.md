@@ -58,6 +58,14 @@ Lean source directly from the pinned community repository. It checks the
 SHA-256 of each file before displaying it. The public build does not bundle
 the Lean source files or require a proof server.
 
+The PDF opens by default. Text opens a KaTeX rendering of the pinned authors'
+TeX at `/text/`. The manuscript and its byte bindings live under
+`instances/riemann-hypothesis/papers/long/` and `passage-ties-text.json`.
+The builder checks the paper revision and manuscript digest, then projects the
+PDF's reviewed annotations onto the exact spans in Text. When the source
+changes, update both inputs together and verify that all existing PDF links
+have a matching Text passage.
+
 To preview the built reader and the module API on one origin, serve them
 together with the paper manifest.
 

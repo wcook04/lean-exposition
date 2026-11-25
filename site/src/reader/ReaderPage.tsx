@@ -16,6 +16,7 @@ import type { Alignment } from "../api/lean";
 import type { Stage } from "../api/types";
 import { describeError, loadPaperStructure, useEdition, useResource } from "../app/data";
 import { navigate, parseRoute, routeHref, walkEntry, type Route } from "../app/router";
+import { phraseAddress } from "../app/libraryAddress";
 import { PAPER_NAMES, STAGE_ORDER } from "../app/papers";
 import { prefersReducedMotion } from "../app/theme";
 import { hostLean, type LeanWalk } from "../lean/walk";
@@ -282,6 +283,9 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
   const stage = route.stage;
   const structure = paper.structure;
   const pdfOnly = !!site.library?.pdfOnly?.includes(stage);
+  const textStage = site.library?.textFormat;
+  const pdfStage = site.library?.main;
+  const pairedFormat = textStage && pdfStage && (stage === textStage || stage === pdfStage);
   const pdfOwn = PAPER_PDFS[stage] as { path: string; pages: number } | undefined;
   const pdfFile = pdfOwn ? `${import.meta.env.BASE_URL}${pdfOwn.path}` : "";
   // The authors' PDF beside the typeset text: a toggle where the build placed the phrases on it.
@@ -1893,6 +1897,17 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     const at = atInPdf();
     return samePdfOrigin()?.line ?? (scrolledPdf.current && pdfByte.current !== undefined ? doc.lineOfByte(pdfByte.current) : undefined) ?? (at ? resolveAt(doc, at)?.start : undefined) ?? null;
   };
+  const switchFormat = (target: Stage) => {
+    if (target === stage) return;
+    const index = selectedTieIndex ?? current.current;
+    const phrase = index === null ? undefined : ties.index.ties[index]?.phrase;
+    const slug = target === textStage ? Object.keys(site.library?.pages ?? {}).find((key) => site.library?.pages?.[key] === target) : undefined;
+    const next = phrase ? phraseAddress(phrase, slug) : undefined;
+    navigate({
+      view: "read", stage: target, at: next?.at, node: selectedTieIndex !== null ? next?.record ?? undefined : undefined,
+      lean: route.lean, graph: route.graph, decl: route.decl, declModule: route.declModule,
+    });
+  };
   const showPdf = (on: boolean) => {
     if (!pdfMarks || on === pdfOn) return;
     const next = new URL(window.location.href);
@@ -2115,7 +2130,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
             </button>
           )}
           <Crumbs signals={signals} outline={outline} place={!outlineColumn} phone={phone} hint={ties.stops.length > 0 && !isPhraseLayer(ties)} phrases={isPhraseLayer(ties)} onJump={(id) => jumpWithHistory(id, true)} />
-          {(side || (pdfOwn && !pdfOnly)) && (
+          {(side || pairedFormat || (pdfOwn && !pdfOnly)) && (
             <div className="reader-strip__formats">
               {side && (
                 <span className="view-toggle edition-switch" role="group" aria-label="Read the authors’ paper or the adapted edition">
@@ -2123,7 +2138,13 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
                   <button type="button" aria-pressed={side === "adapted"} onClick={() => switchEdition("adapted")}>Adapted edition</button>
                 </span>
               )}
-              {pdfOwn && !pdfOnly && (
+              {pairedFormat && (
+                <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
+                  <button type="button" aria-pressed={stage === textStage} onClick={() => switchFormat(textStage)}>Text</button>
+                  <button type="button" aria-pressed={stage === pdfStage} onClick={() => switchFormat(pdfStage)}>PDF</button>
+                </span>
+              )}
+              {pdfOwn && !pdfOnly && !pairedFormat && (
                 <span className="view-toggle" role="group" aria-label="Read the typeset text or the authors’ PDF">
                   <button type="button" aria-pressed={!pdfOn} onClick={() => showPdf(false)}>Text</button>
                   <button type="button" aria-pressed={pdfOn} disabled={!pdfMarks} onClick={() => showPdf(true)}>PDF</button>

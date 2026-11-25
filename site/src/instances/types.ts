@@ -169,6 +169,8 @@ export interface SiteInstance {
     external?: { title: string; job: string; href: string }[];
     /** Documents read only in the authors' PDF: no reading copy, so no Text toggle. */
     pdfOnly?: InstanceStage[];
+    /** A text rendering paired with the main PDF-only paper. */
+    textFormat?: InstanceStage;
   };
   /**
    * An adapted edition of the main document (instances/<paper>/adapted/, docs/reader-design.md

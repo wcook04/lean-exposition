@@ -114,6 +114,8 @@ export interface LibraryInstance {
     lean_scope?: string;
   };
   documents: LibraryDocument[];
+  /** A text rendering of the same PDF-only paper, with its own source-byte addresses. */
+  text_format?: string;
   /** Compare's columns besides the Lean, by document slot, when the paper has several accounts of one argument. */
   levels?: string[];
   /** Compare's column names by slot (for example "Expert companion"), in place of the reader's default names. */

@@ -16,6 +16,7 @@ from tempfile import TemporaryDirectory
 from urllib.parse import urlencode
 
 from apply_passage_annotations import apply_annotations
+from build_rh_text import add_text_format
 from lean_exposition.alignment import FIDELITY, FIDELITY_KEYS
 from lean_exposition.bundle import scaffold
 from lean_exposition.contracts import encoded
@@ -424,10 +425,13 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
             apply_annotations(INSTANCE, edition, write=True, complete=True)
         write(work / "pdf-marks/short.json", marks)
         write(work / "lean-line-annotations.json", line_annotations)
-        write(work / "instance.json", config)
-        write(work / "addresses.json", {"phrases": {
+        addresses = {"phrases": {
             tie["phrase"]: {"record": tie["record"], "at": tie["at"]} for tie in ties["ties"]
-        }, "results": {}, "pages": {}})
+        }, "results": {}, "pages": {}}
+        add_text_format(edition, config, addresses, INSTANCE / "papers/long/paper.md",
+                        INSTANCE / "passage-ties-text.json")
+        write(work / "instance.json", config)
+        write(work / "addresses.json", addresses)
         write(work / "alignment/records.json", {"records": alignment["records"]})
         for slot in ("long", "short", "expository"):
             write(work / f"alignment/references-{slot}.json", {
@@ -435,6 +439,8 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
             })
         doc = work / "papers/short"
         doc.mkdir(parents=True)
+        (work / "papers/long").mkdir()
+        shutil.copyfile(INSTANCE / "papers/long/paper.md", work / "papers/long/paper.md")
         (doc / "paper.pdf").symlink_to(paper_dir / "paper.pdf")
         subprocess.run(["node", "scripts/check-tex.mjs", INSTANCE.name], cwd=SITE, check=True)
         with ExitStack() as stack:
@@ -460,6 +466,8 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
         # Vite copies public inputs. Keep the shell at the normal Library root.
         dist = SITE / "dist"
         shutil.copyfile(dist / "read/short/index.html", dist / "index.html")
+        (dist / "text").mkdir(exist_ok=True)
+        shutil.copyfile(dist / "read/long/index.html", dist / "text/index.html")
     print(f"RH Library reader built in {SITE / 'dist'}")
 
 

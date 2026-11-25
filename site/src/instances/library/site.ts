@@ -189,6 +189,7 @@ const site = {
   // adapted edition. The full credit and the review sentences are in About.
   frontCredit: {
     [MAIN.slot]: frontCreditLine(CREDIT),
+    ...(PAPER.text_format ? { [PAPER.text_format]: frontCreditLine(CREDIT) } : {}),
     ...(ADAPTED?.credit ? { [ADAPTED.slot]: editionCreditLine(ADAPTED.credit) } : {}),
   },
   frontCreditNote: ADAPTED?.credit ? { [ADAPTED.slot]: ADAPTED.credit.split(/\s+/).slice(0, 4).join(" ") } : undefined,
@@ -199,6 +200,7 @@ const site = {
     paper: PAPER.id,
     main: MAIN.slot,
     pdfOnly: BUILT.filter((d) => d.pdf_only).map((d) => d.slot),
+    textFormat: PAPER.text_format,
     pages: Object.fromEntries(BUILT.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),
     // Addresses of guides and companion pages the library no longer publishes: each opens the paper.
     removed: PAPER.removed_pages ?? [],

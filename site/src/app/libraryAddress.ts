@@ -171,6 +171,10 @@ export function retiredLink(id: string | undefined): RetiredAddress | null {
   return id ? (retiredLinks[id] ?? null) : null;
 }
 
+export function phraseAddress(id: string, slug?: string): PhraseAddress | undefined {
+  return slug ? pagePhrases[slug]?.[id] : phrases[id];
+}
+
 export function libraryHref(route: Read, base: string, lib = LIBRARY): string | null {
   if (!lib || route.beside) return null;
   // A retired link keeps its own address while its notice shows.
