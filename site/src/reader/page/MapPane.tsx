@@ -404,7 +404,21 @@ export const MapPane = memo(function MapPane({ stage, pdfOn, pdfPick, structures
   const insets: Insets = useMemo(() => ({ top: 12, left: 16, bottom: 24, right: 16 }), []);
   const onTreeHover = useCallback((id: string | null) => onPoint(id ? statementFor(ties, id) : null, id ?? undefined), [onPoint, ties]);
   const onTrace = useCallback((id: string) => navigate({ view: "map", goal, node: id, trace: "rests" }), [goal]);
-  const onTreeSelect = useCallback((id: string | null) => id && onSubject(id), [onSubject]);
+  const onTreeSelect = useCallback((id: string | null) => {
+    if (!id) return;
+    const declaration = tools.declOf(id);
+    const statement = statementFor(ties, id) ?? (declaration ? ties.stops.find((t) => {
+      const tie = ties.index.ties[t];
+      return tie.name === declaration || tie.rows?.some((row) => row.name === declaration);
+    }) : undefined);
+    if (statement !== undefined && onOpenTie) {
+      setPreviewCard(null);
+      setWhole(false);
+      onOpenTie(statement, true);
+      return;
+    }
+    onSubject(id);
+  }, [onOpenTie, onSubject, ties, tools]);
 
   // ---- The dock's height, and the fold on a narrow pane ---------------------------------
 
