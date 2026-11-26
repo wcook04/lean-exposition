@@ -22,7 +22,7 @@
     "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection": "Start with Lecture 1, §5 of Madhu Sudan’s Probabilistically Checkable Proofs. Change just one entry of a polynomial’s value table and ask how often random queries could notice. Then state the soundness guarantee in terms of whether one low-degree polynomial is close to the whole received table. The field-valued version is the place to get that distinction clear before reading how the paper represents the tables with bits. On two crossing lines, a received table can supply two different values at their intersection. The point table supplies one value there, and testing a random point against its supplied line checks this kind of discrepancy over the whole space. The theorem uses low rejection to recover one nearby polynomial, even when two indices give different entries for the same line. The binary test will use this after decoding its line entries."
   },
   "pcp-expository-digit-degree": {
-    "PCP.Algebraic.SetMultilinear.encode_isSetMultilinear": "`IsSetMultilinear` is a condition on monomials in the support. Each supported monomial chooses exactly one variable from each digit group. A zero coefficient leaves no monomial to check.",
+    "PCP.Algebraic.SetMultilinear.encode_isSetMultilinear": "A monomial in the encoding chooses one variable from each of the $c$ digit groups. Even a zero digit uses a variable from its group, which will be set to one when the encoding is evaluated. Lean’s `IsSetMultilinear` says the exponents within each group sum to one for each monomial with nonzero coefficient. `encode_isSetMultilinear` proves that property for the encoder.",
     "PCP.Algebraic.SetMultilinear.totalDegree_encode_le": "There are $c$ groups, so each monomial contributed by the encoder has degree $c$, and the resulting polynomial has total degree at most $c$. The input-degree restriction is needed for exact recovery under substitution."
   },
   "pcp-expository-digit-substitution": {
@@ -50,7 +50,7 @@
     "PCP.Algebraic.Hadamard.testQueries_length": "The query list has length $2r+4$ for every seed. Length counts repeated positions too, so the result gives a bound on reads even when a particular seed requests the same address more than once."
   },
   "pcp-expository-proof-table-type": {
-    "PCP.Algebraic.ThreeColorVerifier.Proof": "The fields of `Proof` allow arbitrary received bits. The colour and difference tables have cubic labels to support the derived cubic checks, and the affine labels on the certificate and line tables suffice for their linear tests and correction."
+    "PCP.Algebraic.ThreeColorVerifier.Proof": "A points table answers a label at one field point. Its companion lines table stores a separate encoded restriction for each base point and slope. Lean’s `Proof` lists four of each. `Coefficients t 3` lets the colour and difference points tables answer labels of degree up to three, and `Coefficients t 1` gives the certificate points tables affine labels. The fields are arbitrary bit functions, so soundness can start from a dishonest proof."
   },
   "pcp-expository-binary-tests": {
     "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "With $J\\kappa$ below the point-versus-line threshold, a single decoded polynomial gives both conclusions. Full-label distance controls masked reads of composed labels, and distance on homogeneous linear labels controls the linear comparisons."
@@ -65,14 +65,14 @@
     "PCP.Algebraic.BinaryLocalCorrection.failure_le": "Even if all the points-table entries at $a$ are corrupted, each $z\\ne0$ gives a bijection $v\\mapsto a+zv$. The check at $a+zv$ can therefore use the average error of the points table. The retest of the proposed line contributes the separate rejection rate $\\kappa_a$ for this target. Both rejection and a wrong returned bit count as failures."
   },
   "linked-source-16": {
-    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge": "`rejectionRate_ge` concerns the received tables. The ideal-polynomial rejection is used as a lower bound before subtracting the chances that the primary table or either of the two certificate corrections supplies a bad bit."
+    "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge": "The ideal test reads from low-degree polynomials. If the constraint fails on the grid, at least one certificate identity has a nonzero polynomial residual. A random point detects that residual with a probability bounded below by the degree and field size, and a uniform homogeneous label detects a nonzero value half the time. Lean’s `hnot` is that grid failure. The hypotheses `hp` and `hm` bound the two received tables’ errors on homogeneous labels. The conclusion of `rejectionRate_ge` subtracts their contributions and the line-correction loss before bounding the rejection rate of the received tables."
   },
   "pcp-expository-check-matrix": {
     "PCP.Algebraic.ThreeColorVerifier.branchTest": "The edge test must ask whether the claimed difference gives a proper edge, so it reads the difference and edge-certificate tables. A separate branch tests whether this difference really is the difference of two colour values. Splitting the checks this way lets the verifier use a cubic label on a single stored field element for the edge equation and simple homogeneous labels for the subtraction check.",
-    "PCP.Algebraic.ThreeColorVerifier.test": "`test` evaluates the conjunction of the seven branch verdicts. The event that a given branch rejects is contained in the event that this conjunction rejects."
+    "PCP.Algebraic.ThreeColorVerifier.test": "The seven checks must all pass on the same received proof. A full seed gives each check its own random data, and those data can have different shapes. In Lean, `Sample` assigns a `BranchSeed` to each of the seven indices, and `test` uses `FiniteConjunction.test` on their verdicts. Whenever any one branch rejects, the full test rejects too."
   },
   "pcp-expository-vertex-branch-source": {
-    "PCP.Algebraic.ThreeColorVerifier.validAuxiliary": "`validAuxiliary` indexes the existing vertex-certificate lines table by target and slope. Reusing it adds no proof table, and each call still checks the entry it reads before returning a correction.",
+    "PCP.Algebraic.ThreeColorVerifier.validAuxiliary": "The vertex-certificate test needs a line through the point it wants to check. In `validAuxiliary`, the two arguments `a` and `b` are the base point and slope. The function packages them as the existing address `π.validLines (a, b)`. It supplies the same line table used by the low-degree test, while the corrector still checks the entry before returning a bit.",
     "PCP.Algebraic.ThreeColorVerifier.properAuxiliary": "`properAuxiliary` uses the existing edge-certificate lines table after the pair of vertex coordinates is flattened. The different point type accounts for the two vertices and the certificate coordinates without introducing another table."
   },
   "linked-source-14": {

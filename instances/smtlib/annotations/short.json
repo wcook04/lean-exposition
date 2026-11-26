@@ -9,7 +9,7 @@
     "BSmtLibSpec.Lexicon.Tokenization": "In `(assert x)`, the tokens start at byte offsets 0, 1, 8 and 9. The space after `assert` is consumed, leaving a gap in the offsets. `Tokenization` starts the `From` relation at offset zero, so the parser receives tokens that still point to their positions in the original input.",
     "BSmtLibSpec.Lexicon.Tokenization.From": "Try splitting `1.5` after `1`. The next byte `.` is outside the allowed delimiters, so that split cannot be a `From.token` step. Taking `1.5` together as a decimal works. This is how the formal delimitation rule keeps one literal from turning into two tokens.",
     "BSmtLibSpec.Lexicon.categoryRegex": "The standard's list of token kinds becomes a case split in `categoryRegex`, with separate cases for simple and quoted symbols. The selected version determines the reserved words and simple-symbol rule, and version 2.0 uses its own string rule.",
-    "BSmtLibSpec.Lexicon.comment": "The two line-breaking bytes named here are precisely the bytes excluded by `minus anyChar lineBreak` from the comment body. The final `lineBreak` consumes whichever of them comes first.",
+    "BSmtLibSpec.Lexicon.comment": "The regex separates an ordinary comment into three pieces. `lit \";\"` starts it, `star (minus anyChar lineBreak)` accepts its body, and `lineBreak` consumes the first following line feed or carriage return. Thus when a line starts with `; note`, the line break is consumed with that comment and the text on the next line remains for tokenization. A final comment without a line break is handled by the separate `commentAtEnd` rule.",
     "BSmtLibSpec.Lexicon.lineBreak": "`alt (code 10) (code 13)` matches one byte, a line feed or a carriage return. That byte ends the ordinary semicolon comment.",
     "BSmtLibSpec.Lexicon.whitespace": "In `star (alt whiteSpaceChar comment)`, each repetition consumes either a white space byte or a complete line-terminated comment. Zero repetitions allow an empty separator, and the tokenization relation specifies when a delimiter is required."
   },
@@ -35,7 +35,7 @@
     "BSmtLibSpec.Lexicon.hexadecimal": "The literal prefix is `#x`. The following `plus` requires at least one byte from the digit class or the two letter ranges `A` to `F` and `a` to `f`, as in `#x01Ab`."
   },
   "2-7-p024-10": {
-    "BSmtLibSpec.Lexicon.binary": "After the literal `#b`, `plus (oneOf \"01\")` matches at least one binary digit. The rule admits the leading zeroes in the standard's example `#b001`."
+    "BSmtLibSpec.Lexicon.binary": "For the standard's `#b001`, `seq` joins the fixed prefix `#b` to three individual matches of `oneOf \"01\"`. The `plus` combinator means one or more repetitions, so `#b` alone fails. An input such as `#b102` also fails as a binary token because `2` is outside the repeated class. The rule recognizes the written digits, including their leading zeroes."
   },
   "2-7-p024-12": {
     "BSmtLibSpec.Lexicon.string": "Between the two delimiter quotes, the repeated unit is either one permitted byte other than a quote or the pair `\"\"`. This is the version 2.7 spelling rule on bytes, with the printable byte class in place of a Unicode decoding step.",
@@ -67,7 +67,7 @@
   },
   "2-7-p026-03": {
     "BSmtLibSpec.Lexicon.Token.content": "`abc` and `|abc|` name the same symbol in the standard. `Token.content` gives both the three bytes `abc`, while the grammar token also records whether the spelling was quoted. The lexer can therefore recover the name and still pass on how it appeared in the source.",
-    "BSmtLibSpec.Lexicon.quotedSymbol": "This rule recognizes the bar-delimited spelling in examples such as `|abc|` and `|@abc|`. Name bytes are extracted separately, and the regex tests spelling alone.",
+    "BSmtLibSpec.Lexicon.quotedSymbol": "The vertical bars let a symbol contain bytes that would divide unquoted tokens. For example, `|two words|` forms a single symbol whose name includes a space. The outer `lit \"|\"` expressions match the delimiters, and the starred middle part repeats the permitted whitespace or printable bytes after excluding bars and backslashes. The regex checks that spelling. `Token.content` separately removes the delimiters to recover the name bytes.",
     "BSmtLibSpec.Lexicon.simpleSymbol": "The lexical rule can match names beginning with `@` or `.`, including `@abc` and `.abc`. The restriction on who introduces those names concerns solver use, which is outside this spelling test."
   },
   "2-7-p026-04": {
@@ -84,7 +84,7 @@
   "2-7-p026-08": {
     "BSmtLibSpec.Grammar.Syntax.IsSExpr": "Start by bracketing `(assert x)` as a list with two atoms, the reserved word `assert` and the symbol `x`. The same rule reads `(a (b 1))` as a list with atom `a` and a nested list. `IsSExpr` checks that a tree is valid in the selected version and that writing it back gives exactly the supplied tokens. Here the grouping already works before the script supplies a declaration for `x`.",
     "BSmtLibSpec.Grammar.Tree.SExpr.Valid": "Of the four atom alternatives, only the reserved-word case has a further condition here. It checks that the version is at least 2.6 and that the word belongs to that version. The list case repeats the check at every depth.",
-    "BSmtLibSpec.Grammar.Tree.SExpr": "The recursive `.list` constructor represents the parenthesized alternative, with zero members allowed by the production's star. The other four constructors represent the four kinds of atom individually.",
+    "BSmtLibSpec.Grammar.Tree.SExpr": "The four non-list constructors identify which kind of atom the production places at a leaf. In `(a (b 1))`, the outer `.list` stores two items, a `.symbol` for `a` and a second `.list`. The second list stores a symbol and a numeral constant. Because `.list` takes a `List SExpr`, each item can itself contain a list, and the empty list is the tree for `()`.",
     "BSmtLibSpec.Grammar.Tree.SExpr.tokens": "Each atom branch produces a singleton list in its own token category. The `.list` branch concatenates the members' tokens inside parentheses, preserving the nesting of the displayed production."
   },
   "2-7-p027-02": {
@@ -97,7 +97,7 @@
     "BSmtLibSpec.Grammar.Tree.Index.tokens": "The two cases write one `.numeral` or one `.symbol` syntax token with the supplied payload. The underscore that introduces an indexed identifier belongs to the surrounding identifier, outside the index itself."
   },
   "2-7-p027-04": {
-    "BSmtLibSpec.Grammar.Tree.Identifier.Valid": "The test ranges over the identifier's list of indices and applies `Index.Valid` to each. For a plain symbol that list is empty, so the test is vacuous.",
+    "BSmtLibSpec.Grammar.Tree.Identifier.Valid": "An identifier stores a symbol together with its list of indices. `Identifier.Valid` applies `Index.Valid` to every entry in that list. For `(_ extract 7 4)` it checks the two numeral indices, and the predicate also admits symbolic indices starting with version 2.5. The bare identifier `extract` has an empty list and passes this check immediately. `Identifier.tokens` supplies the grammar's other constraint by writing the parenthesized underscore form only for a nonempty list.",
     "BSmtLibSpec.Grammar.Tree.Identifier": "Both sides of the production use one Lean structure with a symbol and a list of indices. Empty indices encode the plain alternative and a populated list encodes the indexed alternative.",
     "BSmtLibSpec.Grammar.Tree.Identifier.tokens": "With symbol `extract` and numeral indices `7` and `4`, the writer emits `(_ extract 7 4)`. Each index contributes its own token in list order. With an empty index list, the writer gives the bare identifier `extract`, as the first alternative of the production requires."
   },
@@ -114,7 +114,7 @@
     "BSmtLibSpec.Grammar.Syntax.IsAttribute": "For a supplied token list, `IsAttribute` requires an exact match with the attribute's tokens and grammatical validity of its optional value. The keyword's spelling belongs to the preceding lexical stage.",
     "BSmtLibSpec.Grammar.Tree.Attribute.Valid": "The keyword-only branch is `True`. The branch with a value calls `AttributeValue.Valid` in the same version, leaving any restrictions tied to a particular attribute name to the context where it is used.",
     "BSmtLibSpec.Grammar.Tree.Attribute": "In `:named a`, the keyword names the attribute and `a` is its symbol value. A keyword alone can also be an attribute under this production. Lean's `Option AttributeValue` records exactly this choice, leaving rules about what particular attribute names require to their contexts.",
-    "BSmtLibSpec.Grammar.Tree.Attribute.tokens": "`Attribute.tokens` emits a keyword token first in both branches. When the option contains a value, its tokens immediately follow the keyword."
+    "BSmtLibSpec.Grammar.Tree.Attribute.tokens": "Begin with the keyword token. For an attribute stored with `none`, such as the grammar shape `:flag`, that token is the entire output. For `:named claim`, the structure stores `some` symbol value and `Attribute.tokens` appends its tokens immediately after `:named`. The value supplies any grouping of its own. The two alternatives in the passage therefore produce the same leading token and differ in what follows it."
   },
   "2-7-p028-02": {
     "BSmtLibSpec.Grammar.Tree.Sort.tokens": "In these grammar rules, a sort expression such as `Bool` is written as its identifier alone. An application such as `(Array Int Bool)` adds parentheses and writes the argument sorts in order. This operation starts from a given sort tree, so assigning a sort to a term is a separate question."
@@ -132,7 +132,7 @@
   },
   "2-7-p030-02": {
     "BSmtLibSpec.Grammar.Tree.QualIdentifier.Valid": "`Valid` checks the identifier in both alternatives. In the `.as` branch it also checks the sort expression. Both checks are grammatical and use the selected version.",
-    "BSmtLibSpec.Grammar.Tree.QualIdentifier": "The constructor `.plain` contains only an identifier. The constructor `.as` also contains the sort written after the identifier in the second alternative.",
+    "BSmtLibSpec.Grammar.Tree.QualIdentifier": "In a list datatype, a writer can qualify `nil` with an intended result sort by writing `(as nil (List Int))`. The grammar stores `nil` alone as `.plain identifier`. For the `as` form, `.as identifier sort` stores the same kind of identifier plus a structured sort expression. Here that expression has `List` as its head and `Int` as its argument. The constructor records the explicit sort, which later checks can compare with the declaration of `nil`.",
     "BSmtLibSpec.Grammar.Tree.QualIdentifier.tokens": "The plain branch uses `Identifier.tokens`. The qualified branch uses `paren` to enclose the reserved word `as`, the identifier tokens and the sort tokens in that order."
   },
   "2-7-p030-03": {
@@ -141,11 +141,11 @@
   },
   "2-7-p030-04": {
     "BSmtLibSpec.Grammar.Tree.SortedVar.Valid": "Only the sort component of a sorted variable is checked here. This amounts to checking the grammar of the sort and its arguments, independently of how the variable name will be used.",
-    "BSmtLibSpec.Grammar.Tree.SortedVar": "The two elements of the production become the fields `symbol` and `sort`. Lean can reuse the pair in a binder or in a function's parameter list.",
+    "BSmtLibSpec.Grammar.Tree.SortedVar": "Read `(x Int)` as a declaration of the name `x` with sort `Int`. `SortedVar` represents exactly that pair, with a `Symbol` in its `symbol` field and a sort tree in its `sort` field. The same pair can appear in a binder's variable list or in a function's parameter list. The enclosing construct supplies the scope in which occurrences of `x` refer to that declaration.",
     "BSmtLibSpec.Grammar.Tree.SortedVar.tokens": "For a pair such as `(x Int)`, the name supplies one symbol token and the sort supplies its own tokens. `paren` groups them as one sorted variable."
   },
   "2-7-p030-05": {
-    "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid": "The symbol branch has no further condition. The wildcard branch requires version 2.7 or later, even though `_` was already a reserved word for other uses.",
+    "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.Valid": "Inside a pattern, bare `_` is the `.wildcard` alternative. The validity test for that constructor requires `versionAtLeast version .v2_7`. This is a check on the use of the reserved token in a pattern, so the earlier use of `_` to introduce an indexed identifier does not enable it. Quoted `|_|` goes through the `.symbol` alternative, for which this predicate is `True`.",
     "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token": "An ordinary name yields a symbol token and the wildcard yields the reserved token `_`. A quoted symbol such as `|_|` still uses the symbol branch."
   },
   "2-7-p030-06": {
@@ -194,7 +194,7 @@
   },
   "2-7-p033-06": {
     "BSmtLibSpec.Grammar.Tree.Identifier.tokens": "In `(_ BitVec 32)`, the `_` is emitted once before the identifier's symbol and indices. Its position in the parenthesized group identifies this use as indexing.",
-    "BSmtLibSpec.Grammar.Tree.Pattern.tokens": "In a pattern like `(cons x _)`, the underscore is emitted for an argument after the constructor name. A single-wildcard pattern instead emits that token alone.",
+    "BSmtLibSpec.Grammar.Tree.Pattern.tokens": "In `(cons x _)`, the tree's head is the constructor name `cons` and its two arguments are a symbol and a wildcard. `Pattern.tokens` writes the head followed by one token for each argument inside parentheses. The wildcard contributes the same reserved token `_` that introduces `(_ BitVec 32)`, but it appears in an argument position here. A sole wildcard pattern is the `.single` branch and writes just `_`.",
     "BSmtLibSpec.Grammar.Tree.SymbolOrWildcard.token": "The wildcard branch produces the same reserved token spelling `_` that occurs in an indexed identifier. Which use it has depends on the grammar surrounding that token."
   },
   "2-7-p036-07": {
@@ -215,11 +215,11 @@
   },
   "2-7-p051-02": {
     "BSmtLibSpec.Grammar.Tree.SelectorDec.Valid": "At this point the selector already has a symbol and a sort. `Valid` calls the grammar predicate on the sort in the selected version. The datatype declaration supplies the context in which the selector name is introduced.",
-    "BSmtLibSpec.Grammar.Tree.SelectorDec": "The production's two parts become the selector's `symbol` and `sort` fields. A constructor stores a list of these selector declarations.",
+    "BSmtLibSpec.Grammar.Tree.SelectorDec": "In the list constructor declaration `(cons (car T) (cdr (List T)))`, the two inner pairs declare selectors. The first names `car` and gives it result sort `T`. The second names `cdr` and gives it the sort `(List T)`. Each pair becomes a `SelectorDec` with fields `symbol` and `sort`. The enclosing `ConstructorDec` stores those two selector declarations in order.",
     "BSmtLibSpec.Grammar.Tree.SelectorDec.tokens": "The selector contributes its name as one symbol token, then the tokens of its result sort. The enclosing pair of parentheses marks off that selector from other selectors in a constructor."
   },
   "2-7-p051-03": {
-    "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid": "The check runs through the constructor's selectors and requires `SelectorDec.Valid` for each one. With no selectors it holds vacuously, consistent with the star in the production.",
+    "BSmtLibSpec.Grammar.Tree.ConstructorDec.Valid": "For `(nil)` the selector list is empty, so the requirement that each selector be valid holds immediately. That is the zero-repetition case of the star in this production. For `(cons (car T) (cdr (List T)))`, the predicate checks both selectors in the selected version, including the recursive sort expression `(List T)` of the second. Whether the surrounding datatype actually declares `T` is checked when interpreting that declaration.",
     "BSmtLibSpec.Grammar.Tree.ConstructorDec": "The name field represents the leading symbol, and the list field represents the repeated selector declarations. A nullary constructor uses the case with an empty selector list.",
     "BSmtLibSpec.Grammar.Tree.ConstructorDec.tokens": "`ConstructorDec.tokens` starts with the name, appends the already grouped tokens of each selector, and encloses the result. For a nullary constructor such as `nil`, this leaves just `(nil)`."
   },
@@ -235,12 +235,12 @@
   },
   "2-7-p051-06": {
     "BSmtLibSpec.Grammar.Tree.FunctionDef.Valid": "The check calls `Valid` on each sorted parameter, the stated result sort and the body. Grammatical validity of the body is a separate condition from having the declared result sort.",
-    "BSmtLibSpec.Grammar.Tree.FunctionDef": "The `body` field contains the term at the end of this production. The same four-field structure is used inside `define-fun` and `define-fun-rec`.",
+    "BSmtLibSpec.Grammar.Tree.FunctionDef": "In `(define-fun id ((x Int)) Int x)`, the `FunctionDef` begins at `id`. Its `symbol` is the function name, `parameters` contains the single `SortedVar` for `(x Int)`, `result` stores the sort `Int`, and `body` stores the term `x`. The earlier occurrence of `x` is a parameter declaration and the final one is an identifier term. The command constructor supplies `define-fun` and the outer parentheses, and `define-fun-rec` uses the same four-field definition.",
     "BSmtLibSpec.Grammar.Tree.FunctionDef.tokens": "Only the parameter list gets its own parentheses in this function. It emits the name, that list, the result sort and then the body. The wrapper for `define-fun` or `define-fun-rec` is added by the command branch."
   },
   "2-7-p051-07": {
     "BSmtLibSpec.Grammar.Syntax.IsCommand": "The pinned examples read `(check-sat-assuming (p (not q)))` as a list of terms in 2.7 and as a list of propositional literals in 2.6. Both trees write the same tokens. The version argument to `IsCommand` determines which tree satisfies the grammar.",
-    "BSmtLibSpec.Grammar.Tree.Command.Valid": "The $n+1$ repetitions in `declare-datatypes` and `define-funs-rec` become a nonempty test on the first list and an equality of lengths. The predicate also selects the term-argument branch of `check-sat-assuming` in 2.7 and the literal branch in 2.5 and 2.6.",
+    "BSmtLibSpec.Grammar.Tree.Command.Valid": "In `define-funs-rec`, every declared function needs a body in the corresponding position of the second list. Two declarations and only one body still fit the tree's list fields, but `Command.Valid` rejects that tree by requiring equal lengths and a nonempty declaration list. It also checks the recursive syntax of the declarations and bodies. The same paired-length check appears for `declare-datatypes`. The selected version matters separately, for example when choosing the term or literal form of `check-sat-assuming`.",
     "BSmtLibSpec.Grammar.Tree.Command": "Each command is stored with the arguments named in its production. The type also stores a separate `check-sat-assuming` form for the older grammar, and stores the two lists of `define-funs-rec` independently until validity is checked.",
     "BSmtLibSpec.Grammar.Tree.Command.tokens": "`commandTokens` wraps each command name and the tokens of its arguments. The branch for `define-funs-rec`, for example, writes one group of declarations and a second group of bodies. Equal lengths are checked by `Command.Valid`."
   },

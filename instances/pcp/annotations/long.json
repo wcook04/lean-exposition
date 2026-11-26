@@ -80,7 +80,7 @@
     "PCP.Algebraic.DerivedZeroOnGrid.rejectionRate_lower_bound": "A modified primary bit can change the zero-test verdict with probability at most $2\\varepsilon$. Because the oracle replacement changes the rejection rate before the two correction terms are charged, that loss appears inside the multiplier $1+2C_c$."
   },
   "pcp-long-gap": {
-    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable": "By contraposition, if the graph has no three-colouring then its rejection rate cannot be strictly below $g_c$. This gives a weak lower bound, including the case of equality."
+    "PCP.Algebraic.ThreeColorVerifier.rejectionRate_ge_of_not_colorable": "If every received proof for a graph without a three-colouring fails often enough, a proof with rejection below that threshold certifies that the graph is colourable. The Lean theorem is written in the lower-bound direction. Given `hG : ¬ G.Colorable 3` and arbitrary tables `π`, the field-size and degree hypotheses let it conclude `gap c ≤ rejectionRate … π`. The positive gap depends on the digit count $c$."
   },
   "pcp-long-parameter-volume": {
     "PCP.Algebraic.ThreeColorParameterChoice.volume_le": "Minimality of $\\nu$ bounds the preceding volume whenever $\\nu>2$. The factor four bounds the increase from one volume to the next. The maximum with eight accounts for the starting value at $\\nu=2$.",
@@ -90,7 +90,7 @@
     "PCP.Algebraic.ThreeColorFullFieldSampling.rejectionRate_eq": "All four parameters are uniform in $F$ under fair-bit sampling. Conditioned on their being nonzero, the draws have the distribution for the original test. The new verifier accepts when the condition fails, so only its probability multiplies the old rejection rate."
   },
   "pcp-long-base-verifier": {
-    "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees": "The base guarantees include a uniform address bound and exactly $32{,}000{,}000(\\lceil\\log_2(n+2)\\rceil+1)$ bits. The soundness clause uses $g_4/16$ since the probability that all four parameters are nonzero is at least $1/16$."
+    "PCP.Algebraic.ThreeColorCanonicalVerifier.verification_guarantees": "The base verifier fixes a query cap, a fair-bit seed length and a proof-address bound before the verifier is repeated. In Lean, `verification_guarantees` gives `verifier.queries = 187`, `CanonicalRandomness 32000000 32000000` and `ReadsBelow` with `proofBound`. Its completeness clause applies to three-colourable graphs, and `SoundAt x (1 - gap)` bounds acceptance for every proof on a graph without a three-colouring. Here `gap` is $g_4/16$."
   },
   "pcp-long-amplification": {
     "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees": "This instance uses the repetition count chosen for the graph verifier. Conditional on one fixed proof, the seeds are independent, so accepting all repetitions multiplies the acceptance probabilities. Each repetition reads within the original address bound."
@@ -115,7 +115,7 @@
     "PCP.np_subset_pcp": "`np_subset_pcp` closes the runtime premise and records the full resource bounds for the source language. The reduction preserves the yes or no status, so the graph verifier’s completeness and soundness clauses apply to the corresponding original input."
   },
   "pcp-long-proof-map-reverse": {
-    "PCP.finiteWitnessCheck": "`finiteWitnessCheck` interprets the finite string as an oracle with a zero tail. The soundness quantifier already ranges over that oracle, and the polynomial address bound means the chosen tail cannot affect a query.",
+    "PCP.finiteWitnessCheck": "The NP checker must accept one candidate proof prefix on every random seed. Lean’s `oracleOfWitness` reads the list at an in-range address and gives zero otherwise. `finiteWitnessCheck` wraps the universal test over the finite seed type in `decide` to return a Boolean. The address bound makes padding irrelevant for a full prefix, and the separate machine and seed bounds make the enumeration polynomial-time.",
     "PCP.oracleOfWitness_prefix": "`oracleOfWitness_prefix` requires $j<N$. Combined with `ReadsBelow`, it gives equality at every address along the verifier’s adaptive execution, so replacing the oracle by its prefix does not change a verdict on any seed."
   },
   "pcp-long-converse": {
@@ -180,7 +180,7 @@
     "PCP.Algebraic.PointLineTest.exists_close_degree_zero": "Draw two independent uniform points. If their values differ, at least one disagrees with any single proposed constant that is compared to both. Using parameters $t$ and $t+1$ on a random indexed line supplies such a pair and a common constant. Hence the disagreement probability is at most $2\\delta$, and some fixed value from the second point is within that distance of the received function. This handles degree zero without the positive-degree field-size argument."
   },
   "pcp-long-digit-decoder": {
-    "PCP.Algebraic.SetMultilinear.decode": "`decode` is a polynomial homomorphism sending each digit variable to its indicated power of $Y$. Because substitution happens in the polynomial ring, the construction requires neither finite evaluation sets nor field division."
+    "PCP.Algebraic.SetMultilinear.decode": "Decoding substitutes $Y^{k b^i}$ for the variable in group $i$ with digit $k$. This produces a univariate polynomial before any value is assigned to $Y$. In Lean, the paper’s base $b$ is named `m`. `decode` is a ring homomorphism built with `MvPolynomial.eval₂Hom`, which applies `Polynomial.C` to coefficients and substitutes the displayed powers of `Polynomial.X` for variables."
   },
   "pcp-long-set-multilinear": {
     "PCP.Algebraic.SetMultilinear.decode_encode": "With base two and three positions, $6=0\\cdot1+1\\cdot2+1\\cdot4$. The term $Y^6$ encodes as $X_{0,0}X_{1,1}X_{2,1}$ and polynomial substitution sends it to $1\\cdot Y^2\\cdot Y^4$. The identity holds coefficient by coefficient below $2^3$, which gives a left inverse even over a ring where two distinct polynomials can agree at every point."
@@ -223,7 +223,7 @@
   },
   "pcp-long-outer-local-corrector": {
     "PCP.Algebraic.BinaryLocalCorrection.run": "A proposed line can hit the true value at a sampled nonzero parameter while having the wrong intercept. The corrector first tests the received row and checks one of its predicted bits against the points table. If both checks pass, it returns the row's predicted bit at the intercept. This lets the verifier ask about a prescribed certificate point while checking the prediction at a uniformly distributed point.",
-    "PCP.Algebraic.BinaryLocalCorrection.sample": "`sample` passes the coordinates of a product seed to `run`. The nonzero-parameter coordinate is uniform on the units, so a uniform outer slope still gives a uniform comparison point for each allowed parameter."
+    "PCP.Algebraic.BinaryLocalCorrection.sample": "To correct at a fixed target $a$, the procedure uses a random line through $a$ and compares a predicted bit elsewhere on that line. In Lean, `sample` unpacks the product seed into the outer slope, nonzero parameter, inner slope and homogeneous label, and inner-test seed. It passes them to `run`, whose `Option` result is either rejection or a bit. The nonzero-parameter type ensures that for each parameter the uniform outer slope gives a uniform comparison point."
   },
   "pcp-long-local-corrector-honest": {
     "PCP.Algebraic.BinaryLocalCorrection.queries_length_le": "The query list includes the inner row test, the point comparison and the predictions at both inner targets. Its uniform length bound $3c+9$ is also valid for received tables that fail the consistency checks."

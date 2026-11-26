@@ -76,7 +76,7 @@
   "p1-p06.reciprocal-orbit-limit": {
     "Erdos249257.tendsto_cesaroMean_shiftedMersenneAtom_mul": "The paper takes every integer base $b\\ge2$. This convergence theorem fixes $b=2$. It states the limit, not the trailing reciprocal bound.",
     "Erdos249257.shiftedMersenneOrbitMean": "The base-two orbit mean $g/[d(2^g-1)]$, where $g=\\gcd(Q,d)$ and $d>0$. Defines $M_{Q,2}(d)$, whereas the displayed $M_{Q,b}(d)$ has an arbitrary integer base.",
-    "Erdos249257.shiftedMersenneOrbitMean_le_reciprocal": "Bounds $M_{Q,2}(d)$ by $1/d$. It does not assert the preceding limit or quantify over $b\\ge2$."
+    "Erdos249257.shiftedMersenneOrbitMean_le_reciprocal": "For $d>0$ and $b=2$, `shiftedMersenneOrbitMean Q d` is the displayed $g/[d(2^g-1)]$ with $g=\\gcd(Q,d)$. The proof uses $g+1\\le2^g$, so the factor $g/(2^g-1)$ is at most one and the bound is independent of $Q$. This supplies only the final inequality at base two. The limit of the row averages uses a separate argument."
   },
   "p1-p06.reciprocal-domination": {
     "Erdos249257.cesaroMean_shiftedMersenneAtom_mul_le": "Lean bounds only the binary mean, by $\\frac{2(Q+1)}{d}$. The printed display bounds every integer-base mean by $\\frac{Q+2}{d}$ and includes an intermediate infinite sum."
@@ -298,7 +298,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_kernelWeight_le": "The finite-average lemma combines the main term with the two error budgets. Keeping $L$ and $M$ separate lets the mixed proof enlarge its divisibility modulus and still quantify the resulting averaging error."
   },
   "p1-p06.average.sum-coefficients": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_tsum_kernel_le": "Lean allows a separate base $B_i$ in $(1,2]$ for every coefficient. The printed step uses one fixed base $B$."
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_tsum_kernel_le": "Take Lean’s family index to run over the divisors, with `d i = i` for positive indices and constant `B i = B`. The binder `hc` gives nonnegative weights and `hs` requires summability of $c_i/[i(B-1)]$, which follows from the stated cost for a fixed $B>1$. The conclusion averages the full weighted sum over a common sample and permits varying bases as long as the displayed cost stays summable and $1<B_i\\le2$."
   },
   "p1-p06.cover.divisor-count": {
     "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "The filter-and-card expression is the displayed divisor count. A countable family of finite positive sets $F_j$, exponents $0<\\alpha_j\\le1$, and nonnegative divisor coefficients $c_{j,d}$."
@@ -426,7 +426,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_pos": "If $A$ is infinite, $b\\ge2$ and $N>0$, then $\\Delta_{b,A}(N)>0$. These are exactly `hA : A.Infinite`, `hb : 2 ≤ b` and `hN : 0 < N`. An infinite support contains an exponent greater than $N$, and its term increases strictly from shift zero, while all other terms are nonnegative. The requirement $N>0$ matters because the displacement at zero is zero."
   },
   "p1-p06.mixed.base-comparison": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_le_two_mul_binary": "The formal transfer uses $\\Delta_b\\le2\\Delta_2$, not the sharper factor-one inequality cited in this sentence."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_le_two_mul_binary": "Once a binary shift has $\\Delta_{2,A}(N)<\\varepsilon/2$, the Lean inequality gives $\\Delta_{b,A}(N)<\\varepsilon$ at that same shift for any integer $b\\ge2$. The hypothesis `hb` supplies the base restriction. The factor of two suffices for arbitrarily small displacement. The paper cites a factor of one."
   },
   "p1-p06.mixed.weighted-separator": {
     "ErdosProblems.Erdos257.PaperCompleteR8.exists_weighted_not_strengthened_host": "There is an infinite positive support with finite weighted mass at base two but no strengthened positive cover. Its reciprocal sum diverges, and it admits no `LogBudgetCover` with arbitrary positive allowances either. Nevertheless every infinite subset has an irrational series at every integer base $b\\ge2$. This theorem supplies one direction of the separation between the support criteria. It does not by itself supply the reverse example."
@@ -988,7 +988,7 @@
     "Erdos249257.HalfCylinderIntegerGreedy.integerGreedyBits": "The Boolean word produced by visiting integer weights in their given order and selecting each weight when it fits the remaining natural-number capacity. A selected weight is subtracted before processing the rest, and an unaffordable one is skipped. The definition accepts any list of natural weights. For the exact-row problem the list is $q_{n,2},\\ldots,q_{n,n}$ and the capacity is $2^{n-1}-1$. Uniqueness requires the separate domination theorem. It is not true for arbitrary weight lists merely by definition."
   },
   "p1-p06.inputs.3.2.unique-word": {
-    "Erdos249257.BooleanMobiusGreedyReduction.localMersenneHalfTarget_lower_word_eq_greedy_and_remainder_eq": "Lean allows any cutoff $R\\le M$ and every remainder $A<2^{M-R}$. The full exact-row case takes $R=M=n$ and $A=0$."
+    "Erdos249257.BooleanMobiusGreedyReduction.localMersenneHalfTarget_lower_word_eq_greedy_and_remainder_eq": "At full depth set Lean’s `M = R = n`. Then `lowerBinaryWindow M R` is $1$, so the natural remainder `A` must be zero. The hypothesis `hfill` says the selected quotient weights plus that remainder fill the target $2^{n-1}-1$. The conclusion identifies both the bits and the remainder with the deterministic greedy output, so testing for a witness reduces to checking that output’s final remainder."
   },
   "p1-p06.inputs.3.2.zero-test": {
     "Erdos249257.BooleanMobiusGreedyReduction.localMersenneHalfTarget_lower_word_eq_greedy_and_remainder_eq": "For the necessary direction, every exact row has zero greedy remainder. Lean also allows cutoff $R\\le M$ and any remainder below $2^{M-R}$.",

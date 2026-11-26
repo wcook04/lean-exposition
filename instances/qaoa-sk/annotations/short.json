@@ -60,14 +60,14 @@
   },
   "assumptions.value_diffusion#3": {
     "OAI.ZeroTemperatureSK.IsDiffusion": "The second conjunct is the integral SDE with $X_0=0$, imposed almost surely for every $0\\le t\\le1$ on continuous paths. The first conjunct requires progressiveness for the natural Brownian filtration, while the definition of $q$ is elsewhere.",
-    "OAI.ZeroTemperatureSK.squareMoment": "`squareMoment` integrates the square of `gradient` along `X` against `W.law`, giving $q(t)$. The definition takes `X` as an arbitrary process."
+    "OAI.ZeroTemperatureSK.squareMoment": "The last equation defines $q(t)$ by following the diffusion to $X_t$, evaluating the feedback $u$ there, squaring, and then taking expectation. `squareMoment` implements these operations in that order and uses `W.law` for the expectation. It accepts a process `X` as an argument; the separate predicate `IsDiffusion` is what requires that process to solve the stated equation."
   },
   "support.diffusion#3": {
     "OAI.ZeroTemperatureSK.diffusion_isDiffusion": "The constructed `diffusion W γ` satisfies `IsDiffusion`, including progressiveness for the given Brownian motion and the almost-sure integral equation on $[0,1]$. This establishes existence, with uniqueness supplied separately.",
     "OAI.ZeroTemperatureSK.diffusion_uniqueness": "`hX` assumes another solution driven by the same `W`, and the conclusion gives one event of full probability on which both paths agree for every $0\\le t\\le1$. The time quantifier lies inside the almost-sure statement, so the exceptional set is independent of time."
   },
   "scalar.paper_minimizer#2": {
-    "OAI.ZeroTemperatureSK.IsMinimizer": "`IsMinimizer` compares `parisi W γ` with `parisi W η` for every `η : OrderParameter`. This expresses global minimality for the supplied `γ`."
+    "OAI.ZeroTemperatureSK.IsMinimizer": "To minimize $\\mathcal P$ here is to have $\\mathcal P(\\gamma)\\le\\mathcal P(\\eta)$ for every admissible competitor $\\eta$. The binder `∀ η : OrderParameter` in `IsMinimizer` makes that range explicit. The variations used later for contact are admissible competitors because they stay in this range. The predicate is a hypothesis about the supplied $\\gamma$."
   },
   "support.full_relative_support#3": {
     "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "The first two conjuncts give the displayed conclusions. `μ.support = univ` is relative to `Time`, and `StrictMonoOn` restricts the zero extension of $\\gamma$ to $[0,1)$."
@@ -231,7 +231,7 @@
     "OAI.ZeroTemperatureSK.Heat.certW": "The index $2$ in `iteratedDeriv 2 r` counts derivatives of $r$, giving $w=\\partial_x^2r=c\\Phi_{xxx}$ when $r=c\\Phi_x$."
   },
   "section3.z": {
-    "OAI.ZeroTemperatureSK.Heat.certZ": "The index $3$ differentiates $r$ three times in space, giving $z=c\\Phi_{xxxx}$ under $r=c\\Phi_x$."
+    "OAI.ZeroTemperatureSK.Heat.certZ": "Hold time fixed and differentiate $r=c\\Phi_x$ three more times in $x$. Since the step height $c$ is constant, the result is $z=c\\Phi_{xxxx}$. In `certZ r`, the `3` of `iteratedDeriv` counts derivatives of the one-variable function $r$. This is the $z$ whose square appears in the curvature polynomial."
   },
   "support.backward_shapes#4": {
     "OAI.ZeroTemperatureSK.compactRate_jet_one": "On $[0,T]$, `compactJet` indices $0,1,2$ represent $\\Phi_x,\\Phi_{xx},\\Phi_{xxx}$, so the right side is $-\\tfrac12\\Phi_{xxx}-\\gamma(t)\\Phi_x\\Phi_{xx}$. Inside a plateau, the separate time-derivative identity and multiplication by its constant height $c$ turn this into the equation for $r_t$."
@@ -295,7 +295,7 @@
     "OAI.ZeroTemperatureSK.Heat.certR": "The square is taken after evaluating $r$ at $x$, so $R(x)=r(x)^2\\ge0$ requires no regularity or shape assumption.",
     "OAI.ZeroTemperatureSK.Heat.certK": "`certK` is the pointwise product of the backward and forward scores $r$ and $s$. In the certificate the sign of that product follows from the score estimates.",
     "OAI.ZeroTemperatureSK.Heat.certB": "`certB` names the raw quotient for lowercase $b=-r_{xx}/r$. At a zero of $r$, Lean’s total division gives zero, while the paper uses the smooth extension of the quotient.",
-    "OAI.ZeroTemperatureSK.Heat.certL": "The second spatial derivative is taken only of $s$, then multiplied by $-r(x)$, giving $L(x)=-r(x)s_{xx}(x)$.",
+    "OAI.ZeroTemperatureSK.Heat.certL": "`certL` is the last quantity of this display, $L=-r(x)s_{xx}(x)$. Its `iteratedDeriv 2 s x` differentiates the forward score $s$ twice, and `r x` multiplies the result. On $x>0$, positivity of $r$ and concavity of $s$ give $L\\ge0$, the sign needed for the terms with a factor $L$ in the certificate.",
     "OAI.ZeroTemperatureSK.Heat.cert_halfLine_signs": "The proof rewrites $B$ as $-2$ times `burgersRate` divided by $r$, and $S$ as twice `backwardWronskian` divided by $r$. Their signs follow from `hshape` and $r(x)>0$ on the required domain $x>0$."
   },
   "section3.nonnegative_variables": {

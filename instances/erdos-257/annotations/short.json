@@ -183,7 +183,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.cubeCoefficient_cost": "The cost sums `cubeCoefficient q P z d` divided by each index $d$. With $q=2$ and $P=\\{3,5\\}$, the product expression is $(1+z/3)(1+z/5)/2$. This gives the cost in the display."
   },
   "short.c.divisor-indicator-mean": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.mean_divisibility_atom": "The theorem gives the exact finite mean over every positive period divisible by $d$, with any real weight $w$. The paper uses $w=1$."
+    "ErdosProblems.Erdos257.PaperCompleteR8.mean_divisibility_atom": "There are exactly $X/d$ multiples of $d$ among $1,\\ldots,X$ when $d\\mid X$. In Lean `hperiod` imposes that divisibility and `w` is the contribution at each multiple, giving mean $w/d$. Set $w=1$ for the displayed indicator. Setting $w=c_d$ instead explains the cost term $c_d/d$ for a weighted majorant."
   },
   "short.c.divisor-block": {
     "ErdosProblems.Erdos257.PaperCompleteR8.divisorCube": "The finite set $\\{qd:d\\mid\\prod_{p\\in P}p\\}$. The definition forms the divisors of the product and multiplies each by $q$. No primality or positivity hypotheses are needed merely to define this `Finset`. The subsequent expansion theorems assume $q>0$ and prime elements of $P$. For $q=2$ and $P=\\{3,5\\}$ it gives $\\{2,6,10,30\\}$. Its divisor count records which of these selected exponents divide the observation index."
@@ -218,7 +218,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_mean_add_error": "The same progression mean is bounded by $1/[d(B-1)]+1/[T(B-1)]$. This states the final upper bound, and its statement omits the intermediate gcd-dependent expression in the displayed chain."
   },
   "short.c.far-tail": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight_le_of_twice_lt": "The theorem assumes only $B>1$ and $2N<d$ at the sampled point $N$. It does not require $B\\le2$ or a prescribed progression."
+    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight_le_of_twice_lt": "At one sampled point put $N=Lm$. The binder `hfar : 2 * N < d` puts $N$ at or below the middle exponent $(d-1)/2$, so $N\\bmod d=N$. Pairing powers at opposite ends of the geometric sum shows their mean is at least $B^{(d-1)/2}$, hence at least $B^N$. Dividing by $B^d-1$ gives the displayed $1/[d(B-1)]$. Lean needs only $B>1$ for this step."
   },
   "short.c.unique-transition": {
     "ErdosProblems.Erdos257.PaperCompleteR8.dyadic_transition_unique": "For fixed $L$ and $d$, at most one dyadic exponent satisfies $L2^k<d\\le2L2^k$. The hypotheses `hi` and `hj` say that two indices satisfy these inequalities, and the conclusion is `i = j`. The half-open transition intervals for consecutive scales touch only at an endpoint assigned to one side. This ensures the transition contribution is paid at most once in the outer mean."
@@ -287,7 +287,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "Apply the finite-mean lemma to the sum of the two error functions and set its threshold to $1$. Its witness is one sampled argument `((m + 1) * L)`, so both estimates hold at the same positive multiple of the shared modulus."
   },
   "short.c.overlapping-supports": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_union_le": "The union displacement inequality holds for any two supports at every integer base $b\\ge2$, not only for the binary mixed construction."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_union_le": "The shared exponents contribute once to the union. Lean partitions it into `A` and the remaining exponents `(A ∪ B) \\ A`, then bounds the displacement of that remainder by the displacement of `B`. This uses nonnegative atoms, so overlap can only increase the sum of the two separate displacements. The mixed argument takes `A` and `B` to be the two supports and evaluates both at the same shift."
   },
   "short.c.weighted-class": {
     "ErdosProblems.Erdos257.PaperCompleteR7.FinitePrimeWeighted": "The condition that a support has finite weighted sum for some finite nonempty set of primes. Lean chooses `P : Finset ℕ`, requires `P.Nonempty` and `∀ p ∈ P, Nat.Prime p`, then requires `Summable (Set.indicator A (primeWeightedTerm b P))`. One prime set serves the entire support, and its prime powers may grow with the exponent. Choosing a different prime set for each exponent would change the condition. This declaration defines a summability hypothesis, not its irrationality consequence."
@@ -320,7 +320,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.exists_prime_mass_outside": "After excluding any finite set of primes, a finite set of remaining primes has reciprocal sum larger than any prescribed real number $R$. The input `E` is a `Finset` of the type `Nat.Primes`, so primality is built in. The conclusion supplies `Disjoint S E` and the strict mass bound. Excluding the prime two as well gives the odd-prime supply used in the separating constructions."
   },
   "short.c.weighted-prime-blocks": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.disjointPrimeHarmonicBlocks_spec": "Taking $R_k=2^k/4$ gives disjoint odd-prime blocks with $R_k\\le S_k\\le R_k+1$. The printed upper inequality is strict."
+    "ErdosProblems.Erdos257.PaperCompleteR8.disjointPrimeHarmonicBlocks_spec": "Take the target sequence `R` to be $R_k=2^k/4$. The construction forbids all primes already used at earlier stages, giving `Pairwise` disjoint blocks. The remaining conjuncts give odd primes and the two mass bounds on $S_k$. The displayed paper upper bound is strict, while this lemma gives $S_k\\le R_k+1$."
   },
   "short.c.no-cover-from-growth": {
     "ErdosProblems.Erdos257.PaperCompleteR8.no_logBudgetCover_of_unbounded_finite_means": "The result excludes all arbitrary-positive-weight covers whenever finite logarithmic means are unbounded, and dyadic covers satisfying (V) are a special case."

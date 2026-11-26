@@ -84,7 +84,7 @@
     "Erdos249257.binaryCoeffTail_supportCoeff_zero_strictMinimum": "The highlighted `hA.exists_gt N` extracts a selected exponent $d>N$ from the infinitude of $A$. Put $N=k$ to recover the index needed to prove strict positivity."
   },
   "exp.remainders.positive-contribution": {
-    "Erdos249257.shiftedSupportAtom_zero_lt_of_mem_of_lt": "The binders `hdA`, `hN` and `hNd` give $n\\in A$ and $0<k<n$. Thus $k\\bmod n=k$ and the strict comparison of shifted atoms means that $\\ell_n(k)>0$."
+    "Erdos249257.shiftedSupportAtom_zero_lt_of_mem_of_lt": "The selected exponent $n>k$ has residue $k$. Since $k>0$, its numerator rises from $1$ to $2^k$, so its contribution to $R(k)$ is strictly positive. In Lean, `hdA` supplies membership in the support, and `hN` and `hNd` give $0<k<n$. Subtract the left side of the resulting strict inequality to read the positive gain."
   },
   "exp.remainders.other-contributions": {
     "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "`displacementAtom_nonneg` applies separately to every exponent. Its inequality ensures that adding the remaining contributions preserves the strict gain from the one selected exponent above $k$."
@@ -99,7 +99,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "Start with selected exponents $2,3,5$ and choose $Q=6$ to clear $2$ and $3$. For $k=6,12,18$, their rows stay at zero while the row for $5$ uses remainders $1,2,3$. Each column applies the same shift to all rows. `progressionMean` averages exactly these columns with $L=Q$ and $T=M$, starting at the first positive multiple."
   },
   "exp.mean-zero-rows": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Take `F` to be the initial group. Because each $d\\in F$ divides $Q$, it divides every $mQ$, so `hdiv` makes the same group vanish in every column."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "The whole initial group disappears at once because its exponents divide $Q$. Lean takes that group as `F` and tests `hdiv : ∀ d ∈ F, d ∣ N` at the current shift `N = mQ`. Each divisibility holds since a divisor of $Q$ also divides $mQ$. The same lemma therefore gives zero displacement for the group in every column."
   },
   "exp.mean-definition": {
     "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "Put $f(k)=R(k)$, $L=Q$ and $T=M$ in `progressionMean`. Each value in this finite mean is the total of an entire column at a single exponent $mQ$."
@@ -190,7 +190,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "`displacementAtom b N d` is the shifted term minus its baseline at exponent $d$. At $b=2$, $N=k$ and $d=n>0$, its nonnegativity is precisely $\\ell_n(k)\\ge0$."
   },
   "exp.appendix.term-bound": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_le_amplified": "The proof uses $N\\bmod d\\le N$ to bound the residue numerator by $b^N-1$. Set $b=2$, $N=k$ and $d=n$ to obtain the stated upper bound."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_le_amplified": "The remainder $k\\bmod n$ is at most $k$, so replacing it by $k$ can only increase the numerator. The Lean conclusion bounds `displacementAtom b N d` by $(b^N-1)$ times the original summand. At $b=2$, $N=k$ the factor is fixed over all selected $d=n$, which lets the geometric convergence bound control the series of gains."
   },
   "exp.appendix.remainder-converges": {
     "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom": "At $b=2$ the family `Set.indicator A (displacementAtom b N)` is exactly the sequence of selected fractional contributions at shift $N$. The `Summable` conclusion justifies the sum $R(N)$ for every support."
@@ -242,7 +242,7 @@
     "Erdos249257.tendsto_cesaroMean_tsum_shiftedSupportAtom_mul": "The proof multiplies the summability assumption `hsum` by $2(Q+1)$ to obtain `hbound`. For this fixed $Q$ the resulting majorant covers every averaging length `K`, so the limit in `K` may pass through the sum over exponents."
   },
   "exp.formal.lcm-choice": {
-    "Erdos249257.TotientTailPeriodKiller.periodLcm": "`periodLcm` starts with $1$ and takes `Nat.lcm` with $t+1$ at the successor step. Thus `periodLcm t` is the prescribed modulus for the second limit."
+    "Erdos249257.TotientTailPeriodKiller.periodLcm": "`periodLcm t` is the least common multiple of all positive exponents up to $t$. The recursion starts at $1$ and includes one new exponent by taking `Nat.lcm` with $t+1$. The paper uses this $Q$ in the outer limit because every selected exponent at most $t$ divides it and contributes zero displacement along the whole progression."
   },
   "exp.formal.initial-means-zero": {
     "Erdos249257.TotientTailPeriodKiller.dvd_periodLcm": "With $h=n$, the hypotheses `h1` and `ht` give $1\\le n\\le t$. The conclusion makes every observation at a multiple of `periodLcm t` divisible by that $n$.",

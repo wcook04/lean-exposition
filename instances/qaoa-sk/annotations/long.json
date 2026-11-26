@@ -439,7 +439,7 @@
     "OAI.ZeroTemperatureSK.Heat.SmoothBurgers.second_nonpos": "For the implicit `SmoothBurgers` solution, `hi` supplies the initial sign of $w=r_{xx}$ and `ho` gives $w(t,0)=0$. The conclusion propagates $w\\le0$ to every $t\\ge0$ on the closed half-line $x\\ge0$."
   },
   "support.backward_shapes#11": {
-    "OAI.ZeroTemperatureSK.Heat.burgersRate": "`burgersRate` gives the numerator $w/2+rv$. To read the paper’s $H$ from it, divide by $r$ where $r\\ne0$."
+    "OAI.ZeroTemperatureSK.Heat.burgersRate": "In the backward time $\\tau$, the Burgers equation gives $r_\\tau=w/2+rv$, with $v=r_x$ and $w=r_{xx}$. `burgersRate` defines this numerator at fixed time using the first and second spatial derivatives of `r t`. The `time_derivative` field of `SmoothBurgers` identifies it with the time derivative. Dividing by $r$ where $r\\ne0$ gives the paper’s $H$."
   },
   "support.backward_shapes#12": {
     "OAI.ZeroTemperatureSK.Heat.SmoothBurgers.rate_nonpos": "The propagated quantity is `burgersRate`, equal to $rH$ where $r\\ne0$, and `hi` assumes its nonpositive initial sign. Thus the conclusion yields $H\\le0$ for $x>0$ once $r>0$ is supplied, while also stating the rate inequality at $x=0$."
@@ -526,7 +526,7 @@
     "OAI.ZeroTemperatureSK.Certificate.h": "The paper's $h_0=87/2500$ appears under the name `h`. It multiplies $jv$ in `T` and $bjv$ in `F₂`."
   },
   "curvature.certificate-coefficients-second": {
-    "OAI.ZeroTemperatureSK.Certificate.x₀": "The real value $4663/5000$ multiplies $v^2j$ in `F₂`, so it also appears as the coefficient of $v^2$ in `F₂j`.",
+    "OAI.ZeroTemperatureSK.Certificate.x₀": "Lean’s constant `x₀` is $4663/5000$, the coefficient of $v^2j$ in $F_2$. Differentiating that term in $j$ leaves $x_0v^2$, as in `F₂j`. This derivative enters the correction $L(x_0v^2+h_0bv)$ in the rational identity, where its sign matters.",
     "OAI.ZeroTemperatureSK.Certificate.y": "The abbreviation `y` fixes the $v^3$ coefficient of `F₂` at $6853/10000$, giving the $3yv^2$ contribution to `F₂v`.",
     "OAI.ZeroTemperatureSK.Certificate.m": "The minus sign belongs to the value of `m` itself, so the term `m*K*v^2` in `F₂` is $-(1051/400)Kv^2$.",
     "OAI.ZeroTemperatureSK.Certificate.n₀": "Adding `n₀*R*v^2` in `F₂` supplies the negative term $-(1073/500)Rv^2$, since the sign is already included in `n₀`."
@@ -548,7 +548,7 @@
   "support.rational_certificate#11": {
     "OAI.ZeroTemperatureSK.Certificate.P₀": "The square $(b-7v)^2$ is multiplied by $Rj$, so its use as a nonnegative term relies on the certificate's signs $R,j\\ge0$.",
     "OAI.ZeroTemperatureSK.Certificate.P₁": "The fourth argument `B` is independent in this definition and is substituted as $b-2v$ in `rational_identity`. With $R,B\\ge0$, it weights $(b-\\tfrac73v)^2$ nonnegatively.",
-    "OAI.ZeroTemperatureSK.Certificate.P₂": "The factor $Kv$ is outside $(b-\\tfrac92v)^2$, so nonnegativity uses the certificate's signs $K,v\\ge0$.",
+    "OAI.ZeroTemperatureSK.Certificate.P₂": "The third square term is $P_2=Kv(b-\\tfrac92v)^2$. `P₂ K v b` includes the factor $Kv$ as part of its definition. That factor has to be nonnegative before the square gives a nonnegative contribution. The later `weightedSquares` sum supplies the separate coefficient $411/10000$.",
     "OAI.ZeroTemperatureSK.Certificate.P₃": "The definition `P₃` uses $B$ only in the prefactor $vB$. Thus $v,B\\ge0$ suffice for this term's nonnegativity, regardless of the sign of $K+\\tfrac14R-\\tfrac17v$.",
     "OAI.ZeroTemperatureSK.Certificate.P₄": "All four terms, including $-\\tfrac{13}{4}Kv$ and $+\\tfrac43Rv$, lie inside one square, making `P₄` nonnegative for arbitrary real inputs."
   },
@@ -1148,7 +1148,7 @@
   },
   "scalar.scalar_rounding_index": {
     "OAI.SKValue.roundedSign": "`cdf standardGaussian` is applied to `coordinate N N z`, so the added term uses the paper’s $Z_{N+1}$. The first $N$ Euler steps use only the earlier coordinates.",
-    "OAI.SKValue.coefficientB": "At $i=N+1$, the index `i-1` is $N$, so the integral defining $B_{N+1}$ pairs the rounded sign with $Z_{N+1}$."
+    "OAI.SKValue.coefficientB": "The last Gaussian is the independent one used to round the terminal gradient. The paper’s $B_i$ is the expected product of the rounded sign and $Z_i$. Lean’s `coefficientB` pairs `roundedSign` with `coordinate N (i-1)`, so at $i=N+1$ it uses the extra zero-based coordinate $N$. The shifted sum then pairs this last $B$ with $A_N$."
   },
   "scalar.lean_gaussian_target#3": {
     "OAI.SKValue.shiftedCoefficientSum": "The range `Finset.range (N+1)` contains exactly $j=0,\\ldots,N$, and the second factor is evaluated at $j+1$. The definition of `coefficientA` makes the $j=0$ summand vanish, while the last summand uses $B_{N+1}$."

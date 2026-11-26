@@ -6,7 +6,7 @@
     "PCP.NPCertificate": "For three-colourability the candidate witness lists two bits per vertex, enough to name three colours. Its length is bounded in terms of the input, and a checker validates the codes and checks the edges. Those are the two separate jobs of `witnessBound` and `check_polyTime`. The field `spec` adds the logical condition that a bounded accepting witness exists exactly on yes-inputs."
   },
   "in-np-code": {
-    "PCP.InNP": "`Nonempty` makes `InNP` a proposition about existence. An implementation of the checker lives in the certificate, and proving membership does not choose a distinguished checker among all possible certificates."
+    "PCP.InNP": "A language is in NP if one efficient checker works for all inputs, with a bounded accepting witness for each member. In Lean, `NPCertificate P L` stores the checker, the witness polynomial and the proof that a bounded accepted witness exists exactly on members of `L`. `P` is the chosen efficiency predicate on checkers. `Nonempty` asserts that some such certificate exists and makes `InNP P L` a proposition."
   },
   "language-prose": {
     "PCP.Language": "The codomain is `Prop`, so the predicate specifies which strings belong to the language even before any algorithm is given. The later Boolean checker is a separate function on an input and a proposed witness."
@@ -43,7 +43,7 @@
     "PCP.QueryTree.addresses": "A tree can query address two first, then choose address four on zero and address seven on one. The set returned by `addresses` is $\\{2,4,7\\}$, although each run queries at most two addresses. `ReadsBelow` bounds this entire set so one proof prefix covers every possible execution."
   },
   "verifier-code": {
-    "PCP.Verifier": "For each input and seed, `Verifier` includes an abstract tree with a bound on its depth. Computing its steps in polynomial time requires the later implementation and cost conditions."
+    "PCP.Verifier": "A verifier first fixes the input and the seed, then runs a tree whose next address can depend on previous proof bits. Lean’s `run` takes a string `x` and a seed in `Fin (2 ^ randomness x.length)`. If the budget at that length is two, the four seed values select four trees, which may coincide. The result type `QueryTree queries` bounds the number of proof reads per path. The machine runtime is a separate property of the implementation."
   },
   "proof-oracle-prose": {
     "PCP.ProofOracle": "The soundness quantifier ranges over all such sequences, including ones without a computable description. An address bound is why one can nevertheless replace a complete sequence by a finite witness in the converse."
@@ -163,7 +163,7 @@
   },
   "lean-randomness": {
     "PCP.np_subset_pcp": "The constants $a,b$ are supplied before the input clauses. Hence the exact formula determines the random seed type uniformly for the whole verifier, which is used when the converse enumerates seeds.",
-    "PCP.Verifier.CanonicalRandomness": "`CanonicalRandomness` is an equality at every natural-number length. Fixing $a,b$ therefore determines the budget as a function, including the value at length zero."
+    "PCP.Verifier.CanonicalRandomness": "Once $a,b$ are fixed, the verifier uses a specified number of fair bits at every input length. Lean’s `CanonicalRandomness a b` is the equation `V.randomness n = a * Nat.clog 2 (n + 2) + b` for all `n`. Here `Nat.clog` rounds the logarithm up. The converse uses this equation to generate and enumerate the seeds from the length alone."
   },
   "clause-randomness": {
     "PCP.Verifier.CanonicalRandomness": "The budget is fixed at each $n$, even if some runs can ignore part of the seed. The finite seed type still ranges over all bit strings of that length, giving the uniform denominator in `accProb`.",
@@ -187,7 +187,7 @@
   },
   "lean-soundness": {
     "PCP.np_subset_pcp": "The premise `¬ L x` activates the soundness bound on a particular input. The same verifier that has perfect completeness on yes-inputs must reject at least half its seeds for every proof on that input.",
-    "PCP.Verifier.SoundAt": "`SoundAt` has a universal quantifier over proof oracles. Substituting $1/2$ means that after any oracle is fixed, at least half the uniformly drawn seeds reject."
+    "PCP.Verifier.SoundAt": "For a no-input, pick any proof oracle and freeze it before varying the seed. Its acceptance probability must be at most $1/2$. In Lean, `SoundAt` starts with `∀ π : ProofOracle` and compares `V.accProb x π` with the threshold. As `accProb` counts over the finite uniform seed set, this means at least half its seeds reject for each fixed oracle."
   },
   "clause-soundness": {
     "PCP.Verifier.SoundAt": "This is a bound on acceptance for every individual proof. Neither an honest encoding nor a computable origin for the proof is a premise of `SoundAt`.",

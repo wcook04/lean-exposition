@@ -9,16 +9,16 @@
     "second_derivative_test_analyticAt": "At a critical point $a$, take a one-variable slice $g(t)=f(a+th)$ and look at $g''(0)$. For $f(x,y)=x^2+3xy+y^2$, both coordinate slices are $t^2$, but the slice along $(1,-1)$ is $-t^2$. The number $g''(0)$ is the diagonal Hessian evaluation $D^2f(a)[h,h]$. The theorem asks for positivity in every nonzero direction, and analyticity gives a remainder estimate near $a$."
   },
   "potential-analytic": {
-    "couplingPotential_analyticAt": "In the expansion of $U(z+h)$ about any $z$, every term has degree at most two in $h$. That finite polynomial is already a convergent power series. Lean proves the corresponding analyticity by starting with the two continuous linear coordinate projections and using addition, multiplication and squaring."
+    "couplingPotential_analyticAt": "The stated result is `AnalyticAt ℝ couplingPotential z` for an arbitrary point `z`. Expanding $U(z+h)$ gives a finite power series in the displacement $h$, with terms of degree at most two. Lean proves this through closure under polynomial operations. `EuclideanSpace.proj` is the continuous linear map selecting one coordinate, and Lean applies `.analyticAt z` to each of those maps. The proof then uses `pow`, `mul` and `add` on those facts to recover the two squares and the mixed term."
   },
   "potential-derivative": {
-    "couplingPotential_hasFDerivAt": "At $x=(1,2)$, changing only the first coordinate gives $U(1+s,2)=7+4s+s^2$. The linear term shows that $DU(1,2)[(s,0)]=4s$. For a general increment $h$, the mixed product contributes the two terms $x_1h_0+x_0h_1$ to the derivative and leaves $h_0h_1$ in the remainder."
+    "couplingPotential_hasFDerivAt": "At $x=(1,2)$, changing only the first coordinate gives $U(1+s,2)=7+4s+s^2$. The term $4s$ is what the derivative at $x$ does to the increment $(s,0)$. The signature `HasFDerivAt couplingPotential L x` packages the whole derivative as a continuous linear map $L$ on increments. Lean writes $L$ as a weighted sum of the coordinate projections. In the product $x_0x_1$, the terms $x_1h_0+x_0h_1$ enter those weights and the quadratic term $h_0h_1$ stays in the remainder."
   },
   "potential-gradient": {
-    "couplingPotential_gradient_zero": "At $x=(1,0)$ the linear change is $DU(x)[h]=2h_0+h_1$, the dot product of $(2,1)$ with $h$. The gradient stores those coefficients as a vector. At the origin both coefficients are zero, so `couplingPotential_gradient_zero` supplies the hypothesis that removes the linear term from the minimum test."
+    "couplingPotential_gradient_zero": "At $x=(1,0)$, $DU(x)[h]=2h_0+h_1$ is a linear functional, represented by the vector $(2,1)$ since it is the dot product of that vector with $h$. At the origin both coefficients are zero. Lean uses the inner product identification `InnerProductSpace.toDual` in reverse to turn this fact about the Fréchet derivative into the gradient-vector equality. The resulting `gradient couplingPotential ... = 0` is the hypothesis that removes the linear Taylor term."
   },
   "potential-second-derivative": {
-    "couplingPotential_iteratedFDeriv_two": "Hold the direction of differentiation fixed at $v=(0,1)$. The first derivative in that direction is $DU(z)[v]=z_0+2z_1$. Moving the base point $z$ in direction $u=(1,0)$ changes this slope by one per unit displacement. That gives the mixed entry $D^2U(z)[u,v]=1$ of $K$. The Lean lemma computes all the entries at once as $u^TKv$."
+    "couplingPotential_iteratedFDeriv_two": "Fix $v=(0,1)$ and evaluate the first derivative at $z$ on that direction, giving $DU(z)[v]=z_0+2z_1$. Moving the base point in direction $u=(1,0)$ changes this slope by one per unit displacement, so $D^2U(z)[u,v]=1$. In `iteratedFDeriv ℝ 2 couplingPotential z ![a, b]`, `z` is the base point and `![a, b]` supplies the two directions. The Lean lemma computes the whole bilinear form $u^TKv$ at any base point, so those same coefficients form the matrix $K$ everywhere."
   },
   "potential-positive-definite": {
     "couplingPotential_posDef": "The identity $h^TKh=h_0^2+h_1^2+(h_0+h_1)^2$ gives a direct reason for the formal positivity claim. If $h\\ne0$, one of the first two squares is positive. Among unit vectors, the sum is smallest when $h_0=-h_1$ and the last square vanishes."
@@ -27,10 +27,10 @@
     "iteratedFDerivQuadraticMap": "Restrict the spring potential to the line $th$ through the origin. Since $U(th)=t^2U(h)$, the second derivative at $t=0$ is $2U(h)=Q(h)$. For example, $Q(1,0)=2$ and $Q(2,0)=8$. Doubling the displacement doubles the input in each Hessian slot, so the value quadruples. Lean's quadratic map records this scaling to extend a bound on unit vectors to displacements of any length."
   },
   "test-lower-bound": {
-    "coercive_of_posdef": "For nonzero $h$, set $u=h/\\lVert h\\rVert$. Compactness gives a unit vector at which $Q$ attains its minimum $C$, so positivity at that vector gives $C>0$. Now $Q(h)=\\lVert h\\rVert^2Q(u)\\ge C\\lVert h\\rVert^2$. At $h=0$ the bound is equality."
+    "coercive_of_posdef": "Positive definiteness says $Q(h)>0$ separately for every nonzero $h$. The Taylor argument needs one lower bound that works in every direction at once. In nonzero dimension, Lean uses `IsCompact.exists_isMinOn` on the unit sphere to get a minimizing unit vector $m$ and takes $C=Q(m)>0$. For $h\\ne0$, the unit vector $u=h/\\lVert h\\rVert$ gives $Q(h)=\\lVert h\\rVert^2Q(u)\\ge C\\lVert h\\rVert^2$. At $h=0$ there is equality. These are the positive constant and diagonal bound packaged by `IsCoercive`."
   },
   "test-zero-dimensional": {
-    "isLocalMin.of_subsingleton": "In dimension zero the unit sphere is empty, so the proof cannot choose a vector that minimises $Q$ there. Every point equals $a$, however, so the defining inequality for a local minimum is just $f(a)\\le f(a)$."
+    "isLocalMin.of_subsingleton": "In dimension zero the vector space has only one point, so its unit sphere contains no point from which to obtain a positive minimum of $Q$. The conclusion follows directly instead. Every point near the base point $a$ is $a$, and the inequality in `IsLocalMin f a` is just $f(a)\\le f(a)$. `isLocalMin.of_subsingleton` proves that conclusion with only a topology and a `Subsingleton` assumption. Its `@[nontriviality]` attribute lets the power-series proof discharge this case before working in a nontrivial space."
   },
   "test-taylor-error": {
     "littleO_of_powerseries": "For $W(x)=U(x)+x_0^3$ in §3, keeping degrees $0,1,2$ leaves exactly $x_0^3$. For nonzero $x$, dividing its absolute value by $\\lVert x\\rVert^2$ gives a quantity at most $|x_0|$, which tends to zero. In Lean those retained degrees are `p.partialSum 3`, and `littleO_of_powerseries` makes the same division work for the remainder of a general convergent power series."
@@ -39,16 +39,16 @@
     "le_of_littleO": "For a point $a+h$ satisfying the remainder bound, $f(a+h)-f(a)\\ge \\tfrac12Q(h)-|R(h)|\\ge0$. The factor $C/2$ comes from the Taylor coefficient $1/2!$. The surrounding proof chooses a neighbourhood where that bound on $R$ holds at every point."
   },
   "lean-smoothness": {
-    "isLocalMin_of_posDef_of_littleo": "The second `have ⟨C,hC⟩` in Kjos-Hanssen's proof shadows the first. The remaining steps use $C>0$ to choose the little-o tolerance and use $C\\lVert h\\rVert^2\\le Q(h)$ to apply `le_of_littleO`. The first call already supplies both facts.",
+    "isLocalMin_of_posDef_of_littleo": "The two `have ⟨C,hC⟩` lines both give a positive constant and the bound $C\\lVert h\\rVert^2\\le Q(h)$. The second binding shadows the first and is the only call using smoothness `hcd`. Afterwards `hC.1` gives $C>0$ so the proof can request the little-o estimate with tolerance $C/2$. The bound `hC.2 (x - x₀)` controls the quadratic term at a nearby point `x`. The first call already establishes both facts used by these steps.",
     "coercive_of_posdef_of_contdiff": "This second call uses smoothness to identify the half polar form of $Q$ with $B(u,v)=D^2f(a)[u,v]$ for arbitrary $u,v$. The resulting lower bound concerns $B(h,h)$ alone, which the first call obtains directly by minimising on the unit sphere."
   },
   "hessian-polar-form": {
     "polarBilin_iteratedFDerivQuadraticMap": "For a simple bilinear map $B(u,v)=u_0v_1$, the diagonal is $Q(h)=h_0h_1$. With $u=(1,0)$ and $v=(0,1)$, the polar difference $Q(u+v)-Q(u)-Q(v)$ is $1$, the sum of the two cross terms $1$ and $0$. This illustrates what the Lean identity recovers from diagonal values. When both directions are $h$, half the polar difference is $Q(h)$ even for this nonsymmetric example."
   },
   "hessian-symmetry": {
-    "iteratedFDeriv_two_swap": "The smoothness assumption gives equality when the directions are swapped. It therefore lets the proof replace $\\tfrac12[B(u,v)+B(v,u)]$ by $B(u,v)$ off the diagonal. For the minimum argument the only evaluation is at $(h,h)$, where the two summands coincide already."
+    "iteratedFDeriv_two_swap": "Schwarz's theorem supplies symmetry of the second derivative from smoothness at the point. The hypothesis in `iteratedFDeriv_two_swap` is `ContDiffAt ℝ ⊤ f x₀`. The conclusion evaluates the same second derivative on `![y, x]` and `![x, y]`, so the lemma rewrites $B(v,u)$ to $B(u,v)$ in the half polar form $\\tfrac12[B(u,v)+B(v,u)]$. The local-minimum estimate evaluates both slots on the same displacement, where those terms already coincide."
   },
   "power-series-caller": {
-    "second_derivative_test": "For the cubic perturbation in §3, keep the terms of degrees zero through two. The second derivative at zero gives $D^2W(0)[h,h]=2U(h)$, so multiplying by $1/2!$ recovers the quadratic term $U(h)$. The same identification of coefficients in `second_derivative_test` uses the given power series before passing its remainder to the minimum lemma."
+    "second_derivative_test": "The hypothesis `h₁ : HasFPowerSeriesOnBall f p x₀ r` does two jobs. It identifies the first three terms of the series with derivatives weighted by $1/i!$, then gives the little-o estimate for the remainder. For the cubic perturbation in §3, the quadratic term is $\\tfrac12D^2W(0)[h,h]=U(h)$. The caller separately obtains smoothness from `h₁.analyticAt.contDiffAt` and passes it to the remainder lemma. Removing that argument still leaves the power series needed for the estimate."
   }
 }

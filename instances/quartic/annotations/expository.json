@@ -364,7 +364,7 @@
     "QuarticQuery.Forrelation.P_eq_none_iff": "The address question is undefined exactly when both promise tests fail: $\\Phi<\\delta$ and $|\\Phi|>\\delta/2$, expressed in Lean as the negations of the two weak inequalities."
   },
   "exp-5-negative-row-amplitude": {
-    "QuarticQuery.Forrelation.Phi_negativeWitness": "The two-block, four-position input called the negative witness has $\\Phi=-1$."
+    "QuarticQuery.Forrelation.Phi_negativeWitness": "In the negative example, the two sign blocks give a Walsh overlap of $-1$. Lean’s `Phi_negativeWitness` computes the exact numerator $-8$ and denominator $8$ for two blocks of four positions. The measurement still sees squared probability one. The signed value is what puts this particular input outside the address promise."
   },
   "exp-5-negative-example-undefined": {
     "QuarticQuery.Forrelation.P_negativeWitness": "The explicit input with both blocks equal to $1000$ has no prescribed answer for $k=2$ and $m=4$."
@@ -482,7 +482,7 @@
     "QuarticQuery.Circuit": "A circuit specifies its number of gates, a gate at each position, and the positions of its domain and value outputs."
   },
   "exp-6-fan-in-two-gates": {
-    "QuarticQuery.Gate": "A gate carries two optional predecessors and a Boolean truth table."
+    "QuarticQuery.Gate": "A gate takes up to two earlier values and applies a Boolean rule, such as AND. In Lean, `Gate ι earlier` gives each input slot the type `Option (ι ⊕ Fin earlier)`. It can be absent, refer to an input bit, or refer to a previous gate. At gate `g` the circuit uses `earlier = g.val`, which enforces the order used in checking transcripts."
   },
   "exp-6-proposed-transcript": {
     "QuarticQuery.GateConsistent": "A transcript is consistent when, at every gate, its listed output equals that gate’s truth table applied to its predecessor values."
@@ -568,7 +568,7 @@
     "QuarticQuery.Paper.dummyAvg": "The distribution of the first board, written as an expectation. The two products `prodW (prodW μ)` choose all address strings, while `prodW (unif ℓ)` chooses the zero positions."
   },
   "exp-7-blank-cells": {
-    "QuarticQuery.dummy": "The first board determined by zero positions $J$ and address data $A$."
+    "QuarticQuery.dummy": "The dummy board has one zero in each column string and no filled certificate cell. In Lean, `dummy J A` answers by bit location. It compares the row with `J i` for a string read, returns the stored address input from `A` for an address-question read, and returns `false` for every pointer or transcript bit. This clarifies which replies planting can change."
   },
   "exp-7-blank-replies": {
     "QuarticQuery.dummy_update_of_aTarget_none": "Lean proves that replacing the target strings leaves every non-target location unchanged, including column-string bits and other columns as well as cell bits. The hypothesis `h : aTarget I q = none` says precisely that location $q$ is outside the target strings."
@@ -586,7 +586,7 @@
     "QuarticQuery.addressedF_planted": "The planted board has value one when the target column’s address strings are promised and its stored gate outputs are correct."
   },
   "exp-7-decision-tree": {
-    "QuarticQuery.QueryTree": "A deterministic decision tree for reading bits."
+    "QuarticQuery.QueryTree": "A decision tree fixes the next bit to read after each possible history of answers. In Lean, `QueryTree ι` uses `ι` for bit positions. `query index onFalse onTrue` chooses the child for the actual reply, and `leaf answer` gives the final Boolean. `depth` takes the larger child depth and adds one, so the classical budget covers the longest path."
   },
   "exp-7-first-difference": {
     "QuarticQuery.QueryTree.exists_mem_path_ne": "The hypothesis `h : T.eval x ≠ T.eval y` is the output disagreement. `T.path x` lists the actual queries on the first input."
@@ -685,7 +685,7 @@
     "QuarticQuery.avg_reachedCell_le": "With the outside data fixed, the probability of visiting the true cell while the target column is light is at most $G\\rho$, provided every separately capped predictor succeeds with probability at most $\\rho$. The premise `hT : T.depth ≤ G` bounds the number of proposed query times."
   },
   "exp-7-tail": {
-    "QuarticQuery.twoThirds_pow_le": "For $m=4^t$ and $r=40t=20\\log_2m$, the product probability satisfies $(2/3)^r\\le m^{-10}$."
+    "QuarticQuery.twoThirds_pow_le": "Every pair of independently guessed address digits contributes a bound $(2/3)^2=4/9$, smaller than $1/2$. In Lean, `twoThirds_pow_le t` groups the $40t$ digits into $20t$ pairs and bounds the resulting probability by $(1/2)^{20t}=(4^t)^{-10}$. This lets the lower bound absorb the cost of a union bound over possible query times."
   },
   "exp-7-table-erased": {
     "QuarticQuery.Paper.eq_19": "The board uses normalized nonnegative address-data weights (`hμ`, `hμ1`), and the planted column is independently uniform."

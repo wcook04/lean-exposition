@@ -175,7 +175,7 @@
     "QuarticQuery.Paper.construction_equation_3": "For two blocks, the overlap is $z_1^{\\mathsf T}H z_2/m$ because each endpoint vector contributes a factor of $1/\\sqrt m$. Multiplying by the sign diagonals is the part that reads the two blocks. Projecting gives the square of the signed overlap, so the quantum procedure decodes on the two promised ranges while the exact circuit checks the promise itself."
   },
   "p2-promise": {
-    "QuarticQuery.Paper.construction_equation_4": "The complete promise of $P$ on its $km$ input bits."
+    "QuarticQuery.Paper.construction_equation_4": "The promise selects two disjoint ranges of the signed overlap. A value at least $\\delta$ gives one, and absolute value at most $\\delta/2$ gives zero. Every other value leaves the partial function undefined, including a large negative overlap. In Lean, `construction_equation_4` states these cases as `P k t z = some true`, `some false` and `none`, with separate equivalences for the inequalities. It also records the bit count and disjointness."
   },
   "p2-projection": {
     "QuarticQuery.Paper.construction_projection_test": "The projection test succeeds with probability $\\Phi^2$. Under `hk : 1 ≤ k`, this probability is at least $\\delta^2$ on a promised one-input and at most $\\delta^2/4$ on a promised zero-input."
@@ -301,7 +301,7 @@
     "QuarticQuery.localTestTree": "In the gate branch, the tree reads the two predecessor locations and the stored bit for gate $g$. An absent predecessor is supplied without an oracle query."
   },
   "p3-pointer-cost": {
-    "QuarticQuery.localTestTree": "The decision tree that evaluates one test at $(i,s)$."
+    "QuarticQuery.localTestTree": "A pointer test reads the $\\ell$ stored digits of a row number, then reads the single bit in that row of the rival column. In the pointer branch of Lean’s `localTestTree`, `queryWord` collects the digits, `pointerEquiv` turns them into a row, and the final `query` accepts when the bit is zero. This is the branch behind the $\\ell+1$ cost."
   },
   "p3-interface-comparison": {
     "QuarticQuery.Paper.quantumWinner_dominates": "When the winner's address is decoded correctly, its pointer reads zero in the rival's column. The rival's counterpointer lands somewhere in an all-one string, so its decoded cell can be wrong without changing the result. The dominance probability therefore needs only the winner's whole-address decoding guarantee."
@@ -331,7 +331,7 @@
     "QuarticQuery.Paper.quantumComparison_unordered_state": "If the one experiment chooses $i$ with probability $3/4$, it chooses $j$ with probability $1/4$. Both orientations refer to the same two possible outcomes of the same experiment. That makes the pair complementary even with noisy address decoding, which the expected-weight argument needs."
   },
   "q4-aij-definition": {
-    "QuarticQuery.Upper.cmpProb": "The comparison probability $a_{ij}$ for a fixed input."
+    "QuarticQuery.Upper.cmpProb": "The comparison experiment returns one of its two distinct candidates. In Lean, `cmpProb n x i j` uses `coreProb` directly in the sorted order and one minus the sorted probability in the reverse order. It gives zero when `i = j`. Thus the two orientations count complementary outcomes of the same comparison, as needed in the tournament’s expected-weight calculation."
   },
   "q4-complementary-display": {
     "QuarticQuery.Upper.cmpProb_isComparison": "The actual comparison probabilities satisfy $a_{ii}=0$ and $a_{ij}+a_{ji}=1$ for distinct indices. The theorem holds for every input `x` and repetition count `n`. No Forrelation promise appears among its hypotheses."
@@ -395,7 +395,7 @@
     "QuarticQuery.Tournament.ideal_miss_le": "The chance that a dominant candidate is absent is at most the chance that final weight is at least $1/2$, and that probability is at most $2m/2^T$."
   },
   "q4-positive-total": {
-    "QuarticQuery.Tournament.half_lt_total": "Before a dominant candidate is listed, total weight exceeds $1/2$."
+    "QuarticQuery.Tournament.half_lt_total": "An unlisted dominant candidate keeps at least $(1-\\varepsilon)^T$ weight after at most $T$ pivots. If $T\\varepsilon<1/2$, its weight alone keeps the total above $1/2$. In Lean, `hd` supplies dominance, `hlen` bounds the list length, and `hs` says the candidate is absent from the list. `half_lt_total` also assumes the comparison entries lie in $[0,1]$ so the remaining weights cannot reduce the total."
   },
   "q4-prepare-comparisons": {
     "QuarticQuery.Paper.equation_15": "`hF` gives each comparison a common logical read budget `c`. The constructed circuit uses `t * c` reads for $t$ pivots, and `slice i` selects the tensor of retained comparison states at candidate $i$."
@@ -620,7 +620,7 @@
     "QuarticQuery.Paper.addressSimulator_depth_le": "The capped address simulator has total query depth at most $L$ on every input. The time parameter `t` limits how far the original tree is simulated and can exceed $L$."
   },
   "c5-output-before-answer": {
-    "QuarticQuery.Paper.addressSimulator": "The predictor for a fixed column $i$ and proposed query time."
+    "QuarticQuery.Paper.addressSimulator": "The simulator predicts the address from the proposed cell location before reading the certificate bit there. In Lean, `addressSimulator` passes `aTarget i` to `simTree` to identify the hidden strings and `cellGuess i` to extract a proposed address in column $i$. Outside reads use `dummy J A`. If the replay stops, exceeds its target-read budget or proposes an unrelated location, the predictor outputs the all-zero address."
   },
   "c5-separate-clocks": {
     "QuarticQuery.simTree": "A simulation with two counters: `t` counts remaining steps of the original tree, and `c` counts remaining queries to the hidden target. A query answered from `base` decreases only `t`. A target query decreases both."

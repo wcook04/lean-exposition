@@ -103,7 +103,7 @@
     "QuarticQuery.TestIndex": "`Fin S ⊕ Bool` distinguishes the $S$ gate-consistency tests from the two additional output tests."
   },
   "qr-test-count": {
-    "QuarticQuery.Paper.construction_K_count": "The test set has $m+(m-1)+40t(S+2)$ elements."
+    "QuarticQuery.Paper.construction_K_count": "The test count has one label per row of the proposed winning column, one per pointer to a rival, and one per transcript gate plus two output checks for each address question. In Lean, `construction_K_count` counts `TestIndex (2 * t) (40 * t) S`. The first index gives $m=2^{2t}$ rows and columns, the second gives $r=40t$ questions, and `S` counts the gates in each transcript."
   },
   "qr-test-count-bound": {
     "QuarticQuery.Paper.construction_K_count": "The type gives the exact count, which simplifies to the equality shown after $r=20\\ell$. It does not give the displayed cubic upper bound.",
@@ -153,7 +153,7 @@
     "QuarticQuery.Paper.quantumTournament_list": "The existential `law` and its `Samples` and `Runs` witnesses appear before `∀ x s`. The dominant vertex is used to state the guarantee for the sampler."
   },
   "qr-weight-update": {
-    "QuarticQuery.Tournament.weight": "Each candidate starts with weight one."
+    "QuarticQuery.Tournament.weight": "After selecting pivot $p$, a future draw can keep candidate $i$ only if it beats every previous pivot and also beats $p$. Fresh comparisons multiply the old probability by $a_{ip}$. Lean’s `weight` uses one for the empty list and the clause `p :: L` multiplies `weight a L i` by `a i p`. The new self-comparison consequently erases the weight of $p$."
   },
   "qr-weight-product": {
     "QuarticQuery.Paper.quantumWeight_product": "The weight of candidate $i$ after the pivot history $L$ is the product of $a_{ip}$ over the pivots in $L$. `L.map` lists the factors and `.prod` multiplies them."
@@ -327,7 +327,7 @@
     "QuarticQuery.restrictWeight": "The restricted weight keeps $\\nu(x)$ when the queried coordinate has answer $b$, and assigns weight zero otherwise."
   },
   "rec-cl-weighted-value-recursion": {
-    "QuarticQuery.budgetValue": "The value $W_c(\\nu)$ is defined recursively."
+    "QuarticQuery.budgetValue": "With no reads left, choose the constant answer that captures the greater input weight. With one more read available, either keep the previous strategy or query a coordinate and add the best correct masses on the two branches. In Lean, `budgetValue` uses `none` for the old budget and `some q` for a read at `q`. `restrictWeight` zeroes incompatible inputs without renormalizing, which is why the child values are added directly."
   },
   "rec-cl-weighted-optimum": {
     "QuarticQuery.exists_tree_budgetValue_le": "This declaration constructs a depth-$c$ tree with success at least $W_c$. The upper bound for all trees is the separate `treeSuccess_le_budgetValue` declaration.",
@@ -465,7 +465,7 @@
     "QuarticQuery.ForrelationLower.D_D": "The theorem states that the repeated same-coordinate discrete derivative is zero. Combined with the extension derivative identity this supplies the second clause, but it does not state the first clause or the commutation clause."
   },
   "fr-centered-character": {
-    "QuarticQuery.ForrelationLower.xi": "The centered character is $\\xi_i(z_i)=(z_i-\\mu_i)/(1-\\mu_i^2)$."
+    "QuarticQuery.ForrelationLower.xi": "A biased sign $z_i$ has mean $\\mu_i$. Subtracting $\\mu_i$ centers it, and dividing by $1-\\mu_i^2$ scales it so that multiplying by the sign’s probability gives the discrete derivative weight $z_i/2$. In Lean, `xi μ a b` uses `sg b` to turn the Boolean into a sign. The next lemma `piB_mul_xi` proves the weight identity under $|\\mu_i|<1$, where the denominator is nonzero."
   },
   "fr-character-cancellation": {
     "QuarticQuery.ForrelationLower.piB_mul_xi": "For $|\\mu_i|<1$, multiplying the sign probability $(1+\\mu_i z_i)/2$ by its centered character gives $z_i/2$. The binder `h` excludes zero denominator at the two endpoint biases."
@@ -699,7 +699,7 @@
     "QuarticQuery.Paper.appendixA_spectralSensitivity_adversary_le_Q": "Every total Boolean function satisfies $\\lambda(f)\\leq35Q(f)$."
   },
   "qm-degree-lambda": {
-    "QuarticQuery.Paper.appendixA4_paper_route": "For every total Boolean function, $\\deg(f)\\leq\\lambda(f)^2$."
+    "QuarticQuery.Paper.appendixA4_paper_route": "The degree is the largest size of a support in the Boolean polynomial, and spectral sensitivity is the operator norm of the graph of single-bit flips that change the output. Lean’s `appendixA4_paper_route` takes a total Boolean function and bounds the real cast of `degree f` by `spectralSensitivity f ^ 2`. It handles degree zero directly. In positive degree it restricts to a largest support and applies Huang’s signed-cube argument on that face."
   },
   "qm-top-coefficient": {
     "QuarticQuery.Paper.appendixA_topFourier_survives": "The Lean equality needs only `#S = degree f`, whereas the paper has additionally chosen a nonzero coefficient on $S$. The hypothesis `hS : #S = degree f` excludes larger nonzero supports that could contribute to that coefficient."

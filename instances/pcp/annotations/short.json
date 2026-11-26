@@ -4,7 +4,7 @@
   },
   "pcp-short-forward-statement": {
     "PCP.np_subset_pcp": "`CanonicalRandomness` fixes the exact seed length $\\alpha\\lceil\\log_2(n+2)\\rceil+\\beta$. The bound applies to the machine that produces the query tree, and the separate `ReadsBelow` clause bounds all the addresses the tree can reach.",
-    "PCP.ReferenceNP.inNP_iff_mem": "The forward theorem takes `PCP.InNP Machine.PolyTimeRel` as its hypothesis. To apply it to a language in the reference nondeterministic-machine class, use the right-to-left direction of `inNP_iff_mem` to obtain a concrete witness checker."
+    "PCP.ReferenceNP.inNP_iff_mem": "The usual NP hypothesis starts from a nondeterministic machine, while this construction starts from a deterministic polynomial-time checker with a polynomial witness bound. Lean’s `inNP_iff_mem` equates `PCP.InNP Machine.PolyTimeRel L` with `L ∈ Complexity.NP`. The right-to-left implication turns the textbook class assumption into the hypothesis of `np_subset_pcp`."
   },
   "pcp-short-theorem": {
     "PCP.np_subset_pcp": "Suppose the verifier has two seeds. A proof that passes only the first and another that passes only the second each have acceptance probability $1/2$. Perfect completeness requires one proof that passes both. This is why a deterministic checker can use one candidate proof prefix and enumerate the seeds in the converse."
@@ -12,7 +12,7 @@
   "pcp-short-colour-constraints": {
     "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints": "The existential direction starts with a three-colouring and interpolates its grid values to obtain the degree bound. The reverse direction restricts a witness polynomial to the grid and uses the primitive cube root to identify the solutions of $u^3=1$ with the three colours.",
     "PCP.Algebraic.ThreeColorGrid.constraints_iff_satisfies": "Take two vertices labelled with the same allowed colour. Their difference is zero, so the edge expression is $E(X,Y)(-1)$. It is nonzero on an edge and zero on a nonedge. This is why one interpolated adjacency table $E$ can enforce the proper-colouring condition over the whole pair grid, where $E$ takes only the values zero and one.",
-    "PCP.Algebraic.ThreeColorGrid.totalDegree_validPolynomial_le": "The cube can triple the total degree, while subtracting the constant one cannot increase that bound. The same degree ceiling will apply to a vanishing certificate for the vertex constraint.",
+    "PCP.Algebraic.ThreeColorGrid.totalDegree_validPolynomial_le": "The vertex constraint is the polynomial $P^3-1$. Its degree is at most three times the degree of $P$, since multiplying three copies adds their degree bounds and subtracting a constant cannot increase the result. Lean’s `validPolynomial P` names this expression. `totalDegree_validPolynomial_le` proves its bound for an arbitrary `P`, so the paper can substitute the interpolation bound $d_0$ and use $3d_0$ for the vertex certificate.",
     "PCP.Algebraic.ThreeColorGrid.totalDegree_edgeExtension_le": "The adjacency table is interpolated in the coordinates of both vertices. Each coordinate contributes at most $h-1$ to total degree, so the graph contributes $2d_0$ to the $5d_0$ bound for the edge constraint.",
     "PCP.Algebraic.ThreeColorGrid.totalDegree_properPolynomial_le": "Multiplying by $E$ restricts the colouring equation to edges on the grid and costs $\\deg E$ in the degree budget. With $\\deg Q\\le d_0$ and $\\deg E\\le 2d_0$, cubing $Q$ and multiplying gives the $5d_0$ ceiling."
   },
@@ -26,7 +26,7 @@
     "PCP.Algebraic.ThreeColorVerifier.Proof": "The `Proof` fields are functions returning bits at typed addresses. There is no consistency premise between a points table and its lines table, so the soundness theorem can start with arbitrary received answers."
   },
   "pcp-short-query-type": {
-    "PCP.Algebraic.ThreeColorVerifier.Query": "Each constructor selects a table and fixes the type of label a query can use. A lines-table query also takes the base and slope of an outer line and an inner evaluation point, so it addresses one bit of the encoded restriction.",
+    "PCP.Algebraic.ThreeColorVerifier.Query": "A read addresses one proof bit. In Lean, `Query.color` takes a vertex and a polynomial label of degree at most three, while `Query.validCert` takes a certificate point and an affine label. A lines constructor such as `Query.colorLine` first takes the line’s base point and slope, then the inner evaluation point and an affine label. The constructor tells `read` which table to consult and restricts what can count as an address.",
     "PCP.Algebraic.ThreeColorVerifier.read": "`read` dispatches to the selected field of `Proof` and returns one bit. When the proof is honest, the value arises from the construction of the table being read, with the same read operation used for arbitrary proofs."
   },
   "pcp-short-honest-value": {
@@ -61,10 +61,10 @@
     "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees": "These are the guarantees after fair-bit sampling and repetition. `verification_guarantees` records the chosen positive $R$, the query and seed budgets multiplied by $R$, and the final error $1/2$. The single-run rejection gap appears earlier in the proof."
   },
   "pcp-short-complexity": {
-    "PCP.Lang.ThreeColorRuntime.polyTimeAlg": "`polyTimeAlg` bounds the running time of the amplified algorithm in the concrete machine model. The field and root searches contribute through the imported construction, so the assertion covers the computation needed to produce queries as well as the queries themselves."
+    "PCP.Lang.ThreeColorRuntime.polyTimeAlg": "A constant number of proof reads still leaves the cost of computing each address and verdict. The Lean conclusion `Machine.PolyTimeAlg … algorithm` applies to the actual amplified verifier’s next-action function. The proof uses the certified polynomial cost of the base program and its correctness proof to instantiate `ThreeColorAmplifiedRuntime.of_callback`. This makes the resource claim cover the computation between reads."
   },
   "linked-source-14": {
-    "PCP.pcp_subset_np_concrete": "The address bound lets the NP witness contain just $p(n)$ bits. A concrete checker enumerates the polynomially many seeds and accepts if every run accepts. Perfect completeness supplies a passing witness, while soundness ensures that any candidate on a no-input fails at least one seed."
+    "PCP.pcp_subset_np_concrete": "The converse uses a polynomial-length proof prefix as an ordinary NP witness and checks it on every seed. In Lean, `hlen` bounds the address of every read, `hrand` gives the logarithmic seed budget, and `halg` together with `himpl` makes each simulated run efficient. `hcomplete` and `hsound` give the two directions of the checker’s specification. The conclusion `InNP Machine.PolyTimeRel L` supplies the bounded witness and concrete checker."
   },
   "pcp-short-reference-np": {
     "PCP.ReferenceNP.inNP_iff_mem": "The equivalence transports the two PCP implications to the reference definition of NP. The machine-to-checker direction supplies the forward theorem’s hypothesis, and the checker-to-machine direction converts the converse’s output to reference NP membership."

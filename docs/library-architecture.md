@@ -268,6 +268,12 @@ short direct note is enough. Read the changed notes in passage order and
 check that both the mathematical example and the return to the passage make
 sense without additional notation.
 
+State the mathematical move or claim in the passage, then point to the Lean
+binder, field, or expression that lets the reader recognise it. When a Lean
+declaration narrows the claim, say which hypothesis sets the boundary and
+what is guaranteed inside it. Give a note enough space to explain both the
+math and the code that the reader has open.
+
 Use a specialist source to choose what the reader should do first. Look for
 the simpler problem the source solves before using the general result, or the
 first computation its argument expects a reader to be able to do. Choose an

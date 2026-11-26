@@ -148,7 +148,7 @@
     "OAI.ZeroTemperatureSK.WeakIto.completion_square_feedback": "The response has already been set equal to $u$ on the left, and the identity computes its gain as $hcu^2/2$. The identity assumes neither $|u|\\le1$ nor $c\\ge0$, so feasibility and the upper bound require the surrounding argument."
   },
   "support.regularity#14": {
-    "OAI.ZeroTemperatureSK.valueRate": "`valueRate` is a rate in time, defined as $-a(t,x)/2-\\gamma(t)u(t,x)^2/2$. The squared slope is the term multiplied by the order parameter in the PDE."
+    "OAI.ZeroTemperatureSK.valueRate": "Optimizing the quadratic response gives the term $\\gamma(t)u(t,x)^2/2$ in the backward equation. Lean’s `valueRate` is the time rate $-a/2-\\gamma u^2/2$, where `extend γ.val t` supplies the coefficient and `gradient W γ t x` is the slope $u$. This explains which square enters the equation. The sensitivity of the optimized value to a change of coefficient is a separate result."
   },
   "assumptions.value_diffusion#7": {
     "OAI.ZeroTemperatureSK.IsDiffusion": "The quantifier `∀ᵐ ω` precedes the time quantifier, so the equation holds simultaneously at every time in $[0,1]$ outside one null set, together with continuity and $X_0=0$. Progressive measurability is a separate conjunct."
@@ -195,7 +195,7 @@
     "OAI.ZeroTemperatureSK.full_support": "`FullSupportConclusion` says every measure satisfying `IsStieltjesMeasure γ μ` has `μ.support = Set.univ`. The type `Time` already restricts the statement to the relative topology of $[0,1)$."
   },
   "gaps.strict-increase": {
-    "OAI.ZeroTemperatureSK.full_support": "Look for the fourth conjunct of `FullSupportConclusion`. It says `γ.val a < γ.val b` for every pair `a < b` of overlap times."
+    "OAI.ZeroTemperatureSK.full_support": "For any $0\\le a<b<1$, full support puts positive mass between the two times. Their cumulative values then satisfy $\\gamma(a)<\\gamma(b)$. In Lean the fourth conjunct of `FullSupportConclusion` states this strict inequality for `a b : Time`, where `Time` enforces exactly those endpoint restrictions. The theorem supplies it under `hmin`, the hypothesis that the given order parameter minimizes the Parisi functional."
   },
   "support.moment_saturation#6": {
     "OAI.ZeroTemperatureSK.full_support": "The two integrals occur together at the end of `FullSupportConclusion`, for all associated diffusions and all times in $[0,1)$. `squareMoment` integrates the square of the spatial slope and the last integral squares the spatial curvature."
@@ -263,7 +263,7 @@
     "OAI.ZeroTemperatureSK.contactPotential_remove": "Here $\\nu$ is finite and `hν` requires it to be a submeasure of the existing Stieltjes mass. The conclusion is $\\int G\\,d\\nu\\le0$, so removal of all $\\mu_\\gamma$ is covered only when that measure is finite, and no directional derivative is stated."
   },
   "support.contact#15": {
-    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos": "The line defining `hz` combines `hI`, the nonpositive upper bound, with `integral_nonneg hF0`. Antisymmetry gives exactly $\\int F\\,d\\nu=0$."
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos": "The argument has already bounded the integral of $G$ from above by zero. Since $G\\ge0$, its integral is also at least zero. Lean gives these two bounds to `le_antisymm` as `hI` and `integral_nonneg hF0`. That yields zero integral, then vanishing almost everywhere. Continuity extends the conclusion to every support point, whose every neighbourhood has positive mass."
   },
   "support.contact#16": {
     "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.continuous_zero_on_support_of_integral_nonpos": "The proof first obtains $F=0$ almost everywhere from the zero integral. If $F(x)\\ne0$ at a support point, continuity makes $\\{F\\ne0\\}$ a neighbourhood of positive measure, contradicting its measure being zero."
@@ -284,7 +284,7 @@
     "OAI.ZeroTemperatureSK.minimizer_contact": "Under `hmin` and `hμ`, the conjunction gives `squareMoment` equal to $t$ and `curvatureMoment` at most $1$ at every relative support point. The moment derivative identity turns the second clause into $q'(t)\\le1$, including the right derivative at zero."
   },
   "support.contact_derivatives#4": {
-    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.contact_conditions": "At zero the proof takes $q(0)=0$ from `hq0`. If zero is supported, `hGt` also supplies $G(0)=0$ from contact."
+    "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.contact_conditions": "At zero the equality $G(0)=0$ comes from support membership, using the compact mass-removal result. The equality $q(0)=0$ has a separate source in the symmetry of the diffusion and gradient at the initial state. `contact_conditions` receives that equality as `hq0` and uses it in the zero case. The interior case instead gets $q(t)=t$ by differentiating $G$ at a minimum."
   },
   "support.contact_derivatives#6": {
     "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.derivative_contact_of_potential_min": "From `hqd` and the contrary assumption $d>1$, the proof obtains right secant slopes greater than $1$. With `hqs`, these imply $q(t)>t$, so `hGd` yields $G'(t)=t-q(t)<0$ without continuity of $q'$."

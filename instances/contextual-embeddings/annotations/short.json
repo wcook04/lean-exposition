@@ -12,13 +12,13 @@
     "Ty": "The two occurrences of `Ty` in the Haskell function alternative become the two arguments of Lean's `Ty.Fun`. The notation `:->` associates to the right, so `a :-> b :-> c` means a function taking an $a$ and returning a function from $b$ to $c$."
   },
   "code-ctx": {
-    "Ctx": "In Lean, `ts :/: t` is notation for `Ctx.Snoc ts t`. Its first argument is the entire earlier context. Thus `(ts :/: a) :/: b` records two binders in order, with $a$ introduced before $b$."
+    "Ctx": "Read `ts` as the ordered list of types in scope, with the newest type at the right. `Ctx.Empty` supplies the empty list, and `Ctx.Snoc ts t`, written `ts :/: t`, keeps the whole earlier context as its first argument and appends one type. For two successive binders of types `a` and `b`, `(Ctx.Empty :/: a) :/: b` has `b` at the last position. This order is what lets `Index.Top` select the newest binder."
   },
   "code-top": {
     "Index": "The return type of `Index.Top` repeats `t` as the last context entry and the selected type. This is how Lean checks that the newest variable really has the requested type. There is no `Index.Top` in the empty context."
   },
   "code-pop": {
-    "Index": "The input selects an occurrence of `t` in `ts`. After appending `t'`, the same occurrence is one position farther from the end, so `Index.Pop` changes only the context index. The types `t` and `t'` may coincide."
+    "Index": "Suppose `i : Index ts t` selects a variable of type `t` in the old context `ts`. When a new binder of type `t'` is appended, the same variable is one entry farther from the right. `Index.Pop i : Index (ts :/: t') t` records that skip. In the return type, `t'` occurs only inside the larger context. The selected type stays `t`, even when the new binder happens to have that same type."
   },
   "code-var": {
     "STLC": "In a context with just $x$ of type $a$, the variable rule concludes that $x$ is a term of type $a$. In Lean, `Index.Top` certifies the lookup and `STLC.Var Index.Top` is the resulting term. Both share the same context and selected type, so the constructor needs no further lookup."
@@ -39,7 +39,7 @@
     "ProxyTop": "The exotic example above inspects an index to choose a different body in the `Index.Top` and `Index.Pop` cases. Frohlich, Foster, Kavvos and Wang give the host function a marker with only the `ProxyTop.PTop` constructor, so there is no older-variable case on which it can branch."
   },
   "code-proxytop": {
-    "ProxyTop": "The Haskell constructor has the same name as its type. Lean uses `ProxyTop.PTop`. Its result type records the entire context at binding and requires its last entry to have the marked variable's type."
+    "ProxyTop": "The paper's constructor is named `ProxyTop`, and Lean calls it `ProxyTop.PTop`. With earlier context `ts` and new variable type `t`, it has type `ProxyTop (ts :/: t) t`, so the type fixes the complete context at binding and identifies its last entry. For two successive binders of type `a`, an outer marker keeps the one-entry context while the inner marker has the two-entry context. That distinction survives even though both markers are made with the same constructor."
   },
   "proxytop-only-top": {
     "ProxyTop": "In a two-binder context $[a,b]$, a marker for the new variable has type `ProxyTop (Ctx.Empty :/: a :/: b) b`. The marker for the earlier variable keeps its original context $[a]$. To use it under the second binder, the construction needs reification between those contexts."
@@ -75,7 +75,7 @@
     "STLCCtx": "Both the marker argument and the result of the host function refer to the extended context `ts :/: a`. The function can name the new variable through its argument, and its result is a guest body of type `b`. The outer constructor binds that variable."
   },
   "code-capp": {
-    "STLCCtx": "Function and argument are both written at use context `ts`, so they can be combined directly. Either subterm can contain variables from earlier binding sites. Those variables carry their own reification inside their `STLCCtx.CVar` constructors."
+    "STLCCtx": "The passage gives the rule for applying a function in one use context `ts`. For instance, with `f : a :-> b` introduced before `x : a`, the two occurrences in `CApp (CVar f) (CVar x)` both live in the context `[a :-> b, a]`. The first marker reifies across one extension and the second reifies in place. The signature of `CApp` matches the function's domain to the argument type and leaves their common use context in the result of type `b`."
   },
   "code-cstar": {
     "STLCCtx": "A unit term uses no variable. `STLCCtx.CStar` therefore leaves the context arbitrary and takes no marker or reification instance, even if it appears inside a host function that binds a variable."
@@ -84,13 +84,13 @@
     "STLCCtx": "For $\\lambda x.\\lambda y.x$, the host binder names $x$ while its marker keeps the context at the first lambda. The occurrence beneath the second lambda needs one extension instance. Unembedding will read that instance to recover the single `Index.Pop`."
   },
   "fig2-cvar": {
-    "unembed": "The instance is part of the matched `STLCCtx.CVar`. Applying its reification to the marker gives an index at the occurrence's context, which is what `STLC.Var` expects. The binding context can disappear from the result."
+    "unembed": "The variable clause of `unembed` opens `STLCCtx.CVar` to retrieve a marker of type `ProxyTop ts t` and the stored instance `ReifyIndex ts ts'`. The instance converts the marker into `Index ts' t`, where `ts'` is the context of the occurrence. For an outer variable used under one more lambda, the usual extension instance supplies `Index.Pop Index.Top`. `STLC.Var` wraps that position, so the first-order term keeps the use context and guest type and no longer needs to store the marker."
   },
   "fig2-clam": {
     "unembed": "To read back the abstraction `CLam (fun x => CVar x)`, give its host body the marker `ProxyTop.PTop`. The body then reads back to `STLC.Var Index.Top`, and `STLC.Lambda` binds it. The argument to the host function names a position, so this step recovers the guest body without evaluating it on a guest value."
   },
   "fig2-capp": {
-    "unembed": "The recursive calls preserve each operand's context and guest type. The translated function is still an arrow from the translated argument's type, so `STLC.Apply` type checks with the two recursive results."
+    "unembed": "An application has a function subterm of guest type `a :-> b` and an argument subterm of guest type `a`, both in the same use context. The type of `unembed` preserves each subterm's context and guest type, so the recursive results satisfy the corresponding inputs of `STLC.Apply`. In the first-order round trip, the two induction hypotheses recover those two subterms independently, then `STLC.Apply` rebuilds the original application."
   },
   "fig2-cstar": {
     "unembed": "This branch changes the syntax constructor from `STLCCtx.CStar` to `STLC.Star`. Since `unembed` preserves the context and unit type here, the branch closes by the constructor equation when proving the round trip."
@@ -126,13 +126,13 @@
     "fromIndex": "Start with `Index.Pop Index.Top` in $[a,b]$. Read the inner `Index.Top` in $[a]$ to recover the older binder's marker. Then add $b$ back to the use context and store one extension in the instance. Working inward and then outward this way converts a position into binding data while keeping the occurrence's type $a$."
   },
   "code-fromindex-top": {
-    "fromIndex": "In the `Index.Top` branch the binding and use contexts already coincide. `varTop` records that fact in the package by using reflexive reification, so there is no context extension to reconstruct."
+    "fromIndex": "`Index.Top` selects the final entry of a context `ts :/: t`. The binding context of that entry is the same as the immediate use context, so this branch of `fromIndex` can return `varTop`. That package holds a `ProxyTop.PTop` at `ts :/: t` and the reflexive `ReifyIndex` instance. Reifying it returns `Index.Top`, which is the base case of the variable round trip."
   },
   "code-vartop": {
     "varTop": "The explicit arguments in `@PTop ts t` fix the hidden binding context to `ts :/: t`. That is also the package's use context, so Lean can fill the instance argument with `instReifyIndexRefl`."
   },
   "code-fromindex-pop": {
-    "fromIndex": "For `Index.Pop i`, first construct a package in the shorter context using `fromIndex i`. The step `weakenPVar` then adds the same last entry that `Index.Pop` skipped. The binding marker stays attached to its original context."
+    "fromIndex": "For `Index.Pop i` in the larger use context, `i` selects the same variable before the last entry was added. `fromIndex i` first recovers the marker and its instance in that shorter use context. `weakenPVar` puts the skipped entry back by extending the stored reification, while keeping the binding marker. With input `Index.Pop Index.Top` in $[a,b]$, the rebuilt package holds a marker bound in $[a]$ and reifies it for use in $[a,b]$."
   },
   "code-weaken": {
     "weakenPVar": "The two sides of `PVar i => PVar i` use the same marker. The constructor on the right expects a reification with an extended target context, so Lean wraps the old instance with `instReifyIndexSnoc`. The source prints the same constructor even though its implicit argument has changed."
@@ -150,7 +150,7 @@
     "toCVar": "This is the variable branch of the term translation. To work out what it does on a particular occurrence, apply `fromIndex` to recover the binding marker and its reification first, then use `fromVar` to put that data inside the contextual term."
   },
   "code-fromvar": {
-    "fromVar": "The `ProxyVar.PVar` pattern exposes the hidden context and makes its reification instance available. `STLCCtx.CVar` can use both directly. No index is computed until an operation such as `unembed` asks for one."
+    "fromVar": "The paper's `MkVar` is Lean's `ProxyVar.PVar`. Matching it gives `fromVar` the saved marker together with the implicit `ReifyIndex` from its binding context to its use context. `STLCCtx.CVar` requires exactly those inputs, so `fromVar` can put them into the full term syntax while keeping the same guest type. The conversion changes the outer constructor. Computing the first-order index is a later step in `unembed`."
   },
   "code-tocvar": {
     "toCVar": "The right-hand side runs from right to left. `fromIndex` turns a typed position into a marker and an instance. `fromVar` uses them to make a term of the index's guest type in the index's original context."
@@ -176,7 +176,7 @@
     "indexIsoL": "In the `Index.Top` branch the two sides reduce to the same index. In the `Index.Pop` branch unfolding `fromIndex` and `weakenPVar` leaves a pop on each side. The induction hypothesis supplies equality of the indices inside those pops."
   },
   "indexIsoL-intuition": {
-    "indexIsoL": "Think of `Index.Pop Index.Top` as a position one binder back. The conversion saves the older binder and uses one weakening at the current binder. Reification turns that weakening into the single pop again."
+    "indexIsoL": "Start with `Index.Pop Index.Top` in $[a,b]$. `fromIndex` creates the marker for $a$ in $[a]$ and stores an extension instance accounting for $b$. The equality in `indexIsoL` reifies with the instance extracted from that very package. It first gets `Index.Top` in $[a]$ and adds one `Index.Pop` in $[a,b]$. The proof inducts on the input index because each `Pop` adds exactly one such extension to the package."
   },
   "indexIsoR": {
     "indexIsoR": "This order reifies first, using the instance already present, and lets `fromIndex` build a fresh package from the resulting position. A custom instance could have chosen a different position of the same type. The proof invokes `closedWorld` to exclude that possibility and recover the original package."
