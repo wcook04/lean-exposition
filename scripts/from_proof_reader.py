@@ -42,6 +42,8 @@ import sys
 import tomllib
 from pathlib import Path
 
+from check_figures import FIGURE
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from lean_exposition.alignment import _math_spans  # noqa: E402
 
@@ -72,6 +74,17 @@ def write(path: Path, text: str | bytes) -> str:
     data = text.encode("utf-8") if isinstance(text, str) else text
     path.write_bytes(data)
     return sha(data)
+
+
+def copy_figures(source: Path, target: Path, markdown: str) -> None:
+    figures = source / "figures"
+    if figures.is_dir():
+        for figure in sorted(figures.iterdir()):
+            write(target / "figures" / figure.name, figure.read_bytes())
+    for link in sorted(set(FIGURE.findall(markdown))):
+        figure = source / link
+        if figure.parent == source and figure.is_file():
+            write(target / "figures" / figure.name, figure.read_bytes())
 
 
 def words(text: str) -> int:
@@ -717,9 +730,7 @@ def main() -> None:
     text, sections, section_anchors = reading_copy(md, links["passages"])
     paper_dir = out / "papers" / slot
     write(paper_dir / "paper.md", text)
-    if (page / "figures").is_dir():
-        for fig in sorted((page / "figures").iterdir()):
-            write(paper_dir / "figures" / fig.name, fig.read_bytes())
+    copy_figures(page, paper_dir, text)
 
     pdf = None
     if args.pdf:
@@ -1214,10 +1225,8 @@ def main() -> None:
         ctext, csections, _ = reading_copy(cmd, cpassages)
         cdir = out / "papers" / cslot
         write(cdir / "paper.md", ctext)
-        for cp in cpages:
-            if (cp / "figures").is_dir():
-                for fig in sorted((cp / "figures").iterdir()):
-                    write(cdir / "figures" / fig.name, fig.read_bytes())
+        for cp, t in zip(cpages, ctomls):
+            copy_figures(cp, cdir, (cp / t["paper"].get("markdown", "paper.md")).read_text())
         cplain = {k: v for cl in clinks for k, v in cl.get("plain", {}).items()}
         cnotes = {k: v for cl in clinks for k, v in cl.get("notes", {}).items()}
         merged_links = {"plain": cplain, "notes": cnotes}

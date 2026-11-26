@@ -34,15 +34,16 @@ function conditionOf(decl: OurDeclaration | undefined): string | null {
   return m ? `Conditional on the ${m[1]}` : null;
 }
 
+const hasOurs = site.library && (site.library.optionalAssets?.includes("ours.json") ?? true);
 let loading: Promise<Ours | null> | null = null;
 /** The statements once they have arrived (undefined until then), so a card mounted later has them in its first render. */
-let arrived: Ours | null | undefined = site.library ? undefined : null;
+let arrived: Ours | null | undefined = hasOurs ? undefined : null;
 
 /** Whether our statements have arrived (or there are none to wait for). */
 export const oursArrived = () => arrived !== undefined;
 
 export function loadOurs(): Promise<Ours | null> {
-  if (!site.library) return Promise.resolve(null);
+  if (!hasOurs) return Promise.resolve(null);
   loading ??= fetch(`${import.meta.env.BASE_URL}ours.json`)
     .then((r) => (r.ok ? (r.json() as Promise<Ours>) : null))
     .catch(() => null)

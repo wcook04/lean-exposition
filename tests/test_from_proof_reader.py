@@ -64,7 +64,20 @@ ALL = [passage("p.theorem", "Every widget is round", "Demo.widget_round", "round
 
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from from_proof_reader import statement_block  # noqa: E402
+from from_proof_reader import copy_figures, statement_block  # noqa: E402
+
+
+class FigureImport(unittest.TestCase):
+    def test_copy_referenced_figure_beside_the_paper(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            paper = root / "source"
+            paper.mkdir()
+            (paper / "proof-map.png").write_bytes(b"original figure")
+            (paper / "unreferenced.png").write_bytes(b"unused")
+            copy_figures(paper, root / "output", "![Proof map](proof-map.png)")
+            self.assertEqual((root / "output/figures/proof-map.png").read_bytes(), b"original figure")
+            self.assertFalse((root / "output/figures/unreferenced.png").exists())
 
 
 class StatementBlock(unittest.TestCase):

@@ -124,6 +124,7 @@ export interface LibraryInstance {
   section_aids?: Record<string, string>;
   /** Which guides the paper has, known to the build (generated/showcase.json, route.json). */
   reading_aids?: { showcase: boolean; route: boolean };
+  optional_assets?: string[];
   comparisons_held_text?: string;
   /** About's own sections, before the reader's shared ones. */
   about?: AboutSection[];

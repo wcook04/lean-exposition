@@ -157,6 +157,8 @@ export interface SiteInstance {
   library?: {
     paper: string;
     main: InstanceStage;
+    /** Optional files this build published beside its edition. */
+    optionalAssets?: readonly string[];
     pages?: Record<string, string>;
     /** Slugs of pages no longer published (removed guides and companions): their addresses open the paper. */
     removed?: string[];

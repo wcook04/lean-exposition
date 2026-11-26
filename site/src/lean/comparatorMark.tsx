@@ -51,14 +51,15 @@ export function appliedIn(receipt: ComparatorReceipt | null, name: string): { ru
   return null;
 }
 
+const hasReceipt = site.library && (site.library.optionalAssets?.includes("comparator.json") ?? true);
 let loading: Promise<ComparatorReceipt | null> | null = null;
 /** The receipt once it has arrived (undefined until then), so a card mounted later shows it in its first render. */
-let arrived: ComparatorReceipt | null | undefined = site.library ? undefined : null;
+let arrived: ComparatorReceipt | null | undefined = hasReceipt ? undefined : null;
 
 /** Whether the receipt has arrived (or there is none to wait for). */
 export const comparatorArrived = () => arrived !== undefined;
 export function loadComparator(): Promise<ComparatorReceipt | null> {
-  if (!site.library) return Promise.resolve(null);
+  if (!hasReceipt) return Promise.resolve(null);
   loading ??= fetch(`${import.meta.env.BASE_URL}comparator.json`)
     .then((r) => (r.ok ? r.json() : null))
     .catch(() => null)

@@ -78,6 +78,12 @@ instances/<paper>/
 
 **Labels and credit.** Every comparison, title and note carries `source: ai | recorded`. The cards print "AI-assessed" (comparisons) or "AI-drafted" (titles, notes). The header and About carry `credit_lines[]` intact, for example Physlib, Euler and Navier–Stokes. About says no mathematician has reviewed the AI-made links.
 
+Paper figures are published under `paper-figures/<slot>/` from the instance's
+`papers/<slot>/figures/`. The Proof Reader importer also accepts an image
+referenced beside the source manuscript. The Library build checks both forms
+of reference. The Contextual Embeddings charts are the vector crops from the
+Proof Reader's copy of the authors' PDF.
+
 **Existing instances.** SK and #257 keep their `examples/` and `papers/` folders. Their `instance.json` points at those folders, so nothing moves on the first pass. Their `copy.ts` slots become `instance.json` fields. Their FrontPage, AboutPage, LeanLanding and ChecksIntro components are dropped, because there are no front pages; any sentences they hold become `about[]`.
 
 **`scripts/from_proof_reader.py`.** This converter turns a Proof Reader page (`paper.toml`, `links.json`, paper source, `generated/lean.json(.gz)`, `checks/`) into this format:

@@ -2,7 +2,7 @@
 """Fail when a figure a paper's documents reference is not in the build, or not on the live site.
 
 Usage:
-    check_figures.py <paper> DIST             every ![..](figures/<name>) in instances/<paper>/papers/*/paper.md
+    check_figures.py <paper> DIST             every local Markdown figure in instances/<paper>/papers/*/paper.md
                                               must exist as DIST/paper-figures/<slot>/<name>
     check_figures.py <paper> DIST --live URL  also fetch URL/paper-figures/<slot>/<name> and require 200
 
@@ -15,14 +15,14 @@ import sys
 import urllib.request
 from pathlib import Path
 
-FIGURE = re.compile(r"!\[[^\]]*\]\((?:\./)?figures/([\w.-]+\.(?:svg|png|jpe?g|webp))\)", re.I)
+FIGURE = re.compile(r"!\[[^\]]*\]\((?:\./)?((?:figures/)?[\w.-]+\.(?:svg|png|jpe?g|webp))\)", re.I)
 
 
 def references(paper: str) -> list[tuple[str, str]]:
     refs = []
     for md in sorted(Path(f"instances/{paper}/papers").glob("*/paper.md")):
-        for name in FIGURE.findall(md.read_text(encoding="utf-8")):
-            refs.append((md.parent.name, name))
+        for link in FIGURE.findall(md.read_text(encoding="utf-8")):
+            refs.append((md.parent.name, Path(link).name))
     return sorted(set(refs))
 
 

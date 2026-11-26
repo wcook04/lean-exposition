@@ -44,15 +44,16 @@ export interface ReadingAids {
 }
 
 const NONE: ReadingAids = { glossary: [], showcase: [] };
+const hasAids = site.library && (site.library.optionalAssets?.includes("aids.json") ?? true);
 let loading: Promise<ReadingAids> | null = null;
 /** The aids once they have arrived, so a card mounted later has them in its first render. */
-let arrived: ReadingAids | null = site.library ? null : NONE;
+let arrived: ReadingAids | null = hasAids ? null : NONE;
 
 /** Whether the aids have arrived (or there are none to wait for). */
 export const aidsArrived = () => arrived !== null;
 
 export function loadAids(): Promise<ReadingAids> {
-  if (!site.library) return Promise.resolve(NONE);
+  if (!hasAids) return Promise.resolve(NONE);
   loading ??= fetch(`${import.meta.env.BASE_URL}aids.json`)
     .then((r) => (r.ok ? r.json() : NONE))
     .then((data: Partial<ReadingAids>) => ({

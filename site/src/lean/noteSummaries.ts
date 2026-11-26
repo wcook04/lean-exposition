@@ -7,15 +7,16 @@ import site from "@instance/site";
 
 export interface LeanNote { text: string; summary?: string }
 type Notes = Record<string, LeanNote>;
+const hasNotes = site.library && (site.library.optionalAssets?.includes("lean-notes.json") ?? true);
 let loading: Promise<Notes> | null = null;
 /** The notes once they have arrived, so a card mounted later has its note in its first render. */
-let arrived: Notes | null = site.library ? null : {};
+let arrived: Notes | null = hasNotes ? null : {};
 
 /** Whether the notes have arrived (or there are none to wait for). */
 export const leanNotesArrived = () => arrived !== null;
 
 export function loadLeanNotes(): Promise<Notes> {
-  if (!site.library) return Promise.resolve({});
+  if (!hasNotes) return Promise.resolve({});
   loading ??= fetch(`${import.meta.env.BASE_URL}lean-notes.json`)
     .then((r) => (r.ok ? r.json() : {}))
     .then((data: { notes?: Notes }) => data.notes ?? {})

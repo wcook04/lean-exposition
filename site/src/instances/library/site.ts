@@ -194,6 +194,7 @@ const site = {
   readingAids: PAPER.reading_aids,
   library: {
     paper: PAPER.id,
+    optionalAssets: PAPER.optional_assets,
     main: MAIN.slot,
     pdfOnly: BUILT.filter((d) => d.pdf_only).map((d) => d.slot),
     pages: Object.fromEntries(BUILT.filter((d) => !d.main && d.slug).map((d) => [d.slug, d.slot])),

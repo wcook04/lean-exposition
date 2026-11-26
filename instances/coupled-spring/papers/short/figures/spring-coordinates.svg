@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 604 180" width="604" height="180" role="img" aria-labelledby="title">
+  <!-- Frame and spring geometry adapted from Jim.belk’s Coupled Harmonic Oscillator k.
+       https://commons.wikimedia.org/w/index.php?title=File:Coupled_Harmonic_Oscillator_k.svg&amp;oldid=870225002
+       CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/
+       Changes: shorter walls and mass blocks, equal stiffness labels, inward arrows, new styling. -->
+  <title>Three identical springs and two inward displacement axes</title>
+  <rect width="604" height="180" rx="10" fill="#f4f5f8"/>
+  <g stroke="#596479" stroke-width="3" stroke-linecap="round" fill="none">
+    <g transform="translate(0 45) scale(1 .46)">
+      <path vector-effect="non-scaling-stroke" d="M 20.56685,7.07971 V 156.78684"/>
+      <path vector-effect="non-scaling-stroke" d="M 4.97235,21.78308 18.89601,7.85943"/>
+      <path vector-effect="non-scaling-stroke" d="M 4.97235,49.09572 18.89601,35.17207"/>
+      <path vector-effect="non-scaling-stroke" d="M 4.97235,76.40836 18.89601,62.48471"/>
+      <path vector-effect="non-scaling-stroke" d="M 4.97235,103.72101 18.89601,89.79736"/>
+      <path vector-effect="non-scaling-stroke" d="M 4.97235,131.03365 18.89601,117.11"/>
+      <path vector-effect="non-scaling-stroke" d="M 4.97235,158.34629 18.89601,144.42264"/>
+      <path vector-effect="non-scaling-stroke" d="M 582.20175,157.25449 V 7.54736"/>
+      <path vector-effect="non-scaling-stroke" d="m 597.79625,142.55112 -13.92366,13.92365"/>
+      <path vector-effect="non-scaling-stroke" d="m 597.79625,115.23848 -13.92366,13.92365"/>
+      <path vector-effect="non-scaling-stroke" d="m 597.79625,87.92584 -13.92366,13.92365"/>
+      <path vector-effect="non-scaling-stroke" d="M 597.79625,60.61319 583.87259,74.53684"/>
+      <path vector-effect="non-scaling-stroke" d="M 597.79625,33.30055 583.87259,47.2242"/>
+      <path vector-effect="non-scaling-stroke" d="M 597.79625,5.98791 583.87259,19.91156"/>
+    </g>
+    <path d="m 22.1263,79.65543 h 10.69336 c 0,0 5.9186,16.48561 11.80726,16.48561 15.95406,0 17.22374,-28.73843 8.30964,-28.73843 -8.91411,0 -1.88295,28.73843 8.30964,28.73843 10.19259,0 17.96724,-28.73843 8.30964,-28.73843 -9.43484,0 -1.88214,28.73843 8.30964,28.73843 10.2088,0 20.66869,-28.73843 8.30963,-28.73843 -12.13679,0 -2.52867,28.73843 8.30964,28.73843 11.50665,0 19.09019,-28.73843 8.30964,-28.73843 -11.22574,0 -2.52982,28.73843 8.30964,28.73843 11.06222,0 20.42584,-28.73843 8.30964,-28.73843 -11.89358,0 -1.87854,28.73843 8.30964,28.73843 6.20506,0 9.35668,-16.26283 9.35668,-16.26283 h 12.25281"/>
+    <path d="m 236.6515,79.9785 h 10.69336 c 0,0 5.9186,16.48561 11.80726,16.48561 15.95406,0 17.22374,-28.73842 8.30964,-28.73842 -8.91411,0 -1.88295,28.73842 8.30964,28.73842 10.19258,0 17.96724,-28.73842 8.30964,-28.73842 -9.43484,0 -1.88214,28.73842 8.30963,28.73842 10.20881,0 20.6687,-28.73842 8.30964,-28.73842 -12.13679,0 -2.52867,28.73842 8.30964,28.73842 11.50665,0 19.09019,-28.73842 8.30964,-28.73842 -11.22574,0 -2.52982,28.73842 8.30964,28.73842 11.06222,0 20.42584,-28.73842 8.30964,-28.73842 -11.89358,0 -1.87854,28.73842 8.30964,28.73842 6.20506,0 9.35668,-16.26283 9.35668,-16.26283 H 363.858"/>
+    <path d="m 452.15568,79.50612 h 10.69336 c 0,0 5.9186,16.48561 11.80726,16.48561 15.95406,0 17.22374,-28.73842 8.30964,-28.73842 -8.91411,0 -1.88295,28.73842 8.30964,28.73842 10.19258,0 17.96724,-28.73842 8.30964,-28.73842 -9.43484,0 -1.88214,28.73842 8.30963,28.73842 10.20881,0 20.6687,-28.73842 8.30964,-28.73842 -12.13679,0 -2.52867,28.73842 8.30964,28.73842 11.50665,0 19.09019,-28.73842 8.30964,-28.73842 -11.22574,0 -2.52982,28.73842 8.30964,28.73842 11.06222,0 20.42584,-28.73842 8.30964,-28.73842 -11.89358,0 -1.87854,28.73842 8.30964,28.73842 6.20506,0 9.35668,-16.26283 9.35668,-16.26283 h 12.25281"/>
+  </g>
+  <rect x="148.96092" y="51" width="88.642426" height="57" rx="6" fill="#d9e0ec" stroke="#596479" stroke-width="2"/>
+  <rect x="362.95496" y="51" width="88.642426" height="57" rx="6" fill="#d9e0ec" stroke="#596479" stroke-width="2"/>
+  <g fill="#24324b" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="27">
+    <text x="86" y="49">k</text>
+    <text x="301" y="49">k</text>
+    <text x="516" y="49">k</text>
+  </g>
+  <g stroke="#264c89" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 193,130 H 249 m -9,-7 9,7 -9,7"/>
+    <path d="M 409,130 H 353 m 9,-7 -9,7 9,7"/>
+  </g>
+  <g fill="#264c89" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="27">
+    <text x="221" y="160">x₀</text>
+    <text x="381" y="160">x₁</text>
+  </g>
+</svg>

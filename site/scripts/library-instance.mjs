@@ -48,10 +48,6 @@ if (existsSync(graphPath)) {
 const hasShowcase = (generated("showcase.json") ?? []).length > 0;
 const routeData = generated("route.json");
 const hasRoute = Array.isArray(routeData) ? routeData.length > 0 : Array.isArray(routeData?.steps) && routeData.steps.length > 0;
-writeFileSync(
-  resolve(import.meta.dirname, "../src/instances/library/current.json"),
-  JSON.stringify({ ...instance, ...(sectionAids ? { section_aids: sectionAids } : {}), reading_aids: { showcase: hasShowcase, route: hasRoute } }, null, 1) + "\n",
-);
 const phrases = {};
 // Phrase addresses (/@<id>) open the main document; a companion's phrases keep the reader's own
 // addresses under /read/<slot>/. Each numbered result's canonical target in the main document is the
@@ -184,4 +180,15 @@ for (const slug of instance.removed_pages ?? []) {
   if (instance.documents.some((d) => d.slug === slug)) throw new Error(`removed_pages: ${slug} is still a page of the paper`);
 }
 writeFileSync(resolve(import.meta.dirname, "../public/addresses.json"), JSON.stringify({ paper, phrases, retired, results, pages, moved, checks: laterChecks }));
+const optionalAssets = ["aids.json", "ours.json", "comparator.json", "lean-notes.json"]
+  .filter((name) => existsSync(resolve(import.meta.dirname, "../public", name)));
+writeFileSync(
+  resolve(import.meta.dirname, "../src/instances/library/current.json"),
+  JSON.stringify({
+    ...instance,
+    ...(sectionAids ? { section_aids: sectionAids } : {}),
+    reading_aids: { showcase: hasShowcase, route: hasRoute },
+    optional_assets: optionalAssets,
+  }, null, 1) + "\n",
+);
 console.log(`library paper: ${paper} (${Object.keys(phrases).length} phrase addresses, ${Object.keys(retired).length} retired, ${Object.keys(results).length} result targets, ${Object.keys(moved).length} moved pages)`);
