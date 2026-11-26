@@ -146,7 +146,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.sum_kernelWeight_gcdOrbit": "For any real base $B>1$, positive modulus $L$ and positive exponent $d$, summing $B^{tL\\bmod d}/(B^d-1)$ over one orbit gives $1/(B^{\\gcd(L,d)}-1)$. The complete-orbit sum holds for every real $B>1$. The paper uses integer $b\\ge2$."
   },
   "p1-p06.weighted-incomplete-period": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.sum_kernelWeight_le_gcdBlockCount": "The sum along $L,2L,\\ldots,TL$ is bounded by the number of complete residue periods plus one, multiplied by the sum over one period. The period length is $d/\\gcd(L,d)$. The assumptions are a real base `hB : 1 < B`, a positive modulus `hL : 0 < L`, and a positive exponent `hd : 0 < d`. The final incomplete period is bounded by a whole period because its terms are nonnegative."
+    "ErdosProblems.Erdos257.PaperCompleteR8.sum_kernelWeight_le_gcdBlockCount": "At base two with $Q=4$ and $a=6$, the first three shifts visit residues $4,2,0$, and the fourth repeats $4$. The four shifted kernel terms sum to $1/3+16/63$, at most two complete periods of mass $1/3$ each. This accounts for the extra whole-period charge before division by the sample length. Lean uses nonnegativity and allows a real base $B>1$, positive modulus and positive exponent."
   },
   "p1-p06.weighted-average-bound": {
     "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_kernel_le_gcdMean_add_error": "Lean bounds the larger term $\\varphi_a$, before subtracting $\\frac{1}{b^a-1}$, with the same right side, and permits every real $B>1$."
@@ -155,7 +155,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.geom_ratio_antitone": "Lean states non-increase, $\\frac{v}{B^v-1}\\le\\frac{u}{B^u-1}$ for $u\\le v$. It does not state the strict decrease established by the following positive-difference display, although it permits real $B>1$."
   },
   "p1-p06.weighted-nowrap": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight_nowrap_binary_envelope": "Lean bounds the larger shifted term $\\varphi_a(N)$ and allows every real base $B\\ge2$, with `hNd : N<d`. The paper uses $N=tQ<a$."
+    "ErdosProblems.Erdos257.PaperCompleteR8.kernelWeight_nowrap_binary_envelope": "Check where the last shift $TQ$ is relative to $a$ before using the geometric estimate. With $Q=4$, $T=3$ and $a=15$, the gaps $a-tQ$ are $11,7,3$, so each shift gains a decaying geometric factor. At $a=12$ the last shift has wrapped to remainder zero. Lean requires $N<d$ and bounds the larger shifted kernel term by $2\\cdot 2^{N-d}$ for real $B\\ge2$."
   },
   "p1-p06.weighted-outer-tail": {
     "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean_far_conductors_le": "The displayed sum ranges over the possibly infinite set $\\{a\\in A:a>QT\\}$. This theorem sums over a finite $F$ with `hfar`, and an infinite-sum passage is still needed, although it bounds the larger shifted terms."

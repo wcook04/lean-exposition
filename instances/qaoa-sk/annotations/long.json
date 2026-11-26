@@ -791,7 +791,7 @@
     "OAI.SKValue.FiniteGaussianConclusion": "The second conjunct of `FiniteGaussianConclusion` fixes $T$ while $N$ grows. Its third conjunct varies the upper endpoint of the scalar-model curvature integral, approaching one from below."
   },
   "scalar.shifted_gaussian_limit#9": {
-    "OAI.ZeroTemperatureSK.gaussianValueSum": "The range `Finset.range (N+1)` contains $j=0,\\ldots,N$, and the second factor is evaluated at `j+1`, giving the adjacent pairing exactly. This definition uses the support-model coefficients and contains no convergence assertion."
+    "OAI.ZeroTemperatureSK.gaussianValueSum": "Write out the sum for $N=1$ before taking a limit. The $A_0$ term is zero, leaving $A_1B_2$, with $B_2$ paired with the extra Gaussian used for rounding. The worked heat example in §10.4 gives $A_1B_2=4/(5\\pi)$ and $A_1B_1=8/(5\\pi)$, so the adjacent index matters at finite mesh. `gaussianValueSum` defines this shifted pairing. The convergence claim uses separate hypotheses."
   },
   "scalar.shifted_gaussian_limit#10": {
     "OAI.ZeroTemperatureSK.eulerState": "The first update starts at $Y_0=0$ and sees $Z_1$. The next drift is evaluated at the resulting $Y_1$ before $Z_2$ is used. This order makes the multiplier of each fresh normal a function of the past. `eulerState` uses the zero-based coordinate $j$ for the move from $Y_j$ to $Y_{j+1}$."
@@ -807,7 +807,7 @@
     "OAI.SKValue.meshControl_quadrature": "Set `H j ω = 1` to obtain the error between $\\int_0^T\\gamma(s)\\,ds$ and its left Riemann sum. Monotonicity `hγ` makes that error the displayed integral of $|\\gamma(s)-\\gamma(\\pi_N(s))|$, bounded by `stepSize T N * (γ T - γ 0)`."
   },
   "scalar.euler_normalization#3": {
-    "OAI.SKValue.coupled_euler_L2_convergence": "The definition `meshMaxError` is the maximum of $|Y_j-X_{t_j}|$ over $0\\le j\\le N$, so integrating its square gives the selected error. The premises `hpaths` require the diffusion integral equation and continuous paths, while `hLip` and `GradientStrip` supply bounds for this general pre-Brownian coupling."
+    "OAI.SKValue.coupled_euler_L2_convergence": "First use the same Brownian increment in the Euler step and in the diffusion step. In the difference of the two updates the increment cancels, leaving the previous error and a drift quadrature error. That cancellation is what lets the proof control the maximum error over the entire mesh. Lean states convergence of its squared integral on a fixed strip, under the pre-Brownian law, strip regularity and the almost-sure path equation."
   },
   "scalar.euler_normalization#4": {
     "OAI.SKValue.normalized_family_orthonormal": "For $i<j$, condition on the first $j-1$ normals. The earlier $g_i$ and the multiplier of $Z_j$ are then fixed, while $Z_j$ has mean zero. For the diagonal term, the fresh normal has second moment one, and normalization divides out the multiplier’s second moment. Lean separates these two arguments and requires measurable past-dependent multipliers with positive second moments."

@@ -6,7 +6,7 @@
     "Ctx": "“Snoc” appends on the right. In `Ctx.Empty :/: a :/: b`, the rightmost entry $b$ is the newest binding. The same ordering lets an index recover the binding position by counting past entries from the right."
   },
   "index": {
-    "Index": "Compare $\\lambda x.\\lambda y.x$ with $\\lambda x.\\lambda y.y$ when both binders have type $a$. At the body, the two entries have the same type, but counting from the right gives `Index.Pop Index.Top` for $x$ and `Index.Top` for $y$. The indices carry both the selected position and evidence that it has type $a$."
+    "Index": "Mark the lambda that binds the final occurrence before counting. In $\\lambda x.\\lambda y.x$, the occurrence refers to the outer binder, so count past one lambda and write `Index.Pop Index.Top`. Renaming the inner binder to $z$ leaves that count unchanged. Changing the body to $y$ gives `Index.Top` even if both binders have type $a$. The index certifies the type at the chosen position."
   },
   "code-ty": {
     "Ty": "The two occurrences of `Ty` in the Haskell function alternative become the two arguments of Lean's `Ty.Fun`. The notation `:->` associates to the right, so `a :-> b :-> c` means a function taking an $a$ and returning a function from $b$ to $c$."
@@ -54,7 +54,7 @@
     "instReifyIndexRefl": "Use a variable immediately inside its binder, as in $\\lambda x.x$. Its binding and use contexts are equal, so its position is zero. The match on `ProxyTop.PTop` makes the type of the last entry visible to Lean, which lets the reflexive instance return `Index.Top`."
   },
   "code-snoc": {
-    "instReifyIndexSnoc": "Appending a binder moves every existing position one place back. If $x$ is at `Index.Top` in $[a]$, it is at `Index.Pop Index.Top` in $[a,b]$. The recursive `reify` call supplies the position before the append, and the instance adds the `Index.Pop` for the new entry."
+    "instReifyIndexSnoc": "Compare the occurrence of $x$ in $\\lambda x.x$ with its occurrence in $\\lambda x.\\lambda y.x$. Both point to the binder for $x$. Its use context grows from $[a]$ to $[a,b]$, so its position goes from `Index.Top` to `Index.Pop Index.Top`. The recursive `reify` call finds the position before the append, and the extension instance adds one `Index.Pop` for the new binder."
   },
   "instance-refl": {
     "instReifyIndexRefl": "Here reflexive means the two complete context lists are equal. The selected type may also occur earlier in the list, but this instance uses the binding site's most recent entry, which is still the most recent at use."

@@ -6,7 +6,7 @@
     "coupled_spring_potential": "Kjos-Hanssen's proof supplies three facts to `second_derivative_test_analyticAt`: analyticity, a vanishing gradient and a positive definite Hessian. The same test applies to the cubic perturbation in §3, where locality matters because the potential can fall below its value at the origin."
   },
   "test-statement": {
-    "second_derivative_test_analyticAt": "Take the one-variable function $f(t)=t^2+t^3$ from the axis restriction in §3. At zero, $f'(0)=0$ and $f''(0)=2$, so the quadratic Taylor term is $\\tfrac12(2)t^2=t^2$. The cubic has absolute value $|t|t^2$, which is smaller than $t^2$ when $0<|t|<1$. The analytic theorem makes this comparison uniform over all directions in a finite-dimensional space."
+    "second_derivative_test_analyticAt": "At a critical point $a$, take a one-variable slice $g(t)=f(a+th)$ and look at $g''(0)$. For $f(x,y)=x^2+3xy+y^2$, both coordinate slices are $t^2$, but the slice along $(1,-1)$ is $-t^2$. The number $g''(0)$ is the diagonal Hessian evaluation $D^2f(a)[h,h]$. The theorem asks for positivity in every nonzero direction, and analyticity gives a remainder estimate near $a$."
   },
   "potential-analytic": {
     "couplingPotential_analyticAt": "In the expansion of $U(z+h)$ about any $z$, every term has degree at most two in $h$. That finite polynomial is already a convergent power series. Lean proves the corresponding analyticity by starting with the two continuous linear coordinate projections and using addition, multiplication and squaring."
@@ -24,7 +24,7 @@
     "couplingPotential_posDef": "The identity $h^TKh=h_0^2+h_1^2+(h_0+h_1)^2$ gives a direct reason for the formal positivity claim. If $h\\ne0$, one of the first two squares is positive. Among unit vectors, the sum is smallest when $h_0=-h_1$ and the last square vanishes."
   },
   "test-quadratic-map": {
-    "iteratedFDerivQuadraticMap": "For the spring Hessian, $Q(1,0)=2$ and $Q(2,0)=8$. Doubling the displacement doubles each of the two inputs to $D^2f(a)$, so the result is multiplied by four. Lean's quadratic map `iteratedFDerivQuadraticMap` records this scaling, which the proof uses to turn a bound on unit directions into a bound on displacements of any length."
+    "iteratedFDerivQuadraticMap": "Restrict the spring potential to the line $th$ through the origin. Since $U(th)=t^2U(h)$, the second derivative at $t=0$ is $2U(h)=Q(h)$. For example, $Q(1,0)=2$ and $Q(2,0)=8$. Doubling the displacement doubles the input in each Hessian slot, so the value quadruples. Lean's quadratic map records this scaling to extend a bound on unit vectors to displacements of any length."
   },
   "test-lower-bound": {
     "coercive_of_posdef": "For nonzero $h$, set $u=h/\\lVert h\\rVert$. Compactness gives a unit vector at which $Q$ attains its minimum $C$, so positivity at that vector gives $C>0$. Now $Q(h)=\\lVert h\\rVert^2Q(u)\\ge C\\lVert h\\rVert^2$. At $h=0$ the bound is equality."

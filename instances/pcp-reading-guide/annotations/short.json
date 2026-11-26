@@ -113,7 +113,7 @@
     "PCP.Machine.PolyTimeAlg": "The runtime bound concerns one step on the encoded input, seed and history. In the main theorem the seed length is logarithmic and the history has bounded length, so this yields polynomial time for the full capped run."
   },
   "headline-statement": {
-    "PCP.np_subset_pcp": "The existential quantifiers precede every input-dependent clause. They provide one machine algorithm and one set of resource bounds for the language, and `ImplementedBy` transfers the verifier guarantees to that algorithm’s bounded runs."
+    "PCP.np_subset_pcp": "Start with Arora and Barak’s Computational Complexity, §11.2.1, and work through the converse in Remark 11.6. Fix the input and one proposed proof and write the deterministic check that tries every seed. Then return to this statement and identify how the bounded proof prefix, logarithmically many random bits and machine implementation make that check polynomial even when queries are adaptive. The existential quantifiers precede every input-dependent clause. They provide one machine algorithm and one set of resource bounds for the language, and `ImplementedBy` transfers the verifier guarantees to that algorithm’s bounded runs."
   },
   "lean-hypothesis": {
     "PCP.np_subset_pcp": "`hL` is an argument to the forward theorem. It supplies the witness certificate that is used for the reduction. The verifier with the stated bounds is the conclusion.",

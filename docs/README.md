@@ -52,6 +52,8 @@ The [architectural companion](../papers/architecture/README.md) gives the reason
 ## Follow the research
 
 [Research sources](literature.md) explains the selected prior work.
+The [reading exercises](literature.md#what-to-work-out-before-each-paper)
+show what to work out first for each Library reader and catalogue paper.
 The [reading annex](annex/README.md) holds licensed copies and selected source
 files with their attribution. Exact reference records are in
 [references.json](references.json).

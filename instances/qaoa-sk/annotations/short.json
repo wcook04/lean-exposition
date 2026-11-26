@@ -100,7 +100,7 @@
     "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity": "`hiZero` sets the integral of `certDivergence` over $(0,\\infty)$ to zero, using vanishing flux at zero and infinity. The density is `gaussianLogDensity d U` under the listed shape hypotheses, and identifying it with the law of $X_t$ is an additional step."
   },
   "support.integrated_coercivity#3": {
-    "OAI.ZeroTemperatureSK.Certificate.remainder_lower_bound": "For $R,K,v,B,j\\ge0$, `remainder` is bounded below pointwise by $\\kappa v^4$ with $\\kappa=1661507/1521000000>1/1000$. Integrating this estimate supplies the selected quartic contribution."
+    "OAI.ZeroTemperatureSK.Certificate.remainder_lower_bound": "Before checking the 22 coefficients, trace the signs needed to discard the other monomials. In particular the shape inequality gives $B=b-2v\\ge0$, so a term with positive coefficient times $R^2vB$ contributes nonnegatively. For $R,K,v,B,j\\ge0$, Lean keeps the $v^4$ monomial and proves the pointwise bound with $\\kappa=1661507/1521000000>1/1000$. Integration then preserves that term."
   },
   "support.fixed_time_spatial_coercivity#5": {
     "OAI.SKValue.IsDiffusion.literal_coercivity": "The binders of `IsDiffusion.literal_coercivity` require a scalar-model diffusion and $0<t<1$. The inequality concerns spatial derivatives evaluated at $X_t$, with no time-derivative condition at $t$."
@@ -253,7 +253,7 @@
     "OAI.ZeroTemperatureSK.Heat.softAbs": "The parameter `M` scales the argument of $\\cosh$ and divides the logarithm, giving $M^{-1}\\log(2\\cosh(Mx))$. Positivity of $M$ and its role as a bound for the coefficient are supplied by the finite-step construction."
   },
   "support.step_tails#4": {
-    "OAI.ZeroTemperatureSK.Heat.varianceHeat_exp_eq_exp_log": "The equality identifies $e^{c\\Phi}$ with the heat evolution of $e^{cf}$ when $\\Phi$ is `varianceLogHeat c h f`, and the code's `h` is the variance parameter. The displayed PDE and logarithmic derivative require further differentiation of this semigroup identity."
+    "OAI.ZeroTemperatureSK.Heat.varianceHeat_exp_eq_exp_log": "On a constant-height step, first differentiate $h=e^{c\\Phi}$ in space to get $h_{xx}/h=c\\Phi_{xx}+c^2\\Phi_x^2$. This is the combination in the Parisi equation, so the transform gives the backward heat equation and $h_x/h=c\\Phi_x$. For Lipschitz terminal data the Lean identity equates the exponential of `varianceLogHeat` with heat evolution of the exponentiated datum; spatial and time differentiation are further steps."
   },
   "support.step_tails#6": {
     "OAI.ZeroTemperatureSK.Heat.finiteDensity": "At a positive partition time $ih$, splitting the exponential gives $e^{c_i\\Phi_i(x)}e^{-x^2/(2ih)+L_i(x)}$, with `backwardBoundary` as $\\Phi_i$ and `forwardBoundary` as $L_i$. The definition supplies this factorization at partition times without asserting either heat equation within a step.",

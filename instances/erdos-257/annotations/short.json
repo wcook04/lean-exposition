@@ -79,7 +79,7 @@
     "ErdosProblems.Erdos257.irrational_erdosSupportSeries_of_radix_closeReturn": "The proof identifies $q\\Delta$ with a positive difference of integers under assumed rationality. Under an assumed rational value $p/v$, the proof constructs integers $u_N$ with $u_N=vT_N$, where $T_N$ is the shifted sum."
   },
   "short.w.irrationality-device": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.irrational_of_displacement_returns": "An infinite support has irrational $X_A(b)$ if its displacement becomes arbitrarily small at positive indices. Lean only requires arbitrarily small displacements at positive indices, without a specified sequence or rate."
+    "ErdosProblems.Erdos257.PaperCompleteR7.irrational_of_displacement_returns": "First rearrange the displacement identity as $q\\Delta=q(b^N-1)X_A(b)-qJ_{b,A}(N)$. Under $X_A(b)=p/q$ this is an integer. An exponent beyond $N>0$ makes it positive for an infinite support. The analytic argument therefore needs a shift with $\\Delta<1/q$. The Lean criterion supplies irrationality from arbitrarily small displacements at positive shifts without asking for a convergence rate."
   },
   "short.w.prefix-cancellation": {
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "A finite support $F$ contributes zero displacement whenever every exponent in it divides the observation index $N$. Lean assumes `hb : 2 ≤ b` and `hdiv : ∀ d ∈ F, d ∣ N`. Then every remainder $N\\bmod d$ is zero, so each numerator $b^{N\\bmod d}-1$ vanishes. Choosing a modulus divisible by the exponents in $F$ makes this cancellation hold at every sampled multiple of that modulus."
@@ -189,7 +189,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.divisorCube": "The finite set $\\{qd:d\\mid\\prod_{p\\in P}p\\}$. The definition forms the divisors of the product and multiplies each by $q$. No primality or positivity hypotheses are needed merely to define this `Finset`. The subsequent expansion theorems assume $q>0$ and prime elements of $P$. For $q=2$ and $P=\\{3,5\\}$ it gives $\\{2,6,10,30\\}$. Its divisor count records which of these selected exponents divide the observation index."
   },
   "short.c.cover-data": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "A sequence of finite sets $F_j$, exponents $0<\\alpha_j\\le1$ and nonnegative coefficients $c_{j,d}$ that majorise $f_{F_j}(n)^{\\alpha_j}$. The fields `frame_positive`, `exponent_bounds`, `coefficient_nonneg` and `majorises` are assumptions on this data. The field `column_summable` requires each $C_j=\\sum_d c_{j,d}/d$ to be finite. This structure does not assert irrationality or summability of the total cover cost. Its natural index $j$ corresponds to the paper's $j+1$."
+    "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "Try a frame $F=\\{2,3\\}$ and $\\alpha=1/2$. Its divisor count is $2$ on multiples of $6$, so the majorant must reach $\\sqrt2$ there. Putting coefficient $1$ on each of $2,3$ is one admissible choice, with mean cost $1/2+1/3$ from the two divisibility frequencies. `PositiveCoverData` imposes this pointwise majorization and finite cost for each frame. Summability across frames is a separate hypothesis."
   },
   "short.c.majorant-hypothesis": {
     "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "This is a field required of the cover data, not a theorem asserting every cover has it. A sequence of finite sets $F_j$, exponents $0<\\alpha_j\\le1$ and nonnegative coefficients $c_{j,d}$ that majorise $f_{F_j}(n)^{\\alpha_j}$."

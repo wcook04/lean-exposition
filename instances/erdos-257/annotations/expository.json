@@ -66,7 +66,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "For $n=4$ and $k=6$, division gives $6=4+2$, so $2^6/(2^4-1)=4+4/15$. The unshifted term was $1/15$, leaving a gain of $3/15$ after the integer part is removed. `displacementAtom 2 k n` measures this gain over the unshifted term."
   },
   "exp.def.sum-contributions": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "`displacement_eq_tsum` moves the subtraction of the unshifted series inside the infinite sum. With $b=2$, its left side is $R(k)$ and the terms on its right are $\\ell_n(k)$ at the selected exponents."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "First add the contributions for just $2,3,4$ at $k=11$. The three remainders in the exponent are $1,2,3$, giving gains $1/3$, $3/7$ and $7/15$. Their sum is $43/35$. Keep the whole sum as the displacement. Lean passes from this finite subtraction to the full $R(k)$ by summing the gains over the selected exponents."
   },
   "exp.remainders.divides-zero": {
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Set the finite set `F` to $\\{n\\}$ and the multiplier exponent `N` to $k$. The assumption `hdiv` makes $k\\bmod n=0$ and the singleton's contribution zero."
@@ -96,7 +96,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_future_eq": "For a singleton support, `hfuture` is just $k<n$. With $b=2$ the identity gives $\\ell_n(k)=(2^k-1)/(2^n-1)$. The strict bounds on either side use separate estimates."
   },
   "exp.mean-sampling": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "The term at index `m` in `Finset.range T` is sampled at `((m + 1) * L)`. Taking $L=Q$ and $T=M$ starts at $Q$ and ends at $MQ$."
+    "ErdosProblems.Erdos257.PaperCompleteR8.progressionMean": "Start with selected exponents $2,3,5$ and choose $Q=6$ to clear $2$ and $3$. For $k=6,12,18$, their rows stay at zero while the row for $5$ uses remainders $1,2,3$. Each column applies the same shift to all rows. `progressionMean` averages exactly these columns with $L=Q$ and $T=M$, starting at the first positive multiple."
   },
   "exp.mean-zero-rows": {
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Take `F` to be the initial group. Because each $d\\in F$ divides $Q$, it divides every $mQ$, so `hdiv` makes the same group vanish in every column."

@@ -82,7 +82,7 @@
     "BSmtLibSpec.Grammar.Tree.SpecConstant.token": "Each constant constructor produces one syntax token of the corresponding kind and passes through its payload. For example, a hexadecimal constant passes its digit sequence, since the lexical-to-syntax conversion has already dropped `#x`."
   },
   "2-7-p026-08": {
-    "BSmtLibSpec.Grammar.Syntax.IsSExpr": "Read `(a (b 1))` as a list whose two children are the atom `a` and a list containing `b` and `1`. `IsSExpr` checks that the tree is valid for the selected version and that writing it back produces exactly those tokens. Both checks are needed to connect a recursive grammar object to the printed production.",
+    "BSmtLibSpec.Grammar.Syntax.IsSExpr": "Start by bracketing `(assert x)` as a list with two atoms, the reserved word `assert` and the symbol `x`. The same rule reads `(a (b 1))` as a list with atom `a` and a nested list. `IsSExpr` checks that a tree is valid in the selected version and that writing it back gives exactly the supplied tokens. Here the grouping already works before the script supplies a declaration for `x`.",
     "BSmtLibSpec.Grammar.Tree.SExpr.Valid": "Of the four atom alternatives, only the reserved-word case has a further condition here. It checks that the version is at least 2.6 and that the word belongs to that version. The list case repeats the check at every depth.",
     "BSmtLibSpec.Grammar.Tree.SExpr": "The recursive `.list` constructor represents the parenthesized alternative, with zero members allowed by the production's star. The other four constructors represent the four kinds of atom individually.",
     "BSmtLibSpec.Grammar.Tree.SExpr.tokens": "Each atom branch produces a singleton list in its own token category. The `.list` branch concatenates the members' tokens inside parentheses, preserving the nesting of the displayed production."
@@ -207,7 +207,7 @@
   },
   "2-7-p050-04": {
     "BSmtLibSpec.Grammar.Script": "If reading starts in 2.7, `(set-info :smt-lib-version 2.6)` is itself read in 2.7. The next command is read in 2.6. `Script.command` passes that resulting version to the rest of the list, so command validity is checked in the version in force at each position.",
-    "BSmtLibSpec.Grammar.Tree.Command.tokens": "Each branch uses `commandTokens` to put a command name and its arguments inside parentheses. A command with zero arguments such as `(check-sat)` still receives that wrapper. The solver responses described here are outside this conversion from command trees to tokens."
+    "BSmtLibSpec.Grammar.Tree.Command.tokens": "With logic `QF_UF`, read `(declare-const x Bool)`, `(assert x)` and `(check-sat)` in order. The declaration supplies the sort of `x`, and setting `x` to true satisfies the assertion. Move the declaration after the assertion and `x` is undeclared when first used. `Command.tokens` prints the same `(assert x)` in both orders, and prints `(check-sat)` as a command with zero arguments."
   },
   "2-7-p051-01": {
     "BSmtLibSpec.Grammar.Tree.SortDec": "In a `declare-datatypes` sort declaration, `SortDec` stores a symbol and the arity's numeral as bytes. The `arity` field holds that spelling directly, without first converting it to a Lean natural number.",

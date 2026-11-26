@@ -268,6 +268,15 @@ short direct note is enough. Read the changed notes in passage order and
 check that both the mathematical example and the return to the passage make
 sense without additional notation.
 
+Use a specialist source to choose what the reader should do first. Look for
+the simpler problem the source solves before using the general result, or the
+first computation its argument expects a reader to be able to do. Choose an
+exercise whose outcome helps the reader make a decision in the target
+passage. For example, a diagonal strain makes phase transport easy to
+calculate, while a shear exposes the error from transposing the forward map.
+Record the source section and the passage it prepares in the
+[reading routes](literature.md#what-to-work-out-before-each-paper).
+
 The Library build uses [apply_passage_annotations.py](../scripts/apply_passage_annotations.py)
 to add `annotation` to the matching Lean row in the static tie response. For a
 companion or an adapted document the response is under

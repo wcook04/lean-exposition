@@ -13,6 +13,76 @@ distinguishes active research papers, long records, the #257 exposition and
 retired manuscripts. These selections concern writing methods; they are not
 new verification of the cited mathematics.
 
+## Before opening a Library paper
+
+These exercises lead into the shorter papers listed in the Library at
+[a501de95](https://github.com/wcook04/plectis-erdos/tree/a501de956765730ba4e6c9ad284e6d65855d533a/paper).
+Each one rehearses a decision in the linked argument. The
+[#257 reader](https://wcook04.github.io/library/erdos-257/) teaches its prerequisites in the passage notes.
+
+- **[#68, factorial denominators](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/68/erdos-68-factorial-denominator-irrationality.tex#L99-L174).**
+  Identify the cleared integer prefix in the factorial-tail argument. Then
+  apply §2’s congruence weights to `T₆ = 6e₅ − e₆`. The only nonzero weighted
+  sums are `V₂ = 90`, `V₃ = 100` and `V₆ = 719`. Subtract `90U₂ + 20U₃`
+  to isolate `V₆ = 6! − 1`. This is the proper-divisor correction in the
+  integral-basis theorem. To prove irrationality of the sum `S` by this
+  method, each proposed denominator `q` still needs a nonintegral form
+  `MS + k` with `q` dividing `M`.
+  [Hančl–Tijdeman, Lemma 2.1 and the following remark](https://www.impan.pl/shop/en/publication/transaction/download/product/83588#page=3)
+- **[#243, reciprocal tails](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/243/erdos-243-reciprocal-tail-rigidity.tex#L132-L164).**
+  Subtract `1/4`, `1/9` and `1/56` from `11/29`, carrying the product
+  denominator each time. The third step gives `20/58464 = 5/14616`. The
+  unreduced pair still has denominator `56 × 1044`, which is why §2 keeps
+  it for the next numerator update. The cubic-rate theorem assumes
+  `aₙ²/aₙ₊₁ = 1 + 3/n + o(n⁻³)`. The general Sylvester question remains open.
+  [Koizumi, Table 1 and Lemma 4](https://math.colgate.edu/~integers/aa28/aa28.pdf#page=11)
+- **[#249, totient sections](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/249/erdos-249-binary-totient-series.tex#L247-L269).**
+  Test the nonproportionality hypothesis in Martin’s theorem on the pair
+  `n` and `6n`. The two linear functions are proportional, but their
+  totient ratio is 2 at `n=1` and 6 at `n=6`. This is the second step in
+  §2’s proof for the two zero-residue sections once the other coefficients
+  are gone. The original binary totient sum remains open.
+  [Martin, Theorem 1 and the next paragraph](https://arxiv.org/pdf/math/0603053v1)
+- **[#251, dyadic corrections](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/251/erdos-251-prime-gap-dyadic-series.tex#L255-L291).**
+  Put `(0,4)`, `(2,2)`, and `(4,0)` in the first two dyadic positions.
+  Each pair has the same unweighted total and gives an even correction at
+  each position. The weighted sums are `1`, `3/2`, and `2`. Translate
+  `[0,T]` by each sum. At `T=1/2` the intervals meet. At `T=1/3` they
+  leave gaps. This rehearses §2’s use of overlap to choose the next
+  correction and of a vanishing residual to attain the target.
+  [Crmarić–Kovač, Lemma 4(a)](https://arxiv.org/pdf/2504.18712v1#page=4)
+- **[#269, running LCM](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/269/erdos-269-three-prime-running-lcm.tex#L179-L216).**
+  Invert the affine tail maps for blocks `53` and `5` at a trial tail
+  `331/1000`. The next-tail candidates are `93/100` and `31/100`.
+  Both are in `(0,1)` and only the second lies in `[3/10,13/15]`.
+  §2 uses this sharper bound to make a finite set of rational tails determine
+  a periodic jump sequence for the **distinct** running-LCM sum. The original
+  sum counts repeated terms.
+  [Hančl–Tijdeman, §2, equation (1)](https://publi.math.unideb.hu/paper/982/download/#page=3)
+- **[#1041, polynomial lemniscates](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1041/erdos-1041-lemniscate-newton-flow.tex#L121-L159).**
+  Before tracking the sheets of the degree-seven polynomial, find the
+  preimage of `(-1,-3/4]` for `p(z)=z²-3/4`. It is the imaginary segment
+  with `abs(Im z)<1/2`. The straight path between the two roots still
+  stays inside the lemniscate and has length `√3`. This prepares the
+  double-cover estimate in §2, which needs root distances as well as
+  confinement of the slit preimage.
+  [Ebenfelt–Khavinson–Shapiro, proof of Proposition 2.1](https://arxiv.org/pdf/1003.4567v1#page=3)
+- **[#1049, geometric moments](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/1049/erdos-1049-rational-base-lambert.tex#L208-L229).**
+  Expand the two-by-two Heine identity into node-pair contributions. For
+  `q=1/2` and masses `q^k` at nodes `q^k`, the pairs `{1,1/2}` and
+  `{1,1/4}` contribute `1/8` and `9/64`. Moving the second node can
+  increase a summand. That prepares the displacement sum in Theorem 2.1.
+  The sufficient height range in §4 leaves `F(3/2)` open.
+  [Zudilin, §2, equations (2)–(3)](https://arxiv.org/pdf/1507.05697v2#page=2)
+- **[Synthesis, sparse perturbations](https://github.com/wcook04/plectis-erdos/blob/a501de956765730ba4e6c9ad284e6d65855d533a/paper/synthesis/optimal-sparse-perturbations.tex#L186-L274).**
+  With denominator `n!` and allowance `n³` on the support, measure the
+  remaining allowance in units of `1/N!`. On even positions the normalized
+  tail tends to infinity. On multiples of three it stays bounded along
+  `N=3k`, where its first term tends to 1. This is a test of the capacity
+  criterion and sharp support threshold in §3, which also impose eventual
+  divisibility by every fixed modulus.
+  [Nitecki, the interval argument and Theorem 2](https://arxiv.org/pdf/1106.3779v2#page=8)
+
 ## Choose a model by the decision it explains
 
 | Problem and public source | Useful authoring decision |

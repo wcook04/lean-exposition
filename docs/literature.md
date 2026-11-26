@@ -128,6 +128,110 @@ The license records deliberately preserve inconsistencies: leanblueprint's actua
 Community discovery sharpened these choices. A [September 2025 Zulip discussion](https://leanprover-community.github.io/archive/stream/113489-new-members/topic/Is.20it.20possible.20to.20map.20dependencies.20of.20theorems.3F.html) distinguishes a plan written before formalization from a graph extracted afterward. An [April 2024 maintainer reply](https://leanprover-community.github.io/archive/stream/113489-new-members/topic/How.20to.20make.20blueprint.html) directs users away from copying an old project's folders and toward leanblueprint's maintained instructions. These discussions are discovery context; the technical choices above rely on the linked primary implementations.
 
 
+## What to work out before each paper
+
+These routes are reading exercises drawn from the cited specialists' arguments
+and teaching order. Each tells you where the exercise pays off in the reader.
+
+- **Navier–Stokes.** Before estimating the period map, apply the heat equation
+  to one Fourier mode and let the frequency approach zero. This identifies
+  where the uniform strict contraction has to come from. Before the vector
+  certificate, follow the one-parameter construction cited in §7.4. Solve at a
+  fixed parameter and then use opposite signs to remove the scalar obstruction.
+  [Tao, 254A Notes 1, heat estimates and Theorem 45](https://terrytao.wordpress.com/2018/09/16/254a-notes-1-local-well-posedness-of-the-navier-stokes-equations/) ·
+  [Donninger–Schörkhuber, §2.3, steps 7–8](https://arxiv.org/html/2406.16597v3#S2.SS3)
+- **Euler.** Solve phase transport and check self-advection for one wave on a
+  constant affine strain before following the succession of localized waves.
+  Then repeat the phase-gradient calculation in a shear, where the forward
+  transpose and inverse transpose give opposite signs. This prepares the
+  affine material-acceleration identity and the localized chain rule.
+  [Coiculescu, §§1–2, equation (3), and §4](https://terrytao.wordpress.com/2026/11/23/finite-time-singularity-formation-for-the-three-dimensional-euler-equations/)
+- **Contextual Embeddings.** Identify the binder before counting outward.
+  Compare renaming the inner binder with changing which binder an occurrence
+  refers to. This prepares the indexed variable and context-extension rules.
+  [Wadler, Kokke and Siek, “A second example”](https://plfa.github.io/DeBruijn/#a-second-example)
+- **Coupled spring.** Check an off-axis slice after the two coordinate slices.
+  A large mixed coefficient can turn a point with positive coordinate
+  curvatures into a saddle. The spring test evaluates the full quadratic form.
+  [Strang, *Calculus*, §13.6, Examples 6–7](https://ocw.mit.edu/ans7870/textbooks/Strang/Edited/Calculus/13.5-13.7.pdf)
+- **SMT-LIB 2.7.** Walk one declare–assert–check interaction before reading
+  the grammar tables. Move the declaration after the assertion and see which
+  layer rejects the unchanged assertion. This prepares the grammar witness
+  and the separate check of the declared names.
+  [Cok, Chapter 2, “Basic Boolean example”](https://smtlib.github.io/jSMTLIB/SMTLIBTutorial.pdf#page=14)
+- **PCP.** In the exposition, corrupt one table entry and ask whether the
+  question is exact low degree or distance from low degree. In the short
+  paper, reconstruct one value from random lines. In the long record, practice
+  a masked Hadamard read before the product check. The reading guide starts
+  by enumerating all seeds for one fixed proof.
+  [Sudan, Lectures 1 §5, 2 §4 and 3 §§2.5–2.6](https://people.csail.mit.edu/madhu/papers/2004/pcp-ias.pdf) ·
+  [Arora–Barak, §11.2.1, Remark 11.6](https://theory.cs.princeton.edu/complexity/ab_pcpchap.pdf)
+- **Quartic query separation.** Trace the first differing query for a blank
+  certificate array in the short paper. In the reconstruction, factor an
+  adaptive transcript into restrictions on independent inputs. In the
+  exposition, apply the two Grover reflections and check the conditional
+  distribution in the flagged component.
+  [Aaronson–Ben-David–Kothari, Lemma 6](https://obj.umiacs.umd.edu/cheat_sheet/1511.01937.pdf) ·
+  [Drucker, Lemmas 3.1–3.2](https://people.csail.mit.edu/andyd/SDPT.pdf) ·
+  [de Wolf, §§7.2–7.3](https://homepages.cwi.nl/~rdewolf/qcnotes.pdf)
+- **Erdős #257.** Work out quotient and remainder in a fixed denominator,
+  then follow one residue row through a full and a partial period. This
+  prepares the use of one common shift and the correction for leftover
+  entries. The [Erdős guide](erdos-method-transfer.md#before-opening-a-library-paper)
+  gives a corresponding exercise for each catalogue paper that opens as a PDF.
+  [Conrad, §2, Theorem 2.4](https://kconrad.math.uconn.edu/blurbs/ugradnumthy/modarith.pdf) ·
+  [Erdős, pp. 223 and 226](https://www.renyi.hu/~p_erdos/1969-09.pdf) ·
+  [Duverney–Tachiya, §2, equations (2.3) and (2.6)–(2.9)](https://danielduverney.fr/documents/theorie-des-nombres/DuverneyTachiya190522.pdf)
+- **QAOA/SK.** Maximize the two-spin energy with disorder fixed. Next work
+  out the contact derivative and one Cole–Hopf step. For the finite Gaussian
+  approximation, couple with the same Brownian increment and check the pairing
+  at size one before reading the limit.
+  [Panchenko, §§1–2](https://arxiv.org/pdf/1412.0170) ·
+  [Chen, Propositions 3.2 and 3.10](https://arxiv.org/html/2607.18032v1) ·
+  [Full-support preprint, §7, Proposition 7.2](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Full-support-of-the-zero-temperature-Sherrington-Kirkpatrick-order-parameter-September-27-2026/main.pdf)
+- **Talagrand–Parisi.** Derive Guerra's bound at a single trial overlap
+  before working through the cascades. Complete the square in the pressure
+  derivative and track the sign. Then average the mass-one field in
+  Talagrand's setup to recover the simpler interpolation with a constant shift.
+  [Bolthausen, §3.3, Theorem 3.8](https://www.kurims.kyoto-u.ac.jp/~kumagai/EB-LN_Kyoto_finaL.pdf#page=29) ·
+  [Montanari–Sen, §2.7.2](https://arxiv.org/pdf/2204.02909v2#page=98)
+- **Riemann reader.** For the analytic argument, expand the ordinary
+  nonnegative Dirichlet series around a real point before handling the signed
+  series in §4.1. Compute the residue of the logarithmic derivative near a
+  simple and a double zero. For the arithmetic argument, draw a three-slope polygon and apply
+  the minimum-slope inequality to the map onto its retained image before §5.4.
+  [Kedlaya, §1, Theorem 2](https://kskedlaya.org/18.785/dseries.pdf#page=1) ·
+  [Bost, Appendix A.2–A.3](https://www.numdam.org/article/SB_1994-1995__37__115_0.pdf#page=33) ·
+  [Bost, §4.3.1, Proposition 4.3](https://www.numdam.org/article/SB_1994-1995__37__115_0.pdf#page=18)
+- **PhysLib gauge theory.** Compute the field strength of a pure gradient with
+  both indices down, then change to the reader's index convention. Compare
+  a constant gauge transformation with one whose derivative is nonzero.
+  Finally test the central element on one particle representation before
+  opening the group-theoretic declaration.
+  [Tong, *Electromagnetism*, §§5.3.1–2](https://www.damtp.cam.ac.uk/user/tong/em/em4.pdf#page=12) ·
+  [Tong, *Gauge Theory*, §2.1.2](https://davidtong.org/pdfs/teaching/gauge-theory/gauge2.pdf#page=6) ·
+  [Tong, *Line Operators in the Standard Model*, §3](https://arxiv.org/pdf/1705.01853#page=10)
+- **Quantum programs.** Choose the first check by the operation used in the
+  linked proof.
+  - For **arcsin**, do fixed-width addition through wraparound, then undo it.
+    [Häner, Roetteler and Svore, Appendix A](https://arxiv.org/pdf/1805.12445v1#page=6)
+  - For **Grover**, obtain the oracle phase in one slot before applying the
+    simultaneous oracle. [Zalka, §1](https://arxiv.org/pdf/quant-ph/9711070v2#page=2)
+  - For **fusion**, track the electron and projectile momentum separately to
+    see what happens to the cached electron sum.
+    [Rubin et al., §II.A, equations (5), (7) and (8)](https://arxiv.org/pdf/2308.12352v1#page=5)
+  - For **photochemistry**, write the joint electron–nucleus Hamiltonian, then
+    work both outcomes of one-bit measurement cleanup.
+    [Pocrnic et al., §II](https://arxiv.org/html/2602.11272v1#S2) ·
+    [Gidney, Figure 3](https://arxiv.org/html/1709.06648v3#Sx3.F3)
+  - For **P450**, decode phase to energy, apply the cap to each result and
+    then compute the root-mean-square error. A large error on rare outcomes
+    can use the whole allowance.
+    [Babbush et al., §II.3, equations (21)–(23)](https://arxiv.org/html/1805.03662v2#S2.SS3)
+  - For **verification**, apply partial and total correctness to the same
+    coin program and track the trace lost to nontermination.
+    [Feng and Ying, Definition 4.9](https://arxiv.org/html/2008.06812v2#S4.Thmtheorem9)
+
 ## Exact-edition mathematical comparisons
 
 The reference register now identifies five additional primary editions used in

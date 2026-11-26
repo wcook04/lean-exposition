@@ -24,7 +24,7 @@
     "OAI.ZeroTemperatureSK.expectedSKMaximum": "For each fixed `J`, `Set.range (spinHamiltonian n J)` ranges over configurations before `sSup` is taken. The integral then averages that optimum under `spinDisorder n`, and division by $n$ gives energy per spin."
   },
   "scalar.source_spin_sequence_limit#1": {
-    "OAI.SKValue.groundStateSequence": "The factor $(n:\\mathbb R)^{-1}$ normalises the expected maximum at each finite $n$, with maximisation inside the disorder integral. This defines the sequence whose limit appears in the passage, without asserting convergence.",
+    "OAI.SKValue.groundStateSequence": "Fix the one coupling $J$ for two spins before choosing their signs. Matching or opposing the signs according to $J$ gives maximum energy $|J|/\\sqrt2$, so maximum energy per spin is $|J|/(2\\sqrt2)$. Only then average over $J$. `groundStateSequence` puts the maximum inside the disorder integral and defines the finite sequence before any limit is taken.",
     "OAI.SKValue.groundStateValue": "The filter `atTop` sends the natural system size $n$ to infinity. `limUnder` defines `groundStateValue`, while convergence to that value is a separate assertion.",
     "OAI.SKValueG.groundStateSequence_tendsto": "The `Tendsto` conclusion asserts actual convergence of the finite expected energies per spin to `groundStateValue` as $n\\to\\infty$. The proof applies the subadditive limit theorem to the negative expected maxima."
   },
@@ -278,7 +278,7 @@
     "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.value_contact_of_potential_min": "The proof uses $(0,1)$ as a neighbourhood of $s$, via `Ioo_mem_nhds hs.1 hs.2`. Rewriting with `hGs` and applying `hG0` gives $G(s)\\le G(t)$ throughout that neighbourhood, establishing `IsLocalMin G s`."
   },
   "support.contact_derivatives#3": {
-    "OAI.ZeroTemperatureSK.contactPotential_hasDerivAt": "Differentiating the tail integral at its lower endpoint gives $-(q(s)-s)=s-q(s)$, which is the derivative value in `HasDerivAt`. The hypothesis `hs` restricts this statement to $0<s<1$, without requiring minimality."
+    "OAI.ZeroTemperatureSK.contactPotential_hasDerivAt": "Try $\\int_s^1 2\\,dt=2(1-s)$: moving the lower endpoint to the right removes area. With the rate $q(t)-t$ the same calculation gives $G^{\\prime}(s)=s-q(s)$. The Lean derivative lemma works at interior times $0<s<1$. At an interior support point of the minimizer, the preceding contact argument gives a minimum, so this derivative forces $q(s)=s$."
   },
   "support.contact_derivatives#1": {
     "OAI.ZeroTemperatureSK.minimizer_contact": "Under `hmin` and `hμ`, the conjunction gives `squareMoment` equal to $t$ and `curvatureMoment` at most $1$ at every relative support point. The moment derivative identity turns the second clause into $q'(t)\\le1$, including the right derivative at zero."

@@ -530,7 +530,7 @@
     "QuarticQuery.coupledAvg": "Read the three factors from the outside in. The address inputs use `prodW (prodW μ)`, the zero rows use `prodW (unif ℓ)`, and the selected column uses `unif ℓ`."
   },
   "c5-coupling-gap": {
-    "QuarticQuery.Paper.eq_18": "Run the deterministic tree on both boards with the same outside data. Its histories coincide as long as every reply does. At the first difference it must be querying either the erased zero or a bit in the planted cell, and that query is also on the dummy path. Bounding the probabilities of those two visits controls the difference in acceptance probabilities."
+    "QuarticQuery.Paper.eq_18": "Start with the blank-array argument at the beginning of Lemma 6’s proof in Aaronson, Ben-David and Kothari’s Separations in Query Complexity Using Cheat Sheets. For a fixed decision tree, write down the first query that can distinguish a blank array from one with a filled certificate. Then repeat the argument for the two boards here and identify the additional changed location. Run the deterministic tree on both boards with the same outside data. Its histories coincide as long as every reply does. At the first difference it must be querying either the erased zero or a bit in the planted cell, and that query is also on the dummy path. Bounding the probabilities of those two visits controls the difference in acceptance probabilities."
   },
   "c5-zero-count": {
     "QuarticQuery.Paper.discoveredZeros": "The integer $Z$ counting columns whose unique zero appears in the complete dummy query run. Lean forms the finite set of columns $i$ for which the location `(i, J i)` lies in `T.path (dummy J A)`, then takes its cardinality."
