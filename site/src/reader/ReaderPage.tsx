@@ -1717,7 +1717,7 @@ function Reader({ route, loaded, structures }: { route: ReadRoute; loaded: Loade
     }
     if (href.startsWith("#") && href.length > 1 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
       event.preventDefault();
-      jumpWithHistory(decodeURIComponent(href.slice(1)), false);
+      jumpWithHistory(decodeURIComponent(href.slice(1)), a.closest(".paper-contents") !== null);
     }
   };
 

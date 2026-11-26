@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-// The shell around a library paper: the credit once under its authors, no "Contents" block in the
+// The shell around a library paper: the credit once under its authors, linked contents in the
 // reading copy, and the short credit line built from the instance's own sentences.
 import { describe, expect, it } from "vitest";
 import { prepareDocument } from "../src/reader/engine";
@@ -56,15 +56,14 @@ describe("a library paper's front matter", () => {
     expect(doc.renderAll().map((part) => part.html).join("")).not.toContain("front-credit");
   });
 
-  it("leaves out the paper's Contents block and keeps the anchor after it", () => {
+  it("links the paper's Contents and keeps the anchor after it", () => {
     const doc = prepare(null);
     const html = doc.renderAll().map((part) => part.html).join("");
-    expect(html).not.toMatch(/<h2[^>]*>Contents/);
-    expect(html).not.toContain("The proof | 4");
-    expect(html).not.toContain("<table");
+    expect(html).toMatch(/<h2[^>]*>Contents/);
+    expect(html).toMatch(/<table\b[^>]*class="paper-contents"/);
+    expect(html).toMatch(/<a href="#introduction"[^>]*>1\. Introduction<\/a>/);
     expect(html).toContain('id="1"');
-    expect(doc.parts.flatMap((part) => part.headings.map((h) => h.title))).not.toContain("Contents");
-    expect(doc.textBlocks().some((block) => block.text.includes("Introduction | 1"))).toBe(false);
+    expect(doc.anchorIndex.has("contents")).toBe(true);
   });
 });
 

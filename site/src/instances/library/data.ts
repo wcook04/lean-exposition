@@ -21,6 +21,7 @@ export interface LibraryDocument {
   pdf_only?: boolean;
   /** The authors' PDF. `name` and `alias` publish it under pdf/ by those names (a reader that moved into the library keeps its PDF addresses). */
   pdf?: LibraryPdf;
+  printed_contents?: import("../../reader/engine").PrintedContents;
   /** A companion document: read in its own right, grouped and ordered in the paper's contents. */
   kind?: "companion";
   group?: string;

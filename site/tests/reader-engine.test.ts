@@ -64,6 +64,67 @@ function visibleText(html: string): string {
   return el.textContent ?? "";
 }
 
+describe("printed contents", () => {
+  it("links table entries to the actual headings across document parts", () => {
+    const chunks = [
+      "## Contents\n",
+      "| | |\n| --- | --- |\n| **I. Setup** | 1 |\n| 2. Formula $x^2$ | 4 |\n| 3. Formula $x^2$ | 7 |\n| [References](#references) | 10 |\n\n",
+      "# Part I. Setup\n\n## 2 Formula $x^2$\n\n## References\n",
+    ];
+    const encoder = new TextEncoder();
+    let end = 0;
+    const parts = chunks.map((chunk) => {
+      const start_byte = end;
+      end += encoder.encode(chunk).length;
+      return { kind: "unmapped_text", span: { start_byte, end_byte: end } };
+    });
+    const doc = prepareDocument({
+      stage: "short", bytes: encoder.encode(chunks.join("")), parts,
+      documentPath: DOCUMENT_PATHS.short, documentPaths: DOCUMENT_PATHS,
+    });
+    const body = dom(doc.renderAll().map(({ html }) => html).join(""));
+    const rows = [...body.querySelectorAll(".paper-contents tbody tr")];
+    expect(rows).toHaveLength(4);
+    expect(rows[0].querySelector("a")?.hash).toBe("#part-i.-setup");
+    expect(rows[1].querySelector("a .katex")).not.toBeNull();
+    expect(rows[2].querySelector("a")).toBeNull();
+    expect(rows[3].querySelector("a")?.hash).toBe("#references");
+    for (const link of body.querySelectorAll<HTMLAnchorElement>(".paper-contents a")) {
+      const id = decodeURIComponent(link.hash.slice(1));
+      expect(doc.anchorIndex.get(id)).toBe(2);
+      expect([...body.querySelectorAll("[id]")].some((node) => node.id === id)).toBe(true);
+    }
+  });
+
+  it("links a contents list without guessing between duplicate titles or changing later lists", () => {
+    const bytes = new TextEncoder().encode([
+      "# Table of contents", "1. Introduction\n2. Proof", "# 1. Introduction",
+      "- Introduction", "## 2. Proof", "## 3. Proof",
+    ].join("\n\n"));
+    const doc = prepareDocument({ stage: "short", bytes, documentPath: DOCUMENT_PATHS.short, documentPaths: DOCUMENT_PATHS });
+    const body = dom(doc.renderAll().map(({ html }) => html).join(""));
+    expect([...body.querySelectorAll(".paper-contents a")].map((node) => node.textContent)).toEqual(["Introduction"]);
+    expect(body.querySelector("ul a")).toBeNull();
+  });
+
+  it("adds the printed entries to an edition without moving its source offsets", () => {
+    const bytes = new TextEncoder().encode("## 1 Introduction\n\nProse.\n\n## A. Proof\n");
+    const input = { stage: "short", bytes, documentPath: DOCUMENT_PATHS.short, documentPaths: DOCUMENT_PATHS };
+    const original = prepareDocument(input);
+    const doc = prepareDocument({ ...input, printedContents: {
+      before: "introduction",
+      entries: [["1. Introduction", 1], ["Appendix A. Proof", 10]],
+    } });
+    const body = dom(doc.renderAll().map(({ html }) => html).join(""));
+    expect(doc.parts.map((part) => part.span)).toEqual(original.parts.map((part) => part.span));
+    expect([...body.querySelectorAll(".paper-contents a")].map((link) => link.getAttribute("href")))
+      .toEqual(["#introduction", "#a.-proof"]);
+    const table = body.querySelector("#contents + .paper-contents")!;
+    const introduction = body.querySelector("#introduction")!;
+    expect(Boolean(table.compareDocumentPosition(introduction) & Node.DOCUMENT_POSITION_FOLLOWING)).toBe(true);
+  });
+});
+
 describe("math", () => {
   it("reuses identical typesetting across parts, separating display math and retaining every error", () => {
     const source = "$x$. $x$. $\\unknowncommand$\n\n";

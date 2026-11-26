@@ -71,7 +71,7 @@ export function preparePaper(paper: PaperData, index: TieIndex | null, reference
     span: { start_byte: part.span.start_byte, end_byte: part.span.end_byte },
     passageAnchor: part.passage_ref ? part.passage_ref.slice(part.passage_ref.lastIndexOf("/") + 1) : undefined,
   }));
-  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, tieTones: index?.segments.map(([, , ids]) => index.ties[ids[0]]?.tone), referenceTable, sectionAids: site.sectionAids?.[stage] ?? null, frontCredit: frontCreditHtml(stage), frontCreditNote: site.frontCreditNote?.[stage] ?? null });
+  return prepareDocument({ stage, bytes: paper.bytes, parts, documentPath: paths[stage], documentPaths: paths, ties: index?.segments, tieTones: index?.segments.map(([, , ids]) => index.ties[ids[0]]?.tone), referenceTable, sectionAids: site.sectionAids?.[stage] ?? null, frontCredit: frontCreditHtml(stage), frontCreditNote: site.frontCreditNote?.[stage] ?? null, printedContents: site.printedContents?.[stage] });
 }
 
 export function loadDocument(stage: Stage): Promise<LoadedDocument> {

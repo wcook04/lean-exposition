@@ -113,6 +113,13 @@ export interface PrepareInput {
    * the authors, so the credit is said once.
    */
   frontCreditNote?: string | null;
+  printedContents?: PrintedContents;
+}
+
+export interface PrintedContents {
+  /** Id of the heading immediately after the printed contents. */
+  before: string;
+  entries: [title: string, page: number][];
 }
 
 // ------------------------------------------------------------- section aids
@@ -661,39 +668,61 @@ function preprocess(text: string, atStart: boolean, frontMatter: { value: Record
 
 const REF_DEF = /^ {0,3}\[(?:[^\]\\\n]|\\.)+\]:[ \t]*\S.*$/gm;
 
-/**
- * A paper's own table of contents ("Contents", with its table of sections and pages) is left out of
- * the reading copy: the contents column beside the paper lists the same sections, live. Only the
- * heading and the tables under it go; an anchor or anything else before the next heading stays.
- */
-function dropContents(states: PartState[], parts: PreparedPart[]): void {
-  let dropping = false;
-  for (const [index, st] of states.entries()) {
-    const kept: Token[] = [];
-    for (let i = 0; i < st.tokens.length; i++) {
-      const t = st.tokens[i];
-      if (t.type === "heading_open") {
-        const title = t.tag === "h1" || t.tag === "h2" ? inlineText(st.tokens[i + 1]?.children ?? [], st.spans).trim() : "";
-        if (/^(table of )?contents$/i.test(title) && st.tokens[i + 2]?.type === "heading_close") {
-          dropping = true;
-          i += 2;
-          continue;
-        }
-        dropping = false;
-      } else if (dropping) {
-        if (t.type === "table_open") {
-          while (i < st.tokens.length && st.tokens[i].type !== "table_close") i++;
-          continue;
-        }
-        if (!(t.type === "html_block" && /^\s*<!--[\s\S]*?-->\s*$/.test(t.content))) dropping = false;
+function contentsKey(title: string): string {
+  return title.normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{M}\p{N}]+/gu, " ").trim();
+}
+
+const CONTENTS_HEADING = /^(?:table of )?contents:?$/i;
+
+function contentsEntry(title: string) {
+  const prefix = /^(?:(?:section\s+)?(\d+(?:\.\d+)*|[A-Z]\.\d+(?:\.\d+)*)|(?:part\s+)?([IVXLCDM]+)|(?:appendix\s+([A-Z])|([A-Z])(?=\.)))[.:]?\s+/i
+    .exec(title.trim());
+  return {
+    key: contentsKey(title),
+    number: contentsKey(prefix?.[1] ?? prefix?.[2] ?? prefix?.[3] ?? prefix?.[4] ?? ""),
+    title: contentsKey(title.trim().slice(prefix?.[0].length ?? 0)),
+  };
+}
+
+/** Make the author's contents work as navigation using the document's existing heading ids. */
+function linkContents(states: PartState[], parts: PreparedPart[]): void {
+  if (!parts.some((part) => part.headings.some((heading) => CONTENTS_HEADING.test(heading.title)))) return;
+  const headings = parts.flatMap((part) => part.headings)
+    .filter((heading) => !CONTENTS_HEADING.test(heading.title))
+    .map((heading) => ({ id: heading.id, ...contentsEntry(heading.title) }));
+  let afterHeading = false;
+  for (const { tokens, spans } of states) {
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      if (token.type === "heading_open") {
+        afterHeading = CONTENTS_HEADING.test(inlineText(tokens[i + 1]?.children ?? [], spans).trim());
+        i += 2;
+        continue;
       }
-      kept.push(t);
-    }
-    if (kept.length !== st.tokens.length) {
-      st.tokens = kept;
-      // A removed heading or table can occupy a whole source part. Keep its
-      // source position, but reserve no space when nothing remains to display.
-      if (kept.length === 0) parts[index].blank = true;
+      if (!afterHeading) continue;
+      if (!["table_open", "ordered_list_open", "bullet_list_open"].includes(token.type)) {
+        afterHeading = false;
+        continue;
+      }
+      token.attrJoin("class", "paper-contents");
+      const close = token.type.replace(/_open$/, "_close");
+      const isTable = token.type === "table_open";
+      for (i++; i < tokens.length && !(tokens[i].type === close && tokens[i].level === token.level); i++) {
+        const item = tokens[i];
+        const children = item.children;
+        if (item.type !== "inline" || !children?.length || (isTable && tokens[i - 1]?.type !== "td_open")
+            || children.some((child) => child.type === "link_open" || child.type === "html_inline")) continue;
+        const { key, title, number } = contentsEntry(inlineText(children, spans));
+        if (!key || /^\d+$/.test(key)) continue;
+        const exact = headings.filter((heading) => heading.key === key);
+        const matches = exact.length || !title ? exact : headings.filter((heading) =>
+          heading.title === title && (!number || !heading.number || number === heading.number));
+        if (matches.length !== 1) continue;
+        const TokenType = token.constructor as typeof Token;
+        const open = new TokenType("link_open", "a", 1);
+        open.attrSet("href", "#" + encodeURIComponent(matches[0].id));
+        item.children = [open, ...children, new TokenType("link_close", "a", -1)];
+      }
     }
   }
 }
@@ -972,8 +1001,6 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
     });
   });
 
-  dropContents(states, parts);
-
   // Pass 2: label and heading ids in document order.
   const labelId = labelIds();
   states.forEach((st, index) => {
@@ -1011,6 +1038,28 @@ export function prepareDocument(input: PrepareInput): PreparedDocument {
       part.anchors.push(id, ...aliases);
     }
   });
+
+  // Some editions omit print navigation from their source Markdown. Render the
+  // transcribed contents beside that source, keeping every byte address intact.
+  const printed = input.printedContents;
+  if (printed?.entries.length && !parts.some((part) => part.headings.some((heading) => CONTENTS_HEADING.test(heading.title)))) {
+    const part = parts.find((row) => row.headings.some(({ id }) => id === printed.before));
+    if (part) {
+      const st = states[part.index];
+      const at = st.tokens.findIndex((token) => token.type === "heading_open" && token.attrGet("id") === printed.before);
+      const rows = printed.entries.map(([title, page]) => `| ${title.replace(/\|/g, "\\|")} | ${page} |`);
+      const previousSpans = st.spans.length;
+      const source = ["## Contents", "", "| | |", "| --- | --- |", ...rows].join("\n");
+      const table = md.parse(protectMath(source, st.spans).text, { references });
+      mathCount += st.spans.length - previousSpans;
+      const id = registry.claimHeading("contents", part.index);
+      table[0].attrSet("id", id);
+      part.headings.splice(part.headings.findIndex((heading) => heading.id === printed.before), 0, { id, title: "Contents", level: 2, aliases: [] });
+      part.anchors.push(id);
+      st.tokens.splice(at, 0, ...table);
+    }
+  }
+  linkContents(states, parts);
 
   // The credit line goes under the authors' names in the front matter, in the part that lists them.
   // An adapted edition's own credit note takes the line at the end of its paragraph instead.

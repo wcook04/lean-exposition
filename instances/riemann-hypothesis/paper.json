@@ -8,6 +8,28 @@
     "Fable"
   ],
   "license": "CC-BY-4.0",
+  "printed_contents": {
+    "before": "introduction",
+    "entries": [
+      ["1. Introduction", 2],
+      ["2. What was verified by machine", 3],
+      ["3. The shape of the proof", 11],
+      ["4. The analytic half", 12],
+      ["5. The squeeze between two slopes", 15],
+      ["6. Divisibility at inert primes", 19],
+      ["7. The frame: Bessel–Poincaré series", 21],
+      ["8. The cohomological bound", 22],
+      ["9. Hosts and the auxiliary characters", 24],
+      ["10. The published theorems the proof rests on", 26],
+      ["11. What the final theorem does not use", 27],
+      ["12. Scope and method", 29],
+      ["13. Consequences and directions", 29],
+      ["Appendix A. Basis of the statements", 30],
+      ["Appendix B. Reproducing the verification", 36],
+      ["Appendix C. The published results formalised in the archive", 38],
+      ["References", 51]
+    ]
+  },
   "source_files": {
     "main.pdf": "802d16e339551439de6fec97308cbd4a88b0dd33c4a8d93265d4a6615c95fc75",
     "one-page.pdf": "136de06e65e731b216a59d037735ed9029dc9f090452b29f63bbff388bb0d25a"
