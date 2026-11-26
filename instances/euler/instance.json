@@ -37,6 +37,25 @@
    "title": "Finite-Time Singularity Formation for the Three-Dimensional Euler Equations",
    "noun": "paper",
    "main": true,
+   "printed_contents": {
+    "before": "introduction",
+    "entries": [
+     ["1. Introduction", 1],
+     ["2. The wave and its amplification", 10],
+     ["3. Localized waves over a smooth parent", 21],
+     ["4. Selecting initial data by the endpoint problem", 23],
+     ["5. From a localized wave to an approximate solution", 26],
+     ["6. The initial wave and the inductive step", 39],
+     ["7. A common sequence of approximate solutions", 41],
+     ["8. The limit and its terminal behavior", 45],
+     ["Appendix A. The Hölder inverse", 47],
+     ["Appendix B. The frequency cutoff", 50],
+     ["Appendix C. The parameter inequalities", 51],
+     ["Appendix D. Finite norms and coefficient estimates", 51],
+     ["Acknowledgments", 53],
+     ["References", 54]
+    ]
+   },
    "pdf": {
     "file": "paper.pdf",
     "sha256": "9d1a7be6a66d2933a00b25318fda0d6a9da6039a6249b477778dabdc2c8234b8",

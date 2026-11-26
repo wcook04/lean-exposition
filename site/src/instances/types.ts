@@ -136,6 +136,8 @@ export interface SiteInstance {
    * number ("5.6") or heading. The reader sets one under each section head as a reader annotation.
    */
   sectionAids?: Partial<Record<string, Record<string, string>>>;
+  /** Contents transcribed from a document's PDF when they are absent from its Markdown. */
+  printedContents?: Partial<Record<string, import("../reader/engine").PrintedContents>>;
   /** Which of a paper's guides exist, so their links stand from the first paint. */
   readingAids?: { showcase: boolean; route: boolean };
   /**
