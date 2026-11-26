@@ -32,7 +32,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.primeSetPart": "`primeSetPart P a` multiplies $p^{v_p(a)}$ for the primes in `P`. For the later witness with $P=\\{2\\}$, its value on $a=2^k m$ with odd $m$ is $2^k$."
   },
   "short.w.weighted-formula": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.primeWeightedTerm": "`primeWeightedTerm` uses `primeSetPart P a` for $h(a)$ in both numerator and denominator. The display's finiteness is the separate `Summable` hypothesis on these terms restricted to $A$."
+    "ErdosProblems.Erdos257.PaperCompleteR7.primeWeightedTerm": "At $a=12$, $P=\\{2\\}$ and $b=2$, the retained prime power is $h(a)=4$, so the summand is $1/45$ instead of the unweighted $1/12$. This discount models the shorter residue cycles available when the sampling modulus shares that prime power. `primeWeightedTerm` defines the summand, and the separate hypothesis sums it over $A$."
   },
   "short.res-weighted-support#1": {
     "ErdosProblems.Erdos257.PaperCompleteR8.divisibilityWeightedClaim": "The first conjunct proved by `divisibilityWeightedClaim` concludes `Irrational (erdosSupportSeries b A)` for an infinite positive support when `FinitePrimeWeighted b A` holds at that same $b\\ge2$."
@@ -109,7 +109,7 @@
     "ErdosProblems.Erdos257.dyadic_observation_sum_le": "The theorem has finite sets $J$ and $F$ and a finite right-hand sum. The display has an infinite right-hand sum. Restrict $F$ to the largest sampled range, then use nonnegativity."
   },
   "short.w.finite-tail": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.exists_finite_weighted_tail": "Lean supplies a finite $F\\subseteq A$ with small weighted tail but does not require `F.Nonempty`. For infinite $A$ one may add an element, using nonnegativity."
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_finite_weighted_tail": "For the geometric weights $2^{-j}$, $j\\ge1$, removing the first $J$ leaves total $2^{-J}$. The summability hypothesis lets us make the same finite selection for the nonnegative weights in (1). This choice precedes choosing the modulus that makes the selected shifts vanish. Lean allows an empty $F$, so one may add any selected exponent if needed."
   },
   "short.w.modulus": {
     "ErdosProblems.Erdos257.PaperCompleteR8.primeSamplingModulus": "The modulus used in the Lean proof is $Q=L(\\prod_{p\\in P}p)^H$. The paper uses $Q=L\\prod_{p\\in P}p^{\\lfloor\\log_p H\\rfloor}$ and $G=\\lfloor H/\\max P\\rfloor$. Lean defines $Q=L(\\prod_{p\\in P}p)^H$ and uses $G=2^H$."
@@ -237,11 +237,11 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.coverBase": "The base $B_j=2^{\\alpha_j}$ associated with the exponent of the $j$th finite set. `PositiveCoverData` stores $0<\\alpha_j\\le1$, so this base lies in $(1,2]$, as the adjacent lemmas show. This is why the uniform kernel estimate covers arbitrarily small positive exponents. The base belongs to an auxiliary tail estimate. The original Lambert subseries is still evaluated at base two during this part of the proof."
   },
   "short.c.two-tail-definitions": {
-    "ErdosProblems.Erdos257.PaperCompleteR21.framePotential_eq_tsum": "For a finite set $F$ of positive exponents, the finite sum of geometric tails equals $U_F(N)=\\sum_{r\\ge1}2^{-r}f_F(N+r)$. This identifies $U_j$ with the finite modular-tail sum, but does not define $V_j$.",
+    "ErdosProblems.Erdos257.PaperCompleteR21.framePotential_eq_tsum": "For $F=\\{2,3\\}$ and $N=1$, the positions $N+r=2,3,4$ each contribute one divisor count, while $N+r=6$ contributes two. You can count by positions as in $U_F(N)$, or count the geometric series for multiples of each member of $F$. `framePotential_eq_tsum` justifies this equality for a finite frame of positive exponents.",
     "ErdosProblems.Erdos257.PaperCompleteR8.coverPotential": "The quantity $V_j(N)=\\sum_d c_{j,d}w_{2^{\\alpha_j},d}(N)$ obtained from the positive divisor majorant for $F_j$. This defines $V_j$, but does not define the divisor-count tail $U_j$."
   },
   "short.c.fractional-tail-bound": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.framePotential_rpow_le_divisorPotential": "The theorem states only the endpoint $U_j(N)^{\\alpha_j}\\le V_j(N)$. It proves it by recurrence comparison and does not state the two intermediate infinite sums."
+    "ErdosProblems.Erdos257.PaperCompleteR8.framePotential_rpow_le_divisorPotential": "The square-root inequality $\\sqrt{1+4}\\le 1+2$ illustrates how taking the power $0<\\alpha\\le1$ lets us move it inside a nonnegative sum as an upper bound and changes $2^{-r}$ to $(2^\\alpha)^{-r}$. The pointwise divisor majorant then controls those powered counts. For a finite frame of positive exponents and nonnegative cover coefficients with summable $c_{j,d}/d$, Lean proves the endpoint directly by recurrence comparison."
   },
   "step.tail_displacement#1": {
     "ErdosProblems.Erdos257.PaperCompleteR8.displacement_finset_le_framePotential": "`displacement_finset_le_framePotential` gives the inequality in the display. The proof drops the nonnegative baseline from the shifted term, leaving `framePotential F N` as an upper bound."
@@ -262,7 +262,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.coverPrefix_common_multiple": "The exponents in the first finitely many cover sets have a common positive multiple $L$. The finite set `coverPrefix C J` is the union of the frames with natural index below $J$. Positivity of their exponents comes from the cover data. The conclusion supplies both `0 < L` and a proof that each member divides $L$. Sampling positive multiples of this $L$ cancels those initial displacement terms."
   },
   "short.c.one-cover-sample": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "The lemma applies to any function and real threshold on a nonempty dyadic sample. The paper uses its particular tail test and threshold one."
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "If every sampled shift had $S_J(N)\\ge1$, every inner progression mean and hence the outer dyadic mean would be at least $1$. The lemma extracts one sample from this two-stage mean. All the tail tests are evaluated at that same shift, and since they are nonnegative, each is bounded by the total $S_J(N)$."
   },
   "short.c.cover-displacement-bound": {
     "ErdosProblems.Erdos257.PaperCompleteR8.displacement_host_le_of_coverTailTest": "The theorem gives the final upper bound $\\Delta_{2,C.\\mathrm{host}}(N)\\le\\varepsilon$. It does not state the intermediate sum of $U_j$ or strict positivity for infinite $A$."
@@ -574,7 +574,7 @@
     "Erdos249257.isClosed_mersenneAchievementSet": "Closedness supplies membership of a limit once convergence of the finite support values is shown. It does not itself assert the quotient-row convergence or its hypotheses."
   },
   "short.r.quotient-two-step-identity": {
-    "Erdos249257.localMersenneQuotient_add_two": "For $d\\ge2$, increasing the precision exponent by two gives $q_{M+2}(d)=4q_M(d)+2\\mathbf1_{d\\mid M+1}+\\mathbf1_{d\\mid M+2}$. The source identity holds for every $d\\ge2$ and $M$, independently of membership in $D_R$."
+    "Erdos249257.localMersenneQuotient_add_two": "For $d=3$ and $M=5$, the old quotient is $\\lfloor 32/7\\rfloor=4$ and the new one is $\\lfloor128/7\\rfloor=18=4\\cdot4+2$. The new binary positions are $6$ and $7$, and only $6$ is divisible by $3$. The identity gives these two correction bits for every $d\\ge2$ and supplies the contribution of each old weight when the precision increases."
   },
   "short.r.target-two-step-identity": {
     "Erdos249257.twentyOneQuotientTarget_add_two": "The integer target satisfies $T_{M+2}=4T_M+\\lfloor4(2^M\\bmod21)/21\\rfloor$ at every natural depth $M$. The second term is named `twentyOneTargetTwoStepPulse M` in Lean. It records the part of the discarded target fraction that becomes an integer after multiplying by four. This is the target-side contribution to the remainder recurrence. It is separate from the divisor contributions of the selected support."

@@ -13,7 +13,7 @@
     "QuarticQuery.QLe": "The state witness is `ψ₀` with norm one. The same vector initializes the program for every input, and the promised-answer condition is checked afterward."
   },
   "exp-1-measurement": {
-    "QuarticQuery.Upper.lawOf": "`lawOf` sums squared moduli over the basis configurations with a common output label. At label $b$ the summands are $|\\psi_z|^2$ for those $z$ with `out z = b`."
+    "QuarticQuery.Upper.lawOf": "Suppose the state has four equally likely basis outcomes, and three carry the same output label. That label has probability $3/4$ even though each individual basis outcome has probability $1/4$. The tournament uses this sum when different records of its comparisons give the same candidate and success flag."
   },
   "exp-1-global-sign": {
     "QuarticQuery.Upper.lawOf_smul": "`lawOf_smul` treats every complex scalar $a$ and gives the exact factor $|a|^2$. The sentence is its $a=-1$ case. `a • ψ` multiplies the entire vector, so this is about a common phase, not changing the signs of selected coordinates."
@@ -25,7 +25,7 @@
     "QuarticQuery.AdaptiveProgram.queryCap": "The maximum number of oracle calls on any branch of a quantum program. A `query` adds one. A `unitary` step adds nothing. And a measurement takes the larger cap of its two continuations."
   },
   "exp-1-phase-oracle": {
-    "QuarticQuery.Paper.construction_bitOracle_phase_kickback": "The binder `hminus` requires opposite amplitudes for the two answer-bit values at each position and workspace value. Under that condition the physical bit query acts by the phase $(-1)^{x_j}$."
+    "QuarticQuery.Paper.construction_bitOracle_phase_kickback": "The answer register starts in the difference of the zero and one states. Reading a zero leaves the two terms in place. Reading a one swaps them, so the difference acquires a minus sign while the register remains in the same state up to that sign. This is how one ordinary bit query applies the input's signs to a superposition of positions in the Forrelation calculation."
   },
   "exp-1-total-function": {
     "QuarticQuery.TotalBool": "A total Boolean function assigns either zero or one to every bit string indexed by `ι`. In Lean, `BitInput ι` is a function from positions to `Bool`, and the arrow in `BitInput ι → Bool` assigns one output to every such input."
@@ -95,7 +95,7 @@
     "QuarticQuery.BitLoc": "The positions of all bits in an enlarged board: column-string bits, address-input bits, pointer bits and transcript bits. The four disjoint alternatives in `BitLoc` keep these kinds of positions separate."
   },
   "exp-2-computed-address": {
-    "QuarticQuery.trueAddress": "The function returns `Classical.choose (hdef h)` at coordinate $h$. It takes the promise witness as input and extracts the mathematical answer for that address question."
+    "QuarticQuery.trueAddress": "If two address questions have promised answers one and zero, their answers name cell $10$. The fact that there is a cell labelled $10$ says nothing about those questions. In the definition of the true address, each digit comes from a promised answer. Later the transcript tests certify that the proposed cell really has those digits."
   },
   "exp-2-promise": {
     "QuarticQuery.PartialBool": "A partial Boolean function returns `some false` or `some true` on its promise, and `none` outside it.",
@@ -174,7 +174,7 @@
     "QuarticQuery.Paper.quantumComparison_unordered_state": "For distinct columns, one circuit supplies both ordered comparison laws. The hypotheses are `hk : 1 ≤ k` and `hij : i ≠ j`. Neither column must win or satisfy the address promise."
   },
   "exp-3-self": {
-    "QuarticQuery.Paper.quantumComparison_self_zero_reads": "Comparing a column with itself can be implemented with zero reads. The theorem gives `Samples 0` for the law whose success probability is `cmpProb n x i i`."
+    "QuarticQuery.Paper.quantumComparison_self_zero_reads": "After the tournament selects column $i$ as a pivot, a future draw of $i$ encounters its self-comparison and fails. This can be decided from the two indices alone. The result is zero probability on the diagonal of the comparison table and no input reads for that case."
   },
   "exp-3-winner": {
     "QuarticQuery.Upper.cmpProb_winner": "The hypothesis `hw : WinsAt ... x i s` includes an all-one string and correct outgoing pointers. `hne : j ≠ i` selects an opponent."
@@ -227,7 +227,7 @@
     "QuarticQuery.Tournament.weight": "The weight of candidate $i$ after a pivot history is the product of its probabilities of defeating those pivots. Prepending a pivot `p` multiplies the old weight by `a i p`."
   },
   "exp-4-halving-claim": {
-    "QuarticQuery.Tournament.expected_weight_le_half": "The expected total after a proportional-weight pivot is at most $W/2$. The assumptions are complementary comparisons, `hW` identifying $W$ with the sum of the weights, and `hpos : 0 < W`."
+    "QuarticQuery.Tournament.expected_weight_le_half": "Imagine just two positive weights, two and one. If we draw a pivot in proportion to those weights, the contribution is $2/3$ whether the heavier or the lighter column always wins the comparison. With more columns, each pair contributes the same way, whatever its bias. Adding over distinct pairs gives the expected weight bound used to show that a dominant column soon reaches the list."
   },
   "exp-4-pair": {
     "QuarticQuery.Tournament.two_mul_weighted_sum": "Pairing each ordered pair with its reverse gives $2\\sum_{p,i}w_pw_i a_{ip}=W^2-\\sum_iw_i^2$. The hypothesis `ha : IsComparison a` supplies complementarity for distinct candidates and zero on the diagonal."
@@ -290,7 +290,7 @@
     "QuarticQuery.Paper.quantum_grover_state": "For $0<q<1$, the prepared state is $\\sin\\theta\\,g+\\cos\\theta\\,b$, where $g$ and $b$ are orthogonal unit vectors and $0<\\theta<\\pi/2$. The hypotheses `h0` and `h1` give these strict bounds on `A.prob`."
   },
   "exp-4-common-multiplier": {
-    "QuarticQuery.Amplification.Preparation.good_iterate": "After $u$ amplification iterations, the entire accepted component equals $\\sin((2u+1)\\theta)\\,g$. Here `g` is `A.goodState`, the normalized accepted part of the initial preparation.",
+    "QuarticQuery.Amplification.Preparation.good_iterate": "Suppose the successful amplitudes for two distinct output labels start in the ratio two to one. Their squared weights are in the ratio four to one. Multiplying both amplitudes by the same nonzero scalar leaves those conditional probabilities at $4/5$ and $1/5$. The Grover rotation applies that common factor to the whole successful component, so the amplified tournament still draws from the required weight distribution.",
     "QuarticQuery.Amplification.Preparation.flipGood": "The success sign flip sends a vector $v$ to $v-2\\Pi v$, where $\\Pi$ is the orthogonal projector onto accepted states. The projector comes from `A.good` in the preparation data.",
     "QuarticQuery.Amplification.Preparation.grover_apply": "One amplification step sends $v$ to $2\\langle\\psi,Sv\\rangle\\psi-Sv$, where $\\psi=A|0\\rangle$ and $S$ flips the accepted component. The formula holds for every vector `v` and uses the unitary preparation and orthogonal success projector stored in `A`."
   },
@@ -343,7 +343,7 @@
     "QuarticQuery.Forrelation.H": "For $m=4^t$, the matrix $H$ is the real sign matrix $W$ multiplied by $2^{-t}=1/\\sqrt m$."
   },
   "exp-5-length-preservation": {
-    "QuarticQuery.Forrelation.H_mem_orthogonalGroup": "The theorem gives orthogonality for every natural $t$. This paragraph uses only the four-position case $t = 1$."
+    "QuarticQuery.Forrelation.H_mem_orthogonalGroup": "For four positions, one unit basis vector maps to four entries each of magnitude $1/2$, giving squared length one. Different basis vectors map to sign columns whose products cancel in pairs, so the images are also orthogonal. This lets the algorithm use the normalized transform between sign queries without changing the state's total probability."
   },
   "exp-5-two-block-quantity": {
     "QuarticQuery.Forrelation.Phi_eq_matrix_product": "The matrix-product identity holds for every $k \\ge 1$, every $t$, and every input. The phrase specializes to $k = 2$ and $t = 1$."
@@ -491,7 +491,7 @@
     "QuarticQuery.GateConsistent": "A transcript is consistent when, at every gate, its listed output equals that gate’s truth table applied to its predecessor values."
   },
   "exp-6-all-gates-correct": {
-    "QuarticQuery.Paper.construction_transcript_correct": "For any circuit and actual input, a proposed transcript is consistent if and only if it equals the recursively evaluated circuit transcript."
+    "QuarticQuery.Paper.construction_transcript_correct": "Take an AND gate followed by a NOT gate on its output. If the input is $(1,1)$, the first locally correct transcript bit must be one, and only then can the second correctly be zero. For a larger circuit, induction fixes each bit from the preceding ones. At the first wrong bit, all the recorded inputs to its gate are still correct. Checking that one gate exposes the false transcript."
   },
   "exp-6-first-wrong-gate": {
     "QuarticQuery.GateConsistent.unique": "Two transcripts satisfying all gate equations for the same circuit and input must agree at every position."
@@ -534,7 +534,7 @@
     "QuarticQuery.Paper.quantumVerify_search_query_bound": "The proof instantiates the amplification threshold at $1/K$. `testCost t` converts the resulting test-evaluation bound to physical reads at the fixed address."
   },
   "exp-6-one-sided-verification": {
-    "QuarticQuery.Paper.quantumVerify_fixedAddress": "Fix a column and one cell, and choose any positive error parameter $\\varepsilon$."
+    "QuarticQuery.Paper.quantumVerify_fixedAddress": "At a fixed cell, if all $K$ tests pass, the search has no failing label to mark and the verifier accepts for sure. Even a single bad gate gives a marked label with probability at least $1/K$ under a uniform draw. Amplification then makes failure to find it unlikely. This is why a correct certificate is safe and a false certificate can slip through only with the specified error probability."
   },
   "exp-6-nonwinner-at-every-cell": {
     "QuarticQuery.Paper.construction_local_dichotomy": "Under `hC : CircuitRealises C f`, the nonwinner clause has `∀ s` before `∃ e`. An off-promise decoder can return any address $s$, and the verifier still has a failed test at that address."
@@ -608,7 +608,7 @@
     "QuarticQuery.Paper.erasedZero_eq_expectedZeros_div": "The probability of reading the erased zero is $\\mathbb E[Z]/m$. Lean expresses the left side through `coupledAvg` and the right side through `expectedZeros`."
   },
   "exp-7-unseen-uniform": {
-    "QuarticQuery.Paper.uniform_zero_given_transcript": "The assumptions `hτ : NoZeroSeen i τ` and `hpos : 0 < dummyTraceMass μ T τ` state these two requirements."
+    "QuarticQuery.Paper.uniform_zero_given_transcript": "In a four-row column, if two distinct queried rows both return one, the zero is equally likely to lie at either remaining row. Placing it in either of those rows is consistent with exactly the same history of replies. This remains true when the previous queries were adaptive, and it bounds the probability of discovering the zero on the next read."
   },
   "exp-7-unseen-move": {
     "QuarticQuery.Paper.observedPrefix_dummy_fiber": "A history containing no zero reply from column $i$ is compatible with placing its zero at row $j$ exactly when $j$ is unread and the same history is compatible with an all-one reference column. The hypothesis `hτ : NoZeroSeen i τ` is essential."
@@ -620,7 +620,7 @@
     "QuarticQuery.Paper.eq_19": "The board uses normalized nonnegative address-data weights (`hμ`, `hμ1`), and the planted column is independently uniform."
   },
   "exp-7-query-index": {
-    "QuarticQuery.cellGuess": "The address already present in a proposed cell-query location. For a fixed target column $I$, `cellGuess I q` returns the cell label if $q$ names a pointer or transcript bit in that column, and returns `none` otherwise."
+    "QuarticQuery.cellGuess": "If a query names a pointer bit in cell $10$, it has already guessed both address digits. The reply may say something about the pointer, but it arrives after the guess. The lower-bound simulator uses the proposed cell label as its output without paying for, or learning from, that final reply."
   },
   "exp-7-address-count": {
     "QuarticQuery.aQueries": "The number of queries in a supplied list that read the address strings of column $i$. Repeated reads do contribute, because `countP` counts list occurrences."
@@ -633,7 +633,7 @@
     "QuarticQuery.avg_heavy_le": "`hcount` charges $L$ per heavy column and bounds the total charge by the sum of `aQueries` over columns. `sum_aQueries_le` bounds that sum by the length of the run."
   },
   "exp-7-heavy-probability": {
-    "QuarticQuery.avg_heavy_le": "The proof uses `avg_unif` to divide the count of heavy columns by $m=2^\\ell$. The positive budget `hL : 1 ≤ L` permits the remaining division by $L$."
+    "QuarticQuery.avg_heavy_le": "With a budget of ten queries and allowance $L=3$, each heavy column costs at least four address reads, so at most two columns can be heavy on any run. The paper uses the simpler bound $G/L$ and divides by $m$ because the planted column is independent and uniform on the dummy run."
   },
   "exp-7-L-positive": {
     "QuarticQuery.one_le_Lvalue": "The allowance $L$ is at least one whenever $k\\ge2$ and $m=4^t$ with $t\\ge8$."
@@ -718,7 +718,7 @@
     "QuarticQuery.Paper.classical_power_log_tendsto": "The theorem applies to any positive coefficient and positive real power of $m$, divided by any fixed real logarithmic power, along $m=4^t$."
   },
   "exp-8-cubic-fails": {
-    "QuarticQuery.Paper.classical_Fkm_ratio": "For $k=3$, `classical_Fkm_ratio` gives divergence for every nonnegative $\\alpha<10/3$, including $\\alpha=3$. It treats all fixed $k\\ge 2$. A positive constant `d` is chosen before `t` grows, and the same named circuit defines both complexities.",
+    "QuarticQuery.Paper.classical_Fkm_ratio": "At $k=3$, the power of $m$ in the randomized lower bound is $5/3$, while cubing the quantum upper bound gives power $3/2$. Their difference is $1/6$, so even after the logarithmic losses the ratio grows without bound. The comparison uses the same total function in both bounds and excludes every constant in a universal cubic inequality.",
     "QuarticQuery.familyExponent_three": "Substituting $k=3$ into $4-2/k$ gives $10/3$."
   },
   "exp-8-three-block-exponent": {
@@ -926,7 +926,7 @@
     "QuarticQuery.Paper.classicalLocalConsistent": "The constraint imposed on one string $U_h$ by a recorded query history."
   },
   "app-b-adaptive-rectangle": {
-    "QuarticQuery.Paper.classical_prefix_iff": "A tuple produces a specified history exactly when the history follows the deterministic tree’s query schedule and every input separately satisfies its recorded bits. `classicalSchedule` records that legal sequence, and `classicalLocalConsistent` records each input’s constraints."
+    "QuarticQuery.Paper.classical_prefix_iff": "Suppose the tree reads a bit of the first string and, only if the answer is one, reads a bit of the second. A transcript with replies one and zero constrains those two bits separately. Every pair satisfying those constraints follows exactly those queries. This is why fixing a transcript preserves independence between the conditioned strings and lets the proof multiply their continuation values."
   },
   "app-b-conditional-product": {
     "QuarticQuery.Paper.classical_transcript_product_law": "Each factor is `classicalLaw (classicalTranscriptWeight μ τ h)`. Lean allows a different prior `μ h` for each input and normalizes its surviving weight separately after a positive-mass history."

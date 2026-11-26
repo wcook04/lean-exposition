@@ -6,7 +6,7 @@
     "Ctx": "“Snoc” appends on the right. In `Ctx.Empty :/: a :/: b`, the rightmost entry $b$ is the newest binding. The same ordering lets an index recover the binding position by counting past entries from the right."
   },
   "index": {
-    "Index": "Read `Index ts t` as a position in the list `ts` whose entry has type `t`. In the context $[a,b]$, the newest position has type $b$, and one step back reaches type $a$. Even when $a=b$, those positions denote different variables."
+    "Index": "Compare $\\lambda x.\\lambda y.x$ with $\\lambda x.\\lambda y.y$ when both binders have type $a$. At the body, the two entries have the same type, but counting from the right gives `Index.Pop Index.Top` for $x$ and `Index.Top` for $y$. The indices carry both the selected position and evidence that it has type $a$."
   },
   "code-ty": {
     "Ty": "The two occurrences of `Ty` in the Haskell function alternative become the two arguments of Lean's `Ty.Fun`. The notation `:->` associates to the right, so `a :-> b :-> c` means a function taking an $a$ and returning a function from $b$ to $c$."
@@ -21,13 +21,13 @@
     "Index": "The input selects an occurrence of `t` in `ts`. After appending `t'`, the same occurrence is one position farther from the end, so `Index.Pop` changes only the context index. The types `t` and `t'` may coincide."
   },
   "code-var": {
-    "STLC": "A de Bruijn index supplies the evidence for the variable typing rule: it already identifies a place with the requested type. `STLC.Var` turns that evidence into a term with the same indices, so the constructor requires no separate context lookup."
+    "STLC": "In a context with just $x$ of type $a$, the variable rule concludes that $x$ is a term of type $a$. In Lean, `Index.Top` certifies the lookup and `STLC.Var Index.Top` is the resulting term. Both share the same context and selected type, so the constructor needs no further lookup."
   },
   "code-lam": {
-    "STLC": "The paper's `Lam` is `STLC.Lambda` in Lean. The body may refer to the new rightmost entry of type `t1`. The outer term binds that entry and has type `t1 :-> t2` in the original context."
+    "STLC": "For the identity $\\lambda x.x$, the body is `STLC.Var Index.Top` in the context with $x$ appended. `STLC.Lambda` takes that body, binds the last entry, and returns a term of type $a\\to a$ in the starting context. The constructor type carries out the change of scope in the lambda typing rule."
   },
   "code-app": {
-    "STLC": "Lean calls the constructor `STLC.Apply`. The first argument's domain and the second argument's type are the same `t1`, while both terms share `ts`. The constructor can therefore eliminate the arrow without changing which free variables are in scope."
+    "STLC": "Apply the unit identity $\\lambda x.x$ to the unit value. The two inputs have guest types `Unit :-> Unit` and `Unit`, so `STLC.Apply` produces a term of type `Unit`. The shared context `ts` makes this the ordinary application rule for terms whose free variables are in the same scope."
   },
   "code-star": {
     "STLC": "The unit term `STLC.Star` requires no index lookup. Its context is arbitrary, so the same constructor can supply a closed term in the empty context or a body that ignores a newly bound variable."
@@ -51,10 +51,10 @@
     "ReifyIndex": "Read `ReifyIndex ts ts'` with the binding context first and the use context second. The same field `ReifyIndex.reify` works for any marked type `t`. That type is preserved even if all the entries appended after binding have other types."
   },
   "code-refl": {
-    "instReifyIndexRefl": "With no new entries between binding and use, the unique marker still points to the newest variable. The Lean match on `ProxyTop.PTop` exposes the final type of that context and makes `Index.Top` type check."
+    "instReifyIndexRefl": "Use a variable immediately inside its binder, as in $\\lambda x.x$. Its binding and use contexts are equal, so its position is zero. The match on `ProxyTop.PTop` makes the type of the last entry visible to Lean, which lets the reflexive instance return `Index.Top`."
   },
   "code-snoc": {
-    "instReifyIndexSnoc": "The inner call converts the marker into an index in the shorter use context. The outer `Index.Pop` moves that index past the added entry. Lean expresses the shorter context in the instance head. Haskell obtains it from the equality constraint."
+    "instReifyIndexSnoc": "Appending a binder moves every existing position one place back. If $x$ is at `Index.Top` in $[a]$, it is at `Index.Pop Index.Top` in $[a,b]$. The recursive `reify` call supplies the position before the append, and the instance adds the `Index.Pop` for the new entry."
   },
   "instance-refl": {
     "instReifyIndexRefl": "Here reflexive means the two complete context lists are equal. The selected type may also occur earlier in the list, but this instance uses the binding site's most recent entry, which is still the most recent at use."
@@ -69,7 +69,7 @@
     "instReifyIndexSnoc": "In the Haskell example the recursive head is general enough to match equal contexts too. The more specific reflexive head wins there. When the recursive head wins, the equality constraint checks the final snoc shape. Lean puts that shape in the head of `instReifyIndexSnoc` itself."
   },
   "code-cvar": {
-    "STLCCtx": "The result of `STLCCtx.CVar` shows the use context `ts'`. The marker can come from a different context `ts`, which the constructor keeps with the instance. Thus an occurrence of $x$ beneath a later binder has the larger context even though its saved marker has the smaller one."
+    "STLCCtx": "The Lean examples `const'` and `flipConst'` both bind two unit variables. Their bodies say `CVar x` and `CVar y`, naming the older and newer binder respectively. In both cases `CVar` gives the term the two-binder use context, while the saved binding context enables instance search to distinguish the two positions."
   },
   "code-clam": {
     "STLCCtx": "Both the marker argument and the result of the host function refer to the extended context `ts :/: a`. The function can name the new variable through its argument, and its result is a guest body of type `b`. The outer constructor binds that variable."
@@ -87,7 +87,7 @@
     "unembed": "The instance is part of the matched `STLCCtx.CVar`. Applying its reification to the marker gives an index at the occurrence's context, which is what `STLC.Var` expects. The binding context can disappear from the result."
   },
   "fig2-clam": {
-    "unembed": "Apply the stored host function to `ProxyTop.PTop` to obtain its body in the extended context. Unembedding that body gives the input needed by `STLC.Lambda`, whose result binds the new entry and lives in the original context."
+    "unembed": "To read back the abstraction `CLam (fun x => CVar x)`, give its host body the marker `ProxyTop.PTop`. The body then reads back to `STLC.Var Index.Top`, and `STLC.Lambda` binds it. The argument to the host function names a position, so this step recovers the guest body without evaluating it on a guest value."
   },
   "fig2-capp": {
     "unembed": "The recursive calls preserve each operand's context and guest type. The translated function is still an arrow from the translated argument's type, so `STLC.Apply` type checks with the two recursive results."
@@ -114,16 +114,16 @@
     "contextualise": "This translation builds the contextual representation of each term while retaining its original context and guest type. On variables it reconstructs the data for the binding site from the index. The reverse variable round trip asks whether that reconstruction recovers an arbitrary original instance."
   },
   "lam-ignores": {
-    "contextualise": "An input `STLC.Lambda` already has a body with all its variable positions encoded as indices. The function inside the resulting `STLCCtx.CLam` ignores its marker argument because the recursive translation can recover every marker from those positions."
+    "contextualise": "Start with `STLC.Lambda (STLC.Var Index.Top)`. The body already says to select the newest entry. When `contextualise` reaches that leaf, `fromIndex` rebuilds its marker and reflexive instance. This is why the host function built for the enclosing lambda can ignore its own marker argument."
   },
   "existential": {
     "ProxyVar": "An occurrence's exposed context and type leave its binding site unspecified. The package contains some binding context `ts`, a marker there, and an instance relating it to the fixed use context `ts'`. Pattern matching opens the package and gives access to all three together."
   },
   "code-proxyvar": {
-    "ProxyVar": "The paper names this package `Var` and its constructor `MkVar`. In Lean they are `ProxyVar` and `ProxyVar.PVar`. The hidden `ts` links the marker to the input of reification, and the result type exposes only `ts'` and `t`."
+    "ProxyVar": "In use context $[a,a]$, an occurrence of type $a$ may come from binding context $[a]$ or $[a,a]$. The result type `ProxyVar ts' t` allows either. Inside `ProxyVar.PVar`, the marker and the reification instance share the chosen binding context, so opening the package gives the right pair to recover the position."
   },
   "workhorse": {
-    "fromIndex": "Read an index from its outermost `Index.Pop` down to `Index.Top`. The base gives the binding marker. Each return from the recursion adds the skipped entry back to the use context and extends the stored reification by one step."
+    "fromIndex": "Start with `Index.Pop Index.Top` in $[a,b]$. Read the inner `Index.Top` in $[a]$ to recover the older binder's marker. Then add $b$ back to the use context and store one extension in the instance. Working inward and then outward this way converts a position into binding data while keeping the occurrence's type $a$."
   },
   "code-fromindex-top": {
     "fromIndex": "In the `Index.Top` branch the binding and use contexts already coincide. `varTop` records that fact in the package by using reflexive reification, so there is no context extension to reconstruct."
@@ -185,10 +185,10 @@
     "closedWorld": "An instance is a record with a reification function. In a context $[a,a]$, a custom function could send the newest marker to the earlier $a$. `closedWorld` assumes that every supplied instance is the reflexive instance or is built by one application of `instReifyIndexSnoc` to a smaller instance."
   },
   "closed-world-why": {
-    "closedWorld": "Instance search supplies one record of the requested type. A term can already contain an instance of that type, and its type alone leaves the record's identity open. The authors propose hiding `ReifyIndex` so clients cannot supply their own records. The Lean file assumes the classification as an axiom."
+    "closedWorld": "Suppose a custom instance at $[a,a]$ sends the newest marker to `Index.Pop Index.Top`. Rebuilding from that position saves the marker in $[a]$, which differs from the input marker's context $[a,a]$. The authors propose hiding `ReifyIndex` so clients cannot supply such records. Their Lean proof uses the `closedWorld` axiom to exclude them."
   },
   "case-analysis": {
-    "indexIsoR": "After rewriting the instance to the reflexive form, the position is `Index.Top` and the reconstructed package reduces to the original. In the extension case, reification produces a pop, and `fromIndex` applies `weakenPVar` after the recursive round trip on the smaller instance."
+    "indexIsoR": "For a marker bound in $[a]$ and used in $[a,b]$, the extension instance reifies it to `Index.Pop Index.Top`. Rebuilding drops the outer `Index.Pop` to recover the package in $[a]$, then reapplies `weakenPVar`. The general proof uses the axiom to put the instance into reflexive or extension form, so it can recover the step as well as the marker."
   },
   "isoL-var": {
     "isoL": "The variable branch translates by `toCVar`, then applies the stored reification during `unembed`. This is exactly the operation in `indexIsoL`. Once it returns the same index, both sides are `STLC.Var` applied to it."

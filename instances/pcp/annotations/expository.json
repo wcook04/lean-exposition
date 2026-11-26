@@ -1,6 +1,6 @@
 {
   "pcp-expository-opening": {
-    "PCP.np_subset_pcp": "The witness checker in the opening is the input to `np_subset_pcp`. The constructed verifier works for the whole language, and the proof whose bits it reads may be a new encoding of the witness."
+    "PCP.np_subset_pcp": "For graph three-colourability, a certificate can list a colour for each vertex. A deterministic checker can confirm that the two colours differ on each edge. The theorem starts from this kind of polynomial-time, bounded-length certificate check and constructs a new encoded proof whose verifier reads a constant number of bits. The reduction to three-colourability lets the construction start from any language with such a checker."
   },
   "pcp-expository-theorem": {
     "PCP.np_subset_pcp": "`V.queries = q` fixes a constant upper bound on the depth of the adaptive query tree. `ReadsBelow` supplies a different bound, on how far into the proof any branch can read even when each branch reads only a few bits."
@@ -13,29 +13,29 @@
     "PCP.Algebraic.ThreeColorGrid.colorable_iff_exists_constraints": "The existence claim adds a degree ceiling to the fixed-polynomial argument. Starting from a colouring, interpolation bounds the degree in each coordinate by $|H|-1$. Starting from a witness polynomial, restriction to the grid gives the colouring."
   },
   "pcp-expository-grid-certificate": {
-    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition": "Each summand contains a coordinate factor that vanishes on the grid, giving the reverse implication immediately. The forward implication removes terms by monic division and uses uniqueness of the low-degree remainder. Those steps work over an integral domain."
+    "PCP.Algebraic.GridVanishing.vanishesOn_iff_exists_decomposition": "Try $H=\\{0,1\\}$ and $P(X,Y)=X^2Y+XY^2$. Reducing $X^2$ to $X$ and $Y^2$ to $Y$ leaves $XY+XY=0$ in characteristic two. The quotients give $P=(X^2+X)Y+(Y^2+Y)X$. The theorem performs the same division for an arbitrary grid, giving the quotients the prover packages into one certificate."
   },
   "pcp-expository-quotient-degree": {
     "PCP.Algebraic.GridVanishing.exists_decomposition": "In the division step, cancelling a term of degree at most $\\deg P$ with a monic degree-$h$ factor contributes a quotient term of degree at most $\\deg P-h$. The formal bound excludes zero quotients because their `totalDegree` is defined as zero."
   },
   "pcp-expository-digit-encoding": {
-    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection": "The small disagreement is measured with a uniform parameter on an indexed line. Even if different indices of the same geometric line supply inconsistent polynomials, the theorem recovers one nearby polynomial on the point domain under the stated field-size bound."
+    "PCP.Algebraic.PointLineTest.exists_close_of_small_rejection": "On two crossing lines, a received table can supply two different values at their intersection. The point table supplies one value there, and testing a random point against its supplied line checks this kind of discrepancy over the whole space. The theorem uses low rejection to recover one nearby polynomial, even when two indices give different entries for the same line. The binary test will use this after decoding its line entries."
   },
   "pcp-expository-digit-degree": {
     "PCP.Algebraic.SetMultilinear.encode_isSetMultilinear": "`IsSetMultilinear` is a condition on monomials in the support. Each supported monomial chooses exactly one variable from each digit group. A zero coefficient leaves no monomial to check.",
     "PCP.Algebraic.SetMultilinear.totalDegree_encode_le": "There are $c$ groups, so each monomial contributed by the encoder has degree $c$, and the resulting polynomial has total degree at most $c$. The input-degree restriction is needed for exact recovery under substitution."
   },
   "pcp-expository-digit-substitution": {
-    "PCP.Algebraic.SetMultilinear.evaluationPoint": "The coordinate exponent is the contribution of digit $j$ in position $i$ to the represented exponent. For $j=0$ this contribution vanishes, so the coordinate is one even at $z=0$."
+    "PCP.Algebraic.SetMultilinear.evaluationPoint": "With two binary digit positions, the four substitution coordinates are $1,z$ in the first group and $1,z^2$ in the second. The product for the two digits of three is $z\\cdot z^2=z^3$. Each digit group still offers a constant-one choice, even at $z=0$, so evaluating the encoding also recovers the constant term."
   },
   "pcp-expository-digit-evaluation": {
     "PCP.Algebraic.SetMultilinear.eval_encode": "Substituting the digit powers adds their exponents, which recovers every exponent of $p$ strictly below $b^c$. This explains both the cutoff and the identity at zero. Lean needs only a commutative semiring for the calculation."
   },
   "pcp-expository-weighted-test": {
-    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close": "The node condition uses successive powers of a generator, with Lagrange weights for evaluation at zero. The strict rejection threshold is used in proving that plurality correction gives an exact solution of the interpolation test. The conclusion concerns existence over any finite field."
+    "PCP.Algebraic.GeneratorLowDegreeTest.exists_close": "For a degree-one restriction, two samples at parameters $a$ and $b$ predict the intercept as $(bf(a)-af(b))/(b-a)$, writing $f$ here for the restriction. The test generalizes these prediction weights to $c+1$ generator nodes. Passing every honest check follows from interpolation. The theorem is the converse with errors, giving one nearby polynomial on the full space when sufficiently few checks reject."
   },
   "pcp-expository-homogeneous-encoding": {
-    "PCP.Algebraic.Hadamard.linearEncode": "`linearEncode` adds the label’s coordinates with weights given by the message. Since this is a linear map of the label, the difference of its values at $R+L$ and $R$ gives its value at $L$, the identity used for a masked read."
+    "PCP.Algebraic.Hadamard.linearEncode": "Let the message be $s=(1,1)$. The labels $(1,0)$ and $(0,1)$ both give one, and their sum $(1,1)$ gives zero. As a result, adding a mask to a requested label changes its bit by precisely the bit of the mask. This is the cancellation the self-corrected read uses."
   },
   "linked-source-18": {
     "PCP.Algebraic.Hadamard.relativeDistance_linearEncode": "For distinct messages their difference has a nonzero coordinate. Translating the label by that coordinate vector swaps the agreement and disagreement sets, giving exactly half the labels in each."
@@ -44,7 +44,7 @@
     "PCP.Algebraic.BLR.exists_linearMap_distance_le_of_rejection_le": "BLR estimates distance to a linear map on the label space. A linear map can still send the constant label to the wrong bit or fail to respect label products, which is why the Hadamard test adds checks for those properties."
   },
   "pcp-expository-hadamard-test": {
-    "PCP.Algebraic.Hadamard.test_soundness": "The same message supplies the two distance bounds. Affine consistency is a separate test because for cubic labels the affine subspace can be a tiny fraction of the full label space."
+    "PCP.Algebraic.Hadamard.test_soundness": "In four binary coordinates with label degree three, the affine labels make up only $32$ of the $32768$ full labels. Even a small fraction of errors over all labels can spoil every affine entry. The direct comparison at a random affine label gives a separate guarantee on that portion of the table for the same recovered message. The later binary low-degree test needs that guarantee for its weighted sums."
   },
   "pcp-expository-cubic-labels": {
     "PCP.Algebraic.Hadamard.testQueries_length": "The query list has length $2r+4$ for every seed. Length counts repeated positions too, so the result gives a bound on reads even when a particular seed requests the same address more than once."
@@ -56,19 +56,19 @@
     "PCP.Algebraic.EncodedLineLowDegreeTest.exists_close": "With $J\\kappa$ below the point-versus-line threshold, a single decoded polynomial gives both conclusions. Full-label distance controls masked reads of composed labels, and distance on homogeneous linear labels controls the linear comparisons."
   },
   "pcp-expository-worked-correction-source": {
-    "PCP.Algebraic.BinaryLocalCorrection.run": "The inner test and the comparison at the sampled nonzero parameter must both pass before `run` returns the bit at $\\Phi(0)$. The same slope and label can be used at the two inner targets because the error estimate bounds the chance of either prediction failing."
+    "PCP.Algebraic.BinaryLocalCorrection.run": "For a linear restriction, its value at a nonzero parameter is a spot check on the proposed line, and its value at zero is the desired intercept. Checking just one point leaves possible errors, so the soundness proof bounds their frequency over random slopes and nonzero parameters. The procedure also tests the received inner row, and returns the zero-parameter bit only after both checks pass."
   },
   "pcp-expository-honest-correction": {
     "PCP.Algebraic.BinaryLocalCorrection.run_eval": "Exact encoding recovery applies because the honest restriction has degree strictly below $b^c$. Both inner corrections then agree with polynomial evaluation for every seed, so the sample-point comparison passes and the returned bit is the homogeneous observation at $a$."
   },
   "pcp-expository-local-correction": {
-    "PCP.Algebraic.BinaryLocalCorrection.failure_le": "`failure_le` compares the output to `some` of the right bit at the fixed target. Its rejection term is local to that target. The global distance estimate applies to the comparison at a nonzero line parameter, where a uniform slope makes the point uniform."
+    "PCP.Algebraic.BinaryLocalCorrection.failure_le": "Even if all the points-table entries at $a$ are corrupted, each $z\\ne0$ gives a bijection $v\\mapsto a+zv$. The check at $a+zv$ can therefore use the average error of the points table. The retest of the proposed line contributes the separate rejection rate $\\kappa_a$ for this target. Both rejection and a wrong returned bit count as failures."
   },
   "linked-source-16": {
     "PCP.Algebraic.BinaryZeroOnGridCorrection.rejectionRate_ge": "`rejectionRate_ge` concerns the received tables. The ideal-polynomial rejection is used as a lower bound before subtracting the chances that the primary table or either of the two certificate corrections supplies a bad bit."
   },
   "pcp-expository-check-matrix": {
-    "PCP.Algebraic.ThreeColorVerifier.branchTest": "`branchTest` takes one of seven indices and a seed of the corresponding type. In particular, the certificate grid tests can have a different seed shape from the low-degree checks.",
+    "PCP.Algebraic.ThreeColorVerifier.branchTest": "The edge test must ask whether the claimed difference gives a proper edge, so it reads the difference and edge-certificate tables. A separate branch tests whether this difference really is the difference of two colour values. Splitting the checks this way lets the verifier use a cubic label on a single stored field element for the edge equation and simple homogeneous labels for the subtraction check.",
     "PCP.Algebraic.ThreeColorVerifier.test": "`test` evaluates the conjunction of the seven branch verdicts. The event that a given branch rejects is contained in the event that this conjunction rejects."
   },
   "pcp-expository-vertex-branch-source": {
@@ -95,7 +95,7 @@
     "PCP.Algebraic.ThreeColorAmplifiedVerifier.verification_guarantees": "The formal clause gives the query and seed budgets in terms of $R$, with soundness $1/2$ after repetition. The numerical single-run gap is established in the fair-bit sampling analysis."
   },
   "pcp-expository-clause-flags": {
-    "PCP.Reduction.FiniteBooleanConstraints.clauses": "The flags track whether the current input has differed from a fixed pattern so far. If it matches the pattern, the last flag is zero and the final clause requires the relation at that pattern. Short clauses are padded with false literals."
+    "PCP.Reduction.FiniteBooleanConstraints.clauses": "If the pattern is $(1,0)$ and the input is $(1,1)$, the flag stays zero after the first bit and becomes one after the second. The final clause for this pattern then passes regardless of $R(1,0)$. Exactly the clause for the matching pattern ends with flag zero and demands that the relation hold there. This is how the reduction replaces a finite relation by bounded-width clauses."
   },
   "pcp-expository-or-gate": {
     "PCP.Reduction.FiniteBooleanConstraints.orGate_iff": "The first two clauses require $z$ when either input is true. The third requires at least one true input whenever $z$ is true. Together they enforce the OR update for each flag."

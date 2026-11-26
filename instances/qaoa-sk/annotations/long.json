@@ -136,7 +136,7 @@
     "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap": "This supplies the clause about support gaps for $0\\le a<b<1$, producing one $c\\ge0$ with $\\gamma=c$ on $(a,b)$. The hypotheses require admissibility and the cumulative Stieltjes relation, without minimization or any exclusion of atoms at the endpoints."
   },
   "support.stieltjes_measure#2": {
-    "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal": "For compact `K` in `Time`, the proof obtains a finite measure $\\mu|_K$ from Stieltjes finiteness on compact sets, then applies `contactPotential_remove` using $\\mu|_K\\le\\mu$. Finiteness of the whole measure on $[0,1)$ is unnecessary."
+    "OAI.ZeroTemperatureSK.contactPotential_compact_mass_removal": "For a diffuse measure such as $\\mu(ds)=(1-s)^{-1}ds$, the total mass is infinite but the restriction to $[0,T]$ is finite for each $T<1$ and the cumulative function $-\\log(1-t)$ has finite area. Removing that restriction takes existing mass even though each point has zero mass. At a minimizer the Lean lemma uses $\\mu|_K\\le\\mu$ and proves the integral of the contact potential over any compact $K$ is at most zero."
   },
   "support.first_variation#4": {
     "OAI.ZeroTemperatureSK.minimizer_variational_inequality": "Applying `hmin` to each admissible `perturbation γ β n` makes the Parisi difference quotient nonnegative. Passing to its limit gives the stated inequality against $\\beta-\\gamma$ for every admissible competitor `β`."
@@ -405,7 +405,7 @@
     "OAI.ZeroTemperatureSK.expected_transition_tiltedMean": "`hmatch` identifies the drift with $c$ times the spatial derivative of the backward heat solution in logarithmic coordinates. With that hypothesis, Lean states the transition through `varianceTilted` tested against bounded smooth functions."
   },
   "support.step_tails#5": {
-    "OAI.ZeroTemperatureSK.Heat.forwardScore": "The Lean definition builds $s$ by taking the Gaussian term $x/\\text{forwardTime}$ and subtracting the spatial derivative of `forwardCorrection`. The paper describes the resulting score as a log derivative of $g$."
+    "OAI.ZeroTemperatureSK.Heat.forwardScore": "For a centered Gaussian of variance $\\sigma^2$, the negative log derivative is $x/\\sigma^2$. If the density is tilted by a factor $\\exp C(x)$, the score acquires the extra term $-C\\prime(x)$. `forwardScore` builds it in exactly those two pieces, with `forwardTime` as the Gaussian variance and `forwardCorrection` as the log tilt."
   },
   "support.step_tails#6": {
     "OAI.ZeroTemperatureSK.Heat.finiteDensity_first_formula": "The index `1` is the first mesh time $h$. Factoring out $e^{c\\Phi(h,x)}$, with $c$ given by `c 0` and $\\Phi$ by `backwardBoundary`, leaves $p_h(x)e^{-c\\Phi(0,0)}$, but the declaration supplies no all-times formula for $g$ or its score."
@@ -718,7 +718,7 @@
     "OAI.ZeroTemperatureSK.minimizer_full_support_actual": "The final clause `curvatureMoment W γ t = 1` is $\\mathbb E[a(t,X_t)^2]=1$ for the constructed `diffusion W γ`, at every $0\\le t<1$. The proof applies `derivative_eq_one_of_full_contact` to the derivative identities for `squareMoment`, including its right derivative at zero."
   },
   "support.strict_increase#2": {
-    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc": "The interval $(a,b]$ is `Ioc a b`, and the equality is additive in `ENNReal`. For nonnegative $\\gamma$, it gives the displayed real increment identity, while positivity of the interval mass requires a further argument.",
+    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc": "Subtracting cumulative masses at $a$ and $b$ keeps an atom at $b$ and cancels any atom at $a$. Thus the real increment is exactly the mass of $(a,b]$ for a nonnegative order parameter. Lean records the additive identity in `ENNReal`, supplying the equality before full support gives positivity.",
     "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support": "For `a < b` in `Time`, the proof uses a supported midpoint to obtain `0 < μ (Ioc a b)`, then `cdf_add_Ioc` to conclude `γ a < γ b`. These endpoints allow $a=0$ and require $b<1$."
   },
   "full_support#7": {
@@ -794,7 +794,7 @@
     "OAI.ZeroTemperatureSK.gaussianValueSum": "The range `Finset.range (N+1)` contains $j=0,\\ldots,N$, and the second factor is evaluated at `j+1`, giving the adjacent pairing exactly. This definition uses the support-model coefficients and contains no convergence assertion."
   },
   "scalar.shifted_gaussian_limit#10": {
-    "OAI.ZeroTemperatureSK.eulerState": "The successor clause uses `meshTime T N j` and `eulerState W γ T N j z` in the drift, so it is evaluated at the left endpoint. The zero-based `gaussianCoordinate N j z` is the paper's $Z_{j+1}$, giving the update from $Y_j$ to $Y_{j+1}$."
+    "OAI.ZeroTemperatureSK.eulerState": "The first update starts at $Y_0=0$ and sees $Z_1$. The next drift is evaluated at the resulting $Y_1$ before $Z_2$ is used. This order makes the multiplier of each fresh normal a function of the past. `eulerState` uses the zero-based coordinate $j$ for the move from $Y_j$ to $Y_{j+1}$."
   },
   "scalar.gaussian_normalizers_definition": {
     "OAI.ZeroTemperatureSK.eulerNormalizer": "The definition `eulerCurvatureMoment W γ T N j` integrates squared curvature at `meshTime T N (j-1)` and `eulerState W γ T N (j-1)`. Its inverse square root is $c_j$ for $1\\le j\\le N$, with positivity of the moment requiring a separate argument.",
@@ -810,7 +810,7 @@
     "OAI.SKValue.coupled_euler_L2_convergence": "The definition `meshMaxError` is the maximum of $|Y_j-X_{t_j}|$ over $0\\le j\\le N$, so integrating its square gives the selected error. The premises `hpaths` require the diffusion integral equation and continuous paths, while `hLip` and `GradientStrip` supply bounds for this general pre-Brownian coupling."
   },
   "scalar.euler_normalization#4": {
-    "OAI.SKValue.normalized_family_orthonormal": "The right side `if i=j then 1 else 0` gives unit squared norms and pairwise orthogonality for the normalized increments. Each multiplier `H j` must be measurable and depend only on coordinates before `j`, and `hpos` supplies its positive second moment, without asserting independence of the normalized family."
+    "OAI.SKValue.normalized_family_orthonormal": "For $i<j$, condition on the first $j-1$ normals. The earlier $g_i$ and the multiplier of $Z_j$ are then fixed, while $Z_j$ has mean zero. For the diagonal term, the fresh normal has second moment one, and normalization divides out the multiplier’s second moment. Lean separates these two arguments and requires measurable past-dependent multipliers with positive second moments."
   },
   "scalar.conditional_rounding#3": {
     "OAI.ZeroTemperatureSK.randomizedSign": "The state `eulerState W γ T N N z` uses only coordinates $0,\\ldots,N-1$, while `gaussianCoordinate N N z` is the extra $Z_{N+1}$ used for rounding. The definition gives the displayed randomized sign, without itself asserting its conditional mean."
@@ -826,7 +826,7 @@
     "OAI.SKValue.finite_rounding_coefficient": "`DependsBefore N` says that the first $N$ coordinates determine both `U` and `K`. Equality of integrals against every such integrable `K` gives the test-function characterization of the conditional mean."
   },
   "scalar.conditional_rounding#5": {
-    "OAI.SKValue.finite_rounding_coefficient": "For a measurable integrable test function `K` depending on the first $N$ coordinates, the conclusion replaces the rounded sign by `U` inside its correlation with `K`. Under `gaussianProduct`, the final coordinate is independent of the pair `(U,K)` by `hUp` and `hKp`."
+    "OAI.SKValue.finite_rounding_coefficient": "Once the first $N$ normals are fixed, multiplying by a function of them just multiplies the conditional mean of the rounded sign by a fixed number. Both $g_j$ and $Z_j$ for $1\\le j\\le N$ are such tests, so the coefficient calculation can replace $F_N$ by $u(T,Y_N)$. Lean proves the integral identity for measurable integrable tests with that dependency and a measurable past-dependent $U$ bounded by one."
   },
   "scalar.correlation_vector_control#3": {
     "OAI.SKValue.gradientMeshError_tendsto_zero": "The quantity `gradientMeshError` is the expectation of the square of $u(T,Y_N)-M_N$, so its convergence to zero is exactly the $o_{L^2}(1)$ assertion. The premise `GradientStrip` includes the integral PDE and `initial`, namely $u(0,0)=0$, for any $0<T\\le1$.",
@@ -948,7 +948,7 @@
     "OAI.SKValueG.predictable_coefficients_le_groundState": "The argument space `Fin (K+1) → ℝ` supplies coordinates $z_0,\\ldots,z_K$. The condition `ha` says that agreement through coordinate $j$ forces agreement of $f_j$, so the active function may use $z_j$ but cannot use the next coordinate $z_{j+1}$."
   },
   "scalar.predictable_orthonormal_hypotheses": {
-    "OAI.SKValueG.predictable_coefficients_le_groundState": "The hypotheses `hm` and `hL` give measurability and $L^2$ membership, while `hu` and `ho` split $\\mathbb E[f_if_j]=\\delta_{ij}$ into unit diagonal moments and zero off-diagonal moments for indices below $K$. No hypothesis sets $\\mathbb E f_j=0$."
+    "OAI.SKValueG.predictable_coefficients_le_groundState": "For two earlier-coordinate functions $1$ and $Z_1$, the product has mean zero and each squared norm is $1$, and the constant function has mean one. These conditions give an identity Gram matrix for the functions, which the later construction uses one column at a time. Lean also requires each $f_j$ to depend only on the initial coordinates through index $j$, and a measurable Boolean spin rule."
   },
   "scalar.source_predictable_lower#5": {
     "OAI.SKValueG.predictable_coefficients_le_groundState": "With `spin (F y)` representing $S(y)$, each `Fin K` summand is $\\mathbb E[f_jS]\\mathbb E[Sz_{j+1}]$, and the conclusion bounds their sum by $P_*$. The second factor in the last summand uses coordinate $K$."

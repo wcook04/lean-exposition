@@ -61,7 +61,7 @@
     "QuarticQuery.Paper.construction_lemma_2_1_iii": "Lean allows $k\\ge 1$ rather than the lemma’s $k\\ge 2$. The exact domain/value and size conclusions agree. `CircuitRealises C (P k t)` requires the domain output to be correct on every raw input and the value output to be correct on the promise."
   },
   "qr-circuit-contract": {
-    "QuarticQuery.CircuitRealises": "The circuit has a gate-consistent transcript on every input. The two fields are assumptions when a theorem takes `hC : CircuitRealises C f`."
+    "QuarticQuery.CircuitRealises": "A circuit with output $(0,1)$ says the input is outside the promise, and its second bit has no specified meaning there. Output $(1,1)$ asserts both promise membership and a yes value. The cell tests therefore check the domain output as well as the address digit. This is essential for making the constructed function total on arbitrary boards."
   },
   "qr-gate-consistency-definition": {
     "QuarticQuery.GateConsistent": "A proposed transcript is gate-consistent when each stored gate bit equals its gate's Boolean truth table applied to the two predecessor values."
@@ -122,7 +122,7 @@
     "QuarticQuery.localTests_iff_eq_of_winsAt": "If column $i$ wins at $s$, then all local tests at another address $s'$ pass exactly when $s'=s$. Both the winning hypothesis `hw` and circuit correctness `hC` are required."
   },
   "qr-nonwinner-failed-test": {
-    "QuarticQuery.exists_failing_localTest": "A column that wins at no address has at least one failing local test at every proposed address. `hn : ¬ ∃ s, WinsAt …` rules out winning anywhere, while `hC` supplies circuit correctness."
+    "QuarticQuery.exists_failing_localTest": "If the transcript is correct but belongs to an off-promise address input, its domain output is zero and that test fails. A forged transcript can instead fail at its first wrong gate. Together with the column and pointer checks, this is why every address of a losing column supplies a failed label to the quantum search."
   },
   "qr-winner-incoming": {
     "QuarticQuery.winner_no_incoming_zero": "The only substantive hypothesis is the winning condition `h`. `hne` makes the source and target distinct."
@@ -159,7 +159,7 @@
     "QuarticQuery.Paper.quantumWeight_product": "The weight of candidate $i$ after the pivot history $L$ is the product of $a_{ip}$ over the pivots in $L$. `L.map` lists the factors and `.prod` multiplies them."
   },
   "qr-weight-drift": {
-    "QuarticQuery.Paper.quantumDrift": "The identity allows arbitrary real weights with positive total $W$. The probability interpretation also needs nonnegative weights. `ha : IsComparison a` supplies complementarity and a zero diagonal."
+    "QuarticQuery.Paper.quantumDrift": "Two independent draws from a distribution can land on the same index. With probabilities $w_i/W$, the chance they differ is $1-\\sum_i w_i^2/W^2$. Conditional on any distinct unordered pair, the two orders have equal probability and complementary comparison results. Multiplying half the distinct-pair probability by $W$ gives (5.4). This derivation uses a probability distribution on nonnegative weights, while the formal identity is algebraic."
   },
   "qr-half-drift": {
     "QuarticQuery.Tournament.expected_weight_le_half": "For positive total weight $W$, the weighted average of the next total weight is at most $W/2$. The hypotheses are complementarity, a zero diagonal, and `hW` identifying $W$ with the sum of current weights."
@@ -171,7 +171,7 @@
     "QuarticQuery.Paper.quantumWeight_lower": "The type gives $(1-\\varepsilon)^h\\le w_s$, $1-T\\varepsilon\\le(1-\\varepsilon)^h$ and $w_s>1/2$. It does not state the intermediate $1-h\\varepsilon$ or the substitution $1-T\\varepsilon=999/1000$ shown here. The assumptions include entries in $[0,1]$, $0\\le\\varepsilon\\le1$, and `hT : T * ε < 1/2`."
   },
   "qr-ideal-miss": {
-    "QuarticQuery.Tournament.ideal_miss_le": "The theorem states $\\Pr[s\\notin L_T]\\le\\Pr[W_T\\ge 1/2]\\le 2m/2^T$. The intermediate $\\Pr[W_T\\ge 1/2]\\le 2\\,\\mathbb{E}\\, W_T$ is used in its proof, not exposed in its type."
+    "QuarticQuery.Tournament.ideal_miss_le": "If the winner were missing on one tenth of all runs and retained at least $1/2$ weight on each, those runs alone would contribute at least $1/20$ to the expected total weight. The Markov step in (5.5) uses the halving estimate to make such missed-winner runs rare, regardless of how much weight any losing candidate keeps."
   },
   "qr-fresh-comparison-state": {
     "QuarticQuery.Paper.equation_15": "`hF` bounds every comparison by $c$ logical reads, and the preparation uses $hc$ reads for $h$ pivots."
@@ -270,7 +270,7 @@
     "QuarticQuery.Paper.discoveredZeros": "The integer $Z$ counts columns whose unique zero appears anywhere on the complete dummy query path."
   },
   "rec-cl-discovery-indicator-sum": {
-    "QuarticQuery.Paper.discoveredZeros_cast": "The count of discovered columns equals the sum of their zero-hit indicators."
+    "QuarticQuery.Paper.discoveredZeros_cast": "Reading the same zero three times still contributes one to $Z$, since the independent planted choice can select the corresponding column only once. After fixing the dummy run, each discovered column gives one choice of the planted index that hits the erased zero. Hence the next step divides the number of distinct discoveries by $m$."
   },
   "rec-cl-independent-selection-identity": {
     "QuarticQuery.Paper.erasedZero_eq_expectedZeros_div": "The equality holds algebraically for arbitrary real auxiliary weights $\\mu$. The paper assumes a probability law. Independent uniform selection of $I$ is built into `coupledAvg` in both formulations. In Lean, `2 ^ ℓ` is the number $m$ of rows and columns."
@@ -318,7 +318,7 @@
     "QuarticQuery.Paper.addressSimulator_depth_le": "Lean proves a total cap of $L$ over all target strings, which implies the paper’s separate cap of $L$ for each string."
   },
   "rec-cl-simulator-replay": {
-    "QuarticQuery.eval_simTree": "The theorem concludes equality of the output with the proposed address under matching-answer and prefix-count premises. It does not itself assert equality of the complete replay history. The assumptions `hbase` and `hV` say that outside and target answers agree with the original input."
+    "QuarticQuery.eval_simTree": "Suppose the replay sees an outside read, then a target bit, and the next query names a cell. It can use its fixed outside data for the first reply and spend one target read on the second. The cell index is determined before that third reply. The lemma certifies this output as long as the supplied answers match the recorded prefix and its target-read count stays within the cap."
   },
   "rec-cl-true-cell-union": {
     "QuarticQuery.Paper.eq_22": "The probability of ever visiting the selected true-address cell is at most $G/(mL)+G(2/3)^r$."
@@ -355,7 +355,7 @@
     "QuarticQuery.guessSuccess_le_prod": "At query `p = (h,q)`, the two child calls use `Function.update` at $h$ for both the budget and the weight. `restrictWeight` zeros out inputs inconsistent with the chosen reply."
   },
   "rec-cl-weighted-parent-step": {
-    "QuarticQuery.guessSuccess_le_prod": "The proof extracts the queried factor from each product with `mul_prod_erase`. The common product over the remaining inputs is nonnegative, so `budgetValue_add_le` bounds the sum of the two queried factors."
+    "QuarticQuery.guessSuccess_le_prod": "For a fair input bit labelled by its own value, spending one query changes the correct mass from $1/2$ to $1$. The two child weights each have mass $1/2$, and their optimal correct masses add to one. A second untouched input contributes the same continuation factor on both branches. The recurrence applies exactly this accounting to arbitrary local weight restrictions without dividing by a branch's mass."
   },
   "rec-cl-weighted-root-hardness": {
     "QuarticQuery.budgetValue_le_of_forall": "If every one-input tree of depth at most $c$ has success weight at most $\\beta$, then $W_c(\\nu)\\le\\beta$. The hypothesis `h` is the universal bound on those trees."
@@ -419,7 +419,7 @@
     "QuarticQuery.Forrelation.signDiag": "`signDiag z h` converts the Boolean entries of block `h : Fin k` to real signs on the diagonal. Multiplying by the matrix applies the signs without mixing coordinates."
   },
   "fr-walsh-orthogonal": {
-    "QuarticQuery.Forrelation.H_mem_orthogonalGroup": "The normalized Walsh matrix belongs to the real orthogonal group in dimension $m=4^t$. The type states membership in `Matrix.orthogonalGroup`. This is the usual matrix identity $H^{\\mathsf T}H=I$."
+    "QuarticQuery.Forrelation.H_mem_orthogonalGroup": "Two distinct Walsh columns have signs indexed by characters that differ by a nonzero binary vector. Pair each row with the row obtained by flipping one bit where that vector is one. The inner-product terms cancel in pairs. A column has $m$ signs of magnitude one, so division by $\\sqrt m$ turns the orthogonal columns into unit vectors, as needed for the projection experiment."
   },
   "fr-normalization-identities": {
     "QuarticQuery.Forrelation.W_mul_transpose": "This declaration supplies only $WW^\\top=mI$. The complete selected display also asserts the other matrix and vector normalization identities, which are separate declarations.",
@@ -461,7 +461,7 @@
     "QuarticQuery.ForrelationLower.D": "The discrete derivative in coordinate $a$ is half the difference between setting its sign to $+1$ and setting it to $-1$."
   },
   "fr-extension-derivative-identities": {
-    "QuarticQuery.ForrelationLower.hasDerivAt_ext": "The theorem gives the chain rule for differentiable bias paths, yielding the first partial-derivative identity by a one-coordinate path. It does not state the repeated-derivative zero identity or commutation of distinct partials in the same selected display. The assumption `hc` gives the derivative of each coordinate path at the chosen point.",
+    "QuarticQuery.ForrelationLower.hasDerivAt_ext": "For the function $g(z)=z_1z_2$, independent signs with means $\\mu_1,\\mu_2$ give $F_g(\\mu)=\\mu_1\\mu_2$. Differentiating in the first bias leaves $\\mu_2$, the expectation of the discrete derivative $z_2$. The proof uses this relation along a path of biases to turn changes in the tree's expected output into derivatives of its cube extension.",
     "QuarticQuery.ForrelationLower.D_D": "The theorem states that the repeated same-coordinate discrete derivative is zero. Combined with the extension derivative identity this supplies the second clause, but it does not state the first clause or the commutation clause."
   },
   "fr-centered-character": {
@@ -471,7 +471,7 @@
     "QuarticQuery.ForrelationLower.piB_mul_xi": "For $|\\mu_i|<1$, multiplying the sign probability $(1+\\mu_i z_i)/2$ by its centered character gives $z_i/2$. The binder `h` excludes zero denominator at the two endpoint biases."
   },
   "fr-derivative-moment": {
-    "QuarticQuery.ForrelationLower.ext_Dl": "Under distinct derivative coordinates and $|\\mu_i|<1$, the theorem gives the mixed-derivative expectation identity. It does not state the separate centering or magnitude-two assertions in the selected display. The hypotheses `hL : L.Nodup` and `hμ` require no repeated coordinate and $|\\mu_i|<1$.",
+    "QuarticQuery.ForrelationLower.ext_Dl": "A sign with bias $\\mu=1/2$ takes values $+1,-1$ with probabilities $3/4,1/4$. The factors $\\xi$ are then $2/3,-2$, so multiplying by the probability yields $1/2,-1/2$. Those are the two coefficients of a discrete derivative. Distinct derivative coordinates have separate weights, which is why multiplying these factors gives the mixed derivative in (8.6).",
     "QuarticQuery.ForrelationLower.xi_mean": "The paper introduces centering under $|\\mu_i|<1$. The named centering lemma assumes `hμ : ∀ a, |μ a| ≤ 1/2`, the narrower bias range used later.",
     "QuarticQuery.ForrelationLower.abs_xi_le": "The theorem proves only $|\\xi_i|\\le 2$ under $|\\mu_i|\\le 1/2$. It does not give either the mixed-derivative identity or the centering identity in the selected display."
   },
@@ -574,7 +574,7 @@
     "QuarticQuery.ForrelationLower.chaos_insert": "The paper assumes centered factors and bounded coefficients in this section. The insertion identity itself holds for arbitrary factors and coefficients. Its essential hypothesis is only that $q$ is fresh."
   },
   "fr-unrevealed-coordinate-cancellation": {
-    "QuarticQuery.ForrelationLower.ext_prod_merge": "The hypothesis `hm` gives mean zero separately for each coordinate function. Lean’s `merge` keeps the recorded answers on $Q$ and redraws the other coordinates under the product weights."
+    "QuarticQuery.ForrelationLower.ext_prod_merge": "If a leaf records the first sign, a centered product involving a second, unread sign averages to zero because the second sign still has its original centered law. A product using only recorded coordinates is constant at that leaf. This is how a shallow tree limits which coordinate products can contribute to the derivative estimate."
   },
   "fr-leaf-pairing-identity": {
     "QuarticQuery.ForrelationLower.walk_chaos": "The paper allows an independent real value in $[-1,1]$ at every leaf. `walk_chaos` uses `T : QueryTree ι` with Boolean leaves and one postprocessing map `v : Bool → ℝ`. The full real-leaf endpoint growth theorem is separately linked at (8.28). Lean uses a single map `v : Bool → ℝ` for the output."
@@ -687,7 +687,7 @@
     "QuarticQuery.Paper.appendixA_star_norm_eq_sqrt_card": "The Lean result applies to any finite star with center outside its leaf set, including zero leaves. The paper applies it to a nonempty sensitive-block star. The condition `hc : c ∉ L` keeps the center distinct from every leaf."
   },
   "qm-star-mask": {
-    "QuarticQuery.Paper.appendixA_mask_star_norm_le_one": "The declaration assumes `hcount`, that at most one leaf survives the mask. It proves the norm conclusion but not the sentence’s derivation of `hcount` from block disjointness. That is provided by `appendixA_sensitiveFamily_star_properties`. `hcount` states that bound on the retained leaf set, and `hx` keeps the center out of the leaves."
+    "QuarticQuery.Paper.appendixA_mask_star_norm_le_one": "The coordinate mask keeps the edges corresponding to sensitive blocks that use that coordinate. With disjoint blocks there can be at most one such edge. Its only nonzero matrix block swaps two coordinates, so its operator norm is one. This gives the denominator bound in the nonnegative adversary estimate."
   },
   "qm-bs-bound": {
     "QuarticQuery.Paper.appendixA_blockSensitivity_star_le_Q_sq": "For every total Boolean function, block sensitivity is at most $1225Q(f)^2$."
@@ -723,7 +723,7 @@
     "QuarticQuery.Paper.huangMatrix_trace": "The trace of Huang’s matrix is zero in every dimension."
   },
   "qm-huang-eigenvalues": {
-    "QuarticQuery.Paper.huangEnd_eigenvalue": "The eigenvalue alternative is proved also for $d=0$. The paper assumes $j\\ge 1$ to say the two possible eigenvalues are distinct. Distinctness is not asserted by this declaration. The conditions are `hv0 : v ≠ 0` and the eigenvector equation `hv`."
+    "QuarticQuery.Paper.huangEnd_eigenvalue": "If a matrix squares to $jI$ and multiplies a nonzero eigenvector by $\\lambda$, applying it twice gives $\\lambda^2=j$. The signed cube adjacency has this square identity through block cancellation. Its positive eigenspace is used next to find a vector supported on the chosen majority of the cube."
   },
   "qm-huang-multiplicity": {
     "QuarticQuery.Paper.huangEnd_eigenspaces_half": "For $d>0$, the $\\sqrt d$ and $-\\sqrt d$ eigenspaces of Huang’s matrix each have dimension $2^{d-1}$. The hypothesis `hd : 0 < d` is essential: at dimension zero there is a single zero eigenspace."
@@ -735,7 +735,7 @@
     "QuarticQuery.Paper.huang_absolute_rayleigh_supported": "The theorem states the outer Rayleigh inequality $\\sqrt{d}\\,\\||v|\\|^2 \\le |v|^\\top A_U|v|$ under the eigenvector/support hypotheses. It omits the displayed intermediate equalities through $v^\\top H'dv$."
   },
   "qm-midrijanis": {
-    "QuarticQuery.Paper.appendixA_lemmaA5": "Every total Boolean function satisfies $D(f)\\leq\\operatorname{bs}(f)\\deg(f)$."
+    "QuarticQuery.Paper.appendixA_lemmaA5": "For $f(x,y,z)=xy+z-xyz$, a maximum-degree monomial includes all three variables. At $(0,0,0)$, changing $z$ already flips the answer, giving a sensitive block inside that support. In general, after fixing the other variables to the actual input, a maximal monomial keeps its coefficient and leaves a nonconstant restriction. Each round thus finds a block inside a fresh set of queried variables, giving the factor $\\operatorname{bs}(f)$ in (A.11)."
   },
   "qm-maximal-support-block": {
     "QuarticQuery.Paper.appendixA_sensitiveBlock_of_maximal_support": "Under the maximal-support hypotheses the theorem produces a nonempty sensitive block $B\\subseteq S$. The intermediate claim about nonconstancy of the restricted function is part of the argument."
@@ -766,7 +766,7 @@
   },
   "rec-cl-conditional-product-law": {
     "QuarticQuery.Paper.classical_prefix_iff": "The theorem gives the prefix-event equivalence with compatible schedule and local constraints. It does not give either probability identity in the rest of display (B.1).",
-    "QuarticQuery.Paper.classical_mass_product": "This is the finite product-mass identity after the transcript weight is factored. It does not itself identify the adaptive prefix event or state its normalized conditional law.",
+    "QuarticQuery.Paper.classical_mass_product": "Take independent fair bits $x,y$. A tree reads $x$ and reads $y$ only if $x=1$. Fix the transcript where that second read returns zero. Its event is $\\{x=1\\}\\times\\{y=0\\}$, of mass $1/2\\cdot1/2=1/4$. The product identity accounts for this mass even when a local factor is zero. The subsequent conditional-law statement uses a positive denominator.",
     "QuarticQuery.Paper.classical_transcript_product_law": "The theorem states the final conditional-law factorization in (B.1), deriving schedule compatibility from positive prefix mass. It does not package the preceding event equality and mass identity in its conclusion."
   },
   "rec-cl-positive-local-denominators": {
@@ -1198,7 +1198,7 @@
     "QuarticQuery.exists_gate": "The theorem permits any two isometries `c` and `L` into the finite target. The paper applies it to the oracle-compatible `J` and the particular entry map composed with a Hadamard. For two isometries `c` and `L` into the same finite query space, there is an input-independent isometry `Z` satisfying $Z(c\\phi)=L\\phi$ for every source vector."
   },
   "qm-deferred-padding": {
-    "QuarticQuery.exists_fixedSequence": "The theorem concludes the mass for exactly $T$ queries identity. Its statement does not include the sentence’s structural-induction explanation or the padding construction for individual branches. Given `hT : A.queryCap ≤ T`, the theorem produces one enlarged finite workspace, entry isometry, sequence of fixed gates, and accepting projector."
+    "QuarticQuery.exists_fixedSequence": "Imagine a program whose first measurement chooses an immediate verdict on one branch and one more query on the other. Keep the two branches in separate workspace blocks. The short branch can undergo the extra phase query because its verdict is already fixed and the query preserves its squared norm. The fixed-length simulation can then recover the original output probabilities from the two branch masses."
   },
   "qm-zero-complexity": {
     "QuarticQuery.Independent.ModelZero.zero_query_characterization": "For every partial Boolean function on a finite coordinate type, deterministic, randomized, and quantum complexity are each zero exactly when all promised labels agree. The predicate `LabelsAgree` also holds for an empty promise. `labelsAgree_iff_constant` identifies it with `ConstantOnPromise`."
@@ -1273,7 +1273,7 @@
     "QuarticQuery.Upper.IsCirc.symm": "The lemma turns `IsCirc n F` into the corresponding circuit witness for the inverse family, keeping the logical read count. Accuracy and physical query cost are checked at other declarations."
   },
   "qr-walsh-butterfly": {
-    "QuarticQuery.Forrelation.sum_walshN_succ": "Each output coordinate of a Walsh transform on $2^{n+1}$ integers is the transform of the first half plus a signed transform of the second half."
+    "QuarticQuery.Forrelation.sum_walshN_succ": "The two-point Walsh transform sends $(a,b)$ to $(a+b,a-b)$. At four points, first apply that rule to each half, then add and subtract the two resulting vectors. Recursing gives the exact integer transform using only additions and subtractions, which keeps the certificate circuit small."
   },
   "qr-ideal-walk-magnitude": {
     "QuarticQuery.Paper.construction_walkN_bound": "After $l$ transforms on $2^n$ coordinates, each ideal integer walk value has magnitude at most $(2^n)^l$, provided every sign-layer multiplier has magnitude at most one."
@@ -1285,7 +1285,7 @@
     "QuarticQuery.Paper.construction_walkN_prefix_bound": "A prefix containing $a$ entries of the ideal Walsh walk is bounded in magnitude by $a(2^n)^l$, under the same unit-magnitude assumption on all sign layers."
   },
   "qr-residue-invariant": {
-    "QuarticQuery.Forrelation.Enc": "`Enc` defines the relation between a word of Boolean wires and its integer value modulo a power of two. The arithmetic constructors each supply lemmas preserving that relation."
+    "QuarticQuery.Forrelation.Enc": "A three-bit word $111$ is residue seven, also the residue of $-1$ modulo eight. Modular add and subtract can use the same word throughout the transform. The later signed-range bound says which integer representative the final word stands for, so the promise circuit can compare it to the signed threshold exactly."
   },
   "qr-full-adder-identity": {
     "QuarticQuery.Forrelation.fullAdd_spec": "From three valid existing wires, the constructor adds exactly five gates and returns a valid sum wire and carry wire. `Ext p p' 5` says that the new program extends the old one by five gates while preserving its earlier values."

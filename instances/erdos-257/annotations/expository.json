@@ -6,7 +6,7 @@
     "Erdos249257.irrational_of_int_mul_near_int": "The proof defines the integer numerator `N` as $m p-zq$, with $p$ and $q$ given by `r.num` and `r.den`. The equality `hval` puts the error over $q$ for the two witness integers $m,z$."
   },
   "exp.opening.positive-gap": {
-    "Erdos249257.irrational_of_int_mul_near_int": "For the witness error $N/q$, `hN0` rules out $N=0$. The proof applies `Int.one_le_abs` and divides by $q>0$ to obtain the absolute gap $1/q$, which also bounds any positive error from below."
+    "Erdos249257.irrational_of_int_mul_near_int": "With $S=2/5$, multiplying by $3$ and subtracting $1$ leaves $1/5$. Every choice of integer multiplier and integer subtraction still leaves a multiple of $1/5$. The proof uses this same spacing for the proposed denominator `r.den`, so a strictly positive error smaller than its spacing gives the contradiction."
   },
   "exp.def.series": {
     "Erdos249257.erdosSupportSeries": "With $b=2$, `Set.indicator A` contributes $1/(2^n-1)$ at each selected exponent and zero elsewhere. The symbol `∑'` in `erdosSupportSeries` sums this family over the natural numbers."
@@ -63,7 +63,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom_nonneg": "The numerator of `displacementAtom` at a positive exponent $n$ is $b^{k\\bmod n}-1$. It is nonnegative under $b\\ge2$, which gives $\\ell_n(k)\\ge0$ at $b=2$."
   },
   "exp.def.fractional-contribution": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "`displacementAtom 2 k n` subtracts the unshifted term from the shifted term. For $n>0$ this gives $(2^{k\\bmod n}-1)/(2^n-1)$, the residue formula for $\\ell_n(k)$."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacementAtom": "For $n=4$ and $k=6$, division gives $6=4+2$, so $2^6/(2^4-1)=4+4/15$. The unshifted term was $1/15$, leaving a gain of $3/15$ after the integer part is removed. `displacementAtom 2 k n` measures this gain over the unshifted term."
   },
   "exp.def.sum-contributions": {
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_eq_tsum": "`displacement_eq_tsum` moves the subtraction of the unshifted series inside the infinite sum. With $b=2$, its left side is $R(k)$ and the terms on its right are $\\ell_n(k)$ at the selected exponents."
@@ -72,7 +72,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "Set the finite set `F` to $\\{n\\}$ and the multiplier exponent `N` to $k$. The assumption `hdiv` makes $k\\bmod n=0$ and the singleton's contribution zero."
   },
   "exp.remainders.common-multiple": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "`hdiv` says every $d$ in the finite set `F` divides the chosen shift `N`. All those atoms then have numerator $b^0-1=0$, so their combined contribution vanishes."
+    "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "For exponents $2$ and $3$, any multiple of $6$ leaves remainder zero modulo both. Each shifted fractional contribution then equals its original summand, so both gains vanish. Lean’s `hdiv` asks for this common divisibility for every member of the finite group."
   },
   "exp.remainders.convergence": {
     "ErdosProblems.Erdos257.PaperCompleteR7.summable_displacementAtom": "`summable_displacementAtom` subtracts two summable shifted families under $b\\ge2$. In base two the resulting family is exactly the selected residue contributions defining $R(k)$."
@@ -108,7 +108,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.tsum_progressionMean": "Take `u` to be the selected `displacementAtom` family at $b=2$. Each column is summable, giving `hu`. `tsum_progressionMean` then equates the sum of row means with the mean of column sums, with the sides reversed from (4)."
   },
   "exp.mean-small-column": {
-    "ErdosProblems.Erdos257.PaperCompleteR7.exists_lt_of_mean_lt": "Apply `exists_lt_of_mean_lt` to `Finset.range M` and $f(m)=R((m+1)Q)$ with threshold $1/q$. Its witness is one index of the finite set, so all contributions in the chosen column use the same shift."
+    "ErdosProblems.Erdos257.PaperCompleteR7.exists_lt_of_mean_lt": "If two columns have totals $1/8$ and $3/8$, their mean $1/4$ is below $1/3$, so the first column meets that threshold. A whole column is one shift applied to every exponent. `exists_lt_of_mean_lt` chooses that single index from the finite mean of the totals."
   },
   "exp.mean-zero-preview": {
     "ErdosProblems.Erdos257.PaperCompleteR7.displacement_finset_eq_zero": "For the already chosen finite group, divisibility by $Q$ supplies `hdiv` at each shift $mQ$. Its total contribution can therefore be removed before estimating the column mean."
@@ -120,7 +120,7 @@
     "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The proof defines `g := Nat.gcd Q d` using `d` for the row exponent $n$. This common factor is the spacing between the possible sampled remainders."
   },
   "exp.cycle-length-definition": {
-    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The local `h := d / g` becomes $c=n/g$ in the paper. The summation runs over `Finset.range (d / Nat.gcd Q d)`, so it contains exactly one cycle of samples."
+    "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "With $n=6$ and $Q=4$, the positive multiples of $4$ give remainders $4,2,0$, then repeat. The common factor $g=2$ reduces this to stepping by $2$ modulo $3$, which visits all three residues. `Finset.range (d / Nat.gcd Q d)` counts exactly those samples before the first repeat."
   },
   "exp.cycle-residue-enumeration": {
     "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "The bijection `e` permutes the integers $0,\\ldots,c-1$. The identity `hresidue` multiplies those values by $g$ to obtain the remainders of the $c$ sampled exponents modulo $n$."
@@ -145,7 +145,7 @@
     "Erdos249257.sum_shiftedMersenneAtom_gcdOrbit": "`hsumPerm` reindexes the sum of powers by `e`. For $Q=4$ and $n=6$ this permutes the three remainders $4,2,0$ into $0,2,4$. Subtracting the same baseline per term and dividing by three preserves the equality of means."
   },
   "exp.incomplete-before-cycle": {
-    "Erdos249257.sum_shiftedMersenneAtom_mul_le_inv_pow_gap_of_lt": "With `K = M` and `d = n`, `hnowrap` says the largest sampled exponent $MQ$ is strictly less than $n$. Each sampled remainder is then the sampled exponent itself."
+    "Erdos249257.sum_shiftedMersenneAtom_mul_le_inv_pow_gap_of_lt": "For $Q=4$, $M=2$ and $n=12$, the samples have remainders $4,8$, since neither reaches $12$. Their powers therefore sit inside the ordinary geometric sum up to $2^8$. Lean bounds the sum of shifted terms by $2^{1-(n-MQ)}$ when $MQ<n$. This handles the rows still beyond the last sampled shift."
   },
   "exp.incomplete-decomposition": {
     "Erdos249257.sum_range_eq_mul_blockSum_add_blockRemainder": "Use $x_j=\\ell_n(j+1)$, block length $n$ and $N=MQ$. Periodicity gives `hblock`. The quotient $N/n$ rounded down counts the whole blocks, and `blockRemainder` sums the first $N\\bmod n$ entries of the next block."

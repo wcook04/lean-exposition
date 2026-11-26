@@ -3,7 +3,7 @@
     "PCP.Language": "`List Bool` represents all finite binary strings, including the empty string. The result type `Prop` specifies membership without requiring a decision procedure for it."
   },
   "np-certificate-code": {
-    "PCP.NPCertificate": "The witness bound is evaluated at the length of the original input, and `check_polyTime` separately constrains how witnesses are checked. The equivalence requires a bounded accepting witness for each yes-input and rules one out for each no-input."
+    "PCP.NPCertificate": "For three-colourability the candidate witness lists two bits per vertex, enough to name three colours. Its length is bounded in terms of the input, and a checker validates the codes and checks the edges. Those are the two separate jobs of `witnessBound` and `check_polyTime`. The field `spec` adds the logical condition that a bounded accepting witness exists exactly on yes-inputs."
   },
   "in-np-code": {
     "PCP.InNP": "`Nonempty` makes `InNP` a proposition about existence. An implementation of the checker lives in the certificate, and proving membership does not choose a distinguished checker among all possible certificates."
@@ -28,19 +28,19 @@
     "PCP.Machine.PolyTimeRel": "The machine’s runtime polynomial is in the length of the encoded pair, $|x|+|w|+1$. The certificate’s separate witness-length polynomial in $|x|$ then bounds this runtime for the witnesses considered by `InNP`."
   },
   "pair-encoding-prose": {
-    "PCP.Machine.encodePair": "The separator is a symbol distinct from either bit, so it determines where the first list ends even if one list is empty. Its single tape cell accounts for the extra one in the encoded input length."
+    "PCP.Machine.encodePair": "The bit list $101$ could come from $(1,01)$ or $(10,1)$ by concatenation. Putting a tape symbol between the lists gives $1\\#01$ and $10\\#1$, which the machine can distinguish. This adds one tape cell to the size used in `PolyTimeRel`, including when one list is empty."
   },
   "proof-oracle-code": {
     "PCP.ProofOracle": "Oracle replies are defined at every natural-number address. If the query trees have an address bound, any two oracles with the same prefix below that bound give the same verdict. The bound is a property of the verifier."
   },
   "query-tree-code": {
-    "PCP.QueryTree": "The constructors encode the depth bound in the type. A query consumes one level in both successor trees, while a leaf can inhabit `QueryTree d` for any remaining budget."
+    "PCP.QueryTree": "Read bit five and, if it is one, accept immediately. If it is zero, read bit eight before deciding. This tree fits `QueryTree 2`. The root spends one level, and its early-accept leaf can use the remaining depth index without making a read. The PCP query cap bounds the longest path."
   },
   "tree-evaluation-code": {
     "PCP.QueryTree.eval": "The address of the next query can depend on the supplied proof bit because `eval` recurses into just the selected subtree. The other subtree contributes no reads on that run."
   },
   "tree-addresses-code": {
-    "PCP.QueryTree.addresses": "`addresses` takes a union over both continuations, so it may contain addresses that no single execution reads together. This is the set on which `ReadsBelow` can impose a bound uniform in the proof."
+    "PCP.QueryTree.addresses": "A tree can query address two first, then choose address four on zero and address seven on one. The set returned by `addresses` is $\\{2,4,7\\}$, although each run queries at most two addresses. `ReadsBelow` bounds this entire set so one proof prefix covers every possible execution."
   },
   "verifier-code": {
     "PCP.Verifier": "For each input and seed, `Verifier` includes an abstract tree with a bound on its depth. Computing its steps in polynomial time requires the later implementation and cost conditions."
@@ -59,7 +59,7 @@
     "PCP.Verifier.acceptingRandomness": "The filter holds both $x$ and $\\pi$ fixed while varying the seed. Repeating the count for each proof separately is what makes this definition suitable for `SoundAt`."
   },
   "acceptance-probability-code": {
-    "PCP.Verifier.accProb": "The cardinality and denominator are cast to rationals, so division gives the exact probability. At budget zero the denominator is still one, since there is one seed, the empty bit string."
+    "PCP.Verifier.accProb": "With two random bits there are four seeds. If the same fixed proof passes on three seeds, the numerator is three and `accProb` is the rational number $3/4$. If the budget is zero, the one seed is the empty string, so the denominator is still one. This is the probability used by both completeness and soundness."
   },
   "complete-at-code": {
     "PCP.Verifier.CompleteAt": "The existential quantifier is outside the probability calculation. A single proof must make the fraction of accepting seeds equal to one, so any rejected seed would violate completeness."
@@ -77,7 +77,7 @@
     "PCP.Verifier.accProb": "Because every seed has weight $2^{-k}$, counting accepts and dividing by $2^k$ gives the exact probability used in soundness and completeness. This is a rational inequality or equality over a finite run space."
   },
   "completeness-prose": {
-    "PCP.Verifier.CompleteAt": "Since every seed has positive mass, probability one requires every tree for the input to accept that same oracle. The oracle can depend on the input."
+    "PCP.Verifier.CompleteAt": "Imagine seed zero accepts when proof bit zero is zero and seed one accepts when that bit is one. Each seed can be satisfied on its own, but each fixed proof passes only one seed. `CompleteAt` rules this case out by choosing a single proof before counting accepts, then requiring probability one."
   },
   "soundness-prose": {
     "PCP.Verifier.SoundAt": "The bound says that even a proof chosen to maximize acceptance at this input can reach at most $s$. In the main theorem the clause is applied to no-inputs with $s=1/2$."
@@ -86,10 +86,10 @@
     "PCP.Verifier.ReadsBelow": "Any two oracles that agree below $N$ lead to the same answer at the first query and therefore to the same next query. Repeating this argument down every seed’s tree shows why the whole verdict depends only on that prefix."
   },
   "randomness-budget-prose": {
-    "PCP.Verifier.CanonicalRandomness": "An arbitrary function taking values zero and one would satisfy a constant upper bound yet could encode an arbitrary predicate of input length. The exact formula removes that dependence and makes the seed space available to the deterministic checker."
+    "PCP.Verifier.CanonicalRandomness": "A purported one-bit budget could send an empty seed at some input lengths and a one-bit seed at all other lengths. An algorithm could distinguish the two cases simply by counting received bits, even if deciding which lengths belong to the first case were uncomputable. The exact formula determines the seed length from $n$ and the two chosen constants and makes the seed enumeration in the converse effective."
   },
   "verifier-algorithm-code": {
-    "PCP.VerifierAlg": "The three lists supply all the inputs for one step, including the ordered history of earlier replies. The sum type distinguishes a final verdict from a natural-number address to read next."
+    "PCP.VerifierAlg": "On an empty history a step may return address five. On a history containing one reply it can return `true` or `false` according to that reply. The three argument lists supply the input, the seed and the answer history, while the two cases of the sum type distinguish a verdict from another read."
   },
   "implementation-code": {
     "PCP.Verifier.ImplementedBy": "The equality unfolds from an empty history and applies to both branches after every query. At the query cutoff, `QueryTree.ofStep` replaces another request with rejection, so the clause states correspondence for capped execution."
@@ -107,7 +107,7 @@
     "PCP.VerifierAlg": "One function consumes an answer history, so it can choose a later address using earlier bits. `Bool` returns a verdict directly, while `ℕ` requests a read and extends that history."
   },
   "implementation-prose": {
-    "PCP.Verifier.ImplementedBy": "The unfolding is capped at `V.queries`. At depth zero a verdict is kept and a further query becomes rejection. The equality therefore matches the whole bounded tree, including its verdicts at the cutoff."
+    "PCP.Verifier.ImplementedBy": "For a one-query verifier, unfolding first asks the step function for a verdict or an address. If it gets an address, it calls the step function on each one-bit history to form the two children. At that depth another read request becomes rejection. `ImplementedBy` requires this whole tree to agree with the verifier's tree, so the machine inherits its guarantees for arbitrary proofs."
   },
   "algorithm-time-prose": {
     "PCP.Machine.PolyTimeAlg": "The runtime bound concerns one step on the encoded input, seed and history. In the main theorem the seed length is logarithmic and the history has bounded length, so this yields polynomial time for the full capped run."

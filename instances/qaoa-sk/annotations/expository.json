@@ -29,7 +29,7 @@
     "OAI.SKValueG.groundStateSequence_tendsto": "The `Tendsto` conclusion asserts actual convergence of the finite expected energies per spin to `groundStateValue` as $n\\to\\infty$. The proof applies the subadditive limit theorem to the negative expected maxima."
   },
   "support.stieltjes_measure#2": {
-    "OAI.ZeroTemperatureSK.finiteCDF": "For finite $\\nu$, `finiteCDF ν t` converts $\\nu([0,t])$ to a real number, so an atom at $t$ is already included in the accumulated weight."
+    "OAI.ZeroTemperatureSK.finiteCDF": "In the next example, the mass up through $t=1/2$ is $2$, while up through $t=3/4$ it is $3$. The difference counts the weight that arrived between those two times. `finiteCDF` counts on the closed interval $[0,t]$, so a jump at the observation time is already included."
   },
   "assumptions.full_support_minimizer#5": {
     "OAI.ZeroTemperatureSK.OrderParameter": "The field `val` takes real values and the field `nonneg` imposes the range restriction. `right_continuous` is within `Ici t` and `integrable` is for the coefficient extended by zero to $\\mathbb R$."
@@ -53,7 +53,7 @@
     "OAI.ZeroTemperatureSK.finiteCDF_fubini": "Taking $H=1$ makes the inner integral $1-r$ and gives the weighted identity for `finiteCDF ν`. The hypothesis `[IsFiniteMeasure ν]` restricts this row to finite total mass, whereas the paper allows infinite total mass."
   },
   "support.stieltjes_measure#9": {
-    "OAI.ZeroTemperatureSK.finiteCDF_fubini": "The proof expands the cumulative mass using the indicator of $r\\leq t$, then interchanges the integrals. The signature makes finiteness of $\\nu$ and integrability of $H$ available for that signed interchange."
+    "OAI.ZeroTemperatureSK.finiteCDF_fubini": "Give the weight $2$ at $1/4$ a time-dependent rate $H(t)$ instead of the unit rate in the area example. Its whole contribution is $2\\int_{1/4}^1 H(t)\\,dt$. Counting each weight this way prepares the later variation, where the rate is $q(t)-t$. `finiteCDF_fubini` permits a signed integrable rate for a finite measure. The general nonnegative area formula also allows infinite total mass."
   },
   "support.stieltjes_measure#10": {
     "OAI.ZeroTemperatureSK.Time": "`Time` is the subtype `Ico (0 : ℝ) 1`, so it contains zero and only times strictly below one. A measure on that type can have an initial atom at zero."
@@ -62,7 +62,7 @@
     "OAI.ZeroTemperatureSK.SupportDeterministic.InSupport": "The existential condition first requires $t\\in[0,1)$, then tests the corresponding point in the support of a measure on `Time`. This support uses relative neighbourhoods, including one-sided neighbourhoods at zero."
   },
   "support.strict_increase#2": {
-    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support": "The proof puts the midpoint of $a<b$ in `μ.support`, giving positive mass to $(a,b)$ and hence to $(a,b]$. Combining this with the cumulative identity `hμ` yields $\\gamma(a)<\\gamma(b)$."
+    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.lt_cdf_of_full_support": "For uniform mass on $[0,1)$, every single point has mass zero but every interval of positive length has positive mass. In the full-support argument it is this interval mass that matters. Lean places the midpoint inside $(a,b)$ and uses that neighbourhood to force $\\mu((a,b])>0$, which is the increase of $\\gamma$ from $a$ to $b$."
   },
   "support.strict_increase#3": {
     "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.eq_cdf_of_measure_Ioc_zero": "Under `hγ` and $a\\le b$, zero mass on $(a,b]$ forces $\\gamma(a)=\\gamma(b)$, so a strict increment implies positive interval mass by contraposition. Locating such an interval inside each neighbourhood is an additional step beyond this lemma."
@@ -80,7 +80,7 @@
     "OAI.ZeroTemperatureSK.value_terminal_uniform": "At $t=1$, both the square-root term and the integral from $t$ to one vanish. The two inequalities then force `value W γ 1 x` to equal $|x|$ for every admissible $\\gamma$."
   },
   "scalar.paper_admissible#7": {
-    "OAI.ZeroTemperatureSK.Control": "The argument of `val` is elapsed time since the starting time `t`. Its `progressive` field restricts responses to the filtration of increments $B_{t+s}-B_t$, and `bound` enforces $|\\alpha_s|\\le1$ for every time and path."
+    "OAI.ZeroTemperatureSK.Control": "If the start is at time $1/4$, then at time $1/2$ the rule may respond to the path of increments since $1/4$. The noise after $1/2$ is still unavailable. Lean indexes the response by elapsed time and makes it progressive for that increment history, with values in $[-1,1]$. This is the continuous version of the information constraint in the next sign example."
   },
   "scalar.paper_admissible#10": {
     "OAI.ZeroTemperatureSK.value": "The range inside `sSup` consists of expected `controlPayoff` values, one for each `Control W (Real.toNNReal t)`. Thus expectation is taken for a fixed permitted rule before maximising over rules.",
@@ -158,7 +158,7 @@
     "OAI.ZeroTemperatureSK.diffusion_uniqueness": "`hX` is a diffusion hypothesis for the same `W` and `γ` used by `diffusion W γ`. The two processes agree outside one null set simultaneously for all $0\\leq t\\leq1$."
   },
   "scalar.euler_normalization#1": {
-    "OAI.ZeroTemperatureSK.eulerState": "With $h=T/N$, `meshTime T N j` is $jh$. The successor clause adds $h\\gamma(jh)u(jh,X_j)$ and $\\sqrt h Z_j$ to the previous `eulerState`, with $Z_j$ given by `gaussianCoordinate N j z`."
+    "OAI.ZeroTemperatureSK.eulerState": "Over a time step of length $h=1/4$, a normal increment has standard deviation $1/2$, while a drift of size $d$ contributes $d/4$. This explains the two different scales in the update. `eulerState` evaluates the drift at the old state and uses a fresh Gaussian coordinate for the new increment."
   },
   "scalar.euler_normalization#2": {
     "OAI.ZeroTemperatureSK.eulerState": "The response is computed from the state at index $j$, which uses only earlier Gaussian coordinates. The new `gaussianCoordinate N j z` is added separately and never enters the `gradient` argument."
@@ -272,7 +272,7 @@
     "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.zero_on_support_of_compact_mass_removal": "The hypothesis `hremove` tests only compact sets, and the proof restricts $\\mu$ to a compact initial interval containing the support point in its relative interior. This yields $G=0$ at that support point without assuming finite total Stieltjes mass."
   },
   "gaps.existing-mass-hypothesis": {
-    "OAI.ZeroTemperatureSK.OrderParameter.removeCDF": "The condition `hν : ν ≤ μ` requires the removed finite measure to be dominated by existing mass. It is used for both nonnegativity and monotonicity, so belonging to the support alone cannot justify subtracting a Dirac mass."
+    "OAI.ZeroTemperatureSK.OrderParameter.removeCDF": "A uniform interval can carry positive mass around a point even though there is zero mass at the point itself. Taking away a positive atom there would make the cumulative curve jump downward. Lean’s `hν : ν ≤ μ` requires the removed amount on each measurable set to be at most the amount already there, so the remaining cumulative curve stays nonnegative and nondecreasing."
   },
   "support.contact_derivatives#2": {
     "OAI.ZeroTemperatureSK.SupportDeterministic.Variation.value_contact_of_potential_min": "The proof uses $(0,1)$ as a neighbourhood of $s$, via `Ioo_mem_nhds hs.1 hs.2`. Rewriting with `hGs` and applying `hG0` gives $G(s)\\le G(t)$ throughout that neighbourhood, establishing `IsLocalMin G s`."

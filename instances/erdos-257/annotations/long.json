@@ -164,7 +164,7 @@
     "ErdosProblems.Erdos257.dyadic_observation_sum_le": "Lean states the rearrangement for arbitrary finite $J$ and $F$. The display uses all $a\\ge1$ on the right, and comparison with the infinite nonnegative sum is not in this declaration."
   },
   "p1-p06.weighted-dyadic-single-exponent": {
-    "ErdosProblems.Erdos257.sum_dyadic_observation_weights_le": "Lean allows any finite set $J$ of dyadic exponents, not just $M\\le j<2M$, and does not require $Q>0$."
+    "ErdosProblems.Erdos257.sum_dyadic_observation_weights_le": "With $Q=3$ and $a=25$, the first possible observation length that reaches $a$ is $Q2^4=48$. Even summing all subsequent weights gives only $2^{-4}+2^{-5}+\\cdots=1/8\\le 2Q/a$. Lean proves this bound for any finite set $J$ and $a>0$, so rearranging the finite error sum charges each conductor once at reciprocal scale."
   },
   "p1-p06.weighted-finite-rearrangement": {
     "ErdosProblems.Erdos257.dyadic_observation_sum_le": "For finite exponent and length sets `F` and `J`, positive exponents and nonnegative weights give $\\sum_{j\\in J}2^{-j}\\sum_{a\\in F,\\ a\\le Q2^j}\\alpha_a\\le2Q\\sum_{a\\in F}\\alpha_a/a$. These assumptions are `hF` and `hα`. The proof exchanges two finite sums and applies the observation-weight bound to each exponent. The paper writes an infinite sum on the right. The declaration itself is the finite form, before comparison with that infinite sum."
@@ -183,7 +183,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean": "The average of the progression means with lengths $2^j$ for $R\\le j<R+M$. At scale $j$, the samples are the first $2^j$ positive multiples of the modulus $L$. Lean uses `Finset.Ico R (R + M)` for the half-open interval of scales and divides by $M$. Repeated observations at different scales are counted again. Setting $R=M$ gives the printed range $M\\le j<2M$. The mixed proof uses one such distribution for both errors."
   },
   "p1-p06.weighted-select-small-sample": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "The sample-extraction theorem applies to any real-valued function $f$ with a small dyadic mean, and positivity of all sampled values is unnecessary."
+    "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "First choose a dyadic length whose progression mean is below the threshold. Then choose a term below the threshold inside that progression. Both choices follow because an average of numbers all at least the threshold is at least the threshold. Lean returns the length index $j$ and the position $m$ together, giving one shift $(m+1)Q$ for the entire displacement."
   },
   "p1-p06.weighted-irrationality-finish": {
     "ErdosProblems.Erdos257.PaperCompleteR7.irrational_of_displacement_returns": "If $b\\ge2$, $A$ is infinite, and for every $\\varepsilon>0$ some positive $N$ satisfies $\\Delta_{b,A}(N)<\\varepsilon$, then $X_A(b)$ is irrational. The return assumption is the binder `hreturn`, and positivity follows from infinitude rather than being repeated inside that binder. This theorem accepts any argument establishing the required small values. It does not assume a reciprocal, weighted or cover condition of its own."
@@ -304,7 +304,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.PositiveCoverData": "The filter-and-card expression is the displayed divisor count. A countable family of finite positive sets $F_j$, exponents $0<\\alpha_j\\le1$, and nonnegative divisor coefficients $c_{j,d}$."
   },
   "p1-p06.cover.example-expansion": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.cube_fractional_expansion": "Lean proves the expansion for every positive $q$, finite prime set $P$ and positive exponent $\\alpha$. The display specialises to $q=2$, $P=\\{3,5\\}$, and $\\alpha\\le1$."
+    "ErdosProblems.Erdos257.PaperCompleteR8.cube_fractional_expansion": "At $n=30$, all four divisors in this frame occur, so the right side is $1+2z+z^2=(1+z)^2=4^\\alpha$. At $n=10$ only $2$ and $10$ contribute, giving $1+z=2^\\alpha$. The examples show why one factor is included per eligible prime. Lean sums the product expansion for any $q,n>0$, finite set of primes $P$, and $\\alpha>0$."
   },
   "p1-p06.cover.example-cost": {
     "ErdosProblems.Erdos257.PaperCompleteR8.cubeCoefficient_cost": "The reciprocal-divisor weighted coefficient sum equals the product expression `cubeProductCost q P z`. The cost identity is stated for arbitrary $q$, $P$ and $z$. The paper substitutes $q=2$ and $P=\\{3,5\\}$."
@@ -336,7 +336,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR7.rpow_tsum_le_tsum_rpow": "For nonnegative terms and $0<p\\le1$, the $p$th power of a sum is at most the sum of the $p$th powers. The hypotheses are `hf`, `hp`, `hp1`, and convergence of both series, `hsum` and `hsump`. This countable version justifies the first inequality in the paper’s tail calculation once its summability assumptions are supplied. It does not by itself apply the divisor majorant or interchange the divisor and offset sums."
   },
   "p1-p06.cover.fractional-bridge": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.positiveCover_frame_bridge": "The conclusion compares `framePotential` to `divisorPotential` at base $2^{\\alpha_j}$ after raising the former to $\\alpha_j$. The exponent bounds and the nonnegative summable majorant coefficients are fields of `PositiveCoverData`."
+    "ErdosProblems.Erdos257.PaperCompleteR8.positiveCover_frame_bridge": "For $\\alpha=1/2$, taking a square root turns the decay factor $2^{-r}$ into $(\\sqrt2)^{-r}$, and subadditivity bounds the square root of the sum by the sum of the square roots. The majorant for the powered divisor counts therefore uses base $2^{\\alpha_j}$ in its potential. The Lean lemma packages the endpoint inequality with the exponent bounds, coefficient positivity and summability supplied by `PositiveCoverData`."
   },
   "p1-p06.cover.displacement-tail": {
     "ErdosProblems.Erdos257.PaperCompleteR8.displacement_finset_le_framePotential": "States the displayed upper bound by $U_j$. The equality is not its conclusion. This declaration gives the inequality in the paper’s display. It does not separately state the preceding equality $\\Delta_{2,F}=U_F-X_F(2)$."
@@ -404,7 +404,7 @@
     "ErdosProblems.Erdos257.PaperCompleteR8.WeightedDyadicMeanTarget": "Expands the named statement and displays its hypotheses. The definition assumes $b\\ge2$, exclusion of zero, and finite weighted mass. It does not assume the support is infinite."
   },
   "p1-p06.mixed.cover-common-mean": {
-    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_thresholdTailTest_le": "The bound $(1+4Q/M)K_J$, with $L$ replaced by $Q$. The displayed $<1/8$ is a later choice. For positive thresholds $t_j$ with summable normalised cost, the mean of the remaining tests is at most $1+4L/M$ times their remaining cost."
+    "ErdosProblems.Erdos257.PaperCompleteR8.dyadicMean_thresholdTailTest_le": "A summand $t_j^{-\\alpha_j}V_j(N)$ reaches $1$ exactly when $V_j(N)$ reaches $t_j^{\\alpha_j}$. Normalizing by that threshold makes the tests comparable, so a total below $1$ controls every frame at once. Lean bounds the mean of that total by $(1+4Q/M)K_J$ when the thresholds are positive and the normalized costs are summable. The proof chooses parameters to make this bound $<1/8$."
   },
   "p1-p06.mixed.sample-small-sum": {
     "ErdosProblems.Erdos257.PaperCompleteR8.exists_sample_lt_of_dyadicMean_lt": "If a dyadic mean is less than $c$ and `hM : 0 < M`, some index in that very average has value less than $c$. Lean returns $j,m$ with $R\\le j<R+M$, $m<2^j$, and $f((m+1)L)<c$. No nonnegativity of $f$ is required. This is the finite averaging step used after all required error estimates have been added on a common distribution."
@@ -679,7 +679,7 @@
     "Erdos249257.BooleanMobiusGreedyReduction.scaled_lt_localMersenneQuotient_cast_add_one": "The scaled real weight satisfies $2^Mw_d<q_{M,d}+1$, so replacing it by its integer quotient loses less than one. The only exponent hypothesis is `hd : 1 ≤ d`. The scale $M$ is arbitrary. This strict inequality is the head-rounding estimate in the proof of the finite separation bound."
   },
   "p1-p06.limits.tail-rounding": {
-    "Erdos249257.BooleanMobiusGreedyReduction.localMersenneQuotient_cast_le_scaled": "The integer quotient is no larger than the scaled real Mersenne weight, as expressed by $q_{M,d}\\le2^Mw_d$. The hypothesis `hd : 1 ≤ d` ensures a positive denominator. Summing this inequality over the later ranks explains why rounding those terms down cannot reduce the head-minus-tail difference. Lean casts the natural quotient to a real before making the comparison."
+    "Erdos249257.BooleanMobiusGreedyReduction.localMersenneQuotient_cast_le_scaled": "At depth $M=6$, the later terms for ranks $3,4$ are $64/7$ and $64/15$. Their floors sum to $13$, so subtracting the rounded tail increases the gap for any fixed head. Rounding the head itself can lose less than one. The cited Lean lemma supplies $q_{M,d}\\le 2^Mw_d$ for each positive $d$, and the paper sums those bounds on the tail side of the comparison."
   },
   "p1-p06.limits.integer-rounding-conclusion": {
     "Erdos249257.BooleanMobiusGreedyReduction.localMersenneQuotient_dominanceGap": "For $1\\le d\\le k\\le M$, the quotient at rank $d$ exceeds the sum of later quotients through $k$ by at least $2^{M-k}$. Lean calls the cutoff `R` and the gap `lowerBinaryWindow M R`. `hRM`, `hd`, and `hdR` express these bounds. The finite later list is `localMersenneWeightsFrom M R (d + 1)`. Increasing the cutoff changes both that list and the guaranteed gap."
@@ -2456,7 +2456,7 @@
     "Erdos249257.exists_seeded_bounded_double_or_recycle_model": "There exists a predicate with a witness at $6$ and the exact double-or-recycle transition shape, yet with bounded witness depths. The existential predicate is realised by $P(n)\\iff n=6$. This proves that the seed and transition shape alone do not imply cofinality. It imposes no assertion on the arithmetic set of actual exact rows, which has additional properties."
   },
   "p2-iv.scale.mass-counterexample": {
-    "Erdos249257.splitFractionMass_one_bound_not_necessary_fixture": "At $D=\\{2,3\\}$ and crossing rank $c=5$, the real values straddle $1/2$ and sharp suffix capacity holds, although the combined fractional mass exceeds $1$. These four exact inequalities are the conjunction in the source. The example disproves necessity of that sufficient mass test for an individual crossing core. It does not disprove the sharp-capacity condition itself."
+    "Erdos249257.splitFractionMass_one_bound_not_necessary_fixture": "At depth $8$, dividing $256$ by $3,7,31$ leaves fractional parts $1/3,4/7,8/31$. Their sum exceeds $1$. Adding $1/31$ to the prefix $10/21$ crosses $1/2$, and the binary suffix is $2^7-85-36-1=6<8$. Thus this crossing meets the strict capacity bound with more than one unit of fractional mass."
   },
   "p2-iv.scale.four-term-residual": {
     "Erdos249257.half_sub_four_term_prefix_eq": "Subtracting the Mersenne weights at ranks $2,3,6,7$ from $1/2$ leaves exactly $1/16002$. The equality is stated over rational numbers and needs no hypotheses. This identifies the positive remainder of one concrete finite prefix. It supplies neither a complete infinite representation of $1/2$ nor a bound for all later greedy remainders."

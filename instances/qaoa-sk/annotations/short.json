@@ -20,7 +20,7 @@
     "OAI.ZeroTemperatureSK.IsStieltjesMeasure": "`Set.Iic t` is taken in `Time`, so its real interval is $[0,t]$. The right-hand side uses `ENNReal.ofReal` because the mass is measured in the extended nonnegative reals."
   },
   "support.stieltjes_measure#3": {
-    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc": "Lean writes $\\gamma(a)+\\mu((a,b])=\\gamma(b)$ in the extended nonnegative reals. Since both cumulative values are finite, the difference in the paper is the mass of `Ioc a b`."
+    "OAI.ZeroTemperatureSK.SupportDeterministic.IsStieltjesMeasure.cdf_add_Ioc": "For $\\mu=2\\delta_s+\\delta_t$ with $s<t$, the cumulative masses are $2$ and $3$, so the interval $(s,t]$ contains exactly the new unit at $t$. This endpoint convention lets a gap force a constant cumulative function in its interior. Lean writes the identity in additive form in the extended nonnegative reals."
   },
   "support.stieltjes_measure#4": {
     "OAI.ZeroTemperatureSK.parameterMeasure": "`Measure.dirac ⊥` puts mass at the least element of `Time`, which is $0$. The multiplier is `ENNReal.ofReal (γ.val ⊥)`, giving the initial mass needed for $\\mu_\\gamma([0,t])=\\gamma(t)$."
@@ -29,7 +29,7 @@
     "OAI.ZeroTemperatureSK.Time": "`Time` is a subtype of $\\mathbb R$, so the topology used by `Measure.support` is the relative topology on $[0,1)$. In that type `Set.univ` denotes the whole overlap interval."
   },
   "support.stieltjes_measure#6": {
-    "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap": "`hgap` requires every point of the real interval `Ioo a b` to lie outside the support, with $0\\leq a<b<1$. The conclusion gives a single $c\\geq0$ for every point of that open interval."
+    "OAI.ZeroTemperatureSK.SupportDeterministic.constant_on_support_gap": "If all the mass lies at $1/4$ and $3/4$, the cumulative curve is constant strictly between those points and may jump at the right endpoint. The lemma uses the same argument on any support-free open interval with $0\\le a<b<1$. Comparing two interior points keeps any endpoint atoms out of the comparison."
   },
   "scalar.paper_admissible#4": {
     "OAI.ZeroTemperatureSK.parisi": "`value W γ 0 0` supplies $\\Phi_\\gamma(0,0)$, and the interval integral supplies the penalty $\\frac12\\int_0^1t\\gamma(t)\\,dt$ using the zero extension of $\\gamma$. This definition implements the functional clause of the display.",
@@ -94,7 +94,7 @@
     "OAI.ZeroTemperatureSK.actualQuartic_pos": "The fourth moment is of the unscaled curvature $a=\\Phi_{xx}$, since `actualJet` at order two is evaluated along `diffusion`. Its strict positivity for $0<t<1$ gives the positive right-hand side after multiplication by $c^4/1000$ when $c>0$."
   },
   "support.rational_identity_preview": {
-    "OAI.ZeroTemperatureSK.Certificate.rational_identity": "The identity holds for arbitrary real inputs and retains `WF₂` among the summands alongside squares and `remainder`. It gives the algebraic decomposition before shape assumptions and integration eliminate that term."
+    "OAI.ZeroTemperatureSK.Certificate.rational_identity": "A total derivative integrates to zero when its primitive has the same limiting value at both ends. Here the density times $\\mathcal W(F_2)$ is such a derivative, with zero limits. Lean’s `rational_identity` keeps this term in the pointwise decomposition and holds for arbitrary real inputs. After integration removes it, the shape inequalities make the remaining terms nonnegative."
   },
   "support.flux_identity#2": {
     "OAI.ZeroTemperatureSK.Heat.gaussian_shape_coercivity": "`hiZero` sets the integral of `certDivergence` over $(0,\\infty)$ to zero, using vanishing flux at zero and infinity. The density is `gaussianLogDensity d U` under the listed shape hypotheses, and identifying it with the law of $X_t$ is an additional step."
@@ -493,14 +493,14 @@
   },
   "scalar.euler_normalization#6": {
     "OAI.SKValue.euler": "The `0` branch gives $Y_0=0$ and, for $j<N$, the `j+1` branch advances $Y_j$ using `coordinate N j`, the paper's $Z_{j+1}$, with drift evaluated at $(t_j,Y_j)$. This row defines the Euler path, leaving $h_j$ and $g_j$ to separate definitions.",
-    "OAI.SKValue.normalizer": "At Lean index $j-1$, this is $\\bigl(\\sqrt{\\mathbb E[a(t_{j-1},Y_{j-1})^2]}\\bigr)^{-1}$ under the finite Gaussian product law. It supplies the deterministic reciprocal denominator without asserting that the second moment is positive.",
+    "OAI.SKValue.normalizer": "If a past-dependent multiplier were the constant $2$, multiplying by the reciprocal root second moment $1/2$ would give unit second moment after multiplying by the fresh standard normal. `normalizer` uses the same deterministic scaling for the random curvature in the paper. The definition itself leaves positivity of the denominator to the later argument.",
     "OAI.SKValue.gaussianIncrement": "To read the paper's $g_j$, use Lean index $j-1$. The three factors are the reciprocal denominator, $a(t_{j-1},Y_{j-1})$ and $Z_j$, respectively."
   },
   "scalar.conditional_rounding#2": {
     "OAI.SKValue.roundedSign": "The terminal field in the sign is the gradient at the Euler point $Y_N$. The uniform variable for rounding comes from `coordinate N N z`, the last Gaussian $Z_{N+1}$, and `Real.sign` takes the value zero at an exact threshold."
   },
   "scalar.conditional_rounding#3": {
-    "OAI.SKValue.finite_rounding_coefficient": "For any measurable $U$ with $|U|\\le1$ and any measurable integrable $K$, both depending only on the first $N$ coordinates, the conclusion is $\\mathbb E[FK]=\\mathbb E[UK]$, where $F$ is the rounded sign in the integral. Taking $U=u(T,Y_N)$ gives the test-function form of the selected conditional expectation."
+    "OAI.SKValue.finite_rounding_coefficient": "If the past gives $u(T,Y_N)=1/2$, the extra normal, converted to a uniform variable, gives $+1$ with probability $3/4$ and $-1$ with probability $1/4$. The mean conditional on that past is $1/2$. Lean states the corresponding equality after multiplication by any measurable integrable test depending only on the first $N$ coordinates, with a measurable multiplier $U$ satisfying $|U|\\le1$."
   },
   "scalar.euler_normalization#7": {
     "OAI.SKValue.finite_gaussian_target": "The first clause of `FiniteGaussianConclusion` is eventual in the mesh size $N$ and simultaneous over every $j<N$. Lean states positivity of `normalizer`, the inverse square root of the second moment of `rawCoefficient`."
@@ -516,7 +516,7 @@
     "OAI.SKValue.normalizedIncrement_mean": "Independence factors the integral of $HZ$, and $\\mathbb E Z=0$ makes the scaled increment centred. The hypotheses require almost-everywhere strong measurability of $H$ and a standard Gaussian law for $Z$, but no positivity assumption on the second moment of $H$."
   },
   "qaoa.orthonormal_increments": {
-    "OAI.SKValue.normalized_family_orthonormal": "For any measurable family whose $j$th multiplier depends only on coordinates below $j$ and has positive second moment, the displayed integral is $\\delta_{ij}$. Lean indices $0,\\ldots,N-1$ correspond to the paper's increments $g_1,\\ldots,g_N$."
+    "OAI.SKValue.normalized_family_orthonormal": "With independent standard normals $Z_1,Z_2$, the variables $Z_1$ and $Z_1 Z_2$ both have second moment $1$ and their product has mean zero by averaging over $Z_2$ first. Their magnitudes can still depend on one another. Lean uses this same fresh-coordinate calculation for measurable multipliers depending only on earlier coordinates and normalized by positive second moments."
   },
   "qaoa.continuous_second_moment": {
     "OAI.SKValue.IsDiffusion.curvature_unit_moment_of_contact": "The proof uses $\\mathbb E M_t^2=\\int_0^t\\mathbb E[a(s,X_s)^2]\\,ds$ and the assumed contact identity `hmom` to identify this primitive with $t$. Continuity of the mean square curvature then gives $\\mathbb E[a(t,X_t)^2]=1$ throughout $[0,1)$, including $t=0$."

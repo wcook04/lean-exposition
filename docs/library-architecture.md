@@ -251,6 +251,23 @@ can have a different note in each passage. Use the document slot from
 `instance.json` for companions. Euler and Navier–Stokes use `adapted.json` for
 their adapted documents.
 
+When a passage uses a mathematical idea the reader may be meeting for the
+first time, show the smallest case in which the idea does work. Give the reader
+a calculation, a move, or a case they can check, then name the hypothesis,
+construction, or conclusion it prepares them to read. Check the connection
+against the actual passage and the linked Lean statement. A small residual in
+a scalar equation, for example, only becomes useful once the reader sees how
+the linear correction changes it and where the quadratic error comes from.
+
+Use the authors' paper, its cited literature, and the pinned Lean sources to
+choose that example. Say what the example establishes and which extra inputs
+the paper or Lean statement needs. If a previous note already teaches the
+operation, use the space to explain what changes in this passage. For rows
+that only identify a definition or record a precise difference in scope, a
+short direct note is enough. Read the changed notes in passage order and
+check that both the mathematical example and the return to the passage make
+sense without additional notation.
+
 The Library build uses [apply_passage_annotations.py](../scripts/apply_passage_annotations.py)
 to add `annotation` to the matching Lean row in the static tie response. For a
 companion or an adapted document the response is under
