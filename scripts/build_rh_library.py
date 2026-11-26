@@ -430,8 +430,9 @@ def build(paper_dir, index_dir, lean_checkout, *, public=False):
         }, "results": {}, "pages": {}}
         add_text_format(edition, config, addresses, INSTANCE / "papers/long/paper.md",
                         INSTANCE / "passage-ties-text.json")
-        if paper.get("printed_contents"):
-            config["documents"][-1]["printed_contents"] = paper["printed_contents"]
+        printed = read(INSTANCE / "paper.json")
+        if printed.get("printed_contents") and printed["source_files"]["main.pdf"] == manifest["files"]["paper.pdf"]:
+            config["documents"][-1]["printed_contents"] = printed["printed_contents"]
         write(work / "instance.json", config)
         write(work / "addresses.json", addresses)
         write(work / "alignment/records.json", {"records": alignment["records"]})
