@@ -850,8 +850,8 @@ def main() -> int:
                 args.shots.mkdir(parents=True, exist_ok=True)
                 page.screenshot(path=str(args.shots / f"top-{tag}.png"))
             # Clicking a phrase opens its card and its Lean.
-            # A phrase tied to Lean (its title names the Lean), centred so no sticky bar covers it.
-            tie = page.locator('.paper .tie[data-tone][title*="Lean:"]').nth(1)
+            # A linked phrase, centred so no sticky bar covers its words.
+            tie = page.locator(".paper .tie[data-t][data-tone]").nth(1)
             tie.evaluate("e => e.scrollIntoView({block: 'center'})")
             page.wait_for_timeout(500)
             # A phrase that wraps over lines has a bounding box whose centre can fall between its
