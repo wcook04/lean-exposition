@@ -368,6 +368,16 @@
   border-bottom-color: var(--rule-strong);
 }
 
+.prose .paper-contents thead:not(:has(th:not(:empty))) { display: none; }
+.prose .paper-contents td { padding-block: 0.28em; }
+.prose .paper-contents td:last-child:not(:first-child) {
+  width: 4ch;
+  text-align: end;
+  color: var(--ink-2);
+}
+.prose .paper-contents tr:has(td:first-child strong) td { padding-top: 0.75em; }
+.prose .paper-contents a { text-underline-offset: 0.18em; }
+
 /* --------------------------------------------------------- other blocks */
 
 .prose blockquote {

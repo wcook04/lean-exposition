@@ -191,6 +191,7 @@ const site = {
   frontCreditNote: ADAPTED?.credit_note ? { [ADAPTED.slot]: ADAPTED.credit_note } : undefined,
   comparisonsHeld: PAPER.comparisons_hidden ? PAPER.comparisons_held_text : undefined,
   sectionAids: PAPER.section_aids ? { [MAIN.slot]: PAPER.section_aids } : undefined,
+  printedContents: Object.fromEntries(BUILT.filter((doc) => doc.printed_contents).map((doc) => [doc.slot, doc.printed_contents])),
   readingAids: PAPER.reading_aids,
   library: {
     paper: PAPER.id,

@@ -82,7 +82,7 @@ function flushFrames() {
 }
 
 describe("paper layout work", () => {
-  it("collapses removed print contents parts but keeps their passage and the surrounding text", () => {
+  it("renders linked contents across parts and keeps their passage and surrounding text", () => {
     const chunks = [
       "Abstract ends here.\n\n",
       "## Contents\n\n",
@@ -103,7 +103,8 @@ describe("paper layout work", () => {
     act(() => root.render(<PaperBody stage="long" doc={doc} structures={{}} graph={graph}
       initial={[0, 1, 2, 3, 4]} topInset={56} inspected={null} />));
 
-    expect([...container.querySelectorAll(".part--blank")].map((el) => el.getAttribute("data-part"))).toEqual(["1", "2"]);
+    expect(container.querySelector(".part--blank")).toBeNull();
+    expect(container.querySelector('[data-part="2"] .paper-contents a')?.getAttribute("href")).toBe("#introduction");
     expect(container.querySelector('[data-passage="sec-contents"]')?.getAttribute("data-part")).toBe("1");
     expect(container.querySelector(".part__placeholder")).toBeNull();
     expect(container.querySelector('[data-part="3"] h2')?.textContent).toBe("1 Introduction");
